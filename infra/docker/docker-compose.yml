@@ -1,0 +1,2636 @@
+version: '3.8'
+
+# ============================================================
+# Landomo-World Platform - Docker Compose Configuration
+# ============================================================
+# Single command startup for entire platform: docker compose up
+# Includes: PostgreSQL, Redis, Ingest Services, Workers, Monitoring
+# ============================================================
+#
+# SECRETS: Run ./scripts/init-secrets.sh to generate secret files.
+# Services read from /run/secrets/<name> with env var fallback.
+# ============================================================
+
+# ============================================================
+# DOCKER SECRETS - File-based secret management
+# ============================================================
+secrets:
+  db_password:
+    file: ./secrets/db_password
+  db_read_password:
+    file: ./secrets/db_read_password
+  redis_password:
+    file: ./secrets/redis_password
+  grafana_password:
+    file: ./secrets/grafana_password
+  api_keys_australia:
+    file: ./secrets/api_keys_australia
+  api_keys_uk:
+    file: ./secrets/api_keys_uk
+  api_keys_usa:
+    file: ./secrets/api_keys_usa
+  api_keys_czech:
+    file: ./secrets/api_keys_czech
+  api_keys_france:
+    file: ./secrets/api_keys_france
+  api_keys_spain:
+    file: ./secrets/api_keys_spain
+  api_keys_italy:
+    file: ./secrets/api_keys_italy
+  api_keys_slovakia:
+    file: ./secrets/api_keys_slovakia
+  api_keys_hungary:
+    file: ./secrets/api_keys_hungary
+  api_keys_germany:
+    file: ./secrets/api_keys_germany
+  api_keys_austria:
+    file: ./secrets/api_keys_austria
+  api_keys_polygon:
+    file: ./secrets/api_keys_polygon
+  api_keys_ml_pricing:
+    file: ./secrets/api_keys_ml_pricing
+
+networks:
+  landomo-net:
+    driver: bridge
+  landomo-cz-network:
+    external: true
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+  loki_data:
+  backup_data:
+  minio_data:
+  ml_models:
+
+# ============================================================
+# DEFAULT LOGGING - JSON file driver with rotation
+# ============================================================
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "50m"
+    max-file: "5"
+    tag: "{{.Name}}"
+
+services:
+
+  # ============================================================
+  # POSTGRESQL - Multi-database (one per country)
+  # ============================================================
+  postgres:
+    logging: *default-logging
+    build:
+      context: ./postgres
+    container_name: landomo-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-landomo}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-landomo_dev_pass}
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init-databases.sh:/docker-entrypoint-initdb.d/01-init-databases.sh
+      - ./postgres/init-schema.sql:/docker-entrypoint-initdb.d/02-init-schema.sql
+      - ./ingest-service/migrations:/docker-entrypoint-initdb.d/migrations
+      - ./postgres/03-apply-migrations.sh:/docker-entrypoint-initdb.d/03-apply-migrations.sh
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    networks:
+      - landomo-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-landomo}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  # ============================================================
+  # REDIS - Job Queue
+  # ============================================================
+  redis:
+    image: redis:7-alpine
+    container_name: landomo-redis
+    command: >
+      sh -c '
+        if [ -f /run/secrets/redis_password ]; then
+          redis-server --appendonly yes --appendfsync everysec --maxmemory 4gb --maxmemory-policy allkeys-lru --save 900 1 --save 300 10 --save 60 10000 --activedefrag yes --active-defrag-ignore-bytes 100mb --active-defrag-threshold-lower 10 --active-defrag-threshold-upper 100 --active-defrag-cycle-min 1 --active-defrag-cycle-max 25 --requirepass "$$(cat /run/secrets/redis_password)"
+        else
+          redis-server --appendonly yes --appendfsync everysec --maxmemory 4gb --maxmemory-policy allkeys-lru --save 900 1 --save 300 10 --save 60 10000 --activedefrag yes --active-defrag-ignore-bytes 100mb --active-defrag-threshold-lower 10 --active-defrag-threshold-upper 100 --active-defrag-cycle-min 1 --active-defrag-cycle-max 25
+        fi
+      '
+    secrets:
+      - redis_password
+    volumes:
+      - redis_data:/data
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - landomo-net
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password 2>/dev/null)\" ping 2>/dev/null || redis-cli ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ============================================================
+  # PGBOUNCER - Connection pooling proxy
+  # ============================================================
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: landomo-pgbouncer
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    secrets:
+      - db_password
+    environment:
+      DATABASES_HOST: postgres
+      DATABASES_PORT: 5432
+      DATABASES_USER: ${DB_USER:-landomo}
+      DATABASES_PASSWORD: ${DB_PASSWORD:-landomo_dev_pass}
+      DATABASES_DBNAME: postgres
+      AUTH_TYPE: md5
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 1000
+      DEFAULT_POOL_SIZE: 25
+      MIN_POOL_SIZE: 5
+      ADMIN_USERS: pgbouncer_admin
+      STATS_USERS: pgbouncer_stats
+    ports:
+      - "${PGBOUNCER_PORT:-6432}:6432"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 6432 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  # ============================================================
+  # INGEST SERVICES - Multi-instance per country
+  # ============================================================
+
+  # Australia instance
+  ingest-australia:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-australia
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_australia
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=australia
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_australia
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_AUSTRALIA:-dev_key_aus_1,dev_key_aus_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3001:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # United Kingdom instance
+  ingest-uk:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-uk
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_uk
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=uk
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_uk
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_UK:-dev_key_uk_1,dev_key_uk_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3002:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # USA instance
+  ingest-usa:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-usa
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_usa
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=usa
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_usa
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_USA:-dev_key_usa_1,dev_key_usa_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3003:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Czech Republic instance
+  ingest-czech:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-czech
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_czech
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=czech
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_czech
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_CZECH:-dev_key_cz_1,dev_key_cz_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - SENTRY_ENVIRONMENT=${SENTRY_ENVIRONMENT:-production}
+    ports:
+      - "3004:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # France instance
+  ingest-france:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-france
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_france
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=france
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_france
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_FRANCE:-dev_key_fr_1,dev_key_fr_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3005:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Spain instance
+  ingest-spain:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-spain
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_spain
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=spain
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_spain
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_SPAIN:-dev_key_es_1,dev_key_es_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3006:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Italy instance
+  ingest-italy:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-italy
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_italy
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=italy
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_italy
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_ITALY:-dev_key_it_1,dev_key_it_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3007:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Slovakia instance
+  ingest-slovakia:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-slovakia
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_slovakia
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=slovakia
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_slovakia
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_SLOVAKIA:-dev_key_sk_1,dev_key_sk_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3008:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Hungary instance
+  ingest-hungary:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-hungary
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_hungary
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=hungary
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_hungary
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_HUNGARY:-dev_key_hu_1,dev_key_hu_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3009:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Germany instance
+  ingest-germany:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-germany
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_germany
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=germany
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_germany
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_GERMANY:-dev_key_de_1,dev_key_de_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3010:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Austria instance
+  ingest-austria:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-ingest-austria
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_austria
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=austria
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_austria
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_AUSTRIA:-dev_key_at_1,dev_key_at_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+    ports:
+      - "3011:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # SCHEDULER - Centralized Scraper Orchestration
+  # ============================================================
+  scheduler:
+    build:
+      context: .
+      dockerfile: scheduler/Dockerfile
+    container_name: landomo-scheduler
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - ENABLE_HTTP_TRIGGERS=true
+      - SCHEDULER_PORT=9000
+      - HEALTH_CHECK_TIMEOUT=5000
+      - MAX_CONCURRENT_SCRAPERS=${MAX_CONCURRENT_SCRAPERS:-3}
+      - QUEUE_DEPTH_THRESHOLD=${QUEUE_DEPTH_THRESHOLD:-10000}
+      # Czech Republic scrapers
+      - SREALITY_ENABLED=${SREALITY_ENABLED:-true}
+      - BEZREALITKY_ENABLED=${BEZREALITKY_ENABLED:-true}
+      - REALITY_ENABLED=${REALITY_ENABLED:-true}
+      - IDNES_REALITY_ENABLED=${IDNES_REALITY_ENABLED:-true}
+      - REALINGO_ENABLED=${REALINGO_ENABLED:-true}
+      - ULOVDOMOV_ENABLED=${ULOVDOMOV_ENABLED:-true}
+      # Germany scrapers
+      - IMMOBILIENSCOUT24_DE_ENABLED=${IMMOBILIENSCOUT24_DE_ENABLED:-true}
+      - IMMONET_DE_ENABLED=${IMMONET_DE_ENABLED:-true}
+      - IMMOWELT_DE_ENABLED=${IMMOWELT_DE_ENABLED:-true}
+      - KLEINANZEIGEN_DE_ENABLED=${KLEINANZEIGEN_DE_ENABLED:-true}
+      - WG_GESUCHT_DE_ENABLED=${WG_GESUCHT_DE_ENABLED:-true}
+      # Austria scrapers
+      - WILLHABEN_AT_ENABLED=${WILLHABEN_AT_ENABLED:-true}
+      - IMMOBILIENSCOUT24_AT_ENABLED=${IMMOBILIENSCOUT24_AT_ENABLED:-true}
+      - WOHNNET_AT_ENABLED=${WOHNNET_AT_ENABLED:-true}
+      - IMMOWELT_AT_ENABLED=${IMMOWELT_AT_ENABLED:-true}
+      - IMMODIREKT_AT_ENABLED=${IMMODIREKT_AT_ENABLED:-true}
+      # Slovakia scrapers
+      - NEHNUTELNOSTI_SK_ENABLED=${NEHNUTELNOSTI_SK_ENABLED:-true}
+      - REALITY_SK_ENABLED=${REALITY_SK_ENABLED:-true}
+      - TOPREALITY_SK_ENABLED=${TOPREALITY_SK_ENABLED:-true}
+      - BYTY_SK_ENABLED=${BYTY_SK_ENABLED:-true}
+      # Hungary scrapers
+      - INGATLAN_COM_ENABLED=${INGATLAN_COM_ENABLED:-true}
+      - OC_HU_ENABLED=${OC_HU_ENABLED:-true}
+      - DH_HU_ENABLED=${DH_HU_ENABLED:-true}
+      - ZENGA_HU_ENABLED=${ZENGA_HU_ENABLED:-true}
+      - INGATLANNET_HU_ENABLED=${INGATLANNET_HU_ENABLED:-true}
+    ports:
+      - "9000:9000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ============================================================
+  # SCRAPERS - Moved to docker/docker-compose.scrapers.yml
+  # ============================================================
+  # Start scrapers by country profile:
+  #   docker compose -f docker/docker-compose.yml -f docker/docker-compose.scrapers.yml --profile austria up -d
+  #   docker compose -f docker/docker-compose.yml -f docker/docker-compose.scrapers.yml --profile germany up -d
+  #   docker compose -f docker/docker-compose.yml -f docker/docker-compose.scrapers.yml --profile czech up -d
+  #   docker compose -f docker/docker-compose.yml -f docker/docker-compose.scrapers.yml --profile slovakia up -d
+  #   docker compose -f docker/docker-compose.yml -f docker/docker-compose.scrapers.yml --profile hungary up -d
+  # ============================================================
+
+  # ============================================================
+  # (Legacy inline definitions kept for backward compatibility)
+  # ============================================================
+
+  # ImmobilienScout24.de scraper (Germany's largest portal)
+  scraper-immobilienscout24-de:
+    build:
+      context: .
+      dockerfile: scrapers/Germany/immobilienscout24-de/Dockerfile
+    container_name: landomo-scraper-immobilienscout24-de
+    environment:
+      - PORT=8092
+      - INGEST_API_URL=http://ingest-germany:3000
+      - INGEST_API_KEY=dev_key_de_1
+      - INGEST_API_KEY_IMMOBILIENSCOUT24_DE=${INGEST_API_KEY_IMMOBILIENSCOUT24_DE:-dev_key_de_1}
+    ports:
+      - "8092:8092"
+    depends_on:
+      ingest-germany:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8092/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Immonet.de scraper (major German portal)
+  scraper-immonet-de:
+    build:
+      context: .
+      dockerfile: scrapers/Germany/immonet-de/Dockerfile
+    container_name: landomo-scraper-immonet-de
+    environment:
+      - PORT=8093
+      - INGEST_API_URL=http://ingest-germany:3000
+      - INGEST_API_KEY=dev_key_de_1
+      - INGEST_API_KEY_IMMONET_DE=${INGEST_API_KEY_IMMONET_DE:-dev_key_de_1}
+    ports:
+      - "8093:8093"
+    depends_on:
+      ingest-germany:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8093/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Immowelt.de scraper (major German portal)
+  scraper-immowelt-de:
+    build:
+      context: .
+      dockerfile: scrapers/Germany/immowelt-de/Dockerfile
+    container_name: landomo-scraper-immowelt-de
+    environment:
+      - PORT=8094
+      - INGEST_API_URL=http://ingest-germany:3000
+      - INGEST_API_KEY=dev_key_de_1
+      - INGEST_API_KEY_IMMOWELT_DE=${INGEST_API_KEY_IMMOWELT_DE:-dev_key_de_1}
+    ports:
+      - "8094:8094"
+    depends_on:
+      ingest-germany:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8094/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Kleinanzeigen.de scraper (classifieds with real estate)
+  scraper-kleinanzeigen-de:
+    build:
+      context: .
+      dockerfile: scrapers/Germany/kleinanzeigen-de/Dockerfile
+    container_name: landomo-scraper-kleinanzeigen-de
+    environment:
+      - PORT=8095
+      - INGEST_API_URL=http://ingest-germany:3000
+      - INGEST_API_KEY=dev_key_de_1
+      - INGEST_API_KEY_KLEINANZEIGEN_DE=${INGEST_API_KEY_KLEINANZEIGEN_DE:-dev_key_de_1}
+    ports:
+      - "8095:8095"
+    depends_on:
+      ingest-germany:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8095/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # WG-Gesucht.de scraper (shared housing / WG portal)
+  # OPTIONAL: Requires personal WG-Gesucht account credentials
+  # To enable: Set WG_GESUCHT_USERNAME and WG_GESUCHT_PASSWORD in .env.dev
+  scraper-wg-gesucht-de:
+    build:
+      context: .
+      dockerfile: scrapers/Germany/wg-gesucht-de/Dockerfile
+    container_name: landomo-scraper-wg-gesucht-de
+    environment:
+      - PORT=8096
+      - INGEST_API_URL=http://ingest-germany:3000
+      - INGEST_API_KEY=dev_key_de_1
+      - INGEST_API_KEY_WG_GESUCHT_DE=${INGEST_API_KEY_WG_GESUCHT_DE:-dev_key_de_1}
+      - WG_GESUCHT_USERNAME=${WG_GESUCHT_USERNAME}
+      - WG_GESUCHT_PASSWORD=${WG_GESUCHT_PASSWORD}
+    ports:
+      - "8096:8096"
+    depends_on:
+      ingest-germany:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    profiles:
+      - optional
+      - wg-gesucht
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8096/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # SLOVAK SCRAPERS - Reality portals for Slovakia
+  # ============================================================
+
+  # Nehnuteľnosti.sk scraper (Playwright-based)
+  scraper-nehnutelnosti-sk:
+    build:
+      context: .
+      dockerfile: scrapers/Slovakia/nehnutelnosti-sk/Dockerfile
+    container_name: landomo-scraper-nehnutelnosti-sk
+    environment:
+      - PORT=8082
+      - INGEST_API_URL=http://ingest-slovakia:3000
+      - INGEST_API_KEY=dev_key_sk_1
+      - INGEST_API_KEY_NEHNUTELNOSTI_SK=${INGEST_API_KEY_NEHNUTELNOSTI_SK:-dev_key_sk_1}
+      - USE_CHECKSUMS=false
+    ports:
+      - "8082:8082"
+    depends_on:
+      ingest-slovakia:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Reality.sk scraper (curl-impersonate)
+  scraper-reality-sk:
+    build:
+      context: .
+      dockerfile: scrapers/Slovakia/reality-sk/Dockerfile
+    container_name: landomo-scraper-reality-sk
+    environment:
+      - PORT=8084
+      - INGEST_API_URL=http://ingest-slovakia:3000
+      - INGEST_API_KEY=dev_key_sk_1
+      - INGEST_API_KEY_REALITY_SK=${INGEST_API_KEY_REALITY_SK:-dev_key_sk_1}
+      - USE_CHECKSUMS=false
+    ports:
+      - "8084:8084"
+    depends_on:
+      ingest-slovakia:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8084/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # TopReality.sk scraper (API-based)
+  scraper-topreality-sk:
+    build:
+      context: .
+      dockerfile: scrapers/Slovakia/topreality-sk/Dockerfile
+    container_name: landomo-scraper-topreality-sk
+    environment:
+      - PORT=8085
+      - INGEST_API_URL=http://ingest-slovakia:3000
+      - INGEST_API_KEY=dev_key_sk_1
+      - INGEST_API_KEY_TOPREALITY_SK=${INGEST_API_KEY_TOPREALITY_SK:-dev_key_sk_1}
+      - USE_CHECKSUMS=false
+    ports:
+      - "8085:8085"
+    depends_on:
+      ingest-slovakia:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8085/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Byty.sk scraper (curl-impersonate with WAF bypass)
+  scraper-byty-sk:
+    build:
+      context: .
+      dockerfile: scrapers/Slovakia/byty-sk/Dockerfile
+    container_name: landomo-scraper-byty-sk
+    environment:
+      - PORT=8086
+      - INGEST_API_URL=http://ingest-slovakia:3000
+      - INGEST_API_KEY=dev_key_sk_1
+      - INGEST_API_KEY_BYTY_SK=${INGEST_API_KEY_BYTY_SK:-dev_key_sk_1}
+      - USE_CHECKSUMS=false
+    ports:
+      - "8086:8086"
+    depends_on:
+      ingest-slovakia:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8086/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # AUSTRIAN SCRAPERS - Real estate portals for Austria
+  # ============================================================
+
+  # Willhaben.at scraper (Austria's largest classifieds portal)
+  scraper-willhaben-at:
+    build:
+      context: .
+      dockerfile: scrapers/Austria/willhaben-at/Dockerfile
+    container_name: landomo-scraper-willhaben-at
+    environment:
+      - PORT=8097
+      - INGEST_API_URL=http://ingest-austria:3000
+      - INGEST_API_KEY=dev_key_at_1
+      - INGEST_API_KEY_WILLHABEN_AT=${INGEST_API_KEY_WILLHABEN_AT:-dev_key_at_1}
+    ports:
+      - "8097:8097"
+    depends_on:
+      ingest-austria:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8097/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ImmobilienScout24.at scraper (Austrian branch of IS24)
+  scraper-immobilienscout24-at:
+    build:
+      context: .
+      dockerfile: scrapers/Austria/immobilienscout24-at/Dockerfile
+    container_name: landomo-scraper-immobilienscout24-at
+    environment:
+      - PORT=8098
+      - INGEST_API_URL=http://ingest-austria:3000
+      - INGEST_API_KEY=dev_key_at_1
+      - INGEST_API_KEY_IMMOBILIENSCOUT24_AT=${INGEST_API_KEY_IMMOBILIENSCOUT24_AT:-dev_key_at_1}
+    ports:
+      - "8098:8098"
+    depends_on:
+      ingest-austria:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8098/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Wohnnet.at scraper (Austrian real estate portal)
+  scraper-wohnnet-at:
+    build:
+      context: .
+      dockerfile: scrapers/Austria/wohnnet-at/Dockerfile
+    container_name: landomo-scraper-wohnnet-at
+    environment:
+      - PORT=8099
+      - INGEST_API_URL=http://ingest-austria:3000
+      - INGEST_API_KEY=dev_key_at_1
+      - INGEST_API_KEY_WOHNNET_AT=${INGEST_API_KEY_WOHNNET_AT:-dev_key_at_1}
+    ports:
+      - "8099:8099"
+    depends_on:
+      ingest-austria:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8099/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Immowelt.at scraper (Austrian branch of Immowelt)
+  scraper-immowelt-at:
+    build:
+      context: .
+      dockerfile: scrapers/Austria/immowelt-at/Dockerfile
+    container_name: landomo-scraper-immowelt-at
+    environment:
+      - PORT=8100
+      - INGEST_API_URL=http://ingest-austria:3000
+      - INGEST_API_KEY=dev_key_at_1
+      - INGEST_API_KEY_IMMOWELT_AT=${INGEST_API_KEY_IMMOWELT_AT:-dev_key_at_1}
+    ports:
+      - "8100:8100"
+    depends_on:
+      ingest-austria:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8100/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ImmoDirekt.at scraper (Austrian real estate portal)
+  scraper-immodirekt-at:
+    build:
+      context: .
+      dockerfile: scrapers/Austria/immodirekt-at/Dockerfile
+    container_name: landomo-scraper-immodirekt-at
+    environment:
+      - PORT=8101
+      - INGEST_API_URL=http://ingest-austria:3000
+      - INGEST_API_KEY=dev_key_at_1
+      - INGEST_API_KEY_IMMODIREKT_AT=${INGEST_API_KEY_IMMODIREKT_AT:-dev_key_at_1}
+    ports:
+      - "8101:8101"
+    depends_on:
+      ingest-austria:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8101/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # CZECH SCRAPERS - Real estate portals for Czech Republic
+  # ============================================================
+
+  # Sreality.cz scraper (Czech Republic's largest portal)
+  scraper-sreality:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/sreality/Dockerfile
+    container_name: landomo-scraper-sreality
+    environment:
+      - PORT=8102
+      - WORKER_CONCURRENCY=30
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_SREALITY=${INGEST_API_KEY_SREALITY:-dev_key_cz_1}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8102:8102"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8102/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Bezrealitky.cz scraper (Czech no-agent portal)
+  scraper-bezrealitky:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/bezrealitky/Dockerfile
+    container_name: landomo-scraper-bezrealitky
+    environment:
+      - PORT=8103
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_BEZREALITKY=${INGEST_API_KEY_BEZREALITKY:-dev_key_cz_1}
+    ports:
+      - "8103:8103"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8103/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Reality.cz scraper (Czech real estate portal)
+  scraper-reality:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/reality/Dockerfile
+    container_name: landomo-scraper-reality
+    environment:
+      - PORT=8104
+      - MAX_PAGES=100
+      - FETCH_DETAILS=false
+      - ENABLE_CHECKSUM_MODE=false
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_REALITY=${INGEST_API_KEY_REALITY:-dev_key_cz_1}
+    ports:
+      - "8104:8104"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8104/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # iDNES Reality scraper (Czech media group portal)
+  scraper-idnes-reality:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/idnes-reality/Dockerfile
+    container_name: landomo-scraper-idnes-reality
+    environment:
+      - PORT=8105
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_IDNES_REALITY=${INGEST_API_KEY_IDNES_REALITY:-dev_key_cz_1}
+    ports:
+      - "8105:8105"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8105/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Realingo.cz scraper (Czech GraphQL-based portal)
+  scraper-realingo:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/realingo/Dockerfile
+    container_name: landomo-scraper-realingo
+    environment:
+      - PORT=8106
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_REALINGO=${INGEST_API_KEY_REALINGO:-dev_key_cz_1}
+    ports:
+      - "8106:8106"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8106/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # UlovDomov.cz scraper (Czech rental-focused portal)
+  scraper-ulovdomov:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/ulovdomov/Dockerfile
+    container_name: landomo-scraper-ulovdomov
+    environment:
+      - PORT=8107
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_ULOVDOMOV=${INGEST_API_KEY_ULOVDOMOV:-dev_key_cz_1}
+    ports:
+      - "8107:8107"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8107/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Bazos.cz scraper (Czech/Slovak classifieds portal - 41,785 listings)
+  scraper-bazos:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/bazos/Dockerfile
+    container_name: landomo-scraper-bazos
+    environment:
+      - PORT=8108
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_BAZOS=${INGEST_API_KEY_BAZOS:-dev_key_cz_1}
+      - MAX_PAGES=10000
+    ports:
+      - "8108:8108"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8108/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # CeskeReality.cz scraper (Czech real estate portal - ~5% market)
+  scraper-ceskereality:
+    build:
+      context: .
+      dockerfile: scrapers/Czech Republic/ceskereality/Dockerfile
+    container_name: landomo-scraper-ceskereality
+    environment:
+      - PORT=8109
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_CESKEREALITY=${INGEST_API_KEY_CESKEREALITY:-dev_key_cz_1}
+    ports:
+      - "8109:8109"
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8109/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # HUNGARIAN SCRAPERS - Real estate portals for Hungary
+  # ============================================================
+
+  # Ingatlan.com scraper (largest Hungarian portal - 250K+ listings)
+  scraper-ingatlan-com:
+    build:
+      context: .
+      dockerfile: scrapers/Hungary/ingatlan-com/Dockerfile
+    container_name: landomo-scraper-ingatlan-com
+    environment:
+      - PORT=8087
+      - INGEST_API_URL=http://ingest-hungary:3000
+      - INGEST_API_KEY=dev_key_hu_1
+      - INGEST_API_KEY_INGATLAN_COM=${INGEST_API_KEY_INGATLAN_COM:-dev_key_hu_1}
+    ports:
+      - "8087:8087"
+    depends_on:
+      ingest-hungary:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8087/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Ingatlannet.hu scraper (regional Hungarian portal - 5-10% market share, Szeged focus)
+  scraper-ingatlannet-hu:
+    build:
+      context: .
+      dockerfile: scrapers/Hungary/ingatlannet-hu/Dockerfile
+    container_name: landomo-scraper-ingatlannet-hu
+    environment:
+      - PORT=8091
+      - INGEST_API_URL=http://ingest-hungary:3000
+      - INGEST_API_KEY=dev_key_hu_1
+      - INGEST_API_KEY_INGATLANNET_HU=${INGEST_API_KEY_INGATLANNET_HU:-dev_key_hu_1}
+    ports:
+      - "8091:8091"
+    depends_on:
+      ingest-hungary:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8091/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Zenga.hu scraper (AI-enhanced Hungarian portal - 10-15% market share)
+  scraper-zenga-hu:
+    build:
+      context: .
+      dockerfile: scrapers/Hungary/zenga-hu/Dockerfile
+    container_name: landomo-scraper-zenga-hu
+    environment:
+      - PORT=8090
+      - INGEST_API_URL=http://ingest-hungary:3000
+      - INGEST_API_KEY=dev_key_hu_1
+      - INGEST_API_KEY_ZENGA_HU=${INGEST_API_KEY_ZENGA_HU:-dev_key_hu_2}
+    ports:
+      - "8090:8090"
+    depends_on:
+      ingest-hungary:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8090/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # OC.hu (Otthon Centrum) scraper (Hungary's #1 by traffic - 30-35% market share)
+  scraper-oc-hu:
+    build:
+      context: .
+      dockerfile: scrapers/Hungary/oc-hu/Dockerfile
+    container_name: landomo-scraper-oc-hu
+    environment:
+      - PORT=8088
+      - INGEST_API_URL=http://ingest-hungary:3000
+      - INGEST_API_KEY=dev_key_hu_1
+      - INGEST_API_KEY_OC_HU=${INGEST_API_KEY_OC_HU:-dev_key_hu_1}
+    ports:
+      - "8088:8088"
+    depends_on:
+      ingest-hungary:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8088/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # DH.hu (Duna House) scraper (Hungary's #2 by traffic - 25-30% market share)
+  scraper-dh-hu:
+    build:
+      context: .
+      dockerfile: scrapers/Hungary/dh-hu/Dockerfile
+    container_name: landomo-scraper-dh-hu
+    environment:
+      - PORT=8089
+      - INGEST_API_URL=http://ingest-hungary:3000
+      - INGEST_API_KEY=dev_key_hu_1
+      - INGEST_API_KEY_DH_HU=${INGEST_API_KEY_DH_HU:-dev_key_hu_1}
+    ports:
+      - "8089:8089"
+    depends_on:
+      ingest-hungary:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8089/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # BATCH WORKERS - Background processing per country
+  # ============================================================
+
+  worker-australia:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-australia
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=australia
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_australia
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-australia:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-uk:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-uk
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=uk
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_uk
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-uk:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-usa:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-usa
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=usa
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_usa
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-usa:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-czech:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-czech
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=czech
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_czech
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - SENTRY_ENVIRONMENT=${SENTRY_ENVIRONMENT:-production}
+    depends_on:
+      ingest-czech:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-france:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-france
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=france
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_france
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-france:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-spain:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-spain
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=spain
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_spain
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-spain:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-italy:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-italy
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=italy
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_italy
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-italy:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-slovakia:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-slovakia
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=slovakia
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_slovakia
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-8}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-slovakia:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-hungary:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-hungary
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=hungary
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_hungary
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-hungary:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-germany:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-germany
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=germany
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_germany
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-germany:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  worker-austria:
+    build:
+      context: .
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-worker-austria
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=austria
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_austria
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-5}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ingest-austria:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # DATABASE BACKUP SERVICE
+  # ============================================================
+  # Automated daily backups with retention management.
+  # Usage:
+  #   docker compose --profile backup up -d backup
+  #   Manual backup: docker compose --profile backup exec backup /scripts/backup-databases.sh --all
+  #   Single country: docker compose --profile backup exec backup /scripts/backup-databases.sh --country czech
+
+  backup:
+    image: postgres:16
+    container_name: landomo-backup
+    environment:
+      - PGHOST=postgres
+      - PGPORT=5432
+      - PGUSER=${DB_USER:-landomo}
+      - PGPASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - BACKUP_DIR=/backups
+      - BACKUP_FORMAT=${BACKUP_FORMAT:-custom}
+      - BACKUP_CRON=${BACKUP_CRON:-0 2 * * *}
+      - RETENTION_DAILY=${RETENTION_DAILY:-30}
+      - RETENTION_MONTHLY=${RETENTION_MONTHLY:-12}
+      - BACKUP_ON_START=${BACKUP_ON_START:-false}
+      # S3 sync config (for offsite backups)
+      - S3_BUCKET=${S3_BUCKET:-landomo-backups}
+      - S3_ENDPOINT=${S3_ENDPOINT:-http://minio:9000}
+      - S3_ACCESS_KEY=${S3_ACCESS_KEY:-minioadmin}
+      - S3_SECRET_KEY=${S3_SECRET_KEY:-minioadmin}
+      - S3_REGION=${S3_REGION:-us-east-1}
+      - S3_PREFIX=${S3_PREFIX:-landomo-backups}
+      - ENCRYPT_BACKUPS=${ENCRYPT_BACKUPS:-none}
+    volumes:
+      - ./scripts:/scripts
+      - backup_data:/backups
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    entrypoint: ["/scripts/backup-cron-entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h postgres -U ${PGUSER:-landomo} || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    profiles:
+      - backup
+
+  # ============================================================
+  # MINIO - S3-compatible object storage for local dev/testing
+  # ============================================================
+  # Usage:
+  #   docker compose --profile backup up -d minio
+  #   Console: http://localhost:9001 (minioadmin/minioadmin)
+  #   API:     http://localhost:9000
+
+  minio:
+    image: minio/minio
+    container_name: landomo-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY:-minioadmin}
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - landomo-net
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    profiles:
+      - backup
+
+  # ============================================================
+  # NGINX - API Gateway / Reverse Proxy with SSL termination
+  # ============================================================
+  # Start with: docker compose up -d nginx
+  # SSL setup:  ./scripts/generate-ssl-prod.sh api.landomo.com admin@landomo.com
+  # Dev SSL:    ./scripts/generate-ssl-dev.sh
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: landomo-nginx
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../nginx/ssl:/etc/nginx/ssl:ro
+      - ../nginx/certbot-webroot:/var/www/certbot:ro
+    networks:
+      - landomo-net
+    depends_on:
+      - redis
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:80/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging: *default-logging
+
+  # ============================================================
+  # CERTBOT - Let's Encrypt certificate management (production)
+  # ============================================================
+  # Usage:
+  #   docker compose --profile ssl run --rm certbot certonly --webroot --webroot-path=/var/www/certbot -d api.landomo.com
+  #   docker compose --profile ssl run --rm certbot renew
+  # Or use the helper script: ./scripts/generate-ssl-prod.sh api.landomo.com
+
+  certbot:
+    image: certbot/certbot
+    container_name: landomo-certbot
+    volumes:
+      - ./nginx/ssl:/etc/letsencrypt
+      - ./nginx/certbot-webroot:/var/www/certbot
+    profiles:
+      - ssl
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --quiet; sleep 12h & wait $${!}; done;'"
+
+  # ============================================================
+  # MONITORING STACK (Optional)
+  # ============================================================
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: landomo-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/backup-alert.yml:/etc/prometheus/backup-alert.yml:ro
+      - ./monitoring/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    depends_on:
+      - alertmanager
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    profiles:
+      - monitoring
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: landomo-alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    ports:
+      - "${ALERTMANAGER_PORT:-9093}:9093"
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9093/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    profiles:
+      - monitoring
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: landomo-postgres-exporter
+    secrets:
+      - db_password
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${DB_USER:-landomo}:${DB_PASSWORD:-landomo_dev_pass}@postgres:5432/postgres?sslmode=disable"
+      PG_EXPORTER_EXTEND_QUERY_PATH: /etc/postgres-exporter/postgres-queries.yml
+      PG_EXPORTER_AUTO_DISCOVER_DATABASES: "true"
+      PG_EXPORTER_EXCLUDE_DATABASES: "template0,template1"
+    volumes:
+      - ./monitoring/postgres-queries.yml:/etc/postgres-exporter/postgres-queries.yml:ro
+      - ./monitoring/postgres-replication-queries.yml:/etc/postgres-exporter/postgres-replication-queries.yml:ro
+      - ./monitoring/autovacuum-queries.yml:/etc/postgres-exporter/autovacuum-queries.yml:ro
+    ports:
+      - "${POSTGRES_EXPORTER_PORT:-9187}:9187"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9187/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    profiles:
+      - monitoring
+
+  pgbouncer-exporter:
+    image: prometheuscommunity/pgbouncer-exporter:latest
+    container_name: landomo-pgbouncer-exporter
+    environment:
+      PGBOUNCER_EXPORTER_HOST: pgbouncer
+      PGBOUNCER_EXPORTER_PORT: 6432
+      PGBOUNCER_EXPORTER_USER: pgbouncer_stats
+      PGBOUNCER_EXPORTER_PASS: pgbouncer_stats_pass
+    ports:
+      - "${PGBOUNCER_EXPORTER_PORT:-9127}:9127"
+    depends_on:
+      - pgbouncer
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9127/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    profiles:
+      - monitoring
+
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: landomo-redis-exporter
+    secrets:
+      - redis_password
+    environment:
+      - REDIS_ADDR=redis://redis:6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+    ports:
+      - "${REDIS_EXPORTER_PORT:-9121}:9121"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9121/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    profiles:
+      - monitoring
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: landomo-node-exporter
+    command:
+      - '--path.rootfs=/host'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - "${NODE_EXPORTER_PORT:-9100}:9100"
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9100/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    profiles:
+      - monitoring
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: landomo-cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "${CADVISOR_PORT:-8080}:8080"
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: landomo-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana-dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    depends_on:
+      - prometheus
+      - loki
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    profiles:
+      - monitoring
+
+  # ============================================================
+  # POLYGON SERVICE - Administrative boundary polygons
+  # ============================================================
+
+  polygon-service:
+    build:
+      context: .
+      dockerfile: polygon-service/Dockerfile
+    container_name: landomo-polygon-service
+    secrets:
+      - redis_password
+      - source: api_keys_polygon
+        target: api_keys
+    environment:
+      - PORT=3100
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${POLYGON_DB_NAME:-landomo_czech}
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${POLYGON_DB_MAX_CONNECTIONS:-10}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - CACHE_TTL_SECONDS=${POLYGON_CACHE_TTL:-3600}
+      - API_KEYS=${API_KEYS_POLYGON:-dev_key_polygon_1}
+      - LOG_LEVEL=${POLYGON_LOG_LEVEL:-info}
+      - OVERPASS_API_URL=${OVERPASS_API_URL:-https://overpass-api.de/api/interpreter}
+      - OVERPASS_TIMEOUT=${OVERPASS_TIMEOUT:-6000}
+      - OVERPASS_RETRY_DELAY=${OVERPASS_RETRY_DELAY:-5000}
+      - OVERPASS_MAX_RETRIES=${OVERPASS_MAX_RETRIES:-3}
+    ports:
+      - "${POLYGON_SERVICE_PORT:-4300}:3100"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3100/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # SEARCH SERVICE - GraphQL + REST API for Property Search
+  # ============================================================
+
+  search-service:
+    build:
+      context: .
+      dockerfile: search-service/Dockerfile
+    container_name: landomo-search-service
+    secrets:
+      - db_read_password
+      - redis_password
+    environment:
+      - PORT=4000
+      - HOST=0.0.0.0
+      - NODE_ENV=${NODE_ENV:-production}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_READ_USER=${DB_READ_USER:-search_readonly}
+      - DB_READ_PASSWORD=${DB_READ_PASSWORD:-search_readonly_pass}
+      - DB_MAX_CONNECTIONS=${SEARCH_DB_MAX_CONNECTIONS:-10}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - DEFAULT_SEARCH_LIMIT=${DEFAULT_SEARCH_LIMIT:-20}
+      - MAX_SEARCH_LIMIT=${MAX_SEARCH_LIMIT:-100}
+      - DEFAULT_GEO_RADIUS_KM=${DEFAULT_GEO_RADIUS_KM:-10}
+      - MAX_GEO_RADIUS_KM=${MAX_GEO_RADIUS_KM:-100}
+      - CACHE_SEARCH_TTL=${CACHE_SEARCH_TTL:-300}
+      - CACHE_DETAIL_TTL=${CACHE_DETAIL_TTL:-1800}
+      - CACHE_AGGREGATION_TTL=${CACHE_AGGREGATION_TTL:-3600}
+      - CACHE_INVALIDATION_CHANNEL=${CACHE_INVALIDATION_CHANNEL:-property:updated}
+      - LOG_LEVEL=${SEARCH_LOG_LEVEL:-info}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - SENTRY_ENVIRONMENT=${SENTRY_ENVIRONMENT:-production}
+    ports:
+      - "${SEARCH_SERVICE_PORT:-4000}:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:4000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # FRONTEND DESKTOP - Next.js 16 Web Application
+  # ============================================================
+
+  frontend-desktop:
+    build:
+      context: ./frontend-desktop
+    container_name: landomo-frontend-desktop
+    environment:
+      # API URLs (internal Docker network)
+      - NEXT_PUBLIC_SEARCH_API_URL=${NEXT_PUBLIC_SEARCH_API_URL:-http://search-service:4000/api/v1}
+      - NEXT_PUBLIC_POLYGON_API_URL=${NEXT_PUBLIC_POLYGON_API_URL:-http://polygon-service:3100/api/v1}
+      # Map Configuration
+      - NEXT_PUBLIC_DEFAULT_CENTER_LAT=${NEXT_PUBLIC_DEFAULT_CENTER_LAT:-50.0755}
+      - NEXT_PUBLIC_DEFAULT_CENTER_LNG=${NEXT_PUBLIC_DEFAULT_CENTER_LNG:-14.4378}
+      - NEXT_PUBLIC_DEFAULT_ZOOM=${NEXT_PUBLIC_DEFAULT_ZOOM:-12}
+      # Build Configuration
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      # Analytics (optional)
+      - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID:-}
+      # Feature Flags (optional)
+      - NEXT_PUBLIC_ENABLE_SAVED_SEARCHES=${NEXT_PUBLIC_ENABLE_SAVED_SEARCHES:-true}
+      - NEXT_PUBLIC_ENABLE_PRICE_ALERTS=${NEXT_PUBLIC_ENABLE_PRICE_ALERTS:-false}
+      - NEXT_PUBLIC_ENABLE_COMPARISON=${NEXT_PUBLIC_ENABLE_COMPARISON:-true}
+      - NEXT_PUBLIC_MAX_COMPARE_PROPERTIES=${NEXT_PUBLIC_MAX_COMPARE_PROPERTIES:-4}
+    ports:
+      - "${FRONTEND_DESKTOP_PORT:-3001}:3000"
+    depends_on:
+      polygon-service:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # JAEGER - Distributed Tracing (OpenTelemetry)
+  # ============================================================
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: landomo-jaeger
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "${JAEGER_UI_PORT:-16686}:16686"       # Jaeger UI
+      - "${JAEGER_OTLP_GRPC_PORT:-4317}:4317"  # OTLP gRPC
+      - "${JAEGER_OTLP_HTTP_PORT:-4318}:4318"  # OTLP HTTP
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:16686/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    profiles:
+      - monitoring
+
+  # ============================================================
+  # LOKI + PROMTAIL - Centralized Logging
+  # ============================================================
+
+  loki:
+    image: grafana/loki:3.4.2
+    container_name: landomo-loki
+    command: -config.file=/etc/loki/loki-config.yml
+    volumes:
+      - ./monitoring/loki-config.yml:/etc/loki/loki-config.yml:ro
+      - loki_data:/loki
+    ports:
+      - "${LOKI_PORT:-3100}:3100"
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3100/ready"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    profiles:
+      - monitoring
+
+  promtail:
+    image: grafana/promtail:3.4.2
+    container_name: landomo-promtail
+    command: -config.file=/etc/promtail/promtail-config.yml
+    volumes:
+      - ./monitoring/promtail-config.yml:/etc/promtail/promtail-config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      loki:
+        condition: service_healthy
+    networks:
+      - landomo-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9080/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    profiles:
+      - monitoring
+
+  # Monitoring
+
+  # Bazos scraper (development mode with volume mounts)
+  scraper-bazos-dev:
+    image: node:20-alpine
+    container_name: landomo-scraper-bazos-dev
+    working_dir: /app
+    command: sh -c "npm install && npm start"
+    ports:
+      - "8108:3000"
+    environment:
+      - PORT=3000
+      - INGEST_API_URL=http://landomo-ingest-czech:3000
+      - INGEST_API_KEY_FILE=/run/secrets/api_keys
+      - MAX_PAGES=10000
+    volumes:
+      - ../scrapers/Czech Republic/bazos:/app
+      - ../shared-components:/shared-components
+    secrets:
+      - api_keys_czech
+    networks:
+      - landomo-net
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      - ingest-czech
+      - redis
+
+  # ============================================================
+  # ML PRICING SERVICE - Machine Learning Price Prediction API
+  # ============================================================
+
+  ml-pricing-service:
+    build:
+      context: ..
+      dockerfile: ml-pricing-service/Dockerfile
+    container_name: landomo-ml-pricing
+    secrets:
+      - db_read_password
+      - redis_password
+      - api_keys_ml_pricing
+    environment:
+      # Server Config
+      - PORT=3500
+      - HOST=0.0.0.0
+      - NODE_ENV=${NODE_ENV:-production}
+      
+      # Database (Read-Only Multi-Country Access)
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_READ_USER=ml_pricing_readonly
+      - DB_READ_PASSWORD=${DB_READ_PASSWORD:-ml_pricing_readonly_pass}
+      - DB_MAX_CONNECTIONS=${ML_PRICING_DB_MAX_CONNECTIONS:-10}
+      
+      # Redis Cache
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - MODEL_CACHE_TTL=${MODEL_CACHE_TTL:-86400}
+      - PREDICTION_CACHE_TTL=${PREDICTION_CACHE_TTL:-3600}
+      
+      # API Authentication
+      - API_KEYS=${API_KEYS_ML_PRICING:-dev_ml_key_1}
+      
+      # ML Model Configuration
+      - MODELS_DIR=/app/models
+      - PYTHON_PATH=/app/ml-pricing-service/ml
+      - ML_WORKER_CONCURRENCY=${ML_WORKER_CONCURRENCY:-2}
+      
+      # Training Configuration
+      - TRAINING_CRON=${TRAINING_CRON:-0 2 * * 0}
+      - MIN_TRAINING_SAMPLES=${MIN_TRAINING_SAMPLES:-100}
+      - TEST_SPLIT=${TEST_SPLIT:-0.2}
+      
+      # Logging
+      - LOG_LEVEL=${ML_PRICING_LOG_LEVEL:-info}
+      
+    volumes:
+      - ml_models:/app/models
+    
+    ports:
+      - "${ML_PRICING_PORT:-3500}:3500"
+    
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    
+    networks:
+      - landomo-net
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3500/api/v1/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); }).on('error', () => process.exit(1));"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G

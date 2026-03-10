@@ -1,0 +1,17 @@
+Quick Icon Setup:
+
+Option 1: Use simple colored squares (fastest)
+- Create 3 PNG files with solid color background + "IS24" text
+- Use any image editor or online tool
+- Files needed: icon16.png, icon48.png, icon128.png
+
+Option 2: Download from Flaticon
+- Visit: https://www.flaticon.com/free-icon/house_1946488
+- Download PNG in multiple sizes
+- Rename to icon16.png, icon48.png, icon128.png
+
+Option 3: Skip icons temporarily
+- Extension will work without icons
+- Chrome will show a default puzzle piece icon
+
+For now, the extension is functional without icons!

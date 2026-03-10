@@ -1,0 +1,15 @@
+node_modules
+dist
+npm-debug.log
+.env
+.env.local
+.DS_Store
+*.log
+coverage
+.vscode
+.idea
+ml/__pycache__
+ml/**/*.pyc
+ml/.pytest_cache
+models/*
+!models/.gitkeep

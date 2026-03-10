@@ -1,0 +1,35 @@
+# Node modules (will be installed fresh in container)
+node_modules/
+npm-debug.log
+
+# Development files
+.env
+.env.*
+*.local
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts (will be built in container)
+dist/
+
+# Documentation
+README.md
+*.md
+
+# Tests
+__tests__/
+*.test.ts
+*.spec.ts
+
+# Logs
+logs/
+*.log

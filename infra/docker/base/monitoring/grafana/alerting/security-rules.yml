@@ -1,0 +1,304 @@
+# Security Alert Rules
+# Implemented based on security-engineer specifications
+# Coordinates with infrastructure-rules.yml
+
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: Security Alerts
+    folder: Security
+    interval: 1m
+    rules:
+      # Critical: Failed Authentication Attempts
+      - uid: failed-auth-high
+        title: High Failed Authentication Rate
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  COUNT(*) as failed_attempts,
+                  ROUND(COUNT(*) / 5.0, 1) as attempts_per_minute
+                FROM api_access_log
+                WHERE timestamp > NOW() - INTERVAL '5 minutes'
+                  AND status_code IN (401, 403)
+                  AND endpoint LIKE '%auth%'
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [10]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          description: "{{ $values.attempts_per_minute.Value }} failed auth attempts per minute (threshold: 10/min)"
+          summary: Critical - Possible brute force attack detected
+          runbook_url: https://docs.landomo.com/runbooks/security/failed-auth
+        labels:
+          severity: critical
+          component: authentication
+          team: security
+
+      # Critical: Rate Limit Violations
+      - uid: rate-limit-violations
+        title: Excessive Rate Limit Violations
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  COUNT(*) as violations,
+                  client_ip,
+                  api_key
+                FROM api_access_log
+                WHERE timestamp > NOW() - INTERVAL '1 minute'
+                  AND status_code = 429
+                GROUP BY client_ip, api_key
+                HAVING COUNT(*) > 100
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [100]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 2m
+        annotations:
+          description: "Client {{ $labels.client_ip }} triggered {{ $values.violations.Value }} rate limit violations per minute"
+          summary: Critical - Potential DoS or API abuse
+          runbook_url: https://docs.landomo.com/runbooks/security/rate-limit
+        labels:
+          severity: critical
+          component: rate-limiting
+          team: security
+
+      # Critical: Expired API Key Usage
+      - uid: expired-api-key-usage
+        title: Expired API Key Usage Detected
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  COUNT(*) as attempts,
+                  api_key_prefix,
+                  client_ip
+                FROM api_access_log
+                WHERE timestamp > NOW() - INTERVAL '5 minutes'
+                  AND error_message LIKE '%expired%'
+                  AND api_key_prefix IS NOT NULL
+                GROUP BY api_key_prefix, client_ip
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [1]
+                    type: gte
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: OK
+        for: 1m
+        annotations:
+          description: "Client {{ $labels.client_ip }} attempted to use expired API key {{ $labels.api_key_prefix }}***"
+          summary: Critical - Expired API key usage (potential compromise)
+          runbook_url: https://docs.landomo.com/runbooks/security/expired-key
+        labels:
+          severity: critical
+          component: api-keys
+          team: security
+
+      # Warning: High Redis/DB Connection Errors
+      - uid: high-connection-errors
+        title: High Database/Redis Connection Errors
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  COUNT(*) as error_count,
+                  error_type
+                FROM system_errors
+                WHERE timestamp > NOW() - INTERVAL '1 minute'
+                  AND (error_message LIKE '%connection%' OR error_message LIKE '%timeout%')
+                  AND (component = 'redis' OR component = 'postgres')
+                GROUP BY error_type
+                HAVING COUNT(*) > 5
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [5]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          description: "{{ $values.error_count.Value }} connection errors per minute (threshold: 5/min)"
+          summary: Warning - High connection error rate detected
+          runbook_url: https://docs.landomo.com/runbooks/security/connection-errors
+        labels:
+          severity: warning
+          component: connections
+          team: security
+
+      # Warning: Secrets Approaching Expiration
+      - uid: secrets-expiring
+        title: Secrets Approaching Expiration (>90 days)
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  secret_name,
+                  secret_type,
+                  EXTRACT(EPOCH FROM (NOW() - created_at)) / 86400 as age_days
+                FROM secrets_metadata
+                WHERE EXTRACT(EPOCH FROM (NOW() - created_at)) / 86400 > 90
+                  AND status = 'active'
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [90]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: OK
+        for: 24h
+        annotations:
+          description: "Secret {{ $labels.secret_name }} is {{ $values.age_days.Value }} days old (threshold: 90 days)"
+          summary: Warning - Secret rotation required
+          runbook_url: https://docs.landomo.com/runbooks/security/secret-rotation
+        labels:
+          severity: warning
+          component: secrets
+          team: security
+
+# Note: These alerts require the following database tables:
+# - api_access_log (for auth and rate limit monitoring)
+# - system_errors (for connection error tracking)
+# - secrets_metadata (for secret rotation monitoring)
+#
+# If tables don't exist yet, alerts will show NoData state until tables are created.

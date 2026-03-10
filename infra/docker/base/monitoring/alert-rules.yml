@@ -1,0 +1,509 @@
+# =============================================================================
+# Landomo-World Prometheus Alerting Rules
+# =============================================================================
+# Loaded by Prometheus via rule_files in prometheus.yml.
+#
+# Metrics sources:
+#   - landomo_ingest_*  : ingest-service prom-client (src/metrics/index.ts)
+#   - landomo_search_*  : search-service prom-client (src/metrics/index.ts)
+#   - pg_*              : postgres-exporter
+#   - redis_*           : redis-exporter
+#   - up{}              : Prometheus target health
+# =============================================================================
+
+groups:
+
+  # ==========================================================================
+  # CRITICAL ALERTS - Require immediate attention
+  # ==========================================================================
+  - name: landomo_critical
+    rules:
+
+      - alert: ScraperDown
+        expr: up{job=~"scrapers-.*"} == 0
+        for: 15m
+        labels:
+          severity: critical
+          team: scrapers
+        annotations:
+          summary: "Scraper {{ $labels.instance }} is down"
+          description: >-
+            Scraper {{ $labels.instance }} (job {{ $labels.job }}) has been
+            unreachable for more than 15 minutes. Property data from this
+            portal is not being collected.
+          runbook: "Check container: docker ps | grep scraper. Inspect logs: docker logs <container>."
+
+      - alert: IngestServiceDown
+        expr: up{job="ingest-services"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Ingest service {{ $labels.instance }} is down"
+          description: >-
+            The ingest service at {{ $labels.instance }} has been unreachable
+            for more than 5 minutes. Incoming property data is not being processed.
+          runbook: "Check container: docker ps | grep ingest. Verify DB and Redis connectivity."
+
+      - alert: SearchServiceDown
+        expr: up{job="search-service"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Search service is down"
+          description: >-
+            The search service has been unreachable for more than 5 minutes.
+            User-facing search is unavailable.
+          runbook: "Check container: docker logs landomo-search-service. Verify DB connections."
+
+      - alert: PostgreSQLDown
+        expr: pg_up == 0
+        for: 2m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "PostgreSQL is down"
+          description: >-
+            The PostgreSQL database is unreachable. All services depending
+            on the database will be affected.
+          runbook: "Check container: docker logs landomo-postgres. Verify disk space and connections."
+
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 2m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "Redis is down"
+          description: >-
+            Redis is unreachable. Job queues and caching are unavailable.
+          runbook: "Check container: docker logs landomo-redis. Verify memory and disk."
+
+      - alert: IngestQueueBacklog
+        expr: landomo_ingest_queue_depth > 10000
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Ingest queue depth exceeds 10,000"
+          description: >-
+            The ingestion queue has {{ $value }} items pending. Workers may be
+            overwhelmed or stuck. Check worker health and database write latency.
+          runbook: "Check worker containers. Scale workers or increase BATCH_WORKERS. Inspect queue: redis-cli LLEN bull:ingest-property:wait"
+
+      - alert: DBConnectionPoolExhausted
+        expr: >
+          (landomo_ingest_db_pool_active
+           / clamp_min(landomo_ingest_db_pool_active + landomo_ingest_db_pool_idle, 1)
+          ) > 0.9
+        for: 5m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "Ingest DB connection pool >90% exhausted"
+          description: >-
+            The ingest database connection pool is {{ $value | humanizePercentage }}
+            utilized. Queries may start timing out.
+          runbook: "Check for connection leaks. Increase DB_MAX_CONNECTIONS or enable PgBouncer."
+
+      - alert: DiskUsageHigh
+        expr: >
+          (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"}
+           / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"}
+          ) < 0.15
+        for: 10m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "Disk usage exceeds 85% on {{ $labels.mountpoint }}"
+          description: >-
+            Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} has only
+            {{ $value | humanizePercentage }} free space remaining.
+          runbook: "Clean old backups, WAL archives, or Docker images. Expand volume if needed."
+
+  # ==========================================================================
+  # WARNING ALERTS - Should be investigated promptly
+  # ==========================================================================
+  - name: landomo_warning
+    rules:
+
+      - alert: ScraperHighFailureRate
+        expr: >
+          (
+            rate(landomo_ingest_errors_total{type="batch_ingestion"}[1h])
+            / clamp_min(rate(landomo_ingest_requests_total{status="202"}[1h]), 0.001)
+          ) > 0.20
+        for: 15m
+        labels:
+          severity: warning
+          team: scrapers
+        annotations:
+          summary: "Ingestion failure rate >20% in the last hour"
+          description: >-
+            The ratio of batch ingestion errors to accepted requests exceeds
+            20% over the last hour. Scrapers may be sending malformed data or
+            the database may have issues.
+          runbook: "Check scraper and worker logs. Run a test ingest manually."
+
+      - alert: IngestHighErrorRate
+        expr: >
+          (
+            rate(landomo_ingest_requests_total{status=~"5.."}[15m])
+            / clamp_min(rate(landomo_ingest_requests_total[15m]), 0.001)
+          ) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Ingest API error rate >5% ({{ $labels.instance }})"
+          description: >-
+            Ingest service {{ $labels.instance }} has a {{ $value | humanizePercentage }}
+            5xx error rate over the last 15 minutes. Check for schema violations or
+            database connectivity issues.
+          runbook: "Check ingest service logs. Verify PostgreSQL and Redis are healthy."
+
+      - alert: SearchHighLatency
+        expr: >
+          histogram_quantile(0.99,
+            rate(landomo_search_request_duration_seconds_bucket{route="/api/v1/search"}[5m])
+          ) > 2
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Search p99 latency exceeds 2 seconds"
+          description: >-
+            The 99th percentile search latency is {{ $value | humanizeDuration }}.
+            This degrades user experience.
+          runbook: "Check database query plans, cache hit ratio, and read replica lag."
+
+      - alert: CacheHitRatioLow
+        expr: >
+          (
+            rate(landomo_search_cache_hits_total[30m])
+            / clamp_min(
+                rate(landomo_search_cache_hits_total[30m])
+                + rate(landomo_search_cache_misses_total[30m]),
+              0.001)
+          ) < 0.50
+        for: 30m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Search cache hit ratio below 50%"
+          description: >-
+            Cache hit ratio is {{ $value | humanizePercentage }} over the last 30
+            minutes. This increases database load.
+          runbook: "Check Redis connectivity and memory. Verify cache TTL settings."
+
+      - alert: ReplicationLagHigh
+        expr: pg_replication_lag_seconds > 30
+        for: 5m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "PostgreSQL replication lag exceeds 30 seconds"
+          description: >-
+            Replication lag is {{ $value | humanizeDuration }}. Read replicas may
+            be serving stale data.
+          runbook: "Check replica status and WAL archiving. Verify network between primary and replica."
+
+      - alert: NoPropertiesIngested
+        expr: increase(landomo_ingest_properties_ingested_total[6h]) == 0
+        for: 1h
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "No properties ingested in 6 hours"
+          description: >-
+            No properties have been ingested in the last 6 hours across any
+            country/portal. All scrapers may be failing or the scheduler may
+            not be triggering runs.
+          runbook: "Check scheduler container. Verify scraper health endpoints. Check ingest service queue."
+
+      - alert: MemoryUsageHigh
+        expr: >
+          (process_resident_memory_bytes{job=~"ingest-services|search-service"} / 1024 / 1024 / 1024) > 1.5
+        for: 15m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High memory usage on {{ $labels.job }} ({{ $labels.instance }})"
+          description: >-
+            Process {{ $labels.job }} at {{ $labels.instance }} is using
+            {{ $value | humanize }}GB of memory. Investigate potential memory leaks.
+          runbook: "Check for memory leaks. Increase container memory limit. Review batch size settings."
+
+      - alert: SearchDBPoolUtilizationHigh
+        expr: >
+          (landomo_search_db_pool_active
+           / clamp_min(landomo_search_db_pool_active + landomo_search_db_pool_idle, 1)
+          ) > 0.80
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Search DB pool >80% utilized for {{ $labels.country }}"
+          description: >-
+            The search service database pool for {{ $labels.country }} is
+            {{ $value | humanizePercentage }} utilized. Queries will start
+            queuing if this continues.
+          runbook: "Check for slow queries. Consider increasing pool size."
+
+      - alert: StalenessCircuitBreakerTriggered
+        expr: increase(landomo_ingest_staleness_circuit_breaker_skips_total[6h]) > 0
+        for: 1m
+        labels:
+          severity: warning
+          team: scrapers
+        annotations:
+          summary: "Staleness circuit breaker triggered"
+          description: >-
+            The staleness checker skipped one or more portals because >30% of
+            active listings would have been marked removed. This may indicate a
+            broken scraper that stopped reporting listings.
+          runbook: "Check which portal was skipped in worker logs. Verify that portal's scraper is functional."
+
+      - alert: BatchIngestionSlow
+        expr: >
+          histogram_quantile(0.99,
+            rate(landomo_ingest_batch_duration_seconds_bucket[15m])
+          ) > 5
+        for: 15m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Batch ingestion p99 latency exceeds 5 seconds"
+          description: >-
+            The 99th percentile batch ingestion duration is {{ $value | humanizeDuration }}.
+            Database writes are slow, which may cause queue buildup.
+          runbook: "Check PostgreSQL performance. Verify indexes and vacuum status."
+
+  # ==========================================================================
+  # DATA QUALITY ALERTS - Monitor data completeness and scraper health
+  # ==========================================================================
+  - name: landomo_data_quality
+    rules:
+
+      - alert: DataQualityScoreLow
+        expr: landomo_data_quality_score < 70
+        for: 30m
+        labels:
+          severity: warning
+          team: data
+        annotations:
+          summary: "Data quality score below 70% for {{ $labels.portal }} ({{ $labels.country }})"
+          description: >-
+            The data quality score for {{ $labels.portal }} in {{ $labels.country }}
+            is {{ $value }}%. Check for missing prices, coordinates, or images.
+            Review the scraper transformer for this portal.
+          runbook: "Check GET /api/v1/data-quality for details. Review transformer output for missing fields."
+
+      - alert: ScraperDead
+        expr: landomo_scraper_freshness_hours > 48
+        for: 1h
+        labels:
+          severity: critical
+          team: scrapers
+        annotations:
+          summary: "Scraper dead: no updates from {{ $labels.portal }} ({{ $labels.country }}) in 48h"
+          description: >-
+            Portal {{ $labels.portal }} in {{ $labels.country }} has not had any
+            listing updates in {{ $value | humanizeDuration }}. The scraper may be
+            broken, blocked, or stopped.
+          runbook: "Check scraper container logs. Verify portal is accessible. Check antibot_detection.json for recent blocks."
+
+      - alert: HighMissingPrices
+        expr: landomo_properties_missing_price_pct > 30
+        for: 30m
+        labels:
+          severity: warning
+          team: data
+        annotations:
+          summary: "{{ $value }}% of {{ $labels.portal }} listings missing price"
+          description: >-
+            More than 30% of active listings from {{ $labels.portal }}
+            ({{ $labels.country }}) are missing price data. The portal may have
+            changed its data structure or the transformer needs updating.
+          runbook: "Check transformer price extraction. Run a test scrape and inspect raw data."
+
+      - alert: HighSuspiciousPrices
+        expr: landomo_properties_suspicious_price_pct > 10
+        for: 30m
+        labels:
+          severity: warning
+          team: data
+        annotations:
+          summary: "{{ $value }}% suspicious prices from {{ $labels.portal }}"
+          description: >-
+            More than 10% of active listings from {{ $labels.portal }}
+            ({{ $labels.country }}) have suspicious prices (<=1 or >100M).
+            Check for currency conversion issues or parsing errors.
+          runbook: "Query properties with suspicious prices. Check transformer currency handling."
+
+      - alert: LowFreshness
+        expr: landomo_properties_updated_last_7d_pct < 20
+        for: 1h
+        labels:
+          severity: warning
+          team: scrapers
+        annotations:
+          summary: "Only {{ $value }}% of {{ $labels.portal }} listings updated in 7 days"
+          description: >-
+            Less than 20% of active listings from {{ $labels.portal }}
+            ({{ $labels.country }}) were updated in the last 7 days. The scraper
+            may be running but not reaching all listings.
+          runbook: "Check scraper pagination and listing coverage. Verify scheduler is triggering runs."
+
+  # ==========================================================================
+  # INFO ALERTS - Informational, for logging and tracking
+  # ==========================================================================
+  - name: landomo_info
+    rules:
+
+      - alert: ScrapeRunCompleted
+        expr: increase(landomo_ingest_properties_ingested_total[5m]) > 0
+        for: 0m
+        labels:
+          severity: info
+          team: scrapers
+        annotations:
+          summary: "Properties ingested from {{ $labels.portal }} ({{ $labels.country }})"
+          description: >-
+            {{ $value }} new properties ingested from {{ $labels.portal }}
+            ({{ $labels.country }}) in the last 5 minutes.
+
+      - alert: OrphanedRunsReaped
+        expr: increase(landomo_ingest_orphaned_runs_reaped_total[6h]) > 0
+        for: 0m
+        labels:
+          severity: info
+          team: scrapers
+        annotations:
+          summary: "Orphaned scrape runs reaped"
+          description: >-
+            {{ $value }} orphaned scrape run(s) were automatically cleaned up.
+            These were stuck in 'running' state for over 4 hours.
+          runbook: "Check which scrapers crashed without reporting completion."
+
+      - alert: IngestionVolumeAnomaly
+        expr: >
+          abs(
+            increase(landomo_ingest_properties_ingested_total[6h])
+            - increase(landomo_ingest_properties_ingested_total[6h] offset 1d)
+          )
+          / clamp_min(increase(landomo_ingest_properties_ingested_total[6h] offset 1d), 1)
+          > 0.50
+        for: 30m
+        labels:
+          severity: info
+          team: data
+        annotations:
+          summary: "Ingestion volume anomaly for {{ $labels.portal }}"
+          description: >-
+            The ingestion volume for {{ $labels.portal }} changed by more
+            than 50% compared to 24 hours ago. This may indicate a portal
+            change, listings surge, or scraper issue.
+
+  # ==========================================================================
+  # BUSINESS KPI ALERTS
+  # ==========================================================================
+  - name: landomo_business_kpis
+    rules:
+
+      - alert: DeactivationSpike
+        expr: >
+          increase(landomo_properties_deactivated_total[1h]) > 500
+        for: 5m
+        labels:
+          severity: warning
+          team: data
+        annotations:
+          summary: "Deactivation spike: {{ $value }} properties deactivated in 1 hour"
+          description: >-
+            More than 500 properties were deactivated in the last hour
+            ({{ $labels.reason }}). This may indicate a mass removal event
+            or a staleness checker misconfiguration.
+          runbook: "Check staleness checker logs. Verify scrape_runs table for recent completions."
+
+      - alert: NoNewProperties6h
+        expr: increase(landomo_properties_new_total[6h]) == 0
+        for: 30m
+        labels:
+          severity: warning
+          team: scrapers
+        annotations:
+          summary: "No new properties in 6 hours"
+          description: >-
+            No new properties have been inserted in the last 6 hours.
+            All scrapers may be failing or returning only existing listings.
+          runbook: "Check scraper health endpoints. Verify ingest service is processing jobs."
+
+      - alert: PriceVolatilityHigh
+        expr: pg_price_volatility_volatile_count > 100
+        for: 30m
+        labels:
+          severity: info
+          team: data
+        annotations:
+          summary: "High price volatility on {{ $labels.portal }}: {{ $value }} volatile properties"
+          description: >-
+            Portal {{ $labels.portal }} has {{ $value }} properties with
+            more than 3 price changes in 30 days. This may indicate
+            data quality issues or legitimate market activity.
+
+      - alert: ScraperNoRecentRun
+        expr: >
+          (time() - landomo_scraper_last_run_timestamp) > 86400
+        for: 30m
+        labels:
+          severity: warning
+          team: scrapers
+        annotations:
+          summary: "Scraper {{ $labels.portal }} hasn't run in 24+ hours"
+          description: >-
+            The last completed scrape run for {{ $labels.portal }} was more
+            than 24 hours ago. The scheduler may not be triggering this portal.
+          runbook: "Check scheduler cron configuration. Verify scraper container is running."
+
+      - alert: HighDeadTupleRatio
+        expr: pg_dead_tuples_dead_tuple_ratio > 20
+        for: 30m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "High dead tuple ratio ({{ $value }}%) on {{ $labels.table }}"
+          description: >-
+            Table {{ $labels.table }} has {{ $value }}% dead tuples.
+            Autovacuum may be falling behind.
+          runbook: "Run VACUUM ANALYZE on the table. Check autovacuum settings."
+
+      - alert: DatabaseCacheHitLow
+        expr: pg_cache_hit_ratio_cache_hit_ratio < 90
+        for: 15m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "Database cache hit ratio low ({{ $value }}%) for {{ $labels.database }}"
+          description: >-
+            Buffer cache hit ratio for {{ $labels.database }} dropped below 90%.
+            This indicates high disk I/O and may affect query performance.
+          runbook: "Check shared_buffers setting. Consider increasing PostgreSQL memory allocation."

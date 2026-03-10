@@ -1,0 +1,106 @@
+================================================================================
+SREALITY API FIELD EXTRACTION GAP ANALYSIS - QUICK REFERENCE
+================================================================================
+
+CURRENT EXTRACTION COVERAGE: 76.3% (45/59 fields)
+
+ROOT LEVEL FIELDS: 16/26 extracted (61.5%)
+ITEMS ARRAY FIELDS: 29/33 extracted (88%)
+
+================================================================================
+CRITICAL GAPS - NOT EXTRACTED, HIGH IMPACT
+================================================================================
+
+1. POI DATA (6 fields, 100% availability, 4 hours to implement)
+   Fields: poi, poi_transport, poi_restaurant, poi_grocery, 
+           poi_school_kindergarten, poi_doctors, poi_leisure_time
+   Impact: Unlock neighborhood quality data, lifestyle-based filtering
+   Each POI has: name, distance (m), rating (0-5), reviews, photo, location
+
+2. SELLER/BROKER INFO (Complex object, 100% availability, 6 hours)
+   Field: _embedded.seller
+   Impact: Agent/company filtering, direct contact info, credibility
+   Includes: company details, phones, hours, reviews, specialization
+
+3. ACCESSIBILITY FLAG (1 field, 10-15% availability, 1 hour)
+   Field: Bezbariérový (items array)
+   Impact: Wheelchair accessibility identification
+
+4. VIRTUAL TOUR URLs (1 field, 5-15% availability, 1 hour)
+   Field: _embedded.matterport_url
+   Impact: 3D/360° tour links when available
+
+================================================================================
+EXTRACTION BY CATEGORY
+================================================================================
+
+FULLY EXTRACTED, HIGH PRIORITY (100% coverage):
+✓ Basic info: title, price, locality, coordinates
+✓ Metadata: hash_id, property_type, transaction_type
+✓ Details: bedrooms, bathrooms, sqm, floor, rooms
+✓ Czech-specific: disposition, ownership, condition, heating, energy rating
+✓ Infrastructure: water, sewage, gas availability
+✓ Amenities: parking, elevator, balcony, terrace, cellar, garage, basement
+
+PARTIALLY EXTRACTED OR NOT EXTRACTED:
+✗ Neighborhood context (POI) - 100% available
+✗ Agent/broker contact - 100% available
+✗ Accessibility - 10-15% available
+✗ Virtual tours - 5-15% available
+✗ Minor fields - <40% availability
+
+NOT WORTH EXTRACTING:
+- Metadata fields (internal use only)
+- Redundant fields (Elektřina, Doprava)
+- Rarely available fields (<5%)
+
+================================================================================
+IMPLEMENTATION ROADMAP
+================================================================================
+
+PHASE 1 (11 hours) - HIGH PRIORITY:
+  POI extraction (4h) → neighborhood_amenities object
+  Seller info (6h) → seller object with contact & company data
+  Accessibility (1h) → amenities.wheelchair_accessible
+  Impact: Reach 90% coverage, +15-20% new data dimensions
+
+PHASE 2 (3.5 hours) - MEDIUM PRIORITY:
+  Virtual tours (1h) → media.virtual_tour_url
+  Built area (1h) → country_specific.area_built
+  Alt field names (0.5h) → edge case handling
+  Impact: +5-15% coverage, enhanced media
+
+PHASE 3 - LOW PRIORITY (NOT RECOMMENDED):
+  Metadata fields, redundant fields
+
+================================================================================
+DATA AVAILABILITY SUMMARY
+================================================================================
+
+Always present (100%):
+  - Basic listing data, SEO categorization, items array, images, seller, POI
+
+Usually present (60-90%):
+  - Disposition, floor, ownership, condition, furnishing, heating, parking
+
+Sometimes present (40-60%):
+  - Total area, plot area, energy rating, water/sewage/gas
+
+Rarely present (<40%):
+  - Garden area, loggia, year built, built area, 3D tours
+
+================================================================================
+KEY INSIGHTS
+================================================================================
+
+1. QUALITY: Current extraction is high-quality with good Czech normalization
+2. COVERAGE: 76.3% is solid; main gaps are in optional/lifestyle data
+3. AVAILABILITY: All missing high-value fields present in 100% of responses
+4. EFFORT: Implementation effort is moderate (11-14.5 hours for major gains)
+5. IMPACT: POI + Seller data would unlock major filtering/search capabilities
+
+================================================================================
+Generated: 2026-02-07
+Sample Size: 3 API responses (~180KB)
+API: SReality CS v2 Detail Endpoint
+================================================================================

@@ -1,0 +1,298 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    SREALITY PERFORMANCE TEST - FILES GENERATED
+═══════════════════════════════════════════════════════════════════════════════
+
+All files are located in:
+/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/
+
+═══════════════════════════════════════════════════════════════════════════════
+CORE REPORTS (Priority Order)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. ⭐ PERFORMANCE_TEST_SUMMARY.md (13 KB)
+   └─ Executive summary with actionable insights
+   └─ Best for: Quick overview, decision making
+   └─ Read time: 5-10 minutes
+
+2. ⭐ SREALITY_FINAL_TEST_RESULTS.json (11 KB)
+   └─ Consolidated JSON results with all metrics
+   └─ Best for: Data analysis, sharing with stakeholders
+   └─ Format: Structured JSON (machine-readable)
+
+3. SREALITY_PERFORMANCE_ANALYSIS.md (10 KB)
+   └─ Comprehensive technical analysis
+   └─ Best for: Technical documentation, architecture planning
+   └─ Read time: 15-20 minutes
+
+4. SREALITY_PERFORMANCE_METRICS.json (9.7 KB)
+   └─ Detailed performance metrics and analysis
+   └─ Best for: Deep technical review
+   └─ Format: Structured JSON (machine-readable)
+
+═══════════════════════════════════════════════════════════════════════════════
+SUPPORTING DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════════
+
+5. PERFORMANCE_TEST_INDEX.md (11 KB)
+   └─ Complete index and navigation guide
+   └─ Best for: Finding specific information quickly
+   └─ Contains: File relationships, quick links, FAQs
+
+═══════════════════════════════════════════════════════════════════════════════
+RAW TEST DATA
+═══════════════════════════════════════════════════════════════════════════════
+
+6. PERFORMANCE_REPORT.json (2.3 KB)
+   └─ Raw output from capacity test
+   └─ Best for: Verifying test data, baseline metrics
+
+7. UNIQUENESS_TEST_REPORT.json (1 KB)
+   └─ Data quality analysis results
+   └─ Best for: Deduplication planning, data validation
+
+═══════════════════════════════════════════════════════════════════════════════
+TEST SCRIPTS (Reusable)
+═══════════════════════════════════════════════════════════════════════════════
+
+8. performance_test.ts (9.1 KB)
+   └─ Capacity and speed testing script
+   └─ Run: npx ts-node performance_test.ts
+   └─ Duration: 30-35 seconds
+   └─ Output: Prints to console + PERFORMANCE_REPORT.json
+
+9. uniqueness_test.ts (5.6 KB)
+   └─ Data quality and deduplication test
+   └─ Run: npx ts-node uniqueness_test.ts
+   └─ Duration: 20-25 seconds
+   └─ Output: Prints to console + UNIQUENESS_TEST_REPORT.json
+
+═══════════════════════════════════════════════════════════════════════════════
+TEST EXECUTION LOGS
+═══════════════════════════════════════════════════════════════════════════════
+
+10. performance_test_output.txt (4.0 KB)
+    └─ Console output from capacity test execution
+    └─ Contains: Page-by-page timing, summary stats
+
+11. uniqueness_test_output.txt (1.8 KB)
+    └─ Console output from uniqueness test execution
+    └─ Contains: Uniqueness tracking, cross-category analysis
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK REFERENCE: HOW TO USE THESE FILES
+═══════════════════════════════════════════════════════════════════════════════
+
+FOR EXECUTIVES/DECISION MAKERS:
+  1. Read: PERFORMANCE_TEST_SUMMARY.md (5 min)
+  2. Check: SREALITY_FINAL_TEST_RESULTS.json (key metrics)
+  3. Decide: Follow recommendations
+
+FOR DEVELOPERS:
+  1. Study: SREALITY_PERFORMANCE_ANALYSIS.md (technical details)
+  2. Review: SREALITY_PERFORMANCE_METRICS.json (detailed metrics)
+  3. Reference: API Specifications section
+  4. Implement: Use recommended configuration
+
+FOR QA/TESTING:
+  1. Run: performance_test.ts (verify capacity)
+  2. Run: uniqueness_test.ts (verify data quality)
+  3. Compare: Against baseline metrics
+  4. Track: Changes over time
+
+FOR INTEGRATION:
+  1. Check: API endpoint format
+  2. Copy: Recommended configuration
+  3. Follow: Implementation steps
+  4. Monitor: Using provided metrics
+
+═══════════════════════════════════════════════════════════════════════════════
+FILE DESCRIPTIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+PERFORMANCE_TEST_SUMMARY.md
+├─ Contents:
+│  ├─ Quick facts table
+│  ├─ Test results overview
+│  ├─ Capacity analysis with tables
+│  ├─ Scraping speed results by category
+│  ├─ Time estimates for different scenarios
+│  ├─ Rate limiting findings
+│  ├─ Data quality observations
+│  ├─ Recommended strategy
+│  ├─ Do's and Don'ts
+│  ├─ Optimizations
+│  └─ Final recommendations
+└─ Best for: Quick overview, implementation planning
+
+SREALITY_FINAL_TEST_RESULTS.json
+├─ Contents:
+│  ├─ Executive summary
+│  ├─ Key metrics overview
+│  ├─ Capacity analysis by category
+│  ├─ Performance metrics breakdown
+│  ├─ Time estimates for all scenarios
+│  ├─ Rate limiting analysis
+│  ├─ Data quality results
+│  ├─ Recommended configuration
+│  ├─ Daily capacity projections
+│  ├─ API specifications
+│  └─ Final conclusion
+└─ Best for: Consolidated results, stakeholder sharing
+
+SREALITY_PERFORMANCE_ANALYSIS.md
+├─ Contents:
+│  ├─ Executive summary
+│  ├─ Detailed capacity analysis
+│  ├─ Speed analysis by category
+│  ├─ Estimated scraping timelines
+│  ├─ API behavior & constraints
+│  ├─ Rate limiting & throttling
+│  ├─ Recommended scraping strategy
+│  ├─ Daily capacity projections
+│  ├─ Quality observations
+│  ├─ Implementation tips
+│  ├─ Full technical specifications
+│  └─ Comparison with test results
+└─ Best for: Technical documentation, architecture decisions
+
+SREALITY_PERFORMANCE_METRICS.json
+├─ Contents:
+│  ├─ Test configuration details
+│  ├─ Speed analysis with rankings
+│  ├─ Time estimates for 4 scenarios
+│  ├─ Concurrency recommendations
+│  ├─ Response time variance analysis
+│  ├─ API health check results
+│  ├─ Safe request rate analysis
+│  └─ Recommendations by category
+└─ Best for: Technical deep dives, optimization
+
+PERFORMANCE_TEST_INDEX.md
+├─ Contents:
+│  ├─ Quick start guide
+│  ├─ File relationships diagram
+│  ├─ How to use each file
+│  ├─ Test summary overview
+│  ├─ Key metrics at a glance
+│  ├─ Recommended configuration
+│  ├─ Next steps (4 phases)
+│  └─ Quick links
+└─ Best for: Navigation, finding information
+
+PERFORMANCE_REPORT.json
+├─ Contents:
+│  ├─ Raw test metrics
+│  ├─ Category-by-category results
+│  ├─ Response time data
+│  └─ Summary calculations
+└─ Best for: Baseline verification, raw data
+
+UNIQUENESS_TEST_REPORT.json
+├─ Contents:
+│  ├─ Per-category uniqueness
+│  ├─ Cross-category analysis
+│  ├─ Overall uniqueness score
+│  ├─ Duplicate percentage
+│  └─ Conclusions
+└─ Best for: Data quality assurance
+
+performance_test.ts
+├─ Features:
+│  ├─ Tests multiple pages per category
+│  ├─ Measures response times
+│  ├─ Detects rate limiting
+│  ├─ Calculates metrics
+│  └─ Generates JSON report
+└─ Usage: npx ts-node performance_test.ts
+
+uniqueness_test.ts
+├─ Features:
+│  ├─ Checks hash_id uniqueness
+│  ├─ Detects duplicates
+│  ├─ Cross-category analysis
+│  └─ Generates report
+└─ Usage: npx ts-node uniqueness_test.ts
+
+═══════════════════════════════════════════════════════════════════════════════
+KEY METRICS FROM TESTS
+═══════════════════════════════════════════════════════════════════════════════
+
+Capacity Test Results:
+  ✓ Total Estates Available: 91,548
+  ✓ Test Sample: 4,000 listings (40 API requests)
+  ✓ Average Speed: 122.82 listings/second
+  ✓ Time to Scrape All: 5-8 minutes (with concurrency)
+  ✓ Rate Limiting: NONE DETECTED
+  ✓ Success Rate: 100% (40/40 requests)
+
+Uniqueness Test Results:
+  ✓ Test Sample: 2,000 listings (50 API requests)
+  ✓ Unique Hash IDs: 1,994 out of 2,000
+  ✓ Uniqueness Score: 99.7%
+  ✓ Cross-Category Duplicates: 6 (0.3%)
+  ✓ Data Quality: Excellent
+
+═══════════════════════════════════════════════════════════════════════════════
+RECOMMENDED NEXT STEPS
+═══════════════════════════════════════════════════════════════════════════════
+
+Phase 1: Review (This Week)
+  [ ] Read PERFORMANCE_TEST_SUMMARY.md
+  [ ] Review SREALITY_FINAL_TEST_RESULTS.json
+  [ ] Discuss findings with team
+  [ ] Decide on implementation approach
+
+Phase 2: Implement (Next Week)
+  [ ] Set up scraper with recommended config
+  [ ] Run baseline test: npx ts-node performance_test.ts
+  [ ] Compare results against this report
+  [ ] Adjust configuration if needed
+
+Phase 3: Deploy (Following Week)
+  [ ] Deploy to production
+  [ ] Monitor response times
+  [ ] Track success rates
+  [ ] Compare vs. baseline
+
+Phase 4: Optimize (Ongoing)
+  [ ] Implement caching
+  [ ] Parallel category processing
+  [ ] Database batching
+  [ ] Performance monitoring dashboard
+
+═══════════════════════════════════════════════════════════════════════════════
+SUPPORT & REFERENCE
+═══════════════════════════════════════════════════════════════════════════════
+
+Quick Links:
+  • Overview: PERFORMANCE_TEST_SUMMARY.md
+  • Technical: SREALITY_PERFORMANCE_ANALYSIS.md
+  • Metrics: SREALITY_FINAL_TEST_RESULTS.json
+  • Index: PERFORMANCE_TEST_INDEX.md
+
+To Re-run Tests:
+  • Capacity Test: npx ts-node performance_test.ts
+  • Quality Test: npx ts-node uniqueness_test.ts
+
+For Questions:
+  1. Check the relevant report (see index)
+  2. Review recommendations section
+  3. Run test scripts to verify
+  4. Compare against baseline
+
+═══════════════════════════════════════════════════════════════════════════════
+SUMMARY
+═══════════════════════════════════════════════════════════════════════════════
+
+Total Files Generated: 14
+Test Status: COMPLETE ✅
+API Status: OPERATIONAL - EXCELLENT PERFORMANCE ✅
+Recommendation: READY FOR PRODUCTION DEPLOYMENT ✅
+
+Main Report: PERFORMANCE_TEST_SUMMARY.md
+Complete Data: SREALITY_FINAL_TEST_RESULTS.json
+Start Here: PERFORMANCE_TEST_INDEX.md
+
+═══════════════════════════════════════════════════════════════════════════════
+                         Test Report Generated: 2026-02-07
+═══════════════════════════════════════════════════════════════════════════════

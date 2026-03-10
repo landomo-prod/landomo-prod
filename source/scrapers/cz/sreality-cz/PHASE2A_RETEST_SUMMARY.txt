@@ -1,0 +1,324 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    PHASE 2A RE-TEST EXECUTION SUMMARY                        ║
+║                   Elevator Bug Fix Validation Report                         ║
+║                          2026-02-07 19:36:27Z                                ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ EXECUTIVE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Re-testing the same 6 critical SReality listings with the "fixed" Phase 2a
+transformer code reveals:
+
+  RESULT: MIXED - ONE BUG FIXED, ONE BUG NOT FIXED (REGRESSION OCCURRED)
+
+  ✅ ELEVATOR FALSE POSITIVE BUG:  FIXED
+     Properties without elevators no longer incorrectly marked as having them
+
+  ❌ BALCONY NUMERIC VALUES BUG:   NOT FIXED (REGRESSION: 50% → 0%)
+     API returns balcony values as strings ("3", "13"), but fix only handles
+     numeric types. Extraction rate DECREASED from 50% to 0%.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ TEST PARAMETERS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Listings Tested: 6 (same from original Phase 2a test)
+  Test Duration: 27 seconds
+  API Calls: 6 detail endpoints
+  Success Rate: 100%
+
+  Critical Test Cases:
+  • Listing 2983228236: Elevator with false value (false positive test)
+  • Listing 750941004:  Balcony with "3" m² (numeric string test)
+  • Listing 2437342028: Balcony with "13" m² (numeric string test)
+  • Listing 3024319308: Balcony "3" + Elevator true (combined test)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ FIELD-BY-FIELD RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────┬──────────────┬──────────────┬──────────────┬─────────────────┐
+│ Field       │ Before Fix   │ After Fix    │ Change       │ Status          │
+├─────────────┼──────────────┼──────────────┼──────────────┼─────────────────┤
+│ has_elevator│ 60% (3/5)    │ 75% (3/4)    │ +15% ↑       │ ✅ IMPROVED     │
+│ has_balcony │ 50% (2/4)    │ 0% (0/3)     │ -50% ↓       │ ❌ REGRESSED    │
+│ has_terrace │ 0% (0/12)    │ 0% (0/6)     │ 0%           │ → NO CHANGE     │
+│ has_ac      │ 0% (0/12)    │ 0% (0/6)     │ 0%           │ → NO DATA       │
+│ has_security│ 0% (0/12)    │ 0% (0/6)     │ 0%           │ → NO DATA       │
+│ has_fireplace│0% (0/12)    │ 0% (0/6)     │ 0%           │ → NO DATA       │
+└─────────────┴──────────────┴──────────────┴──────────────┴─────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ CRITICAL BUG #1: ELEVATOR FALSE POSITIVE FIX ✅
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ISSUE: Boolean false values incorrectly extracted as true
+
+  TEST CASE: Listing 2983228236 (Prodej bytu 2+kk 57 m²)
+    API Value:     false (boolean)
+    Previous Code: true ✗ (FALSE POSITIVE)
+    Fixed Code:    false ✓ (CORRECT)
+
+  ROOT CAUSE (FIXED):
+    The isPositiveValue() function now explicitly checks for 'false':
+
+    if (str === '' || str === 'ne' || str === 'no' || str === 'false') {
+      return false;  // ← This handles the false positive bug
+    }
+
+  STATUS: ✅ BUG FIXED
+  IMPACT: Eliminates false enrichment, improves data quality
+  SEVERITY: RESOLVED
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ CRITICAL BUG #2: BALCONY NUMERIC VALUES NOT FIXED ❌
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ISSUE: Balcony items with numeric area values not extracted
+
+  TEST CASES:
+
+  1. Listing 2437342028 (Prodej bytu 3+kk 74 m²)
+     API Value:     "13" (STRING type, not number)
+     API Unit:      m2
+     Previous Code: true ✓ (CORRECT)
+     Fixed Code:    undefined ✗ (REGRESSION)
+
+  2. Listing 750941004 (Pronájem bytu 3+1 56 m²)
+     API Value:     "3" (STRING type, not number)
+     API Unit:      m2
+     Previous Code: undefined ✗ (MISSED)
+     Fixed Code:    undefined ✗ (STILL MISSED)
+
+  3. Listing 3024319308 (Prodej bytu 2+kk 56 m²)
+     API Value:     "3" (STRING type, not number)
+     API Unit:      m2
+     Previous Code: undefined ✗ (MISSED)
+     Fixed Code:    undefined ✗ (STILL MISSED)
+
+  ROOT CAUSE (NOT FIXED):
+    The API returns balcony values as STRING type: "3", "13"
+    But isPositiveValue() only handles numeric type:
+
+    if (typeof value === 'number') {
+      return value > 0;  // ← Works for numbers, NOT for strings
+    }
+
+    When value is "3" (string), it fails this check and falls through to
+    keyword matching, which also fails because "3" doesn't contain any
+    keywords like "ano", "yes", "true", etc.
+
+    MISSING: No parsing of numeric strings with parseFloat() or parseInt()
+
+  STATUS: ❌ BUG NOT FIXED - INCOMPLETE IMPLEMENTATION
+  IMPACT: Data enrichment actually DECREASED (50% → 0%)
+  SEVERITY: BLOCKING - Data quality regression
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ API DISCOVERY: STRING NUMERIC VALUES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Critical Finding: The SReality API returns balcony/terrace areas as STRINGS
+
+  Example from API:
+  {
+    "name": "Balkón",
+    "value": "13",        ← STRING type, not number
+    "type": "area",
+    "unit": "m2"
+  }
+
+  Current Code Expectation:
+    if (typeof value === 'number') {  // ← This is false when value = "13"
+      return value > 0;
+    }
+
+  Result: String values "3" and "13" are NOT recognized as positive
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ CODE IMPLEMENTATION ISSUE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  File: src/transformers/srealityTransformer.ts
+  Function: isPositiveValue() (lines 754-777)
+
+  CURRENT LOGIC:
+    Step 1: Check if null/undefined
+    Step 2: Check if typeof number > 0 ✓ (HANDLES NUMERIC TYPES)
+    Step 3: Convert to string and check for negative keywords ✓ (HANDLES FALSE)
+    Step 4: Check for positive keywords (ano, yes, true, etc.)
+    MISSING: Parse numeric STRINGS before keyword check
+
+  REQUIRED FIX:
+    Add this BEFORE keyword matching:
+
+    // Parse numeric strings like "3", "13"
+    const numValue = parseFloat(str);
+    if (!isNaN(numValue) && numValue > 0) {
+      return true;
+    }
+
+  Location to insert: After line 766 (after negative keyword check)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ DATA QUALITY IMPACT ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Before Fixes (Phase 2a Original):
+    • Elevator enrichment: ~60% (with false positives)
+    • Balcony enrichment: ~50% (mixed results)
+    • Total estimated enriched listings: ~7-8%
+
+  After Partial Fix (Current):
+    • Elevator enrichment: ~75% (improved, no false positives)
+    • Balcony enrichment: ~0% (REGRESSION)
+    • Total estimated enriched listings: ~5-6% (LOWER)
+
+  VERDICT: Data quality DETERIORATED overall
+    - Elevator improved (no false positives)
+    - Balcony regressed significantly (numeric string handling missing)
+    - Net result: NEGATIVE impact
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ DETAILED TEST RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Listing 2437342028: Prodej bytu 3+kk 74 m²
+  API Items:
+    - Balkón: "13" (string, area type)
+    - Výtah: true (boolean)
+  Extracted:
+    - has_balcony: undefined ✗ (should be true)
+    - has_elevator: true ✓
+  Status: BALCONY EXTRACTION FAILED (REGRESSION)
+
+Listing 340882252: Prodej bytu 3+1 69 m²
+  API Items:
+    - Výtah: true (boolean)
+  Extracted:
+    - has_elevator: true ✓
+  Status: PASS
+
+Listing 3430052684: Pronájem bytu 3+1 102 m²
+  API Items: (none amenity-related)
+  Extracted: (all undefined)
+  Status: PASS (no enrichment expected)
+
+Listing 750941004: Pronájem bytu 3+1 56 m²
+  API Items:
+    - Balkón: "3" (string, area type)
+  Extracted:
+    - has_balcony: undefined ✗ (should be true)
+  Status: BALCONY EXTRACTION FAILED
+
+Listing 3024319308: Prodej bytu 2+kk 56 m²
+  API Items:
+    - Balkón: "3" (string, area type)
+    - Výtah: true (boolean)
+  Extracted:
+    - has_balcony: undefined ✗ (should be true)
+    - has_elevator: true ✓
+  Status: BALCONY EXTRACTION FAILED
+
+Listing 2983228236: Prodej bytu 2+kk 57 m² (CRITICAL TEST CASE)
+  API Items:
+    - Výtah: false (boolean)
+  Extracted:
+    - has_elevator: false ✓ (CORRECT - FALSE POSITIVE FIX WORKS)
+  Status: ELEVATOR FALSE POSITIVE BUG FIXED ✅
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ RECOMMENDATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PRIORITY 1 - CRITICAL (BLOCKING):
+  Issue:    Balcony numeric string values not recognized
+  Action:   Update isPositiveValue() to parse numeric strings
+  Fix:      Add parseFloat() check before keyword matching
+  Timeline: IMMEDIATE - Currently broken
+  Testing:  Re-test with 6 listings, verify 50%+ extraction rate on balcony
+
+PRIORITY 2 - HIGH:
+  Issue:    Elevator false positive fix needs verification
+  Action:   Ensure proper handling and document the fix
+  Testing:  Add to CI/CD test suite with false value cases
+
+PRIORITY 3 - MEDIUM:
+  Issue:    AC, Security, Fireplace not found in test data
+  Action:   Expand test to 50+ listings to verify prevalence
+  Impact:   Currently 0%, but may be present in larger sample
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ NEXT STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Apply numeric string parsing fix to isPositiveValue()
+   Location: src/transformers/srealityTransformer.ts:767 (after negative check)
+
+2. Re-test with same 6 listings
+   Expected: has_balcony extraction should return to 50%+ rate
+
+3. Verify no regressions
+   Check: All other fields continue to work correctly
+
+4. Update CI/CD
+   Add: Test cases for string numeric values and false boolean values
+
+5. Expand testing
+   Run: Full Phase 2a test with 50+ listings once fix is applied
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ FILES GENERATED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Test Scripts:
+  • test_phase2a_elevator_fix.ts - Original TypeScript test
+  • test_phase2a_elevator_fix.js - JavaScript implementation
+  • check_api_types.js - API type discovery script
+
+Reports:
+  • PHASE2A_RETEST_RESULTS.json - Machine-readable test results
+  • PHASE2A_COMPARISON_REPORT.json - Before/after comparison
+  • PHASE2A_BUG_FIX_ANALYSIS.md - Detailed technical analysis
+  • PHASE2A_RETEST_SUMMARY.txt - This file
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ CONCLUSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The Phase 2a code update partially addressed the requirements:
+
+✅ COMPLETE: Elevator false positive bug has been fixed
+   The explicit check for 'false' now prevents false positives
+
+❌ INCOMPLETE: Balcony numeric values fix is missing
+   The code doesn't handle STRING numeric values ("3", "13")
+   This has caused a REGRESSION in extraction rates
+
+OVERALL ASSESSMENT: MIXED - NOT PRODUCTION READY
+
+Before applying to production, the numeric string parsing fix MUST be applied
+to restore balcony extraction functionality and prevent data quality regression.
+
+Status: READY FOR DETAILED TECHNICAL REPORT REVIEW
+
+═════════════════════════════════════════════════════════════════════════════════
+Report Generated: 2026-02-07 19:36:27Z
+Test Duration: 27 seconds
+Listings Tested: 6
+Critical Issues Found: 1 (numeric string handling)
+═════════════════════════════════════════════════════════════════════════════════

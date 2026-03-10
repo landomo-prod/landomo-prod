@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-02-07T20:09:24.549Z",
+  "compilation_status": "✅ PASSED - No TypeScript compilation errors",
+  "test_data_source": "Mock data (5 representative listings)",
+  "mock_listings_count": 5,
+  "transformations_successful": 5,
+  "transformations_total": 5,
+  "transformations_failed": 0,
+  "tier1_fields": {
+    "all_complete": true,
+    "count_complete": 5
+  },
+  "tier2_fields": {
+    "czech_fields_present": true,
+    "field_count": 5
+  },
+  "tier3_fields": {
+    "portal_fields_present": true,
+    "field_count": 5
+  },
+  "status_mapping": {
+    "test_passed": true,
+    "sample_statuses": [
+      "active",
+      "sold",
+      "rented",
+      "removed"
+    ]
+  },
+  "field_coverage_percent": 87,
+  "sample_results": [
+    {
+      "index": 1,
+      "id": "realingo-001",
+      "title": "3+1 byt Praha 5",
+      "price": 4500000,
+      "currency": "CZK",
+      "status": "active",
+      "property_type": "apartment",
+      "transaction_type": "sale",
+      "location": {
+        "city": "Praha",
+        "region": "Praha 5"
+      },
+      "details": {
+        "bedrooms": 3,
+        "bathrooms": 1,
+        "area": 68
+      },
+      "portal_metadata": {
+        "purpose": "SALE",
+        "property": "FLAT",
+        "disposition": "3+1",
+        "agent_name": "Jan Novotný"
+      },
+      "country_specific_fields_count": 13,
+      "portal_fields_count": 26
+    },
+    {
+      "index": 2,
+      "id": "realingo-002",
+      "title": "2+kk byt Brno",
+      "price": 12000,
+      "currency": "CZK",
+      "status": "sold",
+      "property_type": "apartment",
+      "transaction_type": "rent",
+      "location": {
+        "city": "Brno",
+        "region": "Brno-Žabovřesky"
+      },
+      "details": {
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "area": 45
+      },
+      "portal_metadata": {
+        "purpose": "RENT",
+        "property": "FLAT",
+        "disposition": "2+kk",
+        "agent_name": "Marie Procházková"
+      },
+      "country_specific_fields_count": 13,
+      "portal_fields_count": 26
+    },
+    {
+      "index": 3,
+      "id": "realingo-003",
+      "title": "Rodinný dům Vysočany",
+      "price": 8500000,
+      "currency": "CZK",
+      "status": "rented",
+      "property_type": "house",
+      "transaction_type": "sale",
+      "location": {
+        "city": "Praha",
+        "region": "Praha 3"
+      },
+      "details": {
+        "bedrooms": 4,
+        "bathrooms": 2,
+        "area": 280
+      },
+      "portal_metadata": {
+        "purpose": "SALE",
+        "property": "HOUSE",
+        "disposition": "4+1",
+        "agent_name": "Petr Kučera"
+      },
+      "country_specific_fields_count": 13,
+      "portal_fields_count": 26
+    }
+  ],
+  "compilation_errors": [],
+  "test_duration_ms": 2
+}

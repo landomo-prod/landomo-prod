@@ -1,0 +1,93 @@
+{
+  "timestamp": "2026-02-07T20:18:32.329Z",
+  "testDuration": 32568,
+  "categories": [
+    {
+      "category": 1,
+      "categoryName": "Apartments",
+      "totalEstates": 27093,
+      "pagesScraped": 10,
+      "estatesInPages": 1000,
+      "startTime": 1770495479761,
+      "endTime": 1770495487280,
+      "durationMs": 7519,
+      "estimatedListingsPerSecond": 132.99640909695438,
+      "averagePageTime": 429.8,
+      "hasMore": true
+    },
+    {
+      "category": 2,
+      "categoryName": "Houses",
+      "totalEstates": 18365,
+      "pagesScraped": 10,
+      "estatesInPages": 1000,
+      "startTime": 1770495487280,
+      "endTime": 1770495495557,
+      "durationMs": 8277,
+      "estimatedListingsPerSecond": 120.81672103419113,
+      "averagePageTime": 454.4,
+      "hasMore": true
+    },
+    {
+      "category": 3,
+      "categoryName": "Land",
+      "totalEstates": 27013,
+      "pagesScraped": 10,
+      "estatesInPages": 1000,
+      "startTime": 1770495495557,
+      "endTime": 1770495504477,
+      "durationMs": 8920,
+      "estimatedListingsPerSecond": 112.10762331838565,
+      "averagePageTime": 505.4,
+      "hasMore": true
+    },
+    {
+      "category": 4,
+      "categoryName": "Commercial",
+      "totalEstates": 19077,
+      "pagesScraped": 10,
+      "estatesInPages": 1000,
+      "startTime": 1770495504477,
+      "endTime": 1770495512329,
+      "durationMs": 7852,
+      "estimatedListingsPerSecond": 127.35608762098829,
+      "averagePageTime": 422.7,
+      "hasMore": true
+    }
+  ],
+  "summary": {
+    "totalEstatesAvailable": 91548,
+    "totalEstatesScraped": 4000,
+    "totalUniqueHashIds": 0,
+    "totalPagesScraped": 40,
+    "totalTimeMs": 32568,
+    "averageListingsPerSecond": 122.82,
+    "estimatedTimeToScrapeAll": "0h 12m",
+    "pagesPerSecond": 1.23,
+    "recommendedBatchSize": 100,
+    "recommendedDelay": 500,
+    "rateLimitDetected": false,
+    "rateLimitThresholds": [
+      {
+        "category": "Apartments",
+        "avgPageTime": 430,
+        "slowdown": "NO"
+      },
+      {
+        "category": "Houses",
+        "avgPageTime": 454,
+        "slowdown": "NO"
+      },
+      {
+        "category": "Land",
+        "avgPageTime": 505,
+        "slowdown": "NO"
+      },
+      {
+        "category": "Commercial",
+        "avgPageTime": 423,
+        "slowdown": "NO"
+      }
+    ]
+  }
+}

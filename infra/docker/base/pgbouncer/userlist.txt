@@ -1,0 +1,10 @@
+;; PgBouncer user list
+;; Format: "username" "password"
+;; Passwords are md5 hashed: md5 + md5(password + username)
+;; These are placeholder values - override via PGBOUNCER_USERLIST_FILE or Docker secrets in production
+;;
+;; For dev: use the same credentials as PostgreSQL
+;; The actual password hash is generated at container startup via the entrypoint script
+"landomo" "landomo_dev_pass"
+"pgbouncer_admin" "pgbouncer_admin_pass"
+"pgbouncer_stats" "pgbouncer_stats_pass"

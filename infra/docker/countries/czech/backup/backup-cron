@@ -1,0 +1,12 @@
+# WAL-G backup schedule (UTC)
+# ┌─────── minute (0-59)
+# │ ┌───── hour (0-23)
+# │ │ ┌─── day of month (1-31)
+# │ │ │ ┌─ month (1-12)
+# │ │ │ │ ┌ day of week (0=Sun)
+# │ │ │ │ │
+# Daily base backup at 02:00 UTC
+0 2 * * * source /etc/walg.env && wal-g backup-push /var/lib/postgresql/data >> /var/log/walg/backup.log 2>&1
+
+# Weekly retention cleanup: keep last 7 full base backups (runs Sunday 03:00)
+0 3 * * 0 source /etc/walg.env && wal-g delete retain FULL 7 --confirm >> /var/log/walg/delete.log 2>&1

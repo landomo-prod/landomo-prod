@@ -1,0 +1,128 @@
+Starting comprehensive SReality integration test...
+
+Step 1: Fetching 5 random listings from SReality API...
+Fetching page 1...
+Fetching page 2...
+Fetching page 3...
+Fetching page 4...
+Fetching page 5...
+Total listings fetched: 100
+Successfully fetched 5 listings
+
+Step 2: Running transformer on each listing...
+Testing listing 1/5 (hash_id: 223769420)...
+Testing listing 2/5 (hash_id: 871113548)...
+Testing listing 3/5 (hash_id: 1639441228)...
+Testing listing 4/5 (hash_id: 3157226316)...
+Testing listing 5/5 (hash_id: 2591810124)...
+
+Completed transformation testing for 5 listings
+
+Step 3: Calculating coverage metrics...
+
+================================================================================
+SREALITY SCRAPER - COMPREHENSIVE INTEGRATION TEST REPORT
+================================================================================
+
+Timestamp: 2026-02-07T20:09:02.660Z
+Test Duration: 3449ms
+
+SUMMARY:
+  Total Listings Tested: 5
+  Successful Transformations: 5
+  Failed Transformations: 0
+  Overall Success Rate: 100.00%
+
+COMPILATION STATUS:
+  SUCCESS: All transformations compiled without errors
+
+FIELD AVAILABILITY (Coverage Metrics):
+  New Features:
+    - Seller Company: 0/5 (0.0%)
+    - Seller Rating: 0/5 (0.0%)
+    - Seller Reviews: 0/5 (0.0%)
+    - Has Accessibility: 0/5 (0.0%)
+    - Virtual Tour URL: 0/5 (0.0%)
+    - Built Area: 0/5 (0.0%)
+
+  Phase 3 Area Fields:
+    - Balcony Area: 0/5 (0.0%)
+    - Terrace Area: 0/5 (0.0%)
+    - Garden Area: 0/5 (0.0%)
+    - Cellar Area: 0/5 (0.0%)
+    - Loggia Area: 0/5 (0.0%)
+
+  Existing Fields:
+    - Price: 5/5 (100.0%)
+    - Bedrooms: 0/5 (0.0%)
+    - SQM: 0/5 (0.0%)
+    - Has Balcony: 0/5 (0.0%)
+    - Has Elevator: 0/5 (0.0%)
+
+SAMPLE RESULTS (First 5 Listings):
+
+  Listing 1 (hash_id: 223769420):
+    URL: https://www.sreality.cz/detail/223769420
+    Transformation: SUCCESS
+    - Price: 11900 CZK
+    - Location: undefined
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: N/A
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+  Listing 2 (hash_id: 871113548):
+    URL: https://www.sreality.cz/detail/871113548
+    Transformation: SUCCESS
+    - Price: 6699000 CZK
+    - Location: undefined
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: N/A
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+  Listing 3 (hash_id: 1639441228):
+    URL: https://www.sreality.cz/detail/1639441228
+    Transformation: SUCCESS
+    - Price: 12810440 CZK
+    - Location: undefined
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: N/A
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+  Listing 4 (hash_id: 3157226316):
+    URL: https://www.sreality.cz/detail/3157226316
+    Transformation: SUCCESS
+    - Price: 38900 CZK
+    - Location: undefined
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: N/A
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+  Listing 5 (hash_id: 2591810124):
+    URL: https://www.sreality.cz/detail/2591810124
+    Transformation: SUCCESS
+    - Price: 12618295 CZK
+    - Location: undefined
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: N/A
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+No issues encountered!
+
+================================================================================
+
+Detailed JSON report saved to: ./COMPREHENSIVE_INTEGRATION_TEST_REPORT.json

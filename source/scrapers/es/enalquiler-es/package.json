@@ -1,0 +1,27 @@
+{
+  "name": "@landomo/scraper-enalquiler",
+  "version": "1.0.0",
+  "description": "Enalquiler.com property scraper for Spain",
+  "main": "dist/enalquiler/src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/enalquiler/src/index.js",
+    "dev": "ts-node src/index.ts",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@landomo/core": "file:../../../shared-components",
+    "axios": "^1.6.7",
+    "bullmq": "^5.1.0",
+    "cheerio": "^1.0.0-rc.12",
+    "domhandler": "^5.0.3",
+    "express": "^4.18.2",
+    "p-limit": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}

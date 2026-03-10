@@ -1,0 +1,72 @@
+# Multi-stage Dockerfile for Kleinanzeigen.de scraper
+
+# Stage 1: Build shared-components
+FROM node:20-alpine AS shared-builder
+
+WORKDIR /shared
+COPY shared-components/package*.json ./
+COPY shared-components/tsconfig.json ./
+RUN npm ci
+COPY shared-components/src ./src
+RUN npm run build
+
+# Stage 2: Build scraper
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy built shared-components
+COPY --from=shared-builder /shared /shared
+
+# Copy package files
+COPY scrapers/Germany/kleinanzeigen-de/package*.json ./
+COPY scrapers/Germany/kleinanzeigen-de/tsconfig.json ./
+
+# Point @landomo/core to the built shared-components
+RUN sed -i 's|file:../../../shared-components|file:///shared|g' package.json && \
+    rm -f package-lock.json
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY scrapers/Germany/kleinanzeigen-de/src ./src
+
+# Build TypeScript
+RUN npm run build
+
+# Stage 3: Runtime
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy built shared-components
+COPY --from=shared-builder /shared /shared
+
+# Copy package files
+COPY scrapers/Germany/kleinanzeigen-de/package*.json ./
+RUN sed -i 's|file:../../../shared-components|file:///shared|g' package.json && \
+    rm -f package-lock.json
+
+# Install production dependencies only
+RUN npm install --production
+
+# Copy built application from builder
+COPY --from=builder /app/dist ./dist
+
+# Create non-root user
+RUN addgroup -g 1001 scraper && \
+    adduser -D -u 1001 -G scraper scraper && \
+    chown -R scraper:scraper /app
+
+USER scraper
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"
+
+# Start application
+CMD ["npm", "start"]

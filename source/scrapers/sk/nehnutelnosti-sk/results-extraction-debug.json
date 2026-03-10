@@ -1,0 +1,14 @@
+{
+  "attempts": [
+    {
+      "found": true,
+      "resultsStart": 1889,
+      "contextBefore": "\"id\":127,\"name\":\"na predaj\",\"sefName\":\"predaj\"}}],",
+      "contextAfter": "\"results\":[{\"advertisement\":{\"id\":\"JusHk2MQFVC\",\"title\":\"DOM-REALÍT ponúka krásny  3izb. podkrovný mezonet na Záhradnickej ulici\",\"sefName\":\"dom-realit-ponuka-krasny-3izb-podkrovny-mezonet-na-zahradnickej-ulici\",\"description\":\"Radovan Varga ponúka  na predaj zariadený 3izb. Podkrovný mezonet na Záhradnickej ulici. \\\n+ 6/6 posch s výťahom\\\n+ 100m2 prízemie + poschodie cca 25m2\\\n+ spodná časť 100m2 :\\\n- 2 x izba \\\n- rohová kuchyňa s obývačkou \\\n- zabudované spotrebiče, umývačka riadu, chladnička, ",
+      "arrayEnd": -1,
+      "finalDepth": 4,
+      "extractionFailed": true
+    }
+  ],
+  "errors": []
+}

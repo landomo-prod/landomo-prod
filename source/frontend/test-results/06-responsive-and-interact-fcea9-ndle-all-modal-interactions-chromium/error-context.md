@@ -1,0 +1,443 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e7] [cursor=pointer]:
+    - img [ref=e8]
+  - alert [ref=e11]
+  - generic [ref=e12]:
+    - navigation [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15] [cursor=pointer]:
+          - img [ref=e17]
+          - generic [ref=e22]: Landomo
+        - generic [ref=e23]:
+          - link "Buy" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+          - link "Rent" [ref=e25] [cursor=pointer]:
+            - /url: "#"
+          - link "Sell" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+          - link "Home Loans" [ref=e27] [cursor=pointer]:
+            - /url: "#"
+      - button "Log in" [ref=e29]
+    - banner [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - textbox "Search by district, street, or ZIP code..." [ref=e36]
+        - generic [ref=e37]:
+          - 'button "Price: Any" [active] [ref=e38]':
+            - generic [ref=e39]: "Price: Any"
+            - img [ref=e40]
+          - 'button "Type: Any" [ref=e42]':
+            - generic [ref=e43]: "Type: Any"
+            - img [ref=e44]
+          - 'button "Disposition: Any" [ref=e46]':
+            - generic [ref=e47]: "Disposition: Any"
+            - img [ref=e48]
+          - 'button "Area: Any" [ref=e50]':
+            - generic [ref=e51]: "Area: Any"
+            - img [ref=e52]
+          - button "More" [ref=e54]:
+            - img
+            - generic [ref=e55]: More
+        - button "Sort" [ref=e56]:
+          - text: Sort
+          - img [ref=e57]
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - heading "Price Range" [level=3] [ref=e63]
+          - button [ref=e64]:
+            - img [ref=e65]
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - generic [ref=e70]: Min Price
+            - slider [ref=e71]: "0"
+            - generic [ref=e72]: €0k
+          - generic [ref=e73]:
+            - generic [ref=e74]: Max Price
+            - slider [ref=e75]: "1000000"
+            - generic [ref=e76]: €1000k
+          - button "Apply" [ref=e77]
+    - generic [ref=e78]:
+      - complementary [ref=e79]:
+        - navigation [ref=e80]:
+          - button "Map Explorer" [ref=e81]:
+            - img [ref=e82]
+            - generic [ref=e84]: Map Explorer
+          - button "Property List" [ref=e85]:
+            - img [ref=e86]
+            - generic [ref=e87]: Property List
+          - button "Saved" [ref=e88]:
+            - img [ref=e89]
+            - generic [ref=e91]: Saved
+          - button "Notifications" [ref=e92]:
+            - img [ref=e93]
+            - generic [ref=e96]: Notifications
+        - navigation [ref=e97]:
+          - button "Collapse" [ref=e98]:
+            - img [ref=e99]
+            - generic [ref=e101]: Collapse
+      - generic [ref=e106]:
+        - generic [ref=e107] [cursor=pointer]:
+          - generic [ref=e108]:
+            - img "Vinohradská 12, Praha 2" [ref=e110]
+            - button [ref=e115]:
+              - img [ref=e116]
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]: €285,000
+              - generic [ref=e121]: Vinohradská 12, Praha 2
+              - generic [ref=e122]:
+                - generic [ref=e123]: SALE
+                - generic [ref=e124]:
+                  - img
+                  - text: 3+kk
+                - generic [ref=e125]:
+                  - img
+                  - text: 78 m²
+            - generic [ref=e126]: €3,654/m²
+        - generic [ref=e127] [cursor=pointer]:
+          - generic [ref=e128]:
+            - img "Korunní 48, Praha 3" [ref=e130]
+            - button [ref=e135]:
+              - img [ref=e136]
+          - generic [ref=e138]:
+            - generic [ref=e139]:
+              - generic [ref=e140]: €195,000
+              - generic [ref=e141]: Korunní 48, Praha 3
+              - generic [ref=e142]:
+                - generic [ref=e143]: SALE
+                - generic [ref=e144]:
+                  - img
+                  - text: 2+kk
+                - generic [ref=e145]:
+                  - img
+                  - text: 67 m²
+            - generic [ref=e146]: €2,910/m²
+        - generic [ref=e147] [cursor=pointer]:
+          - generic [ref=e148]:
+            - img "Manesova 85, Praha 2" [ref=e150]
+            - button [ref=e155]:
+              - img [ref=e156]
+          - generic [ref=e158]:
+            - generic [ref=e159]:
+              - generic [ref=e160]: €420,000
+              - generic [ref=e161]: Manesova 85, Praha 2
+              - generic [ref=e162]:
+                - generic [ref=e163]: SALE
+                - generic [ref=e164]:
+                  - img
+                  - text: 4+kk
+                - generic [ref=e165]:
+                  - img
+                  - text: 100 m²
+            - generic [ref=e166]: €4,200/m²
+        - generic [ref=e167] [cursor=pointer]:
+          - generic [ref=e168]:
+            - img "Belgická 22, Praha 2" [ref=e170]
+            - button [ref=e175]:
+              - img [ref=e176]
+          - generic [ref=e178]:
+            - generic [ref=e179]:
+              - generic [ref=e180]: €310,000
+              - generic [ref=e181]: Belgická 22, Praha 2
+              - generic [ref=e182]:
+                - generic [ref=e183]: SALE
+                - generic [ref=e184]:
+                  - img
+                  - text: 3+1
+                - generic [ref=e185]:
+                  - img
+                  - text: 80 m²
+            - generic [ref=e186]: €3,875/m²
+        - generic [ref=e187] [cursor=pointer]:
+          - generic [ref=e188]:
+            - img "Nitranská 9, Praha 3" [ref=e190]
+            - button [ref=e195]:
+              - img [ref=e196]
+          - generic [ref=e198]:
+            - generic [ref=e199]:
+              - generic [ref=e200]: €245,000
+              - generic [ref=e201]: Nitranská 9, Praha 3
+              - generic [ref=e202]:
+                - generic [ref=e203]: SALE
+                - generic [ref=e204]:
+                  - img
+                  - text: 2+1
+                - generic [ref=e205]:
+                  - img
+                  - text: 75 m²
+            - generic [ref=e206]: €3,267/m²
+        - generic [ref=e207] [cursor=pointer]:
+          - generic [ref=e208]:
+            - img "Náměstí Míru 3, Praha 2" [ref=e210]
+            - button [ref=e215]:
+              - img [ref=e216]
+          - generic [ref=e218]:
+            - generic [ref=e219]:
+              - generic [ref=e220]: €1,850/mo
+              - generic [ref=e221]: Náměstí Míru 3, Praha 2
+              - generic [ref=e222]:
+                - generic [ref=e223]: RENT
+                - generic [ref=e224]:
+                  - img
+                  - text: 2+kk
+                - generic [ref=e225]:
+                  - img
+                  - text: 62 m²
+            - generic [ref=e226]: €30/m²
+        - generic [ref=e227] [cursor=pointer]:
+          - generic [ref=e228]:
+            - img "Štefánikova 14, Praha 5" [ref=e230]
+            - button [ref=e235]:
+              - img [ref=e236]
+          - generic [ref=e238]:
+            - generic [ref=e239]:
+              - generic [ref=e240]: €1,200/mo
+              - generic [ref=e241]: Štefánikova 14, Praha 5
+              - generic [ref=e242]:
+                - generic [ref=e243]: RENT
+                - generic [ref=e244]:
+                  - img
+                  - text: 1+kk
+                - generic [ref=e245]:
+                  - img
+                  - text: 42 m²
+            - generic [ref=e246]: €29/m²
+        - generic [ref=e247] [cursor=pointer]:
+          - generic [ref=e248]:
+            - img "Milady Horákové 47, Praha 7" [ref=e250]
+            - button [ref=e255]:
+              - img [ref=e256]
+          - generic [ref=e258]:
+            - generic [ref=e259]:
+              - generic [ref=e260]: €2,400/mo
+              - generic [ref=e261]: Milady Horákové 47, Praha 7
+              - generic [ref=e262]:
+                - generic [ref=e263]: RENT
+                - generic [ref=e264]:
+                  - img
+                  - text: 3+kk
+                - generic [ref=e265]:
+                  - img
+                  - text: 90 m²
+            - generic [ref=e266]: €27/m²
+        - generic [ref=e267] [cursor=pointer]:
+          - generic [ref=e268]:
+            - img "Pařížská 8, Praha 1" [ref=e270]
+            - button [ref=e275]:
+              - img [ref=e276]
+          - generic [ref=e278]:
+            - generic [ref=e279]:
+              - generic [ref=e280]: €890,000
+              - generic [ref=e281]: Pařížská 8, Praha 1
+              - generic [ref=e282]:
+                - generic [ref=e283]: SALE
+                - generic [ref=e284]:
+                  - img
+                  - text: 4+kk
+                - generic [ref=e285]:
+                  - img
+                  - text: 145 m²
+            - generic [ref=e286]: €6,138/m²
+        - generic [ref=e287] [cursor=pointer]:
+          - generic [ref=e288]:
+            - img "Náměstí Republiky 6, Praha 1" [ref=e290]
+            - button [ref=e295]:
+              - img [ref=e296]
+          - generic [ref=e298]:
+            - generic [ref=e299]:
+              - generic [ref=e300]: €375,000
+              - generic [ref=e301]: Náměstí Republiky 6, Praha 1
+              - generic [ref=e302]:
+                - generic [ref=e303]: SALE
+                - generic [ref=e304]:
+                  - img
+                  - text: 2+kk
+                - generic [ref=e305]:
+                  - img
+                  - text: 68 m²
+            - generic [ref=e306]: €5,515/m²
+        - generic [ref=e307] [cursor=pointer]:
+          - generic [ref=e308]:
+            - img "Sokolovská 131, Praha 8" [ref=e310]
+            - button [ref=e315]:
+              - img [ref=e316]
+          - generic [ref=e318]:
+            - generic [ref=e319]:
+              - generic [ref=e320]: €220,000
+              - generic [ref=e321]: Sokolovská 131, Praha 8
+              - generic [ref=e322]:
+                - generic [ref=e323]: SALE
+                - generic [ref=e324]:
+                  - img
+                  - text: 2+kk
+                - generic [ref=e325]:
+                  - img
+                  - text: 58 m²
+            - generic [ref=e326]: €3,793/m²
+        - generic [ref=e327] [cursor=pointer]:
+          - generic [ref=e328]:
+            - img "Záhřebská 34, Praha 2" [ref=e330]
+            - button [ref=e335]:
+              - img [ref=e336]
+          - generic [ref=e338]:
+            - generic [ref=e339]:
+              - generic [ref=e340]: €495,000
+              - generic [ref=e341]: Záhřebská 34, Praha 2
+              - generic [ref=e342]:
+                - generic [ref=e343]: SALE
+                - generic [ref=e344]:
+                  - img
+                  - text: 3+kk
+                - generic [ref=e345]:
+                  - img
+                  - text: 112 m²
+            - generic [ref=e346]: €4,420/m²
+        - generic [ref=e347] [cursor=pointer]:
+          - generic [ref=e348]:
+            - img "Mánesova 22, Praha 2" [ref=e350]
+            - button [ref=e355]:
+              - img [ref=e356]
+          - generic [ref=e358]:
+            - generic [ref=e359]:
+              - generic [ref=e360]: €1,650/mo
+              - generic [ref=e361]: Mánesova 22, Praha 2
+              - generic [ref=e362]:
+                - generic [ref=e363]: RENT
+                - generic [ref=e364]:
+                  - img
+                  - text: 2+1
+                - generic [ref=e365]:
+                  - img
+                  - text: 55 m²
+            - generic [ref=e366]: €30/m²
+        - generic [ref=e367] [cursor=pointer]:
+          - generic [ref=e368]:
+            - img "Slavíkova 18, Praha 3" [ref=e370]
+            - button [ref=e375]:
+              - img [ref=e376]
+          - generic [ref=e378]:
+            - generic [ref=e379]:
+              - generic [ref=e380]: €175,000
+              - generic [ref=e381]: Slavíkova 18, Praha 3
+              - generic [ref=e382]:
+                - generic [ref=e383]: SALE
+                - generic [ref=e384]:
+                  - img
+                  - text: 1+kk
+                - generic [ref=e385]:
+                  - img
+                  - text: 38 m²
+            - generic [ref=e386]: €4,605/m²
+        - generic [ref=e387] [cursor=pointer]:
+          - generic [ref=e388]:
+            - img "Vršovická 66, Praha 10" [ref=e390]
+            - button [ref=e395]:
+              - img [ref=e396]
+          - generic [ref=e398]:
+            - generic [ref=e399]:
+              - generic [ref=e400]: €950/mo
+              - generic [ref=e401]: Vršovická 66, Praha 10
+              - generic [ref=e402]:
+                - generic [ref=e403]: RENT
+                - generic [ref=e404]:
+                  - img
+                  - text: 1+kk
+                - generic [ref=e405]:
+                  - img
+                  - text: 35 m²
+            - generic [ref=e406]: €27/m²
+        - generic [ref=e407] [cursor=pointer]:
+          - generic [ref=e408]:
+            - img "Na Bělidle 5, Praha 5" [ref=e410]
+            - button [ref=e415]:
+              - img [ref=e416]
+          - generic [ref=e418]:
+            - generic [ref=e419]:
+              - generic [ref=e420]: €340,000
+              - generic [ref=e421]: Na Bělidle 5, Praha 5
+              - generic [ref=e422]:
+                - generic [ref=e423]: SALE
+                - generic [ref=e424]:
+                  - img
+                  - text: 3+1
+                - generic [ref=e425]:
+                  - img
+                  - text: 85 m²
+            - generic [ref=e426]: €4,000/m²
+        - generic [ref=e427] [cursor=pointer]:
+          - generic [ref=e428]:
+            - img "Dejvická 28, Praha 6" [ref=e430]
+            - button [ref=e435]:
+              - img [ref=e436]
+          - generic [ref=e438]:
+            - generic [ref=e439]:
+              - generic [ref=e440]: €2,800/mo
+              - generic [ref=e441]: Dejvická 28, Praha 6
+              - generic [ref=e442]:
+                - generic [ref=e443]: RENT
+                - generic [ref=e444]:
+                  - img
+                  - text: 3+kk
+                - generic [ref=e445]:
+                  - img
+                  - text: 95 m²
+            - generic [ref=e446]: €29/m²
+        - generic [ref=e447] [cursor=pointer]:
+          - generic [ref=e448]:
+            - img "Pod Nuselskými schody 3, Praha 4" [ref=e450]
+            - button [ref=e455]:
+              - img [ref=e456]
+          - generic [ref=e458]:
+            - generic [ref=e459]:
+              - generic [ref=e460]: €210,000
+              - generic [ref=e461]: Pod Nuselskými schody 3, Praha 4
+              - generic [ref=e462]:
+                - generic [ref=e463]: SALE
+                - generic [ref=e464]:
+                  - img
+                  - text: 2+kk
+                - generic [ref=e465]:
+                  - img
+                  - text: 52 m²
+            - generic [ref=e466]: €4,038/m²
+        - generic [ref=e467] [cursor=pointer]:
+          - generic [ref=e468]:
+            - img "Seifertova 42, Praha 3" [ref=e470]
+            - button [ref=e475]:
+              - img [ref=e476]
+          - generic [ref=e478]:
+            - generic [ref=e479]:
+              - generic [ref=e480]: €1,100/mo
+              - generic [ref=e481]: Seifertova 42, Praha 3
+              - generic [ref=e482]:
+                - generic [ref=e483]: RENT
+                - generic [ref=e484]:
+                  - img
+                  - text: 1+1
+                - generic [ref=e485]:
+                  - img
+                  - text: 40 m²
+            - generic [ref=e486]: €28/m²
+        - generic [ref=e487] [cursor=pointer]:
+          - generic [ref=e488]:
+            - img "Krymská 15, Praha 10" [ref=e490]
+            - button [ref=e495]:
+              - img [ref=e496]
+          - generic [ref=e498]:
+            - generic [ref=e499]:
+              - generic [ref=e500]: €1,450/mo
+              - generic [ref=e501]: Krymská 15, Praha 10
+              - generic [ref=e502]:
+                - generic [ref=e503]: RENT
+                - generic [ref=e504]:
+                  - img
+                  - text: 2+kk
+                - generic [ref=e505]:
+                  - img
+                  - text: 55 m²
+            - generic [ref=e506]: €26/m²
+```

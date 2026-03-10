@@ -1,0 +1,238 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   BEZREALITKY SCRAPER INVESTIGATION                        ║
+║                           VISUAL SUMMARY                                   ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+FINDING: Only 37.2% of BezRealitky is being scraped!
+
+Current Capacity:        Real Capacity:
+┌──────────────────┐   ┌──────────────────────────────────────┐
+│    4,335         │   │         11,667                       │
+│   estates        │   │        estates total                 │
+│                  │   │                                      │
+│ 37.2% coverage   │   │ 100% complete platform               │
+└──────────────────┘   └──────────────────────────────────────┘
+                              ↓ +7,330 missing!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT'S MISSING (7,330 listings):
+
+  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  ┃ REKREACNI_OBJEKT (Recreational facilities)     ┃
+  ┃ ═════════════════════════════════════════════  ┃
+  ┃ Count: 6,963                                   ┃
+  ┃ % of Total: 59.7%                              ┃
+  ┃ Status: NOT SCRAPED ⚠️                         ┃
+  ┃                                                ┃
+  ┃ This is the DOMINANT category!                 ┃
+  ┃ More than half of the entire platform!         ┃
+  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  Plus 3 more missing types:
+    • NEBYTOVY_PROSTOR (Non-residential):   147 (1.3%)
+    • GARAZ (Garages):                       137 (1.2%)
+    • KANCELAR (Offices):                     83 (0.7%)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+MARKET COMPOSITION:
+
+  By Estate Type (ALL 7):
+  
+  REKREACNI_OBJEKT   ██████████████████████████████████████ 59.7% (6,963)
+  BYT                ████████████ 24.9% (2,903)
+  POZEMEK            ███ 8.8% (1,030)
+  DUM                ■ 3.5% (404)
+  NEBYTOVY_PROSTOR   ■ 1.3% (147)
+  GARAZ              ■ 1.2% (137)
+  KANCELAR           ■ 0.7% (83)
+  
+  ──────────────────────────────────────────
+  TOTAL: 11,667 listings
+
+
+  By Offer Type:
+  
+  PRONAJEM (Rentals) ████████████████████████ 81.5% (9,505)
+  PRODEJ (Sales)     ███ 18.5% (2,162)
+  
+  ──────────────────────────────────────────
+  TOTAL: 11,667 listings
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CURRENTLY SCRAPED (3 types):
+
+  BYT        ███████████████ 67.0% (2,903)
+  POZEMEK    ████████ 23.8% (1,030)
+  DUM        ██ 9.3% (404)
+  
+  SUBTOTAL: 4,337 listings (37.2% of total)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+ROOT CAUSE:
+
+  Location: src/scrapers/listingsScraper.ts (lines 174-175)
+  Problem:  Only 3 estate types hardcoded in constructor
+  
+  Current Code (WRONG):
+  ┌────────────────────────────────────────────┐
+  │ this.estateTypes = [                       │
+  │   'BYT',           // ✓ Apartments         │
+  │   'DUM',           // ✓ Houses             │
+  │   'POZEMEK'        // ✓ Land               │
+  │ ];                                         │
+  └────────────────────────────────────────────┘
+  
+  Missing estate types:
+  ✗ 'GARAZ'                  (137 listings)
+  ✗ 'KANCELAR'               (83 listings)
+  ✗ 'NEBYTOVY_PROSTOR'       (147 listings)
+  ✗ 'REKREACNI_OBJEKT'       (6,963 listings) ⚠️ MASSIVE GAP
+
+═══════════════════════════════════════════════════════════════════════════════
+
+THE FIX (Trivial - 1 Line Change):
+
+  Change FROM:
+  ──────────
+  this.estateTypes = ['BYT', 'DUM', 'POZEMEK'];
+  
+  
+  Change TO:
+  ─────────
+  this.estateTypes = [
+    'BYT',
+    'DUM',
+    'POZEMEK',
+    'GARAZ',
+    'KANCELAR',
+    'NEBYTOVY_PROSTOR',
+    'REKREACNI_OBJEKT'
+  ];
+
+═══════════════════════════════════════════════════════════════════════════════
+
+IMPACT METRICS:
+
+  Data Coverage:
+  ┌─────────────────┬──────────┐
+  │ Metric          │ Change   │
+  ├─────────────────┼──────────┤
+  │ Total Listings  │ +7,330   │
+  │ Coverage        │ 37% → 100│
+  │ Improvement     │ +169%    │
+  └─────────────────┴──────────┘
+
+  Performance Impact:
+  ┌──────────────────┬──────────┐
+  │ Metric           │ Time     │
+  ├──────────────────┼──────────┤
+  │ Current Scrape   │ 53s      │
+  │ New Scrape (seq) │ 135s     │
+  │ New Scrape (par) │ 25-30s   │
+  └──────────────────┴──────────┘
+
+  Implementation:
+  ┌──────────────────┬──────────┐
+  │ Metric           │ Time     │
+  ├──────────────────┼──────────┤
+  │ Code Change      │ 2 min    │
+  │ Testing          │ 5 min    │
+  │ Full Validation  │ 30-40 min│
+  └──────────────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+VERIFICATION:
+
+  ✓ All 7 estate types tested directly with API
+  ✓ All 14 combinations (7 types × 2 offer types) verified
+  ✓ 100% success rate on all API calls
+  ✓ No errors or rate limiting observed
+  ✓ Data directly from production API
+  
+  Confidence Level: VERY HIGH
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DETAILED BREAKDOWN (ALL 7 TYPES):
+
+  ┌──────────────────────────┬────────┬────────┬──────────────────┐
+  │ Estate Type              │ PRODEJ │PRONAJEM│ TOTAL            │
+  ├──────────────────────────┼────────┼────────┼──────────────────┤
+  │ BYT (Apartments)         │   683  │  2,220 │ 2,903 (24.9%)   │
+  │ DUM (Houses)             │   344  │     60 │   404 (3.5%)    │
+  │ POZEMEK (Land)           │ 1,026  │      4 │ 1,030 (8.8%)    │
+  │ GARAZ (Garages)          │    35  │    102 │   137 (1.2%) ✗  │
+  │ KANCELAR (Offices)       │     4  │     79 │    83 (0.7%) ✗  │
+  │ NEBYTOVY_PROSTOR         │    21  │    126 │   147 (1.3%) ✗  │
+  │ REKREACNI_OBJEKT         │    49  │  6,914 │ 6,963 (59.7%) ✗ │
+  ├──────────────────────────┼────────┼────────┼──────────────────┤
+  │ CURRENT TOTAL (3 types)  │ 2,053  │  2,282 │ 4,335 (37.2%)   │
+  │ MISSING (4 types)        │   109  │  7,221 │ 7,330 (62.8%)   │
+  │ COMPLETE TOTAL (7 types) │ 2,162  │  9,505 │ 11,667 (100%)   │
+  └──────────────────────────┴────────┴────────┴──────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+NEXT STEPS:
+
+  IMMEDIATE (5-10 min):
+    1. Read INVESTIGATION_SUMMARY.txt
+    2. Read SCRAPER_FIX_GUIDE.md
+    3. Make 1-line code change
+    4. Run test-comprehensive-capacity.ts to verify
+
+  SHORT-TERM (next 24 hours):
+    1. Run full scrape with all 7 estate types
+    2. Update PERFORMANCE_REPORT.md
+    3. Investigate REKREACNI_OBJEKT listings
+    4. Decide on special handling if needed
+
+  MEDIUM-TERM (next week):
+    1. Review SReality scraper for similar issues
+    2. Update all documentation
+    3. Brief team on findings
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DOCUMENTATION FILES GENERATED:
+
+  📄 INVESTIGATION_SUMMARY.txt          ← Executive summary (5 min read)
+  📄 BEZREALITKY_CAPACITY_ANALYSIS.md   ← Detailed analysis (15 min read)
+  📄 SCRAPER_FIX_GUIDE.md               ← How to fix it (implementation)
+  📄 UPDATED_CAPACITY_ANALYSIS.md       ← Cross-portal impact
+  📄 ANALYSIS_FILES_INDEX.md            ← Navigation guide
+  📄 VISUAL_SUMMARY.txt                 ← This file
+  
+  🧪 test-all-estate-types.ts           ← Verify all types work
+  🧪 test-comprehensive-capacity.ts     ← Full breakdown test
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY TAKEAWAY:
+
+  The BezRealitky scraper is severely underutilizing the API.
+  
+  It's only scraping 37.2% of available listings (4,335 of 11,667).
+  
+  The fix is trivial (1 line of code).
+  
+  The impact is massive (+169% coverage increase).
+  
+  Implementation risk is very low (API already supports all types).
+  
+  → IMPLEMENT IMMEDIATELY ←
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Generated: February 7, 2026
+Status: Ready for Implementation
+Priority: HIGH
+
+Start with: INVESTIGATION_SUMMARY.txt
+
+═══════════════════════════════════════════════════════════════════════════════

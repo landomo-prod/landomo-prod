@@ -1,0 +1,1289 @@
+{
+  "test_timestamp": "2026-02-07T20:09:34.708Z",
+  "total_listings_tested": 5,
+  "compilation_status": "success",
+  "compilation_errors": [],
+  "overall_extraction_rate": 58.18181818181819,
+  "tier_1_coverage": 93.33333333333333,
+  "tier_2_coverage": 60,
+  "tier_3_coverage": 40,
+  "field_distribution": {},
+  "sample_results": [
+    {
+      "listing_id": "5256944",
+      "address": "Praha 1 - Staré Město",
+      "property_type": "apartment",
+      "compilation_status": "success",
+      "field_tests": [
+        {
+          "field_name": "title",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "price",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "currency",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "property_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "transaction_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.city",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.country",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.bedrooms",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.sqm",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.czech_disposition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.czech_ownership",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.condition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.furnished",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.energy_rating",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.heating_type",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.total_floors",
+          "tier": 3,
+          "category": "structure",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_total",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_plot",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.year_built",
+          "tier": 3,
+          "category": "year",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.water_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.sewage_type",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.gas_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "boolean",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_balcony",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_terrace",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_garden",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_balcony",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_terrace",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_elevator",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "extracted"
+        },
+        {
+          "field_name": "amenities.has_ac",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.hash_id",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_company",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_rating",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "media.virtual_tour_url",
+          "tier": 3,
+          "category": "media",
+          "expected_type": "string",
+          "result": "null"
+        }
+      ],
+      "field_extraction_rate": 72.72727272727273,
+      "tier_coverage": {
+        "tier_1": {
+          "extracted": 9,
+          "total": 9
+        },
+        "tier_2": {
+          "extracted": 5,
+          "total": 6
+        },
+        "tier_3": {
+          "extracted": 10,
+          "total": 18
+        }
+      }
+    },
+    {
+      "listing_id": "5283812",
+      "address": "Praha 6 - Bubeneč",
+      "property_type": "other",
+      "compilation_status": "success",
+      "field_tests": [
+        {
+          "field_name": "title",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "price",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "currency",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "property_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "transaction_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.city",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.country",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.bedrooms",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.sqm",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.czech_disposition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.czech_ownership",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.condition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.furnished",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.energy_rating",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.heating_type",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.total_floors",
+          "tier": 3,
+          "category": "structure",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_total",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_plot",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.year_built",
+          "tier": 3,
+          "category": "year",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.water_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.sewage_type",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.gas_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "boolean",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_balcony",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_terrace",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_garden",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "amenities.has_balcony",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_terrace",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_elevator",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_ac",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "portal_metadata.sreality.hash_id",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_company",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_rating",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "media.virtual_tour_url",
+          "tier": 3,
+          "category": "media",
+          "expected_type": "string",
+          "result": "null"
+        }
+      ],
+      "field_extraction_rate": 69.6969696969697,
+      "tier_coverage": {
+        "tier_1": {
+          "extracted": 9,
+          "total": 9
+        },
+        "tier_2": {
+          "extracted": 5,
+          "total": 6
+        },
+        "tier_3": {
+          "extracted": 9,
+          "total": 18
+        }
+      }
+    },
+    {
+      "listing_id": "5269045",
+      "address": "Brno - Veveří",
+      "property_type": "apartment",
+      "compilation_status": "success",
+      "field_tests": [
+        {
+          "field_name": "title",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "price",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "currency",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "property_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "transaction_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.city",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.country",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.bedrooms",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.sqm",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.czech_disposition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.czech_ownership",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.condition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.furnished",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.energy_rating",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.heating_type",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.total_floors",
+          "tier": 3,
+          "category": "structure",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_total",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_plot",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.year_built",
+          "tier": 3,
+          "category": "year",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.water_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.sewage_type",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.gas_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "boolean",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_balcony",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_terrace",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_garden",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_balcony",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_terrace",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_elevator",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "extracted"
+        },
+        {
+          "field_name": "amenities.has_ac",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "portal_metadata.sreality.hash_id",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_company",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_rating",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "media.virtual_tour_url",
+          "tier": 3,
+          "category": "media",
+          "expected_type": "string",
+          "result": "null"
+        }
+      ],
+      "field_extraction_rate": 60.60606060606061,
+      "tier_coverage": {
+        "tier_1": {
+          "extracted": 9,
+          "total": 9
+        },
+        "tier_2": {
+          "extracted": 4,
+          "total": 6
+        },
+        "tier_3": {
+          "extracted": 7,
+          "total": 18
+        }
+      }
+    },
+    {
+      "listing_id": "5285612",
+      "address": "Ostrava - Poruba",
+      "property_type": "other",
+      "compilation_status": "success",
+      "field_tests": [
+        {
+          "field_name": "title",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "price",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "currency",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "property_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "transaction_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.city",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.country",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.bedrooms",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "details.sqm",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.czech_disposition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.czech_ownership",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.condition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.furnished",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.energy_rating",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.heating_type",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.total_floors",
+          "tier": 3,
+          "category": "structure",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_total",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_plot",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.year_built",
+          "tier": 3,
+          "category": "year",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.water_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.sewage_type",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.gas_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "boolean",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_balcony",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_terrace",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_garden",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_balcony",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_terrace",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_elevator",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_ac",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "portal_metadata.sreality.hash_id",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_company",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_rating",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "media.virtual_tour_url",
+          "tier": 3,
+          "category": "media",
+          "expected_type": "string",
+          "result": "null"
+        }
+      ],
+      "field_extraction_rate": 45.45454545454545,
+      "tier_coverage": {
+        "tier_1": {
+          "extracted": 7,
+          "total": 9
+        },
+        "tier_2": {
+          "extracted": 2,
+          "total": 6
+        },
+        "tier_3": {
+          "extracted": 6,
+          "total": 18
+        }
+      }
+    },
+    {
+      "listing_id": "5279234",
+      "address": "Plzeň - Centrum",
+      "property_type": "other",
+      "compilation_status": "success",
+      "field_tests": [
+        {
+          "field_name": "title",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "price",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "currency",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "property_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "transaction_type",
+          "tier": 1,
+          "category": "basic",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.city",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "location.country",
+          "tier": 1,
+          "category": "location",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "details.bedrooms",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "details.sqm",
+          "tier": 1,
+          "category": "details",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.czech_disposition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.czech_ownership",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.condition",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.furnished",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.energy_rating",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.heating_type",
+          "tier": 2,
+          "category": "czech",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.total_floors",
+          "tier": 3,
+          "category": "structure",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_total",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.area_plot",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.year_built",
+          "tier": 3,
+          "category": "year",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.water_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.sewage_type",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "string",
+          "result": "extracted"
+        },
+        {
+          "field_name": "country_specific.gas_supply",
+          "tier": 3,
+          "category": "infra",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_balcony",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_terrace",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "country_specific.area_garden",
+          "tier": 3,
+          "category": "area",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_balcony",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_terrace",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_elevator",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "amenities.has_ac",
+          "tier": 3,
+          "category": "amenity",
+          "expected_type": "boolean",
+          "result": "null"
+        },
+        {
+          "field_name": "portal_metadata.sreality.hash_id",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "extracted"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_company",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "string",
+          "result": "null"
+        },
+        {
+          "field_name": "portal_metadata.sreality.seller_rating",
+          "tier": 3,
+          "category": "portal",
+          "expected_type": "number",
+          "result": "null"
+        },
+        {
+          "field_name": "media.virtual_tour_url",
+          "tier": 3,
+          "category": "media",
+          "expected_type": "string",
+          "result": "null"
+        }
+      ],
+      "field_extraction_rate": 42.42424242424242,
+      "tier_coverage": {
+        "tier_1": {
+          "extracted": 8,
+          "total": 9
+        },
+        "tier_2": {
+          "extracted": 2,
+          "total": 6
+        },
+        "tier_3": {
+          "extracted": 4,
+          "total": 18
+        }
+      }
+    }
+  ],
+  "issues_found": [
+    "Tier 1 coverage below 95%",
+    "Tier 2 coverage below 80%",
+    "Tier 3 coverage below 60%"
+  ],
+  "recommendations": []
+}

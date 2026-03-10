@@ -1,0 +1,199 @@
+{
+  "test_metadata": {
+    "test_name": "Phase 2a Re-Test: Elevator Bug Fix Validation",
+    "test_date": "2026-02-07T19:36:27.068Z",
+    "description": "Re-testing critical listings with fixed isPositiveValue() function",
+    "total_listings_tested": 6,
+    "listings_tested": [
+      2437342028,
+      340882252,
+      3430052684,
+      750941004,
+      3024319308,
+      2983228236
+    ],
+    "critical_test_cases": {
+      "elevator_false_positive": 2983228236,
+      "balcony_numeric_3sqm": 750941004,
+      "balcony_numeric_3sqm_with_elevator": 3024319308
+    }
+  },
+  "improvements": {
+    "elevator_false_positive_fix": true,
+    "balcony_numeric_values_fix": false,
+    "elevator_before": "60%",
+    "elevator_after": "75%",
+    "balcony_before": "50%",
+    "balcony_after": "0%",
+    "terrace_before": "0%",
+    "terrace_after": "0%"
+  },
+  "extraction_summary": {
+    "has_elevator": {
+      "api_availability": 4,
+      "extraction_count": 3,
+      "extraction_rate": "75%"
+    },
+    "has_balcony": {
+      "api_availability": 3,
+      "extraction_count": 0,
+      "extraction_rate": "0%"
+    },
+    "has_terrace": {
+      "api_availability": 0,
+      "extraction_count": 0,
+      "extraction_rate": "0%"
+    }
+  },
+  "critical_bug_validation": {
+    "false_elevator_cases": [
+      {
+        "listing_id": 2983228236,
+        "api_value": false,
+        "extracted": false,
+        "status": "FIXED"
+      }
+    ],
+    "numeric_balcony_cases": [
+      {
+        "listing_id": 2437342028,
+        "api_value": "13",
+        "status": "NOT FIXED"
+      },
+      {
+        "listing_id": 750941004,
+        "api_value": "3",
+        "status": "NOT FIXED"
+      },
+      {
+        "listing_id": 3024319308,
+        "api_value": "3",
+        "status": "NOT FIXED"
+      }
+    ]
+  },
+  "detailed_results": [
+    {
+      "listing_id": 2437342028,
+      "title": {
+        "name": "Název",
+        "value": "Prodej bytu 3+kk 74 m²"
+      },
+      "property_type": "house",
+      "transaction_type": "rent",
+      "amenities": {
+        "has_elevator": true
+      },
+      "api_items": [
+        {
+          "name": "Balkón",
+          "value": "13",
+          "type": "area",
+          "unit": "m2"
+        },
+        {
+          "name": "Výtah",
+          "value": true,
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "listing_id": 340882252,
+      "title": {
+        "name": "Název",
+        "value": "Prodej bytu 3+1 69 m² (Jednopodlažní)"
+      },
+      "property_type": "house",
+      "transaction_type": "rent",
+      "amenities": {
+        "has_elevator": true
+      },
+      "api_items": [
+        {
+          "name": "Výtah",
+          "value": true,
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "listing_id": 3430052684,
+      "title": {
+        "name": "Název",
+        "value": "Pronájem bytu 3+1 102 m²"
+      },
+      "property_type": "house",
+      "transaction_type": "rent",
+      "amenities": {},
+      "api_items": []
+    },
+    {
+      "listing_id": 750941004,
+      "title": {
+        "name": "Název",
+        "value": "Pronájem bytu 3+1 56 m²"
+      },
+      "property_type": "house",
+      "transaction_type": "rent",
+      "amenities": {},
+      "api_items": [
+        {
+          "name": "Balkón",
+          "value": "3",
+          "type": "area",
+          "unit": "m2"
+        }
+      ]
+    },
+    {
+      "listing_id": 3024319308,
+      "title": {
+        "name": "Název",
+        "value": "Prodej bytu 2+kk 56 m²"
+      },
+      "property_type": "house",
+      "transaction_type": "rent",
+      "amenities": {
+        "has_elevator": true
+      },
+      "api_items": [
+        {
+          "name": "Balkón",
+          "value": "3",
+          "type": "area",
+          "unit": "m2"
+        },
+        {
+          "name": "Výtah",
+          "value": true,
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "listing_id": 2983228236,
+      "title": {
+        "name": "Název",
+        "value": "Prodej bytu 2+kk 57 m² (Podkrovní)"
+      },
+      "property_type": "house",
+      "transaction_type": "rent",
+      "amenities": {
+        "has_elevator": false
+      },
+      "api_items": [
+        {
+          "name": "Výtah",
+          "value": false,
+          "type": "boolean"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_listings_tested": 6,
+    "listings_with_errors": 0,
+    "successful_tests": 6
+  }
+}

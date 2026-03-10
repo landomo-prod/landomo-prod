@@ -1,0 +1,46 @@
+# PgBouncer Monitoring Queries
+# Used by pgbouncer_exporter to expose connection pool metrics
+# Note: pgbouncer_exporter queries SHOW commands on the PgBouncer admin console,
+# but this file documents the metrics we care about for Grafana dashboards.
+
+# The pgbouncer_exporter (spreaker/prometheus-pgbouncer-exporter or similar)
+# automatically exposes metrics from SHOW POOLS, SHOW STATS, SHOW DATABASES.
+# This file serves as documentation and for custom alerting rules.
+
+# Key metrics exposed by pgbouncer_exporter:
+#
+# pgbouncer_pools_client_active          - Active client connections per pool
+# pgbouncer_pools_client_waiting         - Waiting client connections per pool
+# pgbouncer_pools_server_active          - Active server connections per pool
+# pgbouncer_pools_server_idle            - Idle server connections per pool
+# pgbouncer_pools_server_used            - Used server connections per pool
+# pgbouncer_pools_server_tested          - Tested server connections per pool
+# pgbouncer_pools_server_login           - Server connections in login per pool
+# pgbouncer_pools_maxwait                - Oldest waiting client age in seconds
+# pgbouncer_pools_maxwait_us             - Oldest waiting client age in microseconds
+# pgbouncer_pools_pool_mode              - Pool mode (session/transaction/statement)
+#
+# pgbouncer_stats_total_xact_count       - Total transactions per database
+# pgbouncer_stats_total_query_count      - Total queries per database
+# pgbouncer_stats_total_received         - Total bytes received per database
+# pgbouncer_stats_total_sent             - Total bytes sent per database
+# pgbouncer_stats_total_xact_time        - Total transaction time in microseconds
+# pgbouncer_stats_total_query_time       - Total query time in microseconds
+# pgbouncer_stats_total_wait_time        - Total wait time in microseconds
+# pgbouncer_stats_avg_xact_count         - Average transactions/sec per database
+# pgbouncer_stats_avg_query_count        - Average queries/sec per database
+# pgbouncer_stats_avg_xact_time          - Average transaction time in microseconds
+# pgbouncer_stats_avg_query_time         - Average query time in microseconds
+# pgbouncer_stats_avg_wait_time          - Average wait time in microseconds
+#
+# pgbouncer_databases_pool_size          - Max pool size per database
+# pgbouncer_databases_current_connections - Current connections per database
+
+# Alerting thresholds (for Grafana/Alertmanager):
+#
+# WARNING:  pgbouncer_pools_client_waiting > 5   (clients queuing)
+# CRITICAL: pgbouncer_pools_client_waiting > 20  (significant backlog)
+# WARNING:  pgbouncer_stats_avg_wait_time > 100000  (>100ms avg wait)
+# CRITICAL: pgbouncer_stats_avg_wait_time > 500000  (>500ms avg wait)
+# WARNING:  pool_utilization > 80%  (nearing capacity)
+#   Formula: pgbouncer_pools_server_active / pgbouncer_databases_pool_size * 100

@@ -1,0 +1,110 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   PHASE 2A RE-TEST - QUICK REFERENCE                      ║
+║                         2026-02-07 19:36:27Z                              ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ELEVATOR BUG FIX ✅
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  BEFORE:  Properties without elevators marked as having them (false positives)
+  AFTER:   Correctly identifies when elevator = false
+  
+  Test: Listing 2983228236
+        API value = false
+        Result: ✓ Extracted as false (FIXED)
+
+  Code Fix: isPositiveValue() line 765
+            if (str === 'false') return false;
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ BALCONY BUG FIX ❌
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  BEFORE:  50% extraction (2/4) - some numeric missed
+  AFTER:   0% extraction (0/3) - REGRESSION!
+
+  Problem: API returns "13" as STRING, not number
+           Code only checks: if (typeof value === 'number')
+           Missing: parseFloat() to handle string numbers
+
+  Tests Failed:
+    • Listing 2437342028: "13" m² → undefined (should be true)
+    • Listing 750941004:  "3" m² → undefined (should be true)
+    • Listing 3024319308: "3" m² → undefined (should be true)
+
+  Code Problem: isPositiveValue() line 758-760
+                if (typeof value === 'number') { return value > 0; }
+                ↑ This doesn't handle "3" or "13" (string types)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ EXTRACTION RATES COMPARISON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Field          Before    After     Change   Status
+──────────────────────────────────────────────────
+has_elevator   60%       75%       +15% ↑   ✅ Better
+has_balcony    50%       0%        -50% ↓   ❌ Worse (REGRESSION)
+has_terrace    0%        0%        —        → No change
+has_ac         0%        0%        —        → No data
+has_security   0%        0%        —        → No data
+has_fireplace  0%        0%        —        → No data
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ WHAT'S BROKEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Root Cause: isPositiveValue() is incomplete
+
+  Current Logic:
+    1. Check if undefined/null → return false ✓
+    2. Check if numeric type > 0 → return true ✓
+    3. Check for negative keywords → return false ✓
+    4. Check for positive keywords → return boolean
+    5. (DEFAULT) Return false implicitly ✗
+
+  Missing: Parse STRING numeric values like "3", "13"
+
+  Fix Needed:
+    Add after line 766:
+    
+    const numValue = parseFloat(str);
+    if (!isNaN(numValue) && numValue > 0) {
+      return true;
+    }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ CRITICAL FINDING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  The SReality API returns BALCONY VALUES AS STRINGS:
+
+    {
+      "name": "Balkón",
+      "value": "13",    ← This is a STRING, not a number
+      "unit": "m2"
+    }
+
+  Current code expects:
+    if (typeof value === 'number')  // False! It's a string "13"
+
+  Result: Balcony values are not recognized as positive
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ Elevator false positive: FIXED
+  ❌ Balcony numeric values: NOT FIXED (incomplete implementation)
+
+  Overall: NOT PRODUCTION READY - Numeric fix must be applied
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ DOCUMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  PHASE2A_RETEST_SUMMARY.txt ........... Full text report (this version)
+  PHASE2A_COMPARISON_REPORT.json ....... JSON before/after comparison
+  PHASE2A_BUG_FIX_ANALYSIS.md .......... Detailed technical analysis
+  PHASE2A_RETEST_RESULTS.json ......... Machine-readable test results
+

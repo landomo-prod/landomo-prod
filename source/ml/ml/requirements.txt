@@ -1,0 +1,21 @@
+# Python ML Dependencies for Landomo ML Pricing Service
+
+# Core ML Libraries
+lightgbm==4.5.0           # Gradient boosting (primary model)
+scikit-learn==1.5.2       # ML utilities, preprocessing, metrics
+numpy==2.0.2              # Numerical operations
+pandas==2.2.3             # Data manipulation
+
+# Database
+psycopg2-binary==2.9.10   # PostgreSQL adapter
+
+# Optional: Advanced Features
+# xgboost==2.1.3          # Alternative gradient boosting
+# optuna==4.1.0           # Hyperparameter optimization
+# shap==0.47.0            # Model explainability
+
+# Serialization
+joblib==1.4.2             # Model serialization (used by train/predict)
+
+# Utilities
+python-dotenv==1.0.1      # Environment variable loading

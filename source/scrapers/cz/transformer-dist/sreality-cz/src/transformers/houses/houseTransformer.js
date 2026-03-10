@@ -1,0 +1,493 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.transformHouse = transformHouse;
+const itemsParser_1 = require("../../utils/itemsParser");
+const srealityHelpers_1 = require("../../utils/srealityHelpers");
+const czech_value_mappings_1 = require("../../../../shared/czech-value-mappings");
+/**
+ * Transform SReality house listing to HousePropertyTierI
+ *
+ * House-specific fields:
+ * - sqm_plot (CRITICAL - main house differentiator)
+ * - sqm_living, sqm_total
+ * - has_garden, garden_area
+ * - has_garage, garage_count
+ * - has_parking, parking_spaces
+ * - has_basement, cellar_area
+ * - has_pool, has_fireplace, has_terrace, has_attic
+ * - stories (NOT floor number!)
+ * - Czech infrastructure: water_supply, sewage_type, gas_connection
+ */
+function transformHouse(listing) {
+    // Initialize type-safe parser (single O(n) pass)
+    const parser = new itemsParser_1.SRealityItemsParser(listing.items || []);
+    // Extract Czech disposition (e.g., "4+1", "5+kk")
+    const disposition = parser.getString(itemsParser_1.FIELD_NAMES.DISPOSITION);
+    // Extract bedrooms from disposition (houses use same logic as apartments)
+    const bedrooms = (0, srealityHelpers_1.bedroomsFromDisposition)(disposition);
+    // Extract bathrooms
+    const bathrooms = extractBathrooms(parser);
+    // === CRITICAL HOUSE AREAS ===
+    // Living area (interior usable space)
+    const sqm_living = parser.getAreaOr(itemsParser_1.FIELD_NAMES.LIVING_AREA, itemsParser_1.FIELD_NAMES.LIVING_AREA_TRUNCATED, itemsParser_1.FIELD_NAMES.AREA) ?? (0, srealityHelpers_1.extractAreaFromTitle)((0, srealityHelpers_1.getStringOrValue)(listing.name) || '');
+    // Total built area (including walls, structures)
+    const sqm_total = parser.getAreaOr(itemsParser_1.FIELD_NAMES.TOTAL_AREA, itemsParser_1.FIELD_NAMES.BUILT_UP_AREA, itemsParser_1.FIELD_NAMES.BUILT_UP_AREA_ALT);
+    // Plot area (CRITICAL for houses - main differentiator)
+    const sqm_plot = parser.getArea(itemsParser_1.FIELD_NAMES.PLOT_AREA);
+    // Number of stories (NOT floor number - houses ARE the building)
+    const stories = extractStories(parser);
+    // === G. labelsAll[0] features — supplement items[] booleans ===
+    const labels = (0, srealityHelpers_1.extractLabelsFeatures)(listing.labelsAll);
+    // === HOUSE AMENITIES (all must be boolean, not undefined) ===
+    // Garden - check for area value first, then boolean
+    const garden_area = parser.getAreaOr(itemsParser_1.FIELD_NAMES.GARDEN, itemsParser_1.FIELD_NAMES.GARDEN_AREA);
+    const has_garden = (0, srealityHelpers_1.ensureBoolean)(garden_area ? true : parser.getBooleanOr(itemsParser_1.FIELD_NAMES.GARDEN, itemsParser_1.FIELD_NAMES.GARDEN_AREA));
+    // Garage — supplement with labelsAll
+    const has_garage = (0, srealityHelpers_1.ensureBoolean)(parser.getBoolean(itemsParser_1.FIELD_NAMES.GARAGE) || labels.has_garage);
+    const garage_count = extractCount(parser, itemsParser_1.FIELD_NAMES.GARAGE);
+    // Parking — supplement with labelsAll
+    const has_parking = (0, srealityHelpers_1.ensureBoolean)(parser.getBoolean(itemsParser_1.FIELD_NAMES.PARKING) || labels.has_parking);
+    const parking_spaces = extractCount(parser, itemsParser_1.FIELD_NAMES.PARKING);
+    // Basement/cellar — supplement with labelsAll
+    const cellar_area = parser.getAreaOr(itemsParser_1.FIELD_NAMES.CELLAR, itemsParser_1.FIELD_NAMES.BASEMENT);
+    const has_basement = (0, srealityHelpers_1.ensureBoolean)(cellar_area ? true : parser.getBooleanOr(itemsParser_1.FIELD_NAMES.CELLAR, itemsParser_1.FIELD_NAMES.BASEMENT) || labels.has_basement);
+    // Pool
+    const has_pool = (0, srealityHelpers_1.ensureBoolean)(parser.getBoolean(itemsParser_1.FIELD_NAMES.BAZEN));
+    // Fireplace
+    const has_fireplace = (0, srealityHelpers_1.ensureBoolean)(parser.getBoolean(itemsParser_1.FIELD_NAMES.KRB));
+    // Terrace — supplement with labelsAll
+    const terrace_area = parser.getArea(itemsParser_1.FIELD_NAMES.TERRACE);
+    const has_terrace = (0, srealityHelpers_1.ensureBoolean)(terrace_area ? true : parser.getBoolean(itemsParser_1.FIELD_NAMES.TERRACE) || labels.has_terrace);
+    // Attic
+    const has_attic = (0, srealityHelpers_1.ensureBoolean)(parser.getBooleanOr(itemsParser_1.FIELD_NAMES.PODKROVI, itemsParser_1.FIELD_NAMES.PUDA));
+    // Balcony — supplement with labelsAll
+    const has_balcony = (0, srealityHelpers_1.ensureBoolean)(parser.getBooleanOr(itemsParser_1.FIELD_NAMES.BALCONY, itemsParser_1.FIELD_NAMES.BALCONY_ALT) || labels.has_balcony);
+    const balcony_area = parser.getAreaOr(itemsParser_1.FIELD_NAMES.BALCONY, itemsParser_1.FIELD_NAMES.BALCONY_ALT);
+    // === BUILDING CONTEXT ===
+    const year_built = extractYearBuilt(parser);
+    const renovation_year = extractRenovationYear(parser);
+    // === D. Construction type — codeItems.building_type_search FIRST, items[] text fallback ===
+    const buildingTypeCode = listing.codeItems?.building_type_search;
+    const buildingTypeRaw = parser.getStringOr(itemsParser_1.FIELD_NAMES.BUILDING_TYPE, itemsParser_1.FIELD_NAMES.CONSTRUCTION);
+    const construction_type = ((typeof buildingTypeCode === 'number' ? srealityHelpers_1.BUILDING_TYPE_CODES[buildingTypeCode] : undefined)
+        || mapBuildingType(buildingTypeRaw));
+    // Condition — labelsAll 'new_building' tag supplements items[] text
+    const conditionRaw = parser.getString(itemsParser_1.FIELD_NAMES.CONDITION);
+    const condition = mapCondition(conditionRaw) || labels.condition;
+    // === C. Ownership — codeItems.ownership numeric code FIRST, items[] text fallback ===
+    const ownershipCode = listing.codeItems?.ownership;
+    const ownershipRaw = parser.getString(itemsParser_1.FIELD_NAMES.OWNERSHIP);
+    const ownership = (typeof ownershipCode === 'number' ? srealityHelpers_1.OWNERSHIP_CODES[ownershipCode] : undefined)
+        || (0, srealityHelpers_1.mapOwnership)(ownershipRaw);
+    // Heating type
+    const heating_type = parser.getStringOr(itemsParser_1.FIELD_NAMES.HEATING, itemsParser_1.FIELD_NAMES.HEATING_ALT, itemsParser_1.FIELD_NAMES.HEATING_EN);
+    // Roof type (houses have roofs!)
+    const roof_type = extractRoofType(parser);
+    // === B. Energy class — use item.value_type (letter A-G) directly ===
+    const energyItem = (listing.items || []).find((i) => i.type === 'energy_efficiency_rating');
+    const energy_class = energyItem?.value_type
+        || parser.getStringOr(itemsParser_1.FIELD_NAMES.ENERGY_CLASS, itemsParser_1.FIELD_NAMES.ENERGY_RATING);
+    // === FINANCIALS ===
+    const property_tax = extractFinancial(parser, itemsParser_1.FIELD_NAMES.DAN_Z_NEMOVITOSTI);
+    const hoa_fees = extractFinancial(parser, itemsParser_1.FIELD_NAMES.HOA_FEES);
+    const deposit = extractFinancial(parser, itemsParser_1.FIELD_NAMES.DEPOSIT);
+    const utility_charges = extractFinancial(parser, itemsParser_1.FIELD_NAMES.UTILITY_CHARGES);
+    const service_charges = extractFinancial(parser, itemsParser_1.FIELD_NAMES.SERVICE_CHARGES);
+    // === RENTAL SPECIFICS ===
+    const available_from = (0, srealityHelpers_1.parseAvailableFrom)(parser.getStringOr(itemsParser_1.FIELD_NAMES.AVAILABLE_FROM, itemsParser_1.FIELD_NAMES.AVAILABLE_FROM_ALT));
+    // === CLASSIFICATION ===
+    const property_subtype = (0, srealityHelpers_1.mapSubType)(listing.seo?.category_sub_cb);
+    // Extract total rooms count
+    const rooms = extractRooms(disposition);
+    // Extract furnished status for Tier II
+    // Vybavení can be boolean (true/false) or string ("Částečně") - pass raw value
+    const furnishedRawItem = parser.getRaw(itemsParser_1.FIELD_NAMES.FURNISHED);
+    const furnishedRaw = furnishedRawItem?.value;
+    const furnished = (0, czech_value_mappings_1.normalizeFurnished)(furnishedRaw) || labels.furnished;
+    // === F. Seller contact — from _embedded.seller (detail API) ===
+    const sellerInfo = (0, srealityHelpers_1.extractSellerInfo)(listing._embedded);
+    // Extract hash_id (fallback to URL extraction for detail API responses)
+    const hashId = listing.hash_id ?? (0, srealityHelpers_1.extractHashIdFromUrl)(listing._links?.self?.href);
+    // Extract images with multiple sizes
+    const images = (0, srealityHelpers_1.extractImages)(listing);
+    // Extract media URLs
+    const virtualTourUrl = (0, srealityHelpers_1.extractVirtualTourUrl)(listing);
+    const videoUrl = (0, srealityHelpers_1.extractVideoUrl)(listing);
+    return {
+        // === Category Classification ===
+        property_category: 'house',
+        // === Tier I: Core Identification ===
+        title: (0, srealityHelpers_1.getStringOrValue)(listing.name) || 'Unknown',
+        price: listing.price_czk?.value_raw ?? listing.price,
+        currency: 'CZK',
+        transaction_type: listing.seo?.category_type_cb === 2 ? 'rent' : listing.seo?.category_type_cb === 3 ? 'auction' : 'sale',
+        // Location
+        location: {
+            city: (0, srealityHelpers_1.extractCity)((0, srealityHelpers_1.getStringOrValue)(listing.locality) || ''),
+            country: 'cz',
+            coordinates: (listing.gps?.lat && listing.gps?.lon) ? {
+                lat: listing.gps.lat,
+                lon: listing.gps.lon
+            } : (listing.map?.lat && listing.map?.lon) ? {
+                lat: listing.map.lat,
+                lon: listing.map.lon
+            } : undefined
+        },
+        // Classification
+        property_subtype,
+        // === HOUSE-SPECIFIC DETAILS (all non-nullable fields MUST have values) ===
+        bedrooms: bedrooms,
+        bathrooms: bathrooms ?? 1,
+        sqm_living: sqm_living,
+        sqm_total,
+        sqm_plot: sqm_plot,
+        stories,
+        rooms,
+        // === HOUSE AMENITIES (all boolean fields are required, not undefined) ===
+        has_garden,
+        garden_area,
+        has_garage,
+        garage_count,
+        has_parking,
+        parking_spaces,
+        has_basement,
+        cellar_area,
+        has_pool,
+        has_fireplace,
+        has_terrace,
+        terrace_area,
+        has_attic,
+        has_balcony,
+        balcony_area,
+        // === BUILDING CONTEXT ===
+        year_built,
+        renovation_year,
+        construction_type,
+        condition,
+        heating_type: (0, czech_value_mappings_1.normalizeHeatingType)(heating_type) || undefined,
+        roof_type,
+        energy_class,
+        // Tier 1 Universal Fields
+        furnished,
+        published_date: parser.getString(itemsParser_1.FIELD_NAMES.AKTUALIZACE),
+        // === FINANCIALS ===
+        property_tax,
+        hoa_fees,
+        deposit,
+        utility_charges,
+        service_charges,
+        ...(0, srealityHelpers_1.extractCommissionInfo)(listing.price_czk?.name),
+        // === RENTAL SPECIFICS ===
+        available_from,
+        // === F. Seller contact (from _embedded.seller detail API fields) ===
+        ...(sellerInfo ? {
+            agent_name: sellerInfo.agent_name,
+            agent_phone: sellerInfo.agent_phone,
+            agent_email: sellerInfo.agent_email,
+            agent_agency: sellerInfo.agent_agency,
+        } : {}),
+        // === MEDIA & AGENT (enhanced with multiple sizes) ===
+        media: images.length > 0 ? {
+            images: images.map((img, i) => ({
+                url: img.full || img.preview || img.thumbnail || '',
+                thumbnail_url: img.thumbnail,
+                order: i,
+                ...(i === 0 ? { is_main: true } : {}),
+            })).filter(img => img.url),
+            total_images: listing.advert_images_count,
+            virtual_tour_url: virtualTourUrl && virtualTourUrl !== 'available' ? virtualTourUrl : undefined,
+            video_tour_url: videoUrl,
+        } : undefined,
+        // Legacy arrays (deprecated, but keep for backward compatibility)
+        images: images.length > 0 ? images.map(img => img.full || img.preview || img.thumbnail).filter(Boolean) : undefined,
+        videos: videoUrl ? [videoUrl] : undefined,
+        // agent block kept for backward compatibility; populated from sellerInfo
+        agent: (sellerInfo?.agent_name) ? {
+            name: sellerInfo.agent_name,
+            phone: sellerInfo.agent_phone,
+            email: sellerInfo.agent_email,
+            agency: sellerInfo.agent_agency,
+            agency_logo: listing._embedded?.seller?.logo?._links?.self?.href,
+        } : undefined,
+        // Description
+        description: listing.text?.value,
+        // Features array (house-specific features as strings)
+        features: buildFeaturesList(parser, has_garden, has_garage, has_parking, has_pool, has_fireplace, has_terrace, has_attic, has_basement),
+        // === Tier II: Country-Specific (Czech Republic) ===
+        // NOTE: Use flat keys (czech_disposition, not czech.disposition)
+        // because ingest service reads country_specific.czech_disposition
+        country_specific: {
+            czech_disposition: (0, czech_value_mappings_1.normalizeDisposition)(disposition),
+            // ownership: codeItems numeric code → normalized string (most reliable source)
+            czech_ownership: ownership || (0, czech_value_mappings_1.normalizeOwnership)(ownershipRaw),
+            condition: (0, czech_value_mappings_1.normalizeCondition)(conditionRaw) || labels.condition,
+            heating_type: (0, czech_value_mappings_1.normalizeHeatingType)(heating_type),
+            // energy_rating: value_type letter (A-G) preferred over verbose text parsing
+            energy_rating: energy_class || (0, czech_value_mappings_1.normalizeEnergyRating)(energy_class),
+            furnished,
+            // construction_type: codeItems code → string preferred over text matching
+            construction_type: construction_type || (0, czech_value_mappings_1.normalizeConstructionType)(buildingTypeRaw),
+        },
+        // === Tier III: Portal Metadata (enhanced with all documented fields) ===
+        portal_metadata: {
+            sreality: {
+                hash_id: hashId,
+                name: (0, srealityHelpers_1.getStringOrValue)(listing.name),
+                locality: (0, srealityHelpers_1.getStringOrValue)(listing.locality),
+                price_czk: listing.price_czk?.value_raw,
+                price_note: listing.price_czk?.name,
+                category_main_cb: listing.seo?.category_main_cb,
+                category_sub_cb: listing.seo?.category_sub_cb,
+                category_type_cb: listing.seo?.category_type_cb,
+                advert_images_count: listing.advert_images_count,
+                // Marketing flags
+                labels: listing.labels,
+                new: listing.new,
+                region_tip: listing.region_tip,
+                exclusively_at_rk: listing.exclusively_at_rk === 1,
+                // Media flags
+                has_floor_plan: listing.has_floor_plan === 1,
+                has_video: listing.has_video === 1,
+                has_panorama: listing.has_panorama === 1,
+                // Auction fields
+                is_auction: listing.is_auction,
+                auction_price: listing.is_auction ? listing.auctionPrice : undefined,
+                // Media URLs
+                virtual_tour_url: virtualTourUrl && virtualTourUrl !== 'available' ? virtualTourUrl : undefined,
+                video_url: videoUrl
+            }
+        },
+        // === PORTAL & LIFECYCLE ===
+        source_url: (0, srealityHelpers_1.extractSourceUrl)(listing, hashId),
+        source_platform: 'sreality',
+        portal_id: `sreality-${hashId}`,
+        status: 'active'
+    };
+}
+// ============ HELPER FUNCTIONS ============
+/**
+ * Extract bathroom count using parser
+ */
+function extractBathrooms(parser) {
+    const bathroomFields = ['Počet koupelen', 'Koupelen', 'Bathrooms', 'Koupelna'];
+    for (const field of bathroomFields) {
+        const value = parser.getString(field);
+        if (value) {
+            const match = value.match(/(\d+)/);
+            if (match) {
+                return parseInt(match[1]);
+            }
+        }
+    }
+    // Unknown — return undefined instead of assuming 1
+    return undefined;
+}
+/**
+ * Extract number of stories from parser
+ * NOTE: This is stories in the house, NOT floor number!
+ */
+function extractStories(parser) {
+    const value = parser.getStringOr(itemsParser_1.FIELD_NAMES.TOTAL_FLOORS, itemsParser_1.FIELD_NAMES.FLOOR_COUNT, itemsParser_1.FIELD_NAMES.FLOORS_IN_BUILDING);
+    if (!value)
+        return undefined;
+    const match = value.match(/(\d+)/);
+    return match ? parseInt(match[1]) : undefined;
+}
+/**
+ * Extract count from parser (e.g., garage count, parking spaces)
+ */
+function extractCount(parser, ...fieldNames) {
+    for (const field of fieldNames) {
+        const value = parser.getString(field);
+        if (value) {
+            const match = String(value).match(/(\d+)/);
+            if (match) {
+                return parseInt(match[1]);
+            }
+        }
+    }
+    return undefined;
+}
+/**
+ * Extract year built using parser
+ *
+ * SReality API primarily uses 'Rok kolaudace' (occupancy certificate year) rather
+ * than 'Rok postavení' or 'Rok výstavby'. All three are checked for completeness.
+ */
+function extractYearBuilt(parser) {
+    const yearFields = [
+        itemsParser_1.FIELD_NAMES.YEAR_COMPLETED, // 'Rok kolaudace' — primary field the API actually returns
+        itemsParser_1.FIELD_NAMES.YEAR_BUILT, // 'Rok postavení'
+        itemsParser_1.FIELD_NAMES.YEAR_BUILT_ALT, // 'Rok výstavby'
+    ];
+    for (const field of yearFields) {
+        const numericValue = parser.getNumber(field);
+        if (numericValue && numericValue >= 1800 && numericValue <= 2100) {
+            return numericValue;
+        }
+        const value = parser.getString(field);
+        if (value) {
+            const match = value.match(/\b(1[8-9]\d{2}|20\d{2})\b/);
+            const year = match ? parseInt(match[0]) : undefined;
+            if (year && year >= 1800 && year <= 2100) {
+                return year;
+            }
+        }
+    }
+    return undefined;
+}
+/**
+ * Extract renovation year using parser
+ */
+function extractRenovationYear(parser) {
+    const numericValue = parser.getNumber(itemsParser_1.FIELD_NAMES.RENOVATION_YEAR);
+    if (numericValue && numericValue >= 1800 && numericValue <= 2100) {
+        return numericValue;
+    }
+    const value = parser.getString(itemsParser_1.FIELD_NAMES.RENOVATION_YEAR);
+    if (value) {
+        const match = value.match(/\b(1[8-9]\d{2}|20\d{2})\b/);
+        const year = match ? parseInt(match[0]) : undefined;
+        if (year && year >= 1800 && year <= 2100) {
+            return year;
+        }
+    }
+    return undefined;
+}
+/**
+ * Map Czech building type to construction_type enum
+ */
+function mapBuildingType(raw) {
+    if (!raw)
+        return undefined;
+    const normalized = raw.toLowerCase();
+    if (normalized.includes('cihla') || normalized.includes('cihl'))
+        return 'brick';
+    if (normalized.includes('dřev') || normalized.includes('drev'))
+        return 'wood';
+    if (normalized.includes('kámen') || normalized.includes('kamen'))
+        return 'stone';
+    if (normalized.includes('beton'))
+        return 'concrete';
+    if (normalized.includes('smíšen') || normalized.includes('smisen'))
+        return 'mixed';
+    return undefined;
+}
+/**
+ * Map Czech condition to enum
+ */
+function mapCondition(raw) {
+    if (!raw)
+        return undefined;
+    const normalized = raw.toLowerCase();
+    if (normalized.includes('novostavba') || normalized.includes('nový'))
+        return 'new';
+    if (normalized.includes('výborný') || normalized.includes('vyborny'))
+        return 'excellent';
+    if (normalized.includes('velmi dobrý') || normalized.includes('dobrý') || normalized.includes('dobry'))
+        return 'good';
+    if (normalized.includes('po rekonstrukci') || normalized.includes('renovován'))
+        return 'after_renovation';
+    if (normalized.includes('vyžaduje') || normalized.includes('projekt') || normalized.includes('k rekonstrukci'))
+        return 'requires_renovation';
+    return undefined;
+}
+/**
+ * Extract roof type using parser (house-specific!)
+ */
+function extractRoofType(parser) {
+    const roofValue = parser.getStringOr(itemsParser_1.FIELD_NAMES.TYP_STRECHY, itemsParser_1.FIELD_NAMES.STRECHA);
+    if (!roofValue)
+        return undefined;
+    const normalized = roofValue.toLowerCase();
+    if (normalized.includes('plochá') || normalized.includes('plocha'))
+        return 'flat';
+    if (normalized.includes('sedlová') || normalized.includes('sedlova'))
+        return 'gable';
+    if (normalized.includes('valbová') || normalized.includes('valbova'))
+        return 'hip';
+    if (normalized.includes('mansardová') || normalized.includes('mansardova'))
+        return 'mansard';
+    if (normalized.includes('stanová') || normalized.includes('stanova'))
+        return 'gambrel';
+    return undefined;
+}
+/**
+ * Extract financial value using parser (tax, fees, etc.)
+ */
+function extractFinancial(parser, ...fieldNames) {
+    for (const field of fieldNames) {
+        const value = parser.getString(field);
+        if (value) {
+            const normalized = value
+                .replace(/\s+/g, '')
+                .replace(/Kč|CZK/gi, '')
+                .replace(/\/rok|\/měsíc|\/month|\/year/gi, '')
+                .replace(',', '.')
+                .trim();
+            const parsed = parseFloat(normalized);
+            return !isNaN(parsed) && parsed > 0 ? parsed : undefined;
+        }
+    }
+    return undefined;
+}
+/**
+ * Extract total room count from disposition
+ */
+function extractRooms(disposition) {
+    if (!disposition)
+        return undefined;
+    const match = disposition.match(/^(\d)\+(\d|kk)/i);
+    if (!match)
+        return undefined;
+    const baseRooms = parseInt(match[1]);
+    const additional = match[2].toLowerCase() === 'kk' ? 0 : 1;
+    return baseRooms + additional;
+}
+/**
+ * Build features list from amenities using parser
+ */
+function buildFeaturesList(parser, has_garden, has_garage, has_parking, has_pool, has_fireplace, has_terrace, has_attic, has_basement) {
+    const features = [];
+    // House-specific amenities
+    if (has_garden)
+        features.push('garden');
+    if (has_garage)
+        features.push('garage');
+    if (has_parking)
+        features.push('parking');
+    if (has_pool)
+        features.push('pool');
+    if (has_fireplace)
+        features.push('fireplace');
+    if (has_terrace)
+        features.push('terrace');
+    if (has_attic)
+        features.push('attic');
+    if (has_basement)
+        features.push('basement');
+    // Extract furnished status (handles boolean true/false and string "Částečně")
+    const furnishedVal = parser.getRaw(itemsParser_1.FIELD_NAMES.FURNISHED)?.value;
+    const furnishedNorm = (0, czech_value_mappings_1.normalizeFurnished)(furnishedVal);
+    if (furnishedNorm === 'furnished')
+        features.push('furnished');
+    else if (furnishedNorm === 'partially_furnished')
+        features.push('partially_furnished');
+    // Extract AC
+    if (parser.getBoolean(itemsParser_1.FIELD_NAMES.KLIMATIZACE)) {
+        features.push('air_conditioning');
+    }
+    // Extract accessibility
+    if (parser.getBooleanOr(itemsParser_1.FIELD_NAMES.BEZBARIEROVY, itemsParser_1.FIELD_NAMES.BEZBARIEROVA)) {
+        features.push('wheelchair_accessible');
+    }
+    // Extract security features
+    if (parser.getBooleanOr(itemsParser_1.FIELD_NAMES.ALARM, itemsParser_1.FIELD_NAMES.ZABEZPECOVACI_SYSTEM)) {
+        features.push('security_system');
+    }
+    // Solar panels (common for houses)
+    if (parser.getBooleanOr(itemsParser_1.FIELD_NAMES.SOLARNI_PANELY, itemsParser_1.FIELD_NAMES.FOTOVOLTAIKA)) {
+        features.push('solar_panels');
+    }
+    return features;
+}

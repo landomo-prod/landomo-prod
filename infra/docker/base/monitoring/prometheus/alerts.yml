@@ -1,0 +1,260 @@
+# Prometheus Alert Rules
+# Complete alert rules for Landomo platform monitoring
+# Location: docker/prometheus/alerts.yml
+#
+# These rules work with both Prometheus Alertmanager and Grafana Alerting
+
+groups:
+  # ========================================
+  # Security Alerts
+  # ========================================
+  - name: security
+    interval: 30s
+    rules:
+      - alert: HighFailedAuthRate
+        expr: rate(http_requests_total{status="401"}[5m]) > 10
+        for: 5m
+        labels:
+          severity: high
+          category: security
+          team: security
+        annotations:
+          summary: "High failed authentication rate on {{ $labels.instance }}"
+          description: "{{ $value | humanize }} failed auth per second on {{ $labels.country }}"
+
+      - alert: RateLimitCritical
+        expr: rate(http_requests_total{status="429"}[5m]) > 100
+        for: 5m
+        labels:
+          severity: critical
+          category: security
+          team: security
+        annotations:
+          summary: "CRITICAL: Excessive rate limit violations"
+          description: "{{ $value | humanize }} rate limit violations per second"
+
+      - alert: ExpiredAPIKeyUsed
+        expr: increase(api_key_expired_total[5m]) > 0
+        labels:
+          severity: high
+          category: security
+          team: security
+        annotations:
+          summary: "Expired API key attempted"
+          description: "{{ $value }} attempts with expired key"
+
+      - alert: SecretAgeCritical
+        expr: secret_age_days > 90
+        labels:
+          severity: high
+          category: security
+          team: security
+        annotations:
+          summary: "Secret rotation overdue"
+          description: "{{ $labels.secret }} is {{ $value }} days old"
+
+  # ========================================
+  # Operations Alerts
+  # ========================================
+  - name: operations
+    interval: 1m
+    rules:
+      - alert: ScraperDown
+        expr: up{job=~"scraper-.*"} == 0
+        for: 15m
+        labels:
+          severity: critical
+          category: operations
+          team: ops
+        annotations:
+          summary: "Scraper {{ $labels.instance }} is down"
+          description: "Scraper {{ $labels.job }} ({{ $labels.country }}) unreachable for 15+ minutes"
+
+      - alert: APIErrorRateHigh
+        expr: |
+          (
+            rate(http_requests_total{status=~"5.."}[5m]) /
+            rate(http_requests_total[5m])
+          ) * 100 > 5
+        for: 10m
+        labels:
+          severity: critical
+          category: operations
+          team: ops
+        annotations:
+          summary: "High API error rate on {{ $labels.instance }}"
+          description: "{{ $value | humanizePercentage }} of requests failing"
+
+      - alert: NoPropertiesIngested
+        expr: increase(properties_ingested_total[1h]) < 1
+        for: 1h
+        labels:
+          severity: critical
+          category: operations
+          team: ops
+        annotations:
+          summary: "No properties ingested for {{ $labels.country }}"
+          description: "No ingestion activity in {{ $labels.country }} for 1+ hour"
+
+      - alert: WorkerQueueDepthHigh
+        expr: bullmq_queue_waiting_count > 10000
+        for: 15m
+        labels:
+          severity: high
+          category: operations
+          team: ops
+        annotations:
+          summary: "High queue depth on {{ $labels.queue_name }}"
+          description: "{{ $value }} jobs waiting in {{ $labels.queue_name }}"
+
+  # ========================================
+  # Infrastructure Alerts
+  # ========================================
+  - name: infrastructure
+    interval: 1m
+    rules:
+      - alert: DatabaseConnectionFailure
+        expr: rate(pg_stat_database_xact_rollback[5m]) > 10
+        for: 5m
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "High database error rate on {{ $labels.instance }}"
+          description: "{{ $value | humanize }} transaction rollbacks per second"
+
+      - alert: RedisMemoryHigh
+        expr: |
+          (
+            redis_memory_used_bytes /
+            redis_memory_max_bytes
+          ) * 100 > 80
+        for: 10m
+        labels:
+          severity: high
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "High Redis memory usage on {{ $labels.instance }}"
+          description: "Redis at {{ $value | humanizePercentage }} of maximum"
+
+      - alert: DiskSpaceLow
+        expr: |
+          (
+            node_filesystem_avail_bytes{fstype!~"tmpfs|fuse.*"} /
+            node_filesystem_size_bytes{fstype!~"tmpfs|fuse.*"}
+          ) * 100 < 20
+        for: 5m
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "Low disk space on {{ $labels.instance }}"
+          description: "Disk {{ $labels.mountpoint }} at {{ $value | humanizePercentage }} free"
+
+      - alert: BackupFailure
+        expr: backup_last_success_timestamp_seconds < (time() - 86400)
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "Backup failure for {{ $labels.database }}"
+          description: "Last successful backup over 24 hours ago"
+
+      - alert: BackupDurationLong
+        expr: backup_duration_seconds > 3600
+        labels:
+          severity: medium
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "Long backup duration for {{ $labels.database }}"
+          description: "Backup took {{ $value | humanizeDuration }} (threshold: 1 hour)"
+
+  # ========================================
+  # Node/Host Alerts
+  # ========================================
+  - name: node
+    interval: 1m
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 10m
+        labels:
+          severity: high
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage at {{ $value | humanizePercentage }}"
+
+      - alert: HighMemoryUsage
+        expr: |
+          (
+            1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)
+          ) * 100 > 90
+        for: 5m
+        labels:
+          severity: high
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "High memory usage on {{ $labels.instance }}"
+          description: "Memory at {{ $value | humanizePercentage }} usage"
+
+      - alert: HighLoadAverage
+        expr: node_load15 / count(node_cpu_seconds_total{mode="idle"}) without(mode, cpu) > 2
+        for: 10m
+        labels:
+          severity: medium
+          category: infrastructure
+          team: ops
+        annotations:
+          summary: "High load average on {{ $labels.instance }}"
+          description: "Load average {{ $value }} (2x CPU count)"
+
+  # ========================================
+  # Service Health Alerts
+  # ========================================
+  - name: service_health
+    interval: 30s
+    rules:
+      - alert: ServiceDown
+        expr: up{job!~"scraper-.*"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          category: operations
+          team: ops
+        annotations:
+          summary: "Service {{ $labels.job }} is down"
+          description: "{{ $labels.instance }} unreachable for 5+ minutes"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 1
+        for: 10m
+        labels:
+          severity: medium
+          category: operations
+          team: ops
+        annotations:
+          summary: "High response time on {{ $labels.instance }}"
+          description: "P95 response time {{ $value }}s (threshold: 1s)"
+
+      - alert: HighErrorRate
+        expr: |
+          (
+            rate(http_requests_total{status=~"4..|5.."}[5m]) /
+            rate(http_requests_total[5m])
+          ) * 100 > 10
+        for: 10m
+        labels:
+          severity: high
+          category: operations
+          team: ops
+        annotations:
+          summary: "High error rate on {{ $labels.instance }}"
+          description: "{{ $value | humanizePercentage }} of requests failing"

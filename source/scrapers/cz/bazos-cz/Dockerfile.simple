@@ -1,0 +1,31 @@
+# Simple runtime-only Dockerfile for Bazos scraper
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy pre-built application
+COPY ["scrapers/Czech Republic/bazos/dist", "./dist/"]
+COPY ["scrapers/Czech Republic/bazos/package.json", "./package.json"]
+COPY ["scrapers/Czech Republic/bazos/node_modules", "./node_modules/"]
+
+# Copy shared-components (already built locally)
+COPY ["shared-components/dist", "/shared/dist/"]
+COPY ["shared-components/package.json", "/shared/package.json"]
+
+# Update package.json to point to copied shared-components
+RUN sed -i 's|file:../../../shared-components|file:///shared|g' package.json
+
+# Create non-root user
+RUN addgroup -g 1001 scraper && \
+    adduser -D -u 1001 -G scraper scraper && \
+    chown -R scraper:scraper /app
+
+USER scraper
+
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"
+
+CMD ["npm", "start"]

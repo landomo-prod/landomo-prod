@@ -1,0 +1,145 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e7] [cursor=pointer]:
+    - img [ref=e8]
+  - alert [ref=e11]
+  - generic [ref=e12]:
+    - navigation [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15] [cursor=pointer]:
+          - img [ref=e17]
+          - generic [ref=e22]: Landomo
+        - generic [ref=e23]:
+          - link "Buy" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+          - link "Rent" [ref=e25] [cursor=pointer]:
+            - /url: "#"
+          - link "Sell" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+          - link "Home Loans" [ref=e27] [cursor=pointer]:
+            - /url: "#"
+      - button "Log in" [ref=e29]
+    - banner [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - textbox "Search by district, street, or ZIP code..." [ref=e36]
+        - generic [ref=e37]:
+          - 'button "Price: Any" [ref=e38]':
+            - generic [ref=e39]: "Price: Any"
+            - img [ref=e40]
+          - 'button "Type: Any" [ref=e42]':
+            - generic [ref=e43]: "Type: Any"
+            - img [ref=e44]
+          - 'button "Disposition: Any" [ref=e46]':
+            - generic [ref=e47]: "Disposition: Any"
+            - img [ref=e48]
+          - 'button "Area: Any" [ref=e50]':
+            - generic [ref=e51]: "Area: Any"
+            - img [ref=e52]
+          - button "More" [ref=e54]:
+            - img
+            - generic [ref=e55]: More
+        - button "Sort" [ref=e56]:
+          - text: Sort
+          - img [ref=e57]
+    - generic [ref=e60]:
+      - complementary [ref=e61]:
+        - navigation [ref=e62]:
+          - button "Map Explorer" [ref=e63]:
+            - img [ref=e64]
+            - generic [ref=e66]: Map Explorer
+          - button "Property List" [ref=e67]:
+            - img [ref=e68]
+            - generic [ref=e69]: Property List
+          - button "Saved" [ref=e70]:
+            - img [ref=e71]
+            - generic [ref=e73]: Saved
+          - button "Notifications" [ref=e74]:
+            - img [ref=e75]
+            - generic [ref=e78]: Notifications
+        - navigation [ref=e79]:
+          - button "Collapse" [ref=e80]:
+            - img [ref=e81]
+            - generic [ref=e83]: Collapse
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - button "Zoom in" [ref=e87] [cursor=pointer]:
+            - img [ref=e88]
+          - button "Zoom out" [ref=e89] [cursor=pointer]:
+            - img [ref=e90]
+        - generic [ref=e92]:
+          - paragraph [ref=e93]: 0 properties in view
+          - generic [ref=e94]:
+            - img [ref=e95]
+            - paragraph [ref=e98]: No properties found
+            - paragraph [ref=e99]: Try adjusting your filters
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - generic [ref=e103]:
+              - img "Vinohradská 12" [ref=e104]
+              - button [ref=e105]:
+                - img [ref=e106]
+              - button [ref=e108]:
+                - img [ref=e109]
+            - generic [ref=e111]:
+              - img "Thumbnail 1" [ref=e113] [cursor=pointer]
+              - img "Thumbnail 2" [ref=e115] [cursor=pointer]
+              - img "Thumbnail 3" [ref=e117] [cursor=pointer]
+              - img "Thumbnail 4" [ref=e119] [cursor=pointer]
+              - img "Thumbnail 5" [ref=e121] [cursor=pointer]
+              - img "Thumbnail 6" [ref=e123] [cursor=pointer]
+          - generic [ref=e124]:
+            - button [ref=e125]:
+              - img [ref=e126]
+            - heading "€285,000" [level=1] [ref=e130]
+            - generic [ref=e131]: SALE
+            - paragraph [ref=e132]: Vinohradská 12, Praha 2
+          - generic [ref=e134]:
+            - generic [ref=e135]:
+              - img [ref=e136]
+              - generic [ref=e138]: "3"
+            - generic [ref=e139]:
+              - img [ref=e140]
+              - generic [ref=e143]: "1"
+            - generic [ref=e144]:
+              - img [ref=e145]
+              - generic [ref=e150]: 78 m²
+          - generic [ref=e151]:
+            - heading "Description" [level=3] [ref=e152]
+            - paragraph [ref=e153]: Beautifully renovated apartment in the heart of Vinohrady, one of Prague's most sought-after residential neighborhoods. This stunning 3+kk offers bright and spacious living areas with a charming balcony overlooking a peaceful courtyard.
+            - button "Read more" [ref=e154]
+          - generic [ref=e155]:
+            - heading "Amenities" [level=3] [ref=e156]
+            - generic [ref=e157]:
+              - generic [ref=e158]:
+                - img [ref=e159]
+                - generic [ref=e163]: Parking
+              - generic [ref=e164]:
+                - img [ref=e165]
+                - generic [ref=e169]: Balcony
+          - generic [ref=e170]:
+            - generic [ref=e173]:
+              - heading "John Doe" [level=4] [ref=e174]
+              - paragraph [ref=e175]: Licensed Real Estate Agent
+            - generic [ref=e176]:
+              - button "Book Viewing" [ref=e177]
+              - button [ref=e178]:
+                - img [ref=e179]
+            - paragraph [ref=e181]: Usually responds within 2 hours
+          - generic [ref=e182]:
+            - heading "Mortgage Calculator" [level=3] [ref=e183]
+            - generic [ref=e184]:
+              - generic [ref=e185]:
+                - generic [ref=e186]: Purchase Price
+                - generic [ref=e187]: €285,000
+              - generic [ref=e188]:
+                - generic [ref=e189]: 20% down
+                - generic [ref=e190]: 30 yr
+                - generic [ref=e191]: 4.5% rate
+              - generic [ref=e192]:
+                - text: Est. Monthly Payment
+                - paragraph [ref=e193]: €912
+```

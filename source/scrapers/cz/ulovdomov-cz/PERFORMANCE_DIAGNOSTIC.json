@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-07T20:18:47.396Z",
+  "apiBase": "https://ud.api.ulovdomov.cz/v1",
+  "diagnostics": {
+    "apiConnectivity": "unresponsive",
+    "endpointTests": {},
+    "capacityMetrics": {},
+    "speedMetrics": {}
+  },
+  "errors": [
+    "API connectivity issue: Request failed with status code 500"
+  ],
+  "recommendations": [
+    "API is currently unresponsive - check if service is down or endpoint changed",
+    "Verify API URL is still: https://ud.api.ulovdomov.cz/v1",
+    "Check for network/firewall issues",
+    "Unable to determine capacity - API connectivity issues",
+    "Review errors above and check API documentation for changes"
+  ]
+}

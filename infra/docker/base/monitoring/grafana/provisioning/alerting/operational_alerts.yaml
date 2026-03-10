@@ -1,0 +1,478 @@
+# Grafana Alert Rules - Operational Monitoring
+# Auto-provisioned operational alerts for Landomo platform
+# Location: docker/grafana/provisioning/alerting/operational_alerts.yaml
+
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: operational_alerts
+    folder: Operations
+    interval: 1m
+    rules:
+      # ========================================
+      # Scraper Health Alerts
+      # ========================================
+
+      - uid: scraper_down
+        title: Scraper Down for 15+ Minutes
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: up{job=~"scraper-.*"} == 0
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: eq
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: Alerting
+        execErrState: Alerting
+        for: 15m
+        annotations:
+          summary: 'Scraper {{ $labels.instance }} is down'
+          description: 'Scraper {{ $labels.job }} ({{ $labels.country }}) has been unreachable for over 15 minutes'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/scraper-down'
+        labels:
+          severity: critical
+          category: operations
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # Database Alerts
+      # ========================================
+
+      - uid: database_connection_failure
+        title: Database Connection Failures
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: rate(pg_stat_database_xact_rollback[5m]) > 10
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 10
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 5m
+        annotations:
+          summary: 'High database error rate on {{ $labels.instance }}'
+          description: '{{ $value | humanize }} transaction rollbacks per second on {{ $labels.datname }}'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/database-errors'
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # Redis Alerts
+      # ========================================
+
+      - uid: redis_memory_high
+        title: Redis Memory Usage >80%
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: |
+                (
+                  redis_memory_used_bytes /
+                  redis_memory_max_bytes
+                ) * 100
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 80
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 10m
+        annotations:
+          summary: 'High Redis memory usage on {{ $labels.instance }}'
+          description: 'Redis memory at {{ $value | humanizePercentage }} of maximum ({{ $labels.instance }})'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/redis-memory'
+        labels:
+          severity: high
+          category: infrastructure
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # Worker Queue Alerts
+      # ========================================
+
+      - uid: worker_queue_depth_high
+        title: Worker Queue Depth >10,000
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: bullmq_queue_waiting_count
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 10000
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 15m
+        annotations:
+          summary: 'High queue depth on {{ $labels.queue_name }}'
+          description: '{{ $value }} jobs waiting in {{ $labels.queue_name }} ({{ $labels.country }})'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/queue-backlog'
+        labels:
+          severity: high
+          category: operations
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # Disk Space Alerts
+      # ========================================
+
+      - uid: disk_space_low
+        title: Disk Space <20%
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: |
+                (
+                  node_filesystem_avail_bytes{fstype!~"tmpfs|fuse.*"} /
+                  node_filesystem_size_bytes{fstype!~"tmpfs|fuse.*"}
+                ) * 100
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 20
+                    type: lt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 5m
+        annotations:
+          summary: 'Low disk space on {{ $labels.instance }}'
+          description: 'Disk {{ $labels.mountpoint }} at {{ $value | humanizePercentage }} free on {{ $labels.instance }}'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/disk-space'
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # API Error Rate Alerts
+      # ========================================
+
+      - uid: api_error_rate_high
+        title: API Error Rate >5%
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: |
+                (
+                  rate(http_requests_total{status=~"5.."}[5m]) /
+                  rate(http_requests_total[5m])
+                ) * 100
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 5
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 10m
+        annotations:
+          summary: 'High API error rate on {{ $labels.instance }}'
+          description: '{{ $value | humanizePercentage }} of API requests failing on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/api-errors'
+        labels:
+          severity: critical
+          category: operations
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # Ingestion Health Alerts
+      # ========================================
+
+      - uid: no_properties_ingested
+        title: No Properties Ingested for 1+ Hour
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: increase(properties_ingested_total[1h])
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: lt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: Alerting
+        execErrState: Alerting
+        for: 1h
+        annotations:
+          summary: 'No properties ingested for {{ $labels.country }}'
+          description: 'No properties have been ingested for {{ $labels.country }} in the last hour'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/no-ingestion'
+        labels:
+          severity: critical
+          category: operations
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # Backup Alerts
+      # ========================================
+
+      - uid: backup_failure
+        title: Backup Failure Detected
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: backup_last_success_timestamp_seconds < (time() - 86400)
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: eq
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: Alerting
+        execErrState: Alerting
+        for: 0m
+        annotations:
+          summary: 'Backup failure for {{ $labels.database }}'
+          description: 'Last successful backup for {{ $labels.database }} was over 24 hours ago'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/backup-failure'
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        isPaused: false
+
+      - uid: backup_duration_long
+        title: Backup Duration Unusually Long
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: backup_duration_seconds
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 3600
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 0m
+        annotations:
+          summary: 'Long backup duration for {{ $labels.database }}'
+          description: 'Backup for {{ $labels.database }} took {{ $value | humanizeDuration }} (threshold: 1 hour)'
+          dashboard: 'https://grafana.company.com/d/operational-monitoring'
+          runbook: 'https://docs.company.com/runbooks/backup-performance'
+        labels:
+          severity: medium
+          category: infrastructure
+          team: ops
+        isPaused: false

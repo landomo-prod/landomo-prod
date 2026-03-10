@@ -1,0 +1,94 @@
+🚀 SReality Scraper Performance Test
+====================================
+
+
+📊 Testing Apartments (Category 1)...
+  Page 1: 100 estates | Response time: 475ms | Total available: 27093
+  Page 2: 100 estates | Response time: 315ms | Total available: 27093
+  Page 3: 100 estates | Response time: 313ms | Total available: 27093
+  Page 4: 100 estates | Response time: 577ms | Total available: 27093
+  Page 5: 100 estates | Response time: 453ms | Total available: 27093
+  Page 6: 100 estates | Response time: 467ms | Total available: 27093
+  Page 7: 100 estates | Response time: 433ms | Total available: 27093
+  Page 8: 100 estates | Response time: 411ms | Total available: 27093
+  Page 9: 100 estates | Response time: 412ms | Total available: 27093
+  Page 10: 100 estates | Response time: 442ms | Total available: 27093
+
+📊 Testing Houses (Category 2)...
+  Page 1: 100 estates | Response time: 538ms | Total available: 18365
+  Page 2: 100 estates | Response time: 519ms | Total available: 18365
+  Page 3: 100 estates | Response time: 429ms | Total available: 18365
+  Page 4: 100 estates | Response time: 540ms | Total available: 18365
+  Page 5: 100 estates | Response time: 361ms | Total available: 18365
+  Page 6: 100 estates | Response time: 346ms | Total available: 18365
+  Page 7: 100 estates | Response time: 316ms | Total available: 18365
+  Page 8: 100 estates | Response time: 444ms | Total available: 18365
+  Page 9: 100 estates | Response time: 568ms | Total available: 18365
+  Page 10: 100 estates | Response time: 483ms | Total available: 18365
+
+📊 Testing Land (Category 3)...
+  Page 1: 100 estates | Response time: 605ms | Total available: 27013
+  Page 2: 100 estates | Response time: 546ms | Total available: 27013
+  Page 3: 100 estates | Response time: 405ms | Total available: 27013
+  Page 4: 100 estates | Response time: 423ms | Total available: 27013
+  Page 5: 100 estates | Response time: 543ms | Total available: 27013
+  Page 6: 100 estates | Response time: 519ms | Total available: 27013
+  Page 7: 100 estates | Response time: 602ms | Total available: 27013
+  Page 8: 100 estates | Response time: 452ms | Total available: 27013
+  Page 9: 100 estates | Response time: 488ms | Total available: 27013
+  Page 10: 100 estates | Response time: 471ms | Total available: 27013
+
+📊 Testing Commercial (Category 4)...
+  Page 1: 100 estates | Response time: 314ms | Total available: 19077
+  Page 2: 100 estates | Response time: 415ms | Total available: 19077
+  Page 3: 100 estates | Response time: 616ms | Total available: 19077
+  Page 4: 100 estates | Response time: 471ms | Total available: 19077
+  Page 5: 100 estates | Response time: 504ms | Total available: 19077
+  Page 6: 100 estates | Response time: 315ms | Total available: 19077
+  Page 7: 100 estates | Response time: 299ms | Total available: 19077
+  Page 8: 100 estates | Response time: 402ms | Total available: 19077
+  Page 9: 100 estates | Response time: 408ms | Total available: 19077
+  Page 10: 100 estates | Response time: 483ms | Total available: 19077
+
+
+📈 PERFORMANCE TEST SUMMARY
+===========================
+
+Total Test Duration: 32.57s
+Total Pages Scraped: 40
+Total Estates Scraped: 4000
+Total Estates Available: 91548
+Average Listings/Second: 122.82
+Pages/Second: 1.23
+Estimated Time to Scrape All: 0h 12m
+Rate Limit Detected: NO
+
+📊 By Category:
+  Apartments:
+    - Total Available: 27093
+    - Scraped: 1000 (10 pages)
+    - Speed: 133.00 listings/sec
+    - Avg Page Time: 430ms
+  Houses:
+    - Total Available: 18365
+    - Scraped: 1000 (10 pages)
+    - Speed: 120.82 listings/sec
+    - Avg Page Time: 454ms
+  Land:
+    - Total Available: 27013
+    - Scraped: 1000 (10 pages)
+    - Speed: 112.11 listings/sec
+    - Avg Page Time: 505ms
+  Commercial:
+    - Total Available: 19077
+    - Scraped: 1000 (10 pages)
+    - Speed: 127.36 listings/sec
+    - Avg Page Time: 423ms
+
+⚙️  Recommendations:
+  - Batch Size: 100 listings per request
+  - Delay Between Requests: 500ms
+  - Concurrent Requests: 3-5 (with proper delays)
+  - Daily Capacity: ~17280000 listings
+
+✅ Report saved to PERFORMANCE_REPORT.json

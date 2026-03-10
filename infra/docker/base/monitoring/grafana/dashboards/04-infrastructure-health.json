@@ -1,0 +1,699 @@
+{
+  "title": "Infrastructure Health",
+  "tags": [
+    "landomo",
+    "infrastructure",
+    "health"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "uid": "landomo-infrastructure-health",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Database Connections",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Active Connections\" FROM pg_stat_activity WHERE state = 'active'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 50,
+                "color": "yellow"
+              },
+              {
+                "value": 80,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Idle Connections",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Idle\" FROM pg_stat_activity WHERE state = 'idle'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Database Size",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT pg_database_size(current_database()) as \"Size\"",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 10737418240,
+                "color": "yellow"
+              },
+              {
+                "value": 53687091200,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "bytes"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Total Rows (All Tables)",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  (SELECT COUNT(*) FROM properties) + \n  (SELECT COUNT(*) FROM ingestion_log) + \n  (SELECT COUNT(*) FROM property_changes) + \n  (SELECT COUNT(*) FROM scrape_runs) as \"Total Rows\"",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Active Database Connections Over Time",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  NOW() as time,\n  COUNT(*) FILTER (WHERE state = 'active') as \"Active\",\n  COUNT(*) FILTER (WHERE state = 'idle') as \"Idle\",\n  COUNT(*) FILTER (WHERE state = 'idle in transaction') as \"Idle in Transaction\"\nFROM pg_stat_activity \nWHERE datname = current_database()",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "showPoints": "auto"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Active"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Idle"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Idle in Transaction"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Table Sizes",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  tablename as metric,\n  pg_total_relation_size(schemaname||'.'||tablename) as value\nFROM pg_tables \nWHERE schemaname = 'public' \nORDER BY value DESC \nLIMIT 10",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "bytes"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Long Running Queries",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  pid as \"PID\",\n  usename as \"User\",\n  application_name as \"Application\",\n  state as \"State\",\n  EXTRACT(EPOCH FROM (NOW() - query_start)) as \"Duration (s)\",\n  LEFT(query, 100) as \"Query\"\nFROM pg_stat_activity \nWHERE state != 'idle' \n  AND query NOT LIKE '%pg_stat_activity%'\n  AND query_start < NOW() - INTERVAL '10 seconds'\nORDER BY query_start ASC",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 8,
+      "title": "Database Transaction Rate",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  NOW() as time,\n  xact_commit as \"Commits\",\n  xact_rollback as \"Rollbacks\"\nFROM pg_stat_database \nWHERE datname = current_database()",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "showPoints": "auto"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Commits"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rollbacks"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Cache Hit Ratio",
+      "type": "gauge",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 24
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  ROUND(100.0 * blks_hit / NULLIF(blks_hit + blks_read, 0), 2) as \"Cache Hit Ratio\"\nFROM pg_stat_database \nWHERE datname = current_database()",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 80,
+                "color": "yellow"
+              },
+              {
+                "value": 95,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        }
+      },
+      "options": {
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 10,
+      "title": "Deadlocks",
+      "type": "stat",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 24
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT deadlocks as \"Deadlocks\" FROM pg_stat_database WHERE datname = current_database()",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 1,
+                "color": "yellow"
+              },
+              {
+                "value": 10,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 11,
+      "title": "Index Usage",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  schemaname as \"Schema\",\n  tablename as \"Table\",\n  indexname as \"Index\",\n  idx_scan as \"Scans\",\n  pg_size_pretty(pg_relation_size(indexrelid)) as \"Size\"\nFROM pg_stat_user_indexes \nORDER BY idx_scan DESC \nLIMIT 20",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 12,
+      "title": "Unused Indexes",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  schemaname as \"Schema\",\n  tablename as \"Table\",\n  indexname as \"Index\",\n  idx_scan as \"Scans\",\n  pg_size_pretty(pg_relation_size(indexrelid)) as \"Size\"\nFROM pg_stat_user_indexes \nWHERE idx_scan = 0 \n  AND indexrelname NOT LIKE '%_pkey'\nORDER BY pg_relation_size(indexrelid) DESC \nLIMIT 20",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 13,
+      "title": "Worker Queue Status",
+      "type": "table",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 42
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  'Properties Ingested (24h)' as \"Metric\",\n  COUNT(*) as \"Count\"\nFROM ingestion_log \nWHERE ingested_at > NOW() - INTERVAL '24 hours'\nUNION ALL\nSELECT \n  'Scrape Runs (24h)' as \"Metric\",\n  COUNT(*) as \"Count\"\nFROM scrape_runs \nWHERE started_at > NOW() - INTERVAL '24 hours'\nUNION ALL\nSELECT \n  'Property Changes (24h)' as \"Metric\",\n  COUNT(*) as \"Count\"\nFROM property_changes \nWHERE changed_at > NOW() - INTERVAL '24 hours'\nUNION ALL\nSELECT \n  'Status History Records (24h)' as \"Metric\",\n  COUNT(*) as \"Count\"\nFROM listing_status_history \nWHERE started_at > NOW() - INTERVAL '24 hours'",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 14,
+      "title": "Ingestion Throughput (per minute)",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 42
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  date_trunc('minute', ingested_at) as time,\n  COUNT(*) as \"Properties/min\"\nFROM ingestion_log \nWHERE ingested_at > NOW() - INTERVAL '6 hours'\nGROUP BY time \nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 20,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "single"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 15,
+      "title": "Slow Queries (>5s in last hour)",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 50
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  queryid as \"Query ID\",\n  calls as \"Calls\",\n  ROUND(mean_exec_time::numeric, 2) as \"Avg Time (ms)\",\n  ROUND(max_exec_time::numeric, 2) as \"Max Time (ms)\",\n  LEFT(query, 150) as \"Query\"\nFROM pg_stat_statements \nWHERE mean_exec_time > 5000 \nORDER BY mean_exec_time DESC \nLIMIT 20",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m"
+    ]
+  }
+}

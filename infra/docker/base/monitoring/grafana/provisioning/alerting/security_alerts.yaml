@@ -1,0 +1,513 @@
+# Grafana Alert Rules - Security Monitoring
+# Auto-provisioned security alerts for Landomo platform
+# Location: docker/grafana/provisioning/alerting/security_alerts.yaml
+
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: security_alerts
+    folder: Security
+    interval: 1m
+    rules:
+      # ========================================
+      # Authentication Alerts
+      # ========================================
+
+      - uid: high_failed_auth_rate
+        title: High Failed Authentication Rate
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: rate(http_requests_total{status="401"}[5m])
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 10
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 5m
+        annotations:
+          summary: 'High failed authentication rate on {{ $labels.instance }}'
+          description: '{{ $value | humanize }} failed auth per second on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/high-failed-auth'
+        labels:
+          severity: high
+          category: security
+          team: security
+        isPaused: false
+
+      - uid: unauthorized_api_access
+        title: Unauthorized API Access Attempts
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: increase(http_requests_total{status="401",path!="/api/v1/health"}[15m])
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 50
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 0m
+        annotations:
+          summary: 'Unauthorized API access attempts on {{ $labels.instance }}'
+          description: '{{ $value }} unauthorized attempts in last 15 minutes on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/unauthorized-access'
+        labels:
+          severity: high
+          category: security
+          team: security
+        isPaused: false
+
+      # ========================================
+      # Rate Limiting Alerts
+      # ========================================
+
+      - uid: rate_limit_warning
+        title: Rate Limit Threshold Warning
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: |
+                (
+                  rate(http_requests_total{status="429"}[5m]) /
+                  rate(http_requests_total[5m])
+                )
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.5
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 10m
+        annotations:
+          summary: 'High rate limit violations on {{ $labels.instance }}'
+          description: '{{ $value | humanizePercentage }} of requests hitting rate limits on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/rate-limit-warning'
+        labels:
+          severity: medium
+          category: security
+          team: security
+        isPaused: false
+
+      - uid: rate_limit_critical
+        title: Rate Limit Critical Threshold
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: rate(http_requests_total{status="429"}[5m])
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 100
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 5m
+        annotations:
+          summary: 'CRITICAL: Excessive rate limit violations on {{ $labels.instance }}'
+          description: '{{ $value | humanize }} rate limit violations per second on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/rate-limit-critical'
+        labels:
+          severity: critical
+          category: security
+          team: security
+        isPaused: false
+
+      # ========================================
+      # API Key Health Alerts
+      # ========================================
+
+      - uid: expired_key_used
+        title: Expired API Key Usage
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: increase(api_key_expired_total[5m])
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 0m
+        annotations:
+          summary: 'Expired API key attempted on {{ $labels.instance }}'
+          description: '{{ $value }} attempts with expired key {{ $labels.api_key_version }} on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/expired-key'
+        labels:
+          severity: high
+          category: security
+          team: security
+        isPaused: false
+
+      - uid: secret_age_warning
+        title: Secret Age Warning (80 Days)
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: secret_age_days
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 80
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 1h
+        annotations:
+          summary: 'Secret {{ $labels.secret }} rotation approaching'
+          description: '{{ $labels.secret }} is {{ $value }} days old (rotation recommended at 90 days)'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/secret-rotation'
+        labels:
+          severity: medium
+          category: security
+          team: security
+        isPaused: false
+
+      - uid: secret_age_critical
+        title: Secret Age Critical (90+ Days)
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: secret_age_days
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 90
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 0m
+        annotations:
+          summary: 'OVERDUE: Secret {{ $labels.secret }} rotation required'
+          description: '{{ $labels.secret }} is {{ $value }} days old - rotation overdue'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/secret-rotation'
+        labels:
+          severity: high
+          category: security
+          team: security
+        isPaused: false
+
+      # ========================================
+      # Infrastructure Security Alerts
+      # ========================================
+
+      - uid: redis_auth_failure
+        title: Redis Authentication Failures
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: rate(redis_connection_errors_total[1m])
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 5
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 2m
+        annotations:
+          summary: 'Redis connection failures on {{ $labels.instance }}'
+          description: '{{ $value | humanize }} Redis connection errors per second on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/redis-auth-failure'
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        isPaused: false
+
+      - uid: database_auth_failure
+        title: Database Authentication Failures
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: rate(database_connection_errors_total[1m])
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 5
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 2m
+        annotations:
+          summary: 'Database connection failures on {{ $labels.instance }}'
+          description: '{{ $value | humanize }} database connection errors per second on {{ $labels.country }}'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/database-auth-failure'
+        labels:
+          severity: critical
+          category: infrastructure
+          team: ops
+        isPaused: false
+
+      # ========================================
+      # Advanced Security Alerts
+      # ========================================
+
+      - uid: multiple_keys_same_ip
+        title: Multiple API Keys from Same IP
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: count(count(http_requests_total) by (remote_addr, api_key_version)) by (remote_addr)
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 3
+                    type: gt
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Alerting
+        for: 1h
+        annotations:
+          summary: 'Multiple API keys detected from {{ $labels.remote_addr }}'
+          description: '{{ $value }} different API keys used from the same IP address'
+          dashboard: 'https://grafana.company.com/d/security-monitoring'
+          runbook: 'https://docs.company.com/runbooks/multiple-keys-same-ip'
+        labels:
+          severity: medium
+          category: security
+          team: security
+        isPaused: false

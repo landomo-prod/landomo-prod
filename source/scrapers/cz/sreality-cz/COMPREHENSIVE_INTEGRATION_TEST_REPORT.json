@@ -1,0 +1,218 @@
+{
+  "timestamp": "2026-02-07T20:11:20.424Z",
+  "test_duration_ms": 5993,
+  "summary": {
+    "total_listings_tested": 5,
+    "successful_transformations": 5,
+    "failed_transformations": 0,
+    "overall_success_rate": 1
+  },
+  "coverage_metrics": {
+    "total_listings": 5,
+    "successful_transformations": 5,
+    "failed_transformations": 0,
+    "success_rate": 1,
+    "field_availability": {
+      "title": {
+        "count": 5,
+        "percentage": 100
+      },
+      "price": {
+        "count": 5,
+        "percentage": 100
+      },
+      "location": {
+        "count": 5,
+        "percentage": 100
+      },
+      "property_type": {
+        "count": 5,
+        "percentage": 100
+      },
+      "seller_company": {
+        "count": 5,
+        "percentage": 100
+      },
+      "seller_rating": {
+        "count": 0,
+        "percentage": 0
+      },
+      "seller_reviews": {
+        "count": 0,
+        "percentage": 0
+      },
+      "seller_phone": {
+        "count": 0,
+        "percentage": 0
+      },
+      "seller_email": {
+        "count": 5,
+        "percentage": 100
+      },
+      "has_accessibility": {
+        "count": 2,
+        "percentage": 40
+      },
+      "virtual_tour_url": {
+        "count": 0,
+        "percentage": 0
+      },
+      "tour_360_url": {
+        "count": 0,
+        "percentage": 0
+      },
+      "video_tour_url": {
+        "count": 0,
+        "percentage": 0
+      },
+      "floor_plan_urls": {
+        "count": 0,
+        "percentage": 0
+      },
+      "area_built": {
+        "count": 0,
+        "percentage": 0
+      },
+      "area_balcony": {
+        "count": 0,
+        "percentage": 0
+      },
+      "area_terrace": {
+        "count": 0,
+        "percentage": 0
+      },
+      "area_garden": {
+        "count": 0,
+        "percentage": 0
+      },
+      "area_cellar": {
+        "count": 1,
+        "percentage": 20
+      },
+      "area_loggia": {
+        "count": 1,
+        "percentage": 20
+      },
+      "bedrooms": {
+        "count": 0,
+        "percentage": 0
+      },
+      "bathrooms": {
+        "count": 5,
+        "percentage": 100
+      },
+      "sqm": {
+        "count": 0,
+        "percentage": 0
+      },
+      "has_balcony": {
+        "count": 1,
+        "percentage": 20
+      },
+      "has_terrace": {
+        "count": 0,
+        "percentage": 0
+      },
+      "has_elevator": {
+        "count": 4,
+        "percentage": 80
+      },
+      "has_ac": {
+        "count": 2,
+        "percentage": 40
+      },
+      "has_parking": {
+        "count": 3,
+        "percentage": 60
+      }
+    }
+  },
+  "sample_results": [
+    {
+      "listing_url": "https://www.sreality.cz/detail/undefined",
+      "transformation_success": true,
+      "extracted_fields": {
+        "title": "Pronájem bytu 2+kk 87 m²",
+        "price": 59000,
+        "location": "Pod Kaštany, Praha 6 - Bubeneč",
+        "property_type": "apartment",
+        "seller_company": "Unknown",
+        "seller_email": "lukas.cestr@engelvoelkers.com",
+        "bathrooms": 1,
+        "amenities_count": 2,
+        "has_elevator": true,
+        "has_parking": true
+      }
+    },
+    {
+      "listing_url": "https://www.sreality.cz/detail/undefined",
+      "transformation_success": true,
+      "extracted_fields": {
+        "title": "Prodej bytu 2+1 57 m²",
+        "price": 3390000,
+        "location": "Krasnoarmejců, Ostrava - Zábřeh",
+        "property_type": "apartment",
+        "seller_company": "Unknown",
+        "seller_email": "zichlarzova@pnholding.cz",
+        "bathrooms": 1,
+        "amenities_count": 1,
+        "has_ac": true
+      }
+    },
+    {
+      "listing_url": "https://www.sreality.cz/detail/undefined",
+      "transformation_success": true,
+      "extracted_fields": {
+        "title": "Pronájem bytu 2+kk 53 m²",
+        "price": 25500,
+        "location": "Pechmanových, Praha 9 - Vysočany",
+        "property_type": "apartment",
+        "seller_company": "Unknown",
+        "seller_email": "podpora@idealninajemce.cz",
+        "has_accessibility": true,
+        "bathrooms": 1,
+        "amenities_count": 4,
+        "has_balcony": true,
+        "has_elevator": true,
+        "has_parking": true
+      }
+    },
+    {
+      "listing_url": "https://www.sreality.cz/detail/undefined",
+      "transformation_success": true,
+      "extracted_fields": {
+        "title": "Pronájem bytu 4+kk 193 m²",
+        "price": 125000,
+        "location": "Zborovská, Praha 5 - Malá Strana",
+        "property_type": "apartment",
+        "seller_company": "Unknown",
+        "seller_email": "david.culik@engelvoelkers.com",
+        "bathrooms": 1,
+        "amenities_count": 2,
+        "has_elevator": true,
+        "has_parking": true
+      }
+    },
+    {
+      "listing_url": "https://www.sreality.cz/detail/undefined",
+      "transformation_success": true,
+      "extracted_fields": {
+        "title": "Prodej bytu 4+kk 106 m²",
+        "price": 25110320,
+        "location": "Praha 5",
+        "property_type": "apartment",
+        "seller_company": "Unknown",
+        "seller_email": "prodej@sekyragroup.cz",
+        "has_accessibility": true,
+        "area_cellar": 3,
+        "area_loggia": 11,
+        "bathrooms": 1,
+        "amenities_count": 4,
+        "has_elevator": true,
+        "has_ac": true
+      }
+    }
+  ],
+  "issues_encountered": [],
+  "compilation_status": "SUCCESS: All transformations compiled without errors"
+}

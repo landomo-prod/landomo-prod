@@ -1,0 +1,1081 @@
+{
+  "meta": {
+    "scraper": "ulovdomov-cz",
+    "listings_fetched": 800,
+    "details_fetched": 0,
+    "note": "API returns full data in listing response",
+    "timestamp": "2026-02-27T08:05:43.546Z"
+  },
+  "listing_fields": {
+    "absoluteUrl": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 800,
+      "sample_values": [
+        "https://www.ulovdomov.cz/inzerat/prodej-jirkov-jirkov-pionyru-3-1/5650303",
+        "https://www.ulovdomov.cz/inzerat/prodej-olomouc-povel-loudova-3-kk/5642110",
+        "https://www.ulovdomov.cz/inzerat/prodej-praha-strizkov-rumburska-3-1/5650294",
+        "https://www.ulovdomov.cz/inzerat/prodej-praha-vysocany-stridava-3-kk/5649621",
+        "https://www.ulovdomov.cz/inzerat/prodej-ostrozska-nova-ves-ostrozska-nova-ves-u-svatych-3-kk/5649097",
+        "https://www.ulovdomov.cz/inzerat/prodej-ostrozska-nova-ves-ostrozska-nova-ves-u-svatych-3-kk/5649096",
+        "https://www.ulovdomov.cz/inzerat/prodej-ostrozska-nova-ves-ostrozska-nova-ves-u-svatych-4-kk/5649098",
+        "https://www.ulovdomov.cz/inzerat/prodej-uhersky-brod-uhersky-brod-za-dolnim-kostelem-3-kk/5649559",
+        "https://www.ulovdomov.cz/inzerat/prodej-pribram-pribram-ii-fantova-louka-rodinny-dum/5650286",
+        "https://www.ulovdomov.cz/inzerat/prodej-kostelec-nad-labem-kostelec-nad-labem-k-jahodovce-rodinny-dum/5644805"
+      ]
+    },
+    "adminUrl": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 800,
+      "sample_values": [
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5650303",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5642110",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5650294",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5649621",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5649097",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5649096",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5649098",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5649559",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5650286",
+        "https://www.ulovdomov.cz/xadmin/offer/detail/5644805"
+      ]
+    },
+    "area": {
+      "types": {
+        "number": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 166,
+      "min": 12,
+      "max": 759,
+      "sample_values": [
+        58,
+        80,
+        55,
+        86,
+        81,
+        76,
+        116,
+        69,
+        421,
+        140
+      ]
+    },
+    "availableFrom": {
+      "types": {
+        "string": 575
+      },
+      "non_null_count": 575,
+      "null_count": 225,
+      "distinct_count": 96,
+      "all_distinct_values": [
+        "2026-03-01",
+        "2026-02-26",
+        "2026-05-01",
+        "2026-04-01",
+        "2026-02-25",
+        "2025-12-15",
+        "2026-02-24",
+        "2026-02-22",
+        "2026-02-01",
+        "2026-03-02",
+        "2025-07-31",
+        "2026-06-01",
+        "2026-02-17",
+        "2026-02-23",
+        "2026-02-18",
+        "2026-02-16",
+        "2026-03-15",
+        "2026-01-01",
+        "2026-02-20",
+        "2026-04-15",
+        "2026-02-21",
+        "2026-02-28",
+        "2026-11-30",
+        "2026-12-01",
+        "2025-02-01",
+        "2025-05-01",
+        "2025-02-10",
+        "2026-02-11",
+        "2025-10-07",
+        "2026-01-30",
+        "2021-09-01",
+        "2025-10-20",
+        "2026-07-01",
+        "2024-10-01",
+        "2026-01-06",
+        "2026-02-19",
+        "2026-02-05",
+        "2026-02-27",
+        "2026-03-04",
+        "2025-04-01",
+        "2026-01-29",
+        "2025-04-15",
+        "2026-01-16",
+        "2021-05-16",
+        "2026-11-02",
+        "2025-07-25",
+        "2027-03-31",
+        "2025-06-20",
+        "2026-01-11",
+        "2025-08-08",
+        "2026-12-24",
+        "2026-02-09",
+        "2026-02-15",
+        "2025-09-11",
+        "2025-05-03",
+        "2026-10-01",
+        "2026-04-02",
+        "2030-01-31",
+        "2026-05-15",
+        "2025-11-10",
+        "2026-04-20",
+        "2027-06-01",
+        "2024-06-03",
+        "2026-05-31",
+        "2025-09-15",
+        "2014-04-01",
+        "2025-04-26",
+        "2025-11-06",
+        "2026-03-06",
+        "2024-09-23",
+        "2026-02-02",
+        "2026-03-16",
+        "2025-10-30",
+        "2026-03-07",
+        "2025-10-06",
+        "2026-03-23",
+        "2023-08-21",
+        "2025-12-05",
+        "2025-09-01",
+        "2025-06-01",
+        "2024-05-27",
+        "2026-03-05",
+        "2025-07-01",
+        "2025-03-01",
+        "2026-01-27",
+        "2025-01-01",
+        "2025-06-04",
+        "2026-01-15",
+        "2026-04-05",
+        "2025-10-15",
+        "2024-08-01",
+        "2026-04-17",
+        "2026-01-26",
+        "2025-12-19",
+        "2026-01-19",
+        "2025-02-09"
+      ],
+      "value_counts": {
+        "2026-03-01": 89,
+        "2026-02-26": 56,
+        "2026-05-01": 50,
+        "2026-04-01": 49,
+        "2026-02-25": 31,
+        "2025-12-15": 31,
+        "2026-02-24": 30,
+        "2026-02-22": 17,
+        "2026-02-01": 16,
+        "2026-03-02": 16,
+        "2025-07-31": 14,
+        "2026-06-01": 12,
+        "2026-02-17": 12,
+        "2026-02-23": 8,
+        "2026-02-18": 8,
+        "2026-02-16": 8,
+        "2026-03-15": 7,
+        "2026-01-01": 7,
+        "2026-02-20": 5,
+        "2026-04-15": 4,
+        "2026-02-21": 4,
+        "2026-02-28": 3,
+        "2026-11-30": 3,
+        "2026-12-01": 3,
+        "2025-02-01": 3,
+        "2025-05-01": 3,
+        "2025-02-10": 3,
+        "2026-02-11": 3,
+        "2025-10-07": 2,
+        "2026-01-30": 2,
+        "2021-09-01": 2,
+        "2025-10-20": 2,
+        "2026-07-01": 2,
+        "2024-10-01": 2,
+        "2026-01-06": 2,
+        "2026-02-19": 2,
+        "2026-02-05": 2,
+        "2026-02-27": 2,
+        "2026-03-04": 2,
+        "2025-04-01": 2,
+        "2026-01-29": 1,
+        "2025-04-15": 1,
+        "2026-01-16": 1,
+        "2021-05-16": 1,
+        "2026-11-02": 1,
+        "2025-07-25": 1,
+        "2027-03-31": 1,
+        "2025-06-20": 1,
+        "2026-01-11": 1,
+        "2025-08-08": 1,
+        "2026-12-24": 1,
+        "2026-02-09": 1,
+        "2026-02-15": 1,
+        "2025-09-11": 1,
+        "2025-05-03": 1,
+        "2026-10-01": 1,
+        "2026-04-02": 1,
+        "2030-01-31": 1,
+        "2026-05-15": 1,
+        "2025-11-10": 1,
+        "2026-04-20": 1,
+        "2027-06-01": 1,
+        "2024-06-03": 1,
+        "2026-05-31": 1,
+        "2025-09-15": 1,
+        "2014-04-01": 1,
+        "2025-04-26": 1,
+        "2025-11-06": 1,
+        "2026-03-06": 1,
+        "2024-09-23": 1,
+        "2026-02-02": 1,
+        "2026-03-16": 1,
+        "2025-10-30": 1,
+        "2026-03-07": 1,
+        "2025-10-06": 1,
+        "2026-03-23": 1,
+        "2023-08-21": 1,
+        "2025-12-05": 1,
+        "2025-09-01": 1,
+        "2025-06-01": 1,
+        "2024-05-27": 1,
+        "2026-03-05": 1,
+        "2025-07-01": 1,
+        "2025-03-01": 1,
+        "2026-01-27": 1,
+        "2025-01-01": 1,
+        "2025-06-04": 1,
+        "2026-01-15": 1,
+        "2026-04-05": 1,
+        "2025-10-15": 1,
+        "2024-08-01": 1,
+        "2026-04-17": 1,
+        "2026-01-26": 1,
+        "2025-12-19": 1,
+        "2026-01-19": 1,
+        "2025-02-09": 1
+      }
+    },
+    "convenience": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "[]"
+      ],
+      "value_counts": {
+        "[]": 1
+      }
+    },
+    "convenience[]": {
+      "types": {
+        "string": 1578
+      },
+      "non_null_count": 1578,
+      "null_count": 0,
+      "distinct_count": 9,
+      "all_distinct_values": [
+        "garden",
+        "lift",
+        "balcony",
+        "terrace",
+        "loggia",
+        "cellar",
+        "fridge",
+        "dishwasher",
+        "washingMachine"
+      ],
+      "value_counts": {
+        "garden": 781,
+        "lift": 296,
+        "balcony": 212,
+        "terrace": 113,
+        "loggia": 104,
+        "cellar": 33,
+        "fridge": 14,
+        "dishwasher": 14,
+        "washingMachine": 11
+      }
+    },
+    "depositPrice": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 793,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "depositPrice.currency": {
+      "types": {
+        "string": 7
+      },
+      "non_null_count": 7,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "CZK"
+      ],
+      "value_counts": {
+        "CZK": 7
+      }
+    },
+    "depositPrice.value": {
+      "types": {
+        "number": 7
+      },
+      "non_null_count": 7,
+      "null_count": 0,
+      "distinct_count": 6,
+      "min": 10000,
+      "max": 46600,
+      "all_distinct_values": [
+        "20900",
+        "10000",
+        "46600",
+        "12800",
+        "15000",
+        "20000"
+      ],
+      "value_counts": {
+        "10000": 1,
+        "12800": 1,
+        "15000": 1,
+        "20000": 1,
+        "20900": 2,
+        "46600": 1
+      }
+    },
+    "description": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 795,
+      "sample_values": [
+        "Nabízíme k prodeji velmi hezkou družstevní bytovou jednotku 3+1 předělanou z původní dispozice 2+1 o celkové velikosti 58 m2. Okolí domu patří k těm vyhledávanějším z hlediska okrajové, bezpečné a kolem domu velmi udržované lokality města. Totéž platí o nájemnících v domě kteří se pečlivě starají nejenom o společné prostory ale také o okolí domu. Celý dům prošel kompletní revitalizací která se týkala především (zateplení pláště budovy, domovní rozvody, společné prostory, výtah, vstupní vchodové dveře......). Předmětná bytová jednotka nacházející se v 7 podlaží domu prošla taktéž kompletní rekonstrukcí která se týkala (změnou dispozice, rozvodů elektřiny, vody, odpadů, štuky, stropy, podlahy, sociální zařízení......). V celém bytě jsou instalována plastová okna. Podlahy v bytě tvoří kombinace dlažby a linolea. Dále možno využít velmi vkusně zabudovanou vnitřní šatnu. Dále pak lodžii, ze které je vzhledem umístění bytové jednotky nádherný výhled. Součástí bytové jednotky je také sklepní kóje. U domu se nachází velké parkoviště. Občanská vybavenost v místě je velmi dobrá (škola, škola, obchody, služby, MHD.......). Nízké náklady na bydlení. Pro případné doplňující informace či sjednání nezávazné prohlídky volejte kdykoliv 7 dní v týdnu.\n\n - - - - - - - - - - - - - - - - - - - -\n\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Nová etapa projektu SLAVONÍNSKÉ ZAHRADY navazuje na již realizované budovy v okolí ulice Loudova a nabízí kvalitní domov pro rodiny s dětmi, mladé páry, seniory i studenty. \nBudova B tvořená dvěma samostatnými sekcemi o čtyřech podlažích zahrnuje celkem 48 moderních bytů v dispozicích od 1kk do 3kk. Každý byt disponuje balkonem či terasou a jednotky v 1. NP mají navíc prostorné předzahrádky, ideální pro relax i rodinný život. Součástí projektu je podzemní parkovací podlaží, které propojuje obě sekce domu, a je tak zajištěno komfortní parkování pro obyvatele. K dokoupení jsou také komory jak v podzemním podlaží, tak na jednotlivých patrech. Pro více informací navštivte webové stránky Slavoninske-zahrady.\n\nNabízíme prostorný byt s označením B2.1.1 o dispozici 3+kk, podlahové ploše 80,1 m2 v 1. NP, s terasou 8,4, m2 a soukromou zahradou 16,6 m2  ideální pro rodiny s dětmi, páry nebo jako investiční bydlení.\n\nByt je navržen s důrazem na funkčnost, estetiku a soukromí. Velká okna zajišťují dostatek denního světla, přízemní umístění nabízí snadný přístup na terasu a do zahrady, která rozšiřuje obytný prostor a vytváří ideální místo pro relaxaci i volnočasové aktivity.\n\nSoučástí standardu je podlahové vytápění v celém bytě, vinylové podlahy, keramické obklady, obložkové zárubně a možnost výběru z několika designových a materiálových variant. Připraveno je i technické zázemí pro instalaci venkovních žaluzií a sdílené fotovoltaiky. K bytu lze dokoupit garážové/venkovní stání i sklep.\n\nLokalita Slavonína spojuje výhody města a přírody  v okolí najdete cyklostezky, rybník, zeleň i kompletní občanskou vybavenost. MHD, školy, školky, zdravotní péče i obchody jsou v docházkové vzdálenosti, stejně jako napojení na hlavní dopravní tahy.\n\nPokud hledáte moderní bydlení s vysokým standardem, soukromím a vlastním kouskem zeleně, je tento byt skvělou volbou. Dokončení projektu je plánováno na podzim 2027. Prodej je již zahájen  kontaktujte nás pro více informací.\n\n - - - - - - - - - - - - - - - - - - - -\n\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Nabízíme ke koupi světlý a velmi příjemný byt 3+1 v osobním vlastnictví v oblíbené lokalitě Praha 9 – Střížkov.\nByt je po renovaci, ve výborném stavu a nevyžaduje žádné další investice, což z něj činí ideální volbu pro okamžité bydlení i jako atraktivní investici.\nByt se nachází v 7. nadzemním podlaží revitalizovaného domu s výtahem, který prošel zateplením a je osazen plastovými okny. Díky těmto úpravám nabízí byt nízké provozní náklady a energetickou úspornost, což oceníte jak při vlastním bydlení, tak při dlouhodobém pronájmu.\nDům je situován v klidném, zeleném prostředí, přesto s vynikající dopravní dostupností – stanice metra i autobusové zastávky jsou vzdáleny přibližně 350 metrů od vchodu. Velkým benefitem je také park s jezírkem přímo za domem, který dotváří příjemnou atmosféru místa.\nDispozice bytu 3+1 nabízí užitnou plochu 55 m², ke které náleží lodžie o velikosti 6 m², ideální pro relaxaci na slunci. Praktickým bonusem je komora umístěná přímo naproti bytu, která je součástí bytu a poskytuje další úložný prostor.\nLokalita Střížkova patří mezi dlouhodobě vyhledávané díky kompletní občanské vybavenosti v bezprostředním okolí – mateřské a základní školy, obchody, zdravotnická zařízení i služby jsou v pohodlné docházkové vzdálenosti. Milovníci aktivního životního stylu ocení rozsáhlé parky mezi stanicemi Střížkov a Prosek, které nabízejí bohaté možnosti volnočasového vyžití – moderní venkovní hřiště, kluziště a fontány, trampolíny přímo u metra Střížkov i oblíbený Park Přátelství s nejdelší umělou vodní soustavou v Praze.\n\n - - - - - - - - - - - - - - - - - - - -\n\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Exkluzivně nabízím k prodeji krásný, světlý byt o dispozici 3+kk s balkónem, situovaný ve 3NP nedávno dokončeného bloku C ambiciózního a kompaktního developerského projektu Kolbenova park přímo u metra Vysočanská. \nByt je ideálně, východně orientovaný s okny směřujícími přímo do klidné parkové části projektu a svou naprosto ideální dispozicí nadchne všechny zájemce o mimořádné rodinné bydlení bez kompromisů. \nModerní projekt tvoří šest budov harmonicky zasazených do vlastního zeleného parku s mnoha zajímavými prvky a předpokládaným dokončením koncem roku 2028, ale Vy můžete plnohodnotně bydlet IHNED a těšit se na další zhodnocení vaší investice a to díky celkovému sjednocení všech etap, čímž vznikne výrazná přidaná hodnota - centrální park s vodními prvky, promenádou, hřišti a interaktivními prvky. \nCelková užitná plocha bytu 86 m² tvoří společně s balkónem, sklepem a parkovacím stáním bezpečné místo pro Váš nový domov. Jedná se o novostavbu, můžete se spolehnout na kvalitní materiály a jednotlivé prvky, je zde instalovaná velmi kvalitní designová kuchyně se vším, co potřebujete, samozřejmostí je rekuperace, oceníte technickou místnost s prostorem pro pračku a sušičku, byt můžete po dohodě získat i kompletně vybavený. \nParkovací místo je velmi dobře umístěné a parkování zde je radost, o významu samostatného sklepa není třeba hovořit. \nVeškerá občanská vybavenost přímo v místě bydlení, příroda na dosah a dostatek sportovních, kulturních a dalších příležitostí pro trávení volného času, to jsou Vysočany a okolí stanice metra Vysočanská. Ze stanice metra nebo tramvaje  to však máte blízko i do centra města.\n\n - - - - - - - - - - - - - - - - - - - -\n\nPoznámka k ceně: včetně provize, včetně právního servisu\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Hledáte bydlení, které nabízí víc než klasický byt v bytovce? Tento mezonet 3+kk se zahradou je ideální volbou pro ty, kteří chtějí soukromí, vlastní venkovní prostor a moderní standard novostavby – bez kompromisů. Dvě plnohodnotná podlaží přirozeně oddělují denní a noční část. Ráno si vychutnáte kávu na vlastní terase, odpoledne pustíte děti bezpečně na zahradu a večer si užijete klid bez ruchu nad hlavou. \n\nProjekt rodinného domu o třech bytových jednotkách vzniká v klidné a vyhledávané části Ostrožské Nové Vsi. Moderní cihlová stavba s energetickou třídou B, důraz na kvalitní materiály a technologie, vlastní tepelné čerpadlo i podlahové vytápění – to vše znamená nízké provozní náklady a dlouhodobou hodnotu.\n\n- dispozice 3+kk (mezonet – 2 podlaží)\n- užitná plocha obytných místností 81 m²\n- celková plocha 95 m²\n- zahrada včetně terasy 277 m², terasa 14 m²\n- energetická náročnost B – velmi úsporná\n- kolaudace 2026\n- spodní podlaží tvoří otevřený obytný prostor s kuchyňským koutem a přímým vstupem na terasu a zahradu, koupelna\n- horní patro nabízí klidovou zónu – ložnici, další pokoj a koupelnu\n- obývací pokoj i terasa jsou orientovány na severovýchod, což zajišťuje příjemné světlo bez přehřívání v letních měsících\n- parkování je řešeno před domem v podílovém spoluvlastnictví k bytům\n\n- cihlové zdivo Ytong YQ Lambda 450 mm (bez nutnosti dodatečného zateplení)\n- plastová okna s trojskly + HS portál\n- podlahové teplovodní vytápění, elektrické topné rohože v koupelně\n- tepelné čerpadlo vzduch–voda (podružné měření pro každý byt)\n- klimatizace\n- bezpečnostní otevíraní vstupních dveří na kód\n- venkovní podomítkové žaluzie\n- retenční nádrž na dešťovou vodu (zavlažování zahrady)\n- koupelna je kompletně dokončená včetně sanity\n- kuchyňská linka není součástí \n\n- oplocená zahrada s vyrovnaným terénem nabízí dostatek prostoru pro pergolu, bazén, dětské hřiště nebo klidnou relaxační zónu\n- vedle domu je branka s průjezdem k jednotkám se zahradou\n\n- velmi klidná a vyhledávaná část obce s převahou mladých rodin v rodinných domech\n- v dosahu školka, škola, lékař, lékárna, pošta, restaurace, cukrárna, večerka, dětská hřiště, vlak i autobus\n\nLíbí se Vám tato nemovitost? Potkejme se osobně na místě, co Vy na to?\nZavolejte mi nebo napište a já Vám sdělím veškeré detaily do poslední cihly.\n\nChtěli byste, abych i Vás zastupoval při prodeji?\nStačí mi napsat, jsem tu pro Vás kdekoli a kdykoli.\n\nTěším se na Vás :)\nHladiš – Reality\n\n - - - - - - - - - - - - - - - - - - - -\n\nPoznámka k ceně: včetně DPH, včetně poplatků, včetně provize, včetně právního servisu\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Představte si bydlení, kde ráno otevřete HS portál a vyjdete rovnou na vlastní terasu. Žádné schody, žádné kompromisy – jen pohodlí, soukromí a klidná lokalita. Tento přízemní byt 3+kk v novostavbě rodinného domu o třech jednotkách nabízí komfort domu v praktickém a úsporném provedení. Díky bezbariérovému řešení je ideální pro rodinu s malými dětmi, pár hledající dlouhodobé pohodlí i pro každého, kdo chce mít vše na jedné úrovni.\nVelkorysá zahrada navazuje přímo na obytný prostor a vytváří přirozené prodloužení interiéru. V létě zde vznikne venkovní obývák, prostor pro děti nebo klidná relaxační zóna pod bioklimatickou pergolou. Moderní cihlová stavba s energetickou třídou B, tepelné čerpadlo, podlahové vytápění, klimatizace i venkovní žaluzie – to vše znamená nejen komfort, ale i nízké provozní náklady a dlouhodobou hodnotu nemovitosti.\n\n- dispozice 3+kk (přízemní – 1 podlaží)\n- užitná plocha obytných místností 76 m²\n- celková plocha 94 m²\n- zahrada včetně terasy 233 m², terasa 18 m²\n- energetická náročnost B – velmi úsporná\n- kolaudace 2026\n- obývací pokoj i terasa jsou orientovány na severovýchod, což zajišťuje příjemné klima i během horkých letních dnů\n- parkování je řešeno před domem v podílovém spoluvlastnictví k bytům\n\n- cihlové zdivo Ytong YQ Lambda 450 mm (bez nutnosti dodatečného zateplení)\n- plastová okna s trojskly + HS portál\n- podlahové teplovodní vytápění, elektrické topné rohože v koupelně\n- tepelné čerpadlo vzduch–voda (podružné měření pro každý byt)\n- klimatizace\n- bezpečnostní otevíraní vstupních dveří na kód\n- venkovní podomítkové žaluzie\n- retenční nádrž na dešťovou vodu (zavlažování zahrady)\n- koupelna je kompletně dokončená včetně sanity\n- kuchyňská linka není součástí \n\n- oplocená zahrada s vyrovnaným terénem nabízí dostatek prostoru pro pergolu, bazén, dětské hřiště nebo klidnou relaxační zónu\n- vedle domu je branka s průjezdem k jednotkám se zahradou\n\n- velmi klidná a vyhledávaná část obce s převahou mladých rodin v rodinných domech\n- v dosahu školka, škola, lékař, lékárna, pošta, restaurace, cukrárna, večerka, dětská hřiště, vlak i autobus\n\nLíbí se Vám tato nemovitost? Potkejme se osobně na místě, co Vy na to?\nZavolejte mi nebo napište a já Vám sdělím veškeré detaily do poslední cihly.\n\nChtěli byste, abych i Vás zastupoval při prodeji?\nStačí mi napsat, jsem tu pro Vás kdekoli a kdykoli.\n\nTěším se na Vás :)\nHladiš – Reality\n\n - - - - - - - - - - - - - - - - - - - -\n\nPoznámka k ceně: včetně DPH, včetně poplatků, včetně provize, včetně právního servisu\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Potřebujete víc prostoru, ale nechcete řešit starosti klasického rodinného domu? Tento mezonet 4+kk nabízí ideální rovnováhu mezi velikostí, komfortem a úsporným provozem.\nDvě podlaží přirozeně oddělují společenskou část od klidové zóny, takže každý člen rodiny má své soukromí. Prostorný obývací pokoj navazuje na velkorysou terasu, která se stává plnohodnotným pokračováním interiéru – místem pro letní večeře, ranní kávu i večerní relax.\nModerní cihlová novostavba s energetickou třídou B, tepelné čerpadlo, podlahové vytápění, klimatizace i venkovní žaluzie – to vše znamená komfortní bydlení s nízkými provozními náklady a dlouhodobou hodnotou.\n\n- dispozice 4+kk (mezonet – 2 podlaží)\n- užitná plocha obytných místností 116m²\n- celková plocha 144 m²\n- terasa 28 m²\n- energetická náročnost B – velmi úsporná\n- kolaudace 2026\n- orientace obývacího pokoje a terasy na severovýchod zajišťuje příjemné světlo a komfort i během teplejších dnů\n- parkování je řešeno před domem v podílovém spoluvlastnictví k bytům\n\n- cihlové zdivo Ytong YQ Lambda 450 mm (bez nutnosti dodatečného zateplení)\n- plastová okna s trojskly + HS portál\n- podlahové teplovodní vytápění, elektrické topné rohože v koupelně\n- tepelné čerpadlo vzduch–voda (podružné měření pro každý byt)\n- klimatizace\n- bezpečnostní otevíraní vstupních dveří na kód\n- venkovní podomítkové žaluzie\n- retenční nádrž na dešťovou vodu (zavlažování zahrady)\n- koupelna je kompletně dokončená včetně sanity\n- kuchyňská linka není součástí \n\n- oplocená zahrada s vyrovnaným terénem nabízí dostatek prostoru pro pergolu, bazén, dětské hřiště nebo klidnou relaxační zónu\n- vedle domu je branka s průjezdem k jednotkám se zahradou\n\n- velmi klidná a vyhledávaná část obce s převahou mladých rodin v rodinných domech\n- v dosahu školka, škola, lékař, lékárna, pošta, restaurace, cukrárna, večerka, dětská hřiště, vlak i autobus\n\nLíbí se Vám tato nemovitost? Potkejme se osobně na místě, co Vy na to?\nZavolejte mi nebo napište a já Vám sdělím veškeré detaily do poslední cihly.\n\nChtěli byste, abych i Vás zastupoval při prodeji?\nStačí mi napsat, jsem tu pro Vás kdekoli a kdykoli.\n\nTěším se na Vás :)\nHladiš – Reality\n\n - - - - - - - - - - - - - - - - - - - -\n\nPoznámka k ceně: včetně DPH, včetně poplatků, včetně provize, včetně právního servisu\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Hledáte byt přímo v centru Uherského Brodu, ale nechcete dělat kompromisy v prostoru ani světle? Právě jste ho našli. Nabízím Vám byt o dispozici 3+kk, který spojuje výbornou dostupnost, klidné bydlení v menším domě a praktickou dispozici pro každodenní život.\n\n- dispozice 3+kk, 2. NP bez výtahu\n- celková plocha 74 m², užitná plocha 69 m²\n- sklep 5 m² (zděný, přirozeně odvětrávaný okny)\n- u bytu za domem je soukromý prostor dvorku, kde se dá sednout na kávu, sušit prádlo, případně si užívat čerstvý vzduch\n- energetická náročnost G\n- parkování v ulici před domem nebo v přilehlých ulicích\n- byt je orientovaný na jižní stranu (obývací pokoj a ložnice), takže interiér je příjemně prosvětlený po většinu dne\n- v domě je pouze 6 bytových jednotek\n\n- rekonstrukce bytu cca 2017/2018\n- okna plastová dvojskla (2003)\n- podlahy betonové s vinylovou krytinou\n- klimatizace (1 jednotka na chodbě)\n- prostor pro pračku a sušičku v technické místnosti\n- koupelna i kuchyň jsou plně funkční a v dobrém stavu. Byt je průběžně udržovaný a aktuálně obývaný. V koupelně je potřeba zrekonstruovat dlažbu\n\n- centrum města znamená, že máte vše doslova pár minut chůze\n- školy, školky, obchody, restaurace, kavárny, lékaře a zdravotní péči, sportoviště, kino, kulturní vyžití, MHD, autobus, vlak\n- skvělé napojení na hlavní silniční tahy\n- Židovna patří mezi vyhledávané části města – kombinace historie, centra a dostupnosti\n\nPři více zájemcích může být prodej uskutečněn formou elektronické aukce.\n\nPotkejme se osobně na místě, co Vy na to? Zavolejte mi nebo napište a já Vám sdělím veškeré detaily do poslední cihly.\nChtěli byste, abych i Vás zastupoval při prodeji? Stačí mi napsat, jsem tu pro Vás kdekoli a kdykoli.\n\nTěším se na Vás :)\nHladiš – Reality\n\n - - - - - - - - - - - - - - - - - - - -\n\nPoznámka k ceně: včetně DPH, včetně poplatků, včetně provize, včetně právního servisu\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Nabízíme Vám velice prostorný byt. dům se dvěma byt. jednotkami a velkou garáží (nebyt. komerční prostor) v Příbrami II, v ulici Fantova louka.\n\nJedná se o velice prostorný dům s celkovou užitnou plochou 421 m2, který nabízí využití bytu 4+kk (150 m2) s balkonem a výhledem do zeleně, který se nachází ve 2. NP budovy. \n\nV 1. NP je prodejní plocha lyží a kol cca 100 m2 vč. toalety, dále pak kancelář 41 m2 (byt) vč. kuchyňky (bez koupelny) s toaletou vč. umyvadla (která se stěhouje do jiných prostro od 15.4.2026).\n\nVe 2. NP pak skladovací s servisní plocha s užitnou plochou 129 m2.\n\nDům byl přistavěn o 2. NP cca od roku 2000, kdy v roce 2003 mu bylo přiděleno číslo popisné.\n\nV domě jsou mimo jiné dřevná eurookna s izol. dvojskly vč. balk. dveří, elektřina v mědi vč. nových jističů, voda a dopady v plastu, novější VK radiátory, kondenzační plynový kotel (z r. 2022) a novější bojler pro ohřev TUV, podlahy převážně dlažby, betonové, novější koberce, kvalitní int. dveře vč. zárubní, na zakázku vyrobená kuch. linka vč. praktického, pracovního ostrůvku (vč. spotřebičů), balkon s výhledem na severní stranu (směr Spartak Příbram), z pokojů výhled do přilehlých zahrad okolních domů s výhledem na Sv. Horu, vestavné skříně v chodbě bytu, střecha vč. izolace IPA, pevný internet 2, společná TV.\n\nNemovitosti je ideální i jako investice na pronájem dvou bytů a komerčního prostoru, případně v horním bytě bydlet a v přízemí a suterénu provozovat své podnikání.\n\nSítě: el. 230/380 V, obecní vodovod, kanalizace a plynovod, na pozemku vlastní studna v suterénu domu.\n\nV místě je možnost parkování pohodlně před domem.\n\nHezké místo pro podnikání i díky velmi dobré viditelnosti z hlavní komunikace (příjezd do Příbrami) z ulice Žižkova.\n\nEPNB připravujeme, proto prozatím uvádíme třídu G.\n\nKompletní obč. vybavenost. \n.\nDům vč. komerčního prostoru bude volný od 15.4.2026.\n\nPo dohodě Vám rádi pomůžeme vyřídit financování hyp. úvěrem s úrovou sazbou od 3,79 vč. pojištění.\n\n - - - - - - - - - - - - - - - - - - - -\n\nPoznámka k ceně: vč. advokátního servisu a úschovy, vč. provize RK\nMěsíční poplatky: 0 Kč\nProvize: Ano\n",
+        "Mimořádně úsporný rodinný dům s důrazem na soukromí, kvalitu, energetickou efektivitu a pohodlí. To vše právě prodávám na adrese K Jahodovce 1101 v Kostelci nad Labem. Jde o přízemní cihlový dům o dispozici 4+1 s plochou 140 m2 a zastřešenou terasou, na pozemku o celkové rozloze 1015 m2.\n\nZdivo ytong, silné zateplení, trojskla, podlahové topení a tepelné čerpadlo. Dům je napojen na fotovoltaický systém o výkonu 20 kW s bateriovým úložištěm 30 kW a připraven na provoz tří elektromobilů včetně domácnosti\n\nInteriér je navržen prakticky a moderně. Přes zádveří s vestavěnou skříní projdete do jídelny s kuchyní a dále do prostorného obývacího pokoje. Z centrální chodby máte přístup do dvou ložnic se vstupem na terasu. Dále do hlavní samostatné ložnice, prostorné šatny, technické místnosti, koupelny s rohovou vanou, sprchovým koutem a toaletou. Další toaleta je zvlášť. V obývacím pokoji o výměře přes 30 m2 je rodinný krb a vstup na krytou terasu. Kuchyň je od jídelní části oddělena decentním barovým pultem a je vybavena veškerými vestavěnými spotřebiči značek Bosch a Miele, včetně americké lednice. Vedle kuchyně je i samostatná spíž.\n\nDveře a obložky jsou vyrobeny z masivu, okna mají moderní žaluzie typu den a noc, osvětlení je řešeno dekorativními LED prvky.\n\nZahrada kolem domu byla promyšleně navržena a realizována zahradním architektem, aby se během roku měnila v pestrou podívanou. Automatický zavlažovací systém napojený na vlastní vrt a retenční nádrž zajišťuje její nenáročnou údržbu. Je zde také zapuštěný keramický bazén  a samostatný zděný zahradní domek s dílnou. Součástí prodeje je i automatická sekačka Husqvarna, Thermomix TM6, iRobot Roomba na vysávání, iRobot na vytírání a robot na čištění bazénu.\n\nTento dům nabízí soukromí, komfort, kvalitní materiály a velmi nízké provozní náklady.\n\nMísto se také pyšní výbornou dostupností do Prahy. Do Letňan se dostanete za 20 minut autem. V blízkosti je vše, co můžete potřebovat každý den - škola, školka, lékař, obchody, sportovní centrum, restaurace, knihovna, či nedaleké autobusové a vlakové zastávky. A zejména pak přímý kontakt s přírodou – řeka Labe, čisté lesy, cyklostezky, koupací jezera a mnoho dalšího.\n\nPřijďte se podívat. Ozvěte se a rád Vás provedu osobně celým domem a zahradou.\n\nOndřej Kučera\n\nosobní realitní makléř\n\n - - - - - - - - - - - - - - - - - - - -\n\nPoznámka k ceně: Včetně provize a právního servisu.\nMěsíční poplatky: 0 Kč\nProvize: Ano\n"
+      ]
+    },
+    "disposition": {
+      "types": {
+        "string": 690
+      },
+      "non_null_count": 690,
+      "null_count": 110,
+      "distinct_count": 12,
+      "all_distinct_values": [
+        "twoPlusKk",
+        "onePlusKk",
+        "threePlusKk",
+        "twoPlusOne",
+        "threePlusOne",
+        "onePlusOne",
+        "fourPlusKk",
+        "fourPlusOne",
+        "fivePlusOne",
+        "fivePlusKk",
+        "sixAndMore",
+        "atypical"
+      ],
+      "value_counts": {
+        "twoPlusKk": 204,
+        "onePlusKk": 145,
+        "threePlusKk": 88,
+        "twoPlusOne": 84,
+        "threePlusOne": 77,
+        "onePlusOne": 45,
+        "fourPlusKk": 28,
+        "fourPlusOne": 13,
+        "fivePlusOne": 2,
+        "fivePlusKk": 2,
+        "sixAndMore": 1,
+        "atypical": 1
+      }
+    },
+    "floorLevel": {
+      "types": {
+        "number": 709
+      },
+      "non_null_count": 709,
+      "null_count": 91,
+      "distinct_count": 18,
+      "min": -1,
+      "max": 127,
+      "all_distinct_values": [
+        "2",
+        "1",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "0",
+        "9",
+        "11",
+        "8",
+        "10",
+        "14",
+        "-1",
+        "13",
+        "12",
+        "127",
+        "16"
+      ],
+      "value_counts": {
+        "0": 16,
+        "1": 149,
+        "2": 172,
+        "3": 117,
+        "4": 114,
+        "5": 45,
+        "6": 40,
+        "7": 19,
+        "8": 6,
+        "9": 8,
+        "10": 6,
+        "11": 7,
+        "12": 1,
+        "13": 2,
+        "14": 3,
+        "16": 1,
+        "127": 1,
+        "-1": 2
+      }
+    },
+    "geoCoordinates.lat": {
+      "types": {
+        "number": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 684,
+      "min": 48.66683,
+      "max": 50.79065,
+      "sample_values": [
+        50.50574,
+        49.56971,
+        50.12437,
+        50.11135,
+        49.00371,
+        49.0228,
+        49.68957,
+        50.22031,
+        50.09058,
+        49.83832
+      ]
+    },
+    "geoCoordinates.lng": {
+      "types": {
+        "number": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 683,
+      "min": 12.17843,
+      "max": 18.76642,
+      "sample_values": [
+        13.43894,
+        17.2537,
+        14.48847,
+        14.50696,
+        17.44006,
+        17.6482,
+        14.02562,
+        14.58152,
+        14.47416,
+        13.8955
+      ]
+    },
+    "houseConvenience": {
+      "types": {
+        "string": 292
+      },
+      "non_null_count": 292,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "[]"
+      ],
+      "value_counts": {
+        "[]": 292
+      }
+    },
+    "houseConvenience[]": {
+      "types": {
+        "string": 812
+      },
+      "non_null_count": 812,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "cellar",
+        "parking",
+        "garage",
+        "pool"
+      ],
+      "value_counts": {
+        "cellar": 414,
+        "parking": 241,
+        "garage": 151,
+        "pool": 6
+      }
+    },
+    "houseType": {
+      "types": {
+        "string": 97
+      },
+      "non_null_count": 97,
+      "null_count": 703,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "familyHouse",
+        "cottage",
+        "chalet",
+        "villa"
+      ],
+      "value_counts": {
+        "familyHouse": 84,
+        "cottage": 7,
+        "chalet": 5,
+        "villa": 1
+      }
+    },
+    "id": {
+      "types": {
+        "number": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 800,
+      "min": 2968500,
+      "max": 5650311,
+      "sample_values": [
+        5650303,
+        5642110,
+        5650294,
+        5649621,
+        5649097,
+        5649096,
+        5649098,
+        5649559,
+        5650286,
+        5644805
+      ]
+    },
+    "isContacted": {
+      "types": {
+        "boolean": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 800
+      }
+    },
+    "isNoCommission": {
+      "types": {
+        "boolean": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 785,
+        "true": 15
+      }
+    },
+    "isTop": {
+      "types": {
+        "boolean": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 800
+      }
+    },
+    "monthlyFeesPrice": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 792,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "monthlyFeesPrice.currency": {
+      "types": {
+        "string": 8
+      },
+      "non_null_count": 8,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "CZK"
+      ],
+      "value_counts": {
+        "CZK": 8
+      }
+    },
+    "monthlyFeesPrice.value": {
+      "types": {
+        "number": 8
+      },
+      "non_null_count": 8,
+      "null_count": 0,
+      "distinct_count": 7,
+      "min": 1400,
+      "max": 6000,
+      "all_distinct_values": [
+        "3400",
+        "4287",
+        "6000",
+        "1400",
+        "3500",
+        "2000",
+        "3200"
+      ],
+      "value_counts": {
+        "1400": 1,
+        "2000": 1,
+        "3200": 1,
+        "3400": 2,
+        "3500": 1,
+        "4287": 1,
+        "6000": 1
+      }
+    },
+    "offerType": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "sale",
+        "rent"
+      ],
+      "value_counts": {
+        "sale": 400,
+        "rent": 400
+      }
+    },
+    "photos": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "[]"
+      ],
+      "value_counts": {
+        "[]": 2
+      }
+    },
+    "photos[].alt": {
+      "types": {
+        "string": 12980
+      },
+      "non_null_count": 12980,
+      "null_count": 0,
+      "distinct_count": 448,
+      "sample_values": [
+        "Prodej bytu 3+1 58 m2",
+        "Prodej bytu 3+kk 80 m2",
+        "Prodej bytu 3+1 55 m2",
+        "Prodej bytu 3+kk 86 m2",
+        "Prodej bytu 3+kk 81 m2",
+        "Prodej bytu 3+kk 76 m2",
+        "Prodej bytu 4+kk 116 m2",
+        "Prodej bytu 3+kk 69 m2",
+        "Prodej domu 421 m2",
+        "Prodej domu 140 m2"
+      ]
+    },
+    "photos[].id": {
+      "types": {
+        "number": 12980
+      },
+      "non_null_count": 12980,
+      "null_count": 0,
+      "distinct_count": 10000,
+      "min": 16581877,
+      "max": 22811151,
+      "sample_values": [
+        22810905,
+        22810906,
+        22810907,
+        22810908,
+        22810909,
+        22810910,
+        22810911,
+        22810912,
+        22810913,
+        22810914
+      ]
+    },
+    "photos[].path": {
+      "types": {
+        "string": 12980
+      },
+      "non_null_count": 12980,
+      "null_count": 0,
+      "distinct_count": 10000,
+      "sample_values": [
+        "https://photo.ulovdomov.cz/5t/TTssNYSrR222810905",
+        "https://photo.ulovdomov.cz/6t/tknKpRrqVf22810906",
+        "https://photo.ulovdomov.cz/7i/Il2V5y4tWg22810907",
+        "https://photo.ulovdomov.cz/8f/f0ihLbm13i22810908",
+        "https://photo.ulovdomov.cz/9c/cIg61aey7922810909",
+        "https://photo.ulovdomov.cz/0b/baBAOxYaKa22810910",
+        "https://photo.ulovdomov.cz/1m/MaoKP4SXwE22810911",
+        "https://photo.ulovdomov.cz/2w/wIYkgxyv5d22810912",
+        "https://photo.ulovdomov.cz/3w/wPyvkz4pES22810913",
+        "https://photo.ulovdomov.cz/4e/elufWLZfti22810914"
+      ]
+    },
+    "priceNote": {
+      "types": {
+        "string": 487
+      },
+      "non_null_count": 487,
+      "null_count": 313,
+      "distinct_count": 370,
+      "sample_values": [
+        "včetně provize, včetně právního servisu",
+        "včetně DPH, včetně poplatků, včetně provize, včetně právního servisu",
+        "vč. advokátního servisu a úschovy, vč. provize RK",
+        "Včetně provize a právního servisu.",
+        "k jednání",
+        "včetně provize právních služeb, v případě více zájemců, bude prodáno nejlepší nabídce",
+        "včetně DPH, bez poplatků, včetně provize, včetně právního servisu",
+        "Přepis na družstvu hradí kupující",
+        "byt 2.3 B6_zajistíme výhodné financování",
+        "včetně poplatků, včetně provize, včetně právního servisu"
+      ]
+    },
+    "priceUnit": {
+      "types": {
+        "string": 781
+      },
+      "non_null_count": 781,
+      "null_count": 19,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "perRealEstate",
+        "perMonth"
+      ],
+      "value_counts": {
+        "perRealEstate": 396,
+        "perMonth": 385
+      }
+    },
+    "propertyType": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "flat",
+        "house",
+        "land",
+        "other"
+      ],
+      "value_counts": {
+        "flat": 699,
+        "house": 99,
+        "land": 1,
+        "other": 1
+      }
+    },
+    "published": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 800,
+      "sample_values": [
+        "2026-02-27T07:01:05",
+        "2026-02-27T01:17:22",
+        "2026-02-26T20:42:03",
+        "2026-02-22T19:35:56",
+        "2026-02-17T20:42:59",
+        "2026-02-17T20:40:50",
+        "2026-02-17T20:46:17",
+        "2026-02-21T17:12:15",
+        "2026-02-26T18:38:05",
+        "2026-01-16T16:11:31"
+      ]
+    },
+    "rentalPrice": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 23,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "rentalPrice.currency": {
+      "types": {
+        "string": 777
+      },
+      "non_null_count": 777,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "CZK"
+      ],
+      "value_counts": {
+        "CZK": 777
+      }
+    },
+    "rentalPrice.value": {
+      "types": {
+        "number": 777
+      },
+      "non_null_count": 777,
+      "null_count": 0,
+      "distinct_count": 402,
+      "min": 1,
+      "max": 32000000,
+      "sample_values": [
+        2299000,
+        8925000,
+        7650000,
+        15200000,
+        6790000,
+        6590000,
+        8190000,
+        4790000,
+        12500000,
+        16990000
+      ]
+    },
+    "seo": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 720,
+      "sample_values": [
+        "prodej-jirkov-jirkov-pionyru-3-1",
+        "prodej-olomouc-povel-loudova-3-kk",
+        "prodej-praha-strizkov-rumburska-3-1",
+        "prodej-praha-vysocany-stridava-3-kk",
+        "prodej-ostrozska-nova-ves-ostrozska-nova-ves-u-svatych-3-kk",
+        "prodej-ostrozska-nova-ves-ostrozska-nova-ves-u-svatych-4-kk",
+        "prodej-uhersky-brod-uhersky-brod-za-dolnim-kostelem-3-kk",
+        "prodej-pribram-pribram-ii-fantova-louka-rodinny-dum",
+        "prodej-kostelec-nad-labem-kostelec-nad-labem-k-jahodovce-rodinny-dum",
+        "prodej-praha-zizkov-biskupcova-2-kk"
+      ]
+    },
+    "showScamWarn": {
+      "types": {
+        "boolean": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 800
+      }
+    },
+    "street.id": {
+      "types": {
+        "number": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 645,
+      "min": 0,
+      "max": 108521,
+      "sample_values": [
+        27553,
+        102369,
+        100267,
+        108194,
+        102414,
+        85927,
+        67938,
+        51143,
+        94859,
+        103955
+      ]
+    },
+    "street.title": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 603,
+      "sample_values": [
+        "Pionýrů",
+        "Loudova",
+        "Rumburská",
+        "Střídavá",
+        "U Svatých",
+        "Za Dolním kostelem",
+        "Fantova louka",
+        "K Jahodovce",
+        "Biskupcova",
+        "U Štěpánků"
+      ]
+    },
+    "title": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 449,
+      "sample_values": [
+        "Prodej bytu 3+1 58 m2",
+        "Prodej bytu 3+kk 80 m2",
+        "Prodej bytu 3+1 55 m2",
+        "Prodej bytu 3+kk 86 m2",
+        "Prodej bytu 3+kk 81 m2",
+        "Prodej bytu 3+kk 76 m2",
+        "Prodej bytu 4+kk 116 m2",
+        "Prodej bytu 3+kk 69 m2",
+        "Prodej domu 421 m2",
+        "Prodej domu 140 m2"
+      ]
+    },
+    "village.id": {
+      "types": {
+        "number": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 191,
+      "min": 0,
+      "max": 6253,
+      "sample_values": [
+        1496,
+        3447,
+        6253,
+        5477,
+        5524,
+        4124,
+        3211,
+        1283,
+        560,
+        5154
+      ]
+    },
+    "village.title": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 191,
+      "sample_values": [
+        "Jirkov",
+        "Olomouc",
+        "Praha",
+        "Ostrožská Nová Ves",
+        "Uherský Brod",
+        "Příbram",
+        "Kostelec nad Labem",
+        "Hořovice",
+        "Roztoky",
+        "Teplice"
+      ]
+    },
+    "villagePart.id": {
+      "types": {
+        "number": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 349,
+      "min": 0,
+      "max": 15176,
+      "sample_values": [
+        3565,
+        8560,
+        15086,
+        15113,
+        13370,
+        13424,
+        10118,
+        8023,
+        15122,
+        3092
+      ]
+    },
+    "villagePart.title": {
+      "types": {
+        "string": 800
+      },
+      "non_null_count": 800,
+      "null_count": 0,
+      "distinct_count": 345,
+      "sample_values": [
+        "Jirkov",
+        "Povel",
+        "Střížkov",
+        "Vysočany",
+        "Ostrožská Nová Ves",
+        "Uherský Brod",
+        "Příbram II",
+        "Kostelec nad Labem",
+        "Žižkov",
+        "Hořovice"
+      ]
+    }
+  }
+}

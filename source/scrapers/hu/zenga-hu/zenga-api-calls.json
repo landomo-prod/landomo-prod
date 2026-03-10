@@ -1,0 +1,1025 @@
+[
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/budapest+elado+lakas",
+    "headers": {
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"macOS\""
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/styles.61ba9e5a33a75e52.css",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/assets/zenga-logo.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/runtime.d4669aee457d7a75.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/polyfills.0e3ba2c75823484b.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/scripts.6cf2c63794fcb19c.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/main.e6b31645d20e726e.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/assets/icons/ui-kit-sprite.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-purpose": "prefetch",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/assets/icons/oom-icons-sprite.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-purpose": "prefetch",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/assets/icons/zenga-icons-sprite.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-purpose": "prefetch",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/assets/fonts/rethink-sans/RethinkSans-VariableFont_wght.ttf",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://assets.zenga.hu/styles.61ba9e5a33a75e52.css",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/api/config/config.json",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "dpr": "1",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/api/rels/v1/adverts/params",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://www.zenga.hu/api/cmsquery",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    "postData": "{\"query\":\"\\n      {\\n        settlementPages(stage: PUBLISHED, first: 100) {\\n          settlementSlug\\n        }\\n      }\\n    \"}"
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/assets/i18n/hu.translations.json?v=5214e8f0",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/auth/realms/OtpOtthon/protocol/openid-connect/3p-cookies/step1.html",
+    "headers": {
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"macOS\""
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/auth/realms/OtpOtthon/protocol/openid-connect/3p-cookies/step2.html",
+    "headers": {
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"macOS\""
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/auth/realms/OtpOtthon/protocol/openid-connect/login-status-iframe.html",
+    "headers": {
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"macOS\""
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/auth/realms/OtpOtthon/protocol/openid-connect/login-status-iframe.html/init?client_id=portal-frontend&origin=https%3A%2F%2Fwww.zenga.hu",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/assets/icons/ui-kit-sprite.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|72b929e95b0247c0a10c139bf0c555df.2a768e2e48d84cb0",
+      "traceparent": "00-72b929e95b0247c0a10c139bf0c555df-2a768e2e48d84cb0-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/7878.c63813c6d90e98ce.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/1707.b74d8ea6db4e299d.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/3374.d21b5046d3051aae.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/3028.e8fe1593830eac2d.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/6761.ba2f633ed796e4e9.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/4214.ca300b85ac049bef.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/1985.15f62bd7aff72744.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/293.8c7e8f283802160d.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/24.c4725d9ab6717406.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/53.2204d08e2b3e3044.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/common.ea562f7c731980db.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/2318.36de440de767c10e.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/api/order-service/products",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|72b929e95b0247c0a10c139bf0c555df.106fef88b7d043ee",
+      "traceparent": "00-72b929e95b0247c0a10c139bf0c555df-106fef88b7d043ee-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/api/credit/advert-highlight-preload",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|72b929e95b0247c0a10c139bf0c555df.b1e694ed14f44959",
+      "traceparent": "00-72b929e95b0247c0a10c139bf0c555df-b1e694ed14f44959-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&en=page_view&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&ep.ads_data_redaction=1&gdid=dMWZhNz&_tu=CA&gtm=45He6261h2v866847804za200zd866847804xea&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tag_exp=103116026~103200004~104527906~104528500~104684208~104684211~115938465~115938469~116185181~116185182~116988316~117231354&apve=1&apvf=f&apvc=1&tft=1770663342360&tfd=2234",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.googletagmanager.com/static/service_worker/61k0/sw_iframe.html?origin=https%3A%2F%2Fwww.zenga.hu",
+    "headers": {
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"macOS\""
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/6364.f46efc061a9cbcb2.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/9783.8760c046d7c8bbdb.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/9699.ad9101edd869f45b.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/3936.50d0703ca40f2176.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/7119.e01e2a789d47bf5c.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://assets.zenga.hu/1093.6730600543a0a255.js",
+    "headers": {
+      "origin": "https://www.zenga.hu",
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&en=page_view&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&did=dMWZhNz&gdid=dMWZhNz&_tu=CA&gtm=45be6261h2v895299479z8866847804za20gzb866847804zd866847804xec&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tag_exp=103116026~103200004~104527906~104528501~104684208~104684211~115938465~115938469~116185181~116185182~116988315&apve=1&apvf=f&apvc=0&tids=AW-786453508&tid=AW-786453508&tft=1770663342504&tfd=2378",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/assets/icons/oom-icons-sprite.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|72b929e95b0247c0a10c139bf0c555df.a4905968ef1b4e9b",
+      "traceparent": "00-72b929e95b0247c0a10c139bf0c555df-a4905968ef1b4e9b-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&ep.ads_data_redaction=1&did=dMWZhNz&gdid=dMWZhNz&_tu=KA&gtm=45be6261h2z8866847804za20gzb866847804zd866847804xea&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tag_exp=103116026~103200004~104527906~104528500~104684208~104684211~115616986~115938465~115938468~116185181~116185182~116988316&apve=1&apvf=f&apvc=0&tids=AW-10992358134&tid=AW-10992358134&tft=1770663342651&tfd=2525",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://ade.googlesyndication.com/ddm/activity/src=10996717;type=otpot0;cat=otpot0;ord=9167930169361;npa=1;gdid=dMWZhNz;uaa=arm;uab=64;uafvl=Chromium%3B145.0.7632.6%7CNot%253AA-Brand%3B99.0.0.0;uamb=0;uam=;uap=macOS;uapv=15.6.1;uaw=0;pscdl=denied;frm=0;_tu=KFA;gtm=45fe6261h2v9190374080z8866847804za20gzb866847804zd866847804xea;gcs=G100;gcd=13p3p3p2p5l1;dma_cps=-;dma=1;dc_fmt=8;tag_exp=103116026~103200004~104527906~104528500~104684208~104684211~115938465~115938469~116185181~116185182~116988316;epver=2;~oref=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas?",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://ade.googlesyndication.com/ddm/activity/src=10996717;dc_pre=CIn8wvyKzZIDFWHXjgkdfO8ZVg;type=otpot0;cat=otpot0;ord=9167930169361;npa=1;gdid=dMWZhNz;uaa=arm;uab=64;uafvl=Chromium%3B145.0.7632.6%7CNot%253AA-Brand%3B99.0.0.0;uamb=0;uam=;uap=macOS;uapv=15.6.1;uaw=0;pscdl=denied;frm=0;_tu=KFA;gtm=45fe6261h2v9190374080z8866847804za20gzb866847804zd866847804xea;gcs=G100;gcd=13p3p3p2p5l1;dma_cps=-;dma=1;dc_fmt=8;tag_exp=103116026~103200004~104527906~104528500~104684208~104684211~115938465~115938469~116185181~116185182~116988316;epver=2;~oref=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas?",
+    "headers": {
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "referer": "https://www.zenga.hu/"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/assets/icons/zenga-icons-sprite.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|3408134b615447909eb4ccb2fe8091dd.a0b0f7df33114fe5",
+      "traceparent": "00-3408134b615447909eb4ccb2fe8091dd-a0b0f7df33114fe5-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://consent.cookiebot.eu/fc908eb4-588a-4127-9f68-1d13155662d4/cc.js?renew=false&referer=www.zenga.hu&dnt=false&init=false&framework=TCFv2.3",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://www.zenga.hu/api/cmsquery",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|3408134b615447909eb4ccb2fe8091dd.374238d860344fef",
+      "traceparent": "00-3408134b615447909eb4ccb2fe8091dd-374238d860344fef-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    "postData": "{\"query\":\"{\\n      advertisingLinks(orderBy: publishedAt_DESC) {\\n           href\\n           id\\n           label\\n           company\\n           leadParameters\\n           dataHandlingDoc {\\n              id\\n              fileName\\n              url\\n           }\\n           displayPosition\\n           leadFormConfig\\n           leadModalInfoLabel\\n           leadModalInfoText\\n      }\\n    }\"}"
+  },
+  {
+    "method": "POST",
+    "url": "https://www.zenga.hu/api/rels/v1/adverts/search",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|3408134b615447909eb4ccb2fe8091dd.e1edb2c9cbd644a0",
+      "traceparent": "00-3408134b615447909eb4ccb2fe8091dd-e1edb2c9cbd644a0-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    "postData": "{\"pageSize\":20,\"page\":1,\"agency\":null,\"textSearch\":\"budapest+elado+lakas\",\"searchObject\":{}}"
+  },
+  {
+    "method": "POST",
+    "url": "https://www.zenga.hu/api/cmsquery",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|3408134b615447909eb4ccb2fe8091dd.b35f7e7a7e754913",
+      "traceparent": "00-3408134b615447909eb4ccb2fe8091dd-b35f7e7a7e754913-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    "postData": "{\"query\":\"\\n      {\\n        oomAds(first: 50) {\\n          adZone\\n          id\\n          targetUrl\\n          adPicture {\\n            id\\n            url\\n          }\\n        }\\n        oomNativeBanners(first: 1) {\\n          id\\n          note\\n          paidAd\\n          title\\n          centerBox {\\n            id\\n            bannerContent\\n            targetUrl\\n          }\\n          leftBox {\\n            id\\n            bannerContent\\n            targetUrl\\n          }\\n          rightBox {\\n            id\\n            bannerContent\\n            targetUrl\\n          }\\n        }\\n        oomInterstitialBanners(first: 1, orderBy: publishedAt_DESC) {\\n          id\\n          adPicture {\\n            url(transformation: {image: {resize: {fit: max, height: 550, width: 970}}})\\n          }\\n          targetUrl\\n          expiryDate\\n          interstitialEvent\\n        }\\n      }\\n    \"}"
+  },
+  {
+    "method": "POST",
+    "url": "https://www.zenga.hu/api/cmsquery",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|3408134b615447909eb4ccb2fe8091dd.e10a1f613a2b4eba",
+      "traceparent": "00-3408134b615447909eb4ccb2fe8091dd-e10a1f613a2b4eba-01",
+      "dpr": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    "postData": "{\"query\":\"\\n    {\\n      latestUpdates(orderBy: publishDate_DESC, first: 100) {\\n        id\\n        type\\n        segment\\n        highlighted\\n        title\\n        shortDescription\\n        content {\\n          content\\n          imagePosition\\n          contentAlign\\n          youtubeVideoId\\n          image {\\n            url (\\n              transformation: {image: {resize: {fit: max, width: 368, height: 200}}}\\n            )\\n          }\\n        }\\n        buttons {\\n          label\\n          primary\\n          route\\n          icon\\n        }\\n        publishDate\\n      }\\n      latestUpdateNotifications(orderBy: publishedAt_DESC, first: 100) {\\n        id\\n        type\\n        linkLabel\\n        linkRoute\\n        route\\n        segment\\n        description\\n      }\\n    }\\n    \"}"
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/assets/zenga-logo.svg",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "dpr": "1",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&en=page_view&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&us_privacy=1YNY&gdid=dMWZhNz&_tu=KA&gtm=45fe6250v9230498642za200zd9230498642xec&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tcfd=10001&tag_exp=103116026~103200004~104527906~104528500~104684208~104684211~115616985~115938465~115938468~116185181~116185182~116988316&apve=1&apvf=f&apvc=0&tids=DC-15828052&tid=DC-15828052&tft=1770663343063&tfd=2937",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.googletagmanager.com/td?id=DC-15828052&v=3&t=t&pid=147900979&seq=1&exp=103116026~103200004~104527906~104528500~104684208~104684211~115616985~115938465~115938468~116185181~116185182~116988316&dl=www.zenga.hu%2Fbudapest%2Belado%2Blakas&tdp=DC-15828052;230498642;0;0;0&frm=0&rtg=230498642&slo=27&hlo=26&lst=3&bt=0&ct=3&jsp=1&z=0",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.zenga.hu/assets/img/campaign/campaign-reg-promo-card.webp",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "dpr": "1",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/budapest+elado+lakas",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://region1.google-analytics.com/g/collect?v=2&tid=G-GVYFSWV50R&gtm=45je6261h2v888913979z8866847804za20gzb866847804zd866847804&_p=1770663341760&gcs=G100&gcd=13p3p3p2p5l1&npa=1&dma_cps=-&dma=1&tcfd=10001&gdid=dMWZhNz&gtm_up=1&cid=551960286.1770663343&ecid=988199120&ul=en-us&sr=1280x720&uaa=arm&uab=64&uafvl=Chromium%3B145.0.7632.6%7CNot%253AA-Brand%3B99.0.0.0&uamb=0&uam=&uap=macOS&uapv=15.6.1&uaw=0&are=1&frm=0&pscdl=denied&ngs=1&_s=1&tag_exp=102015666~103116026~103200004~104527906~104528500~104684208~104684211~115938465~115938469~116185181~116185182~116988316&sid=1770663343&sct=1&seg=0&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&dt=zenga.hu%20-%20Minden%2C%20ami%20ingatlan.%20Minden%2C%20amire%20sz%C3%BCks%C3%A9ged%20van.&_tu=KAg&en=search_adverts&_fv=1&_nsi=1&_ss=1&ep.page_type=lista_ingatlan&epn.search_num_own_in_page=0&epn.search_num_total=0&epn.search_pagenum=1&ep.ad_category_3=SALE&ep.ad_nm_max=NaN&ep.ad_nm_min=NaN&ep.ad_property_category=haz&ep.ad_properties=&tfd=3146",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://region1.google-analytics.com/g/collect?v=2&tid=G-GVYFSWV50R&gtm=45je6261h2v888913979z8866847804za20gzb866847804zd866847804&_p=1770663341760&gcs=G100&gcd=13p3p3p2p5l1&npa=1&dma_cps=-&dma=1&tcfd=10001&gdid=dMWZhNz&gtm_up=1&cid=551960286.1770663343&ecid=988199120&ul=en-us&sr=1280x720&uaa=arm&uab=64&uafvl=Chromium%3B145.0.7632.6%7CNot%253AA-Brand%3B99.0.0.0&uamb=0&uam=&uap=macOS&uapv=15.6.1&uaw=0&are=1&frm=0&pscdl=denied&_eu=IA&ngs=1&_s=2&tag_exp=102015666~103116026~103200004~104527906~104528500~104684208~104684211~115938465~115938469~116185181~116185182~116988316&sid=1770663343&sct=1&seg=0&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&dt=zenga.hu%20-%20Minden%2C%20ami%20ingatlan.%20Minden%2C%20amire%20sz%C3%BCks%C3%A9ged%20van.&_tu=CAg&en=view_item_list&ep.item_list_id=adverts_page_1&ep.item_list_name=adverts_page_1&_et=3&tfd=3175",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&en=page_view&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&us_privacy=1YNY&ep.listing_pagetype=searchresults&ep.listing_id=&ep.google_business_vertical=real_estate&did=dMWZhNz&gdid=dMWZhNz&_tu=KA&gtm=45be6261h2v895299479z8866847804za20gzb866847804zd866847804xec&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tcfd=10001&tag_exp=103116026~103200004~104527906~104528501~104684208~104684211~115938465~115938469~116185181~116185182~116988315&apve=1&apvf=f&apvc=0&tids=AW-786453508&tid=AW-786453508&tft=1770663343332&tfd=3206",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&en=view_item_list&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&us_privacy=1YNY&ep.ads_data_redaction=1&did=dMWZhNz&gdid=dMWZhNz&_tu=KA&gtm=45be6261h2v895299479z8866847804za20gzb866847804zd866847804xea&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tcfd=10001&tag_exp=103116026~103200004~104527906~104528501~104684208~104684211~115938465~115938469~116185181~116185182~116988315&apve=1&apvf=f&apvc=0&tids=AW-786453508&tid=AW-786453508&tft=1770663343333&tfd=3207",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&us_privacy=1YNY&ep.listing_pagetype=searchresults&ep.ads_data_redaction=1&did=dMWZhNz&gdid=dMWZhNz&_tu=KA&gtm=45be6261h2v895299479z8866847804za20gzb866847804zd866847804xea&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tcfd=10001&tag_exp=103116026~103200004~104527906~104528501~104684208~104684211~115938465~115938469~116185181~116185182~116988315&apve=1&apvf=f&apvc=0&tids=AW-786453508&tid=AW-786453508&tft=1770663343333&tfd=3207",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://pagead2.googlesyndication.com/ccm/collect?frm=0&dl=https%3A%2F%2Fwww.zenga.hu%2Felado%2Bhaz&scrsrc=www.googletagmanager.com&rnd=188146635.1770663342&navt=n&npa=1&us_privacy=1YNY&ep.ads_data_redaction=1&did=dMWZhNz&gdid=dMWZhNz&_tu=KA&gtm=45be6261h2z8866847804za20gzb866847804zd866847804xea&gcs=G100&gcd=13p3p3p2p5l1&dma_cps=-&dma=1&tcfd=10001&tag_exp=103116026~103200004~104527906~104528500~104684208~104684211~115616986~115938465~115938468~116185181~116185182~116988316&apve=1&apvf=f&apvc=0&tids=AW-10992358134&tid=AW-10992358134&tft=1770663343333&tfd=3207",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://www.zenga.hu/api/rels/v1/adverts/search/similar",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/elado+haz",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|36cdfcc58e7d42beb37c796c77e9a1bb.d77f3ee9fc6042aa",
+      "traceparent": "00-36cdfcc58e7d42beb37c796c77e9a1bb-d77f3ee9fc6042aa-01",
+      "dpr": "1",
+      "spa-referrer": "https://www.zenga.hu/elado+haz",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    "postData": "{\"saleType\":\"SALE\",\"category\":\"haz\"}"
+  },
+  {
+    "method": "POST",
+    "url": "https://www.zenga.hu/api/cmsquery",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "viewport-width": "1280",
+      "referer": "https://www.zenga.hu/elado+haz",
+      "accept-language": "hu",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "x-client-session": "c3469894-8c85-4d00-93e8-3176739f81cb",
+      "sec-ch-ua-mobile": "?0",
+      "request-id": "|36cdfcc58e7d42beb37c796c77e9a1bb.658c79f8f3664159",
+      "traceparent": "00-36cdfcc58e7d42beb37c796c77e9a1bb-658c79f8f3664159-01",
+      "dpr": "1",
+      "spa-referrer": "https://www.zenga.hu/elado+haz",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "accept": "application/json",
+      "content-type": "application/json"
+    },
+    "postData": "{\"query\":\"{\\n      advertisingLinks(orderBy: publishedAt_DESC) {\\n           href\\n           id\\n           label\\n           company\\n           leadParameters\\n           dataHandlingDoc {\\n              id\\n              fileName\\n              url\\n           }\\n           displayPosition\\n           leadFormConfig\\n           leadModalInfoLabel\\n           leadModalInfoText\\n      }\\n    }\"}"
+  },
+  {
+    "method": "GET",
+    "url": "https://bat.bing.com/action/0?ti=97222064&Ver=2&mid=3205f118-4ef8-45e6-8909-5b4e93880253&bo=5&sid=ef8f8e7005e811f1b18299308132091c&vid=ef8fcb9005e811f18f300baa1d270623&vids=0&msclkid=N&pi=918639831&lg=en-US&sw=1280&sh=720&sc=24&nwd=1&tl=Elad%C3%B3%20h%C3%A1zak%20orsz%C3%A1gosan%20(0%20ingatlanhirdet%C3%A9s)&p=https%3A%2F%2Fwww.zenga.hu%2Felado%2Bhaz&r=&lt=1498&evt=pageLoad&sv=2&asc=G&cdb=AQIV&rn=916367",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://analytics.tiktok.com/api/v2/pixel",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "content-type": "text/plain;charset=UTF-8",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": "{\"event\":\"LandingPageView\",\"event_id\":\"\",\"message_id\":\"messageId-1770663344879-9662388798862-CS4DHOJC77UF6LFM2EK0\",\"is_onsite\":false,\"timestamp\":\"2026-02-09T18:55:44.879Z\",\"context\":{\"ad\":{\"sdk_env\":\"external\",\"jsb_status\":2},\"device\":{\"platform\":\"pc\"},\"user\":{\"anonymous_id\":\"01KH1W4YQARF1766CBPSKR44N7_.tt.1\"},\"pixel\":{\"code\":\"CS4DHOJC77UF6LFM2EK0\",\"runtime\":\"1\"},\"page\":{\"url\":\"https://www.zenga.hu/elado+haz\",\"referrer\":\"\",\"load_progress\":\"2\"},\"library\":{\"name\":\"pixel.js\",\"version\":\"2.2.1\"},\"session_id\":\"ef8a05a8-05e8-11f1-ae99-764f3a278a19::AS_jQfzFX206XEgdPVvU-CS4DHOJC77UF6LFM2EK0\",\"pageview_id\":\"ef8a05a8-05e8-11f1-ae99-764f3a278a19-xvMNw.0.0::ef38a3a6-05e8-11f1-9637-b83fd2f6640e-CS4DHOJC77UF6LFM2EK0\",\"variation_id\":\"default\",\"csid\":\"1770663344876::8lfKos3UY7LYS2K_QD3o\",\"page_csid\":\"1770663344876::f65GsTz5fWzvZYMm-ouL\",\"csct\":1,\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36\"},\"_inspection\":{\"trigger_source\":\"pixel_self\",\"vids\":\"\"},\"properties\":{},\"signal_diagnostic_labels\":{\"raw_email\":{\"label\":\"missing\"},\"raw_auto_email\":{\"label\":\"missing\"},\"raw_phone\":{\"label\":\"missing\"},\"raw_auto_phone\":{\"label\":\"missing\"},\"hashed_email\":{\"label\":\"missing\"},\"hashed_phone\":{\"label\":\"missing\"},\"raw_eb_email\":{\"label\":\"missing\"},\"raw_eb_phone\":{\"label\":\"missing\"},\"hashed_eb_email\":{\"label\":\"missing\"},\"hashed_eb_phone\":{\"label\":\"missing\"}}}"
+  },
+  {
+    "method": "POST",
+    "url": "https://analytics.tiktok.com/api/v2/pixel",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "content-type": "text/plain;charset=UTF-8",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": "{\"event\":\"Pageview\",\"event_id\":\"\",\"message_id\":\"messageId-1770663344877-4495821748287-CS4DHOJC77UF6LFM2EK0\",\"is_onsite\":false,\"timestamp\":\"2026-02-09T18:55:44.877Z\",\"context\":{\"ad\":{\"sdk_env\":\"external\",\"jsb_status\":2},\"device\":{\"platform\":\"pc\"},\"user\":{\"anonymous_id\":\"01KH1W4YQARF1766CBPSKR44N7_.tt.1\"},\"pixel\":{\"code\":\"CS4DHOJC77UF6LFM2EK0\",\"runtime\":\"1\"},\"page\":{\"url\":\"https://www.zenga.hu/elado+haz\",\"referrer\":\"\",\"load_progress\":\"2\"},\"library\":{\"name\":\"pixel.js\",\"version\":\"2.2.1\"},\"session_id\":\"ef8a05a8-05e8-11f1-ae99-764f3a278a19::AS_jQfzFX206XEgdPVvU-CS4DHOJC77UF6LFM2EK0\",\"pageview_id\":\"ef8a05a8-05e8-11f1-ae99-764f3a278a19-xvMNw.0.0::ef38a3a6-05e8-11f1-9637-b83fd2f6640e-CS4DHOJC77UF6LFM2EK0\",\"variation_id\":\"default\",\"csid\":\"1770663344876::8lfKos3UY7LYS2K_QD3o\",\"page_csid\":\"1770663344876::f65GsTz5fWzvZYMm-ouL\",\"csct\":1,\"css\":1,\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36\"},\"_inspection\":{\"vids\":\"\"},\"properties\":{},\"signal_diagnostic_labels\":{\"raw_email\":{\"label\":\"missing\"},\"raw_auto_email\":{\"label\":\"missing\"},\"raw_phone\":{\"label\":\"missing\"},\"raw_auto_phone\":{\"label\":\"missing\"},\"hashed_email\":{\"label\":\"missing\"},\"hashed_phone\":{\"label\":\"missing\"},\"raw_eb_email\":{\"label\":\"missing\"},\"raw_eb_phone\":{\"label\":\"missing\"},\"hashed_eb_email\":{\"label\":\"missing\"},\"hashed_eb_phone\":{\"label\":\"missing\"}}}"
+  },
+  {
+    "method": "POST",
+    "url": "https://analytics.tiktok.com/api/v2/pixel/act",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "content-type": "text/plain;charset=UTF-8",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": "{\"event_id\":\"\",\"message_id\":\"messageId-1770663345083-1010693513163\",\"is_onsite\":false,\"timestamp\":\"2026-02-09T18:55:45.083Z\",\"context\":{\"ad\":{\"sdk_env\":\"external\",\"jsb_status\":2},\"device\":{\"platform\":\"pc\"},\"user\":{\"anonymous_id\":\"01KH1W4YQARF1766CBPSKR44N7_.tt.1\"},\"pixel\":{\"code\":\"CS4DHOJC77UF6LFM2EK0\",\"runtime\":\"1\",\"codes\":\"CS4DHOJC77UF6LFM2EK0\"},\"page\":{\"url\":\"https://www.zenga.hu/elado+haz\",\"referrer\":\"\",\"load_progress\":\"2\"},\"library\":{\"name\":\"pixel.js\",\"version\":\"2.2.1\"},\"session_id\":\"ef8a05a8-05e8-11f1-ae99-764f3a278a19::AS_jQfzFX206XEgdPVvU\",\"pageview_id\":\"ef8a05a8-05e8-11f1-ae99-764f3a278a19-xvMNw.0.0::ef38a3a6-05e8-11f1-9637-b83fd2f6640e\",\"variation_id\":\"default\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36\",\"index\":0,\"sessions\":[{\"csid\":\"1770663344876::8lfKos3UY7LYS2K_QD3o\",\"page_csid\":\"1770663344876::f65GsTz5fWzvZYMm-ouL\",\"csct\":1,\"pixel_code\":\"CS4DHOJC77UF6LFM2EK0\"}]},\"_inspection\":{\"vids\":\"\"},\"properties\":{},\"signal_diagnostic_labels\":{\"raw_email\":{\"label\":\"missing\"},\"raw_auto_email\":{\"label\":\"missing\"},\"raw_phone\":{\"label\":\"missing\"},\"raw_auto_phone\":{\"label\":\"missing\"},\"hashed_email\":{\"label\":\"missing\"},\"hashed_phone\":{\"label\":\"missing\"},\"raw_eb_email\":{\"label\":\"missing\"},\"raw_eb_phone\":{\"label\":\"missing\"},\"hashed_eb_email\":{\"label\":\"missing\"},\"hashed_eb_phone\":{\"label\":\"missing\"}},\"action\":\"Metadata\",\"auto_collected_properties\":{\"page_trigger\":\"PageView\",\"content_data\":{\"open_graph\":\"{\\\"og:image\\\":[\\\"/assets/img/facebook-share-zenga-search-page.webp\\\",\\\"/assets/img/facebook-share-zenga-search-page.png\\\"],\\\"twitter:image\\\":\\\"/assets/img/twitter-share-zenga-search-page.png\\\",\\\"og:title\\\":\\\"Eladó házak országosan (0 ingatlanhirdetés)\\\",\\\"og:description\\\":\\\"Eladó házat keresel? Jó helyen jársz, ezen az oldalon 70702 db eladó ház fényképes hirdetéseit találod. \\\\r\\\\n\\\\r\\\\n<h2>Eladó ház típusok a zenga.hu ingatlankeresőn</h2>\\\\r\\\\n\\\\r\\\\nAz ingatlankereső részletes beállításai segítenek, hogy megtaláld a tökéletes tégla la\\\",\\\"og:site_name\\\":\\\"zenga.hu - Minden, ami ingatlan. Minden, amire szükséged van.\\\",\\\"og:url\\\":\\\"https://www.zenga.hu/elado+haz\\\",\\\"og:type\\\":\\\"website\\\",\\\"og:image:width\\\":\\\"1200\\\",\\\"og:image:height\\\":\\\"630\\\",\\\"og:image:type\\\":\\\"image/png\\\",\\\"twitter:title\\\":\\\"Eladó házak országosan (0 ingatlanhirdetés)\\\",\\\"twitter:description\\\":\\\"Eladó házat keresel? Jó helyen jársz, ezen az oldalon 70702 db eladó ház fényképes hirdetéseit találod. \\\\r\\\\n\\\\r\\\\n<h2>Eladó ház típusok a zenga.hu ingatlankeresőn</h2>\\\\r\\\\n\\\\r\\\\nAz ingatlankereső részletes beállításai segítenek, hogy megtaláld a tökéletes tégla la\\\",\\\"twitter:card\\\":\\\"summary_large_image\\\",\\\"twitter:image:width\\\":\\\"1200\\\",\\\"twitter:image:height\\\":\\\"630\\\",\\\"twitter:image:type\\\":\\\"image/png\\\"}\",\"microdata\":\"[]\",\"json_ld\":\"[{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@graph\\\":[{\\\"@type\\\":\\\"RealEstateListing\\\",\\\"name\\\":\\\"Eladó házak országosan (0 ingatlanhirdetés)\\\",\\\"description\\\":\\\"Eladó házat keresel? Jó helyen jársz, ezen az oldalon 70702 db eladó ház fényképes hirdetéseit találod. \\\\r\\\\n\\\\r\\\\n<h2>Eladó ház típusok a zenga.hu ingatlankeresőn</h2>\\\\r\\\\n\\\\r\\\\nAz ingatlankereső részletes beállításai segítenek, hogy megtaláld a tökéletes tégla la\\\",\\\"offers\\\":[]},{\\\"@type\\\":\\\"BreadcrumbList\\\",\\\"itemListElement\\\":[{\\\"@type\\\":\\\"ListItem\\\",\\\"position\\\":1,\\\"name\\\":\\\"Eladó ház országosan\\\"}]},{\\\"@type\\\":\\\"Organization\\\",\\\"@id\\\":\\\"https://www.zenga.hu#organization\\\",\\\"name\\\":\\\"zenga.hu - Minden, ami ingatlan. Minden, amire szükséged van.\\\",\\\"url\\\":\\\"https://www.zenga.hu\\\",\\\"logo\\\":{\\\"@type\\\":\\\"ImageObject\\\",\\\"@id\\\":\\\"/assets/zenga-logo.webp\\\",\\\"url\\\":\\\"/assets/zenga-logo.webp\\\",\\\"width\\\":\\\"112\\\",\\\"height\\\":\\\"112\\\"},\\\"foundingDate\\\":\\\"2021\\\",\\\"sameAs\\\":[\\\"https://www.facebook.com/zenga.hu/\\\",\\\"https://www.instagram.com/zenga.hu/\\\",\\\"https://www.linkedin.com/company/zenga-ingatlan/\\\"],\\\"address\\\":{\\\"addressCountry\\\":\\\"Hungary\\\",\\\"addressLocality\\\":\\\"Budapest\\\"},\\\"member\\\":{\\\"familyName\\\":\\\"Lipták\\\",\\\"givenName\\\":\\\"Zsuzsa\\\",\\\"jobTitle\\\":\\\"CEO\\\",\\\"sameAs\\\":\\\"https://hu.linkedin.com/in/zsuzsa-liptak-63553b120\\\"},\\\"parentOrganization\\\":{\\\"@type\\\":\\\"Organization\\\",\\\"name\\\":\\\"OTP Bank\\\",\\\"url\\\":\\\"https://www.otpbank.hu/\\\"}},{\\\"@type\\\":\\\"BreadcrumbList\\\",\\\"itemListElement\\\":[{\\\"@type\\\":\\\"ListItem\\\",\\\"position\\\":1,\\\"name\\\":\\\"Eladó ház országosan\\\"}]},{\\\"@type\\\":\\\"RealEstateListing\\\",\\\"name\\\":\\\"Eladó házak országosan (0 ingatlanhirdetés)\\\",\\\"description\\\":\\\"Eladó házat keresel? Jó helyen jársz, ezen az oldalon 70702 db eladó ház fényképes hirdetéseit találod. \\\\r\\\\n\\\\r\\\\n<h2>Eladó ház típusok a zenga.hu ingatlankeresőn</h2>\\\\r\\\\n\\\\r\\\\nAz ingatlankereső részletes beállításai segítenek, hogy megtaláld a tökéletes tégla la\\\",\\\"offers\\\":[]}]}]\",\"meta\":\"{\\\"title\\\":\\\"Eladó házak országosan (0 ingatlanhirdetés)\\\",\\\"meta:description\\\":\\\"Eladó házat keresel? Jó helyen jársz, ezen az oldalon 70702 db eladó ház fényképes hirdetéseit találod. \\\\r\\\\n\\\\r\\\\n<h2>Eladó ház típusok a zenga.hu ingatlankeresőn</h2>\\\\r\\\\n\\\\r\\\\nAz ingatlankereső részletes beállításai segítenek, hogy megtaláld a tökéletes tégla la\\\"}\"}}}"
+  },
+  {
+    "method": "GET",
+    "url": "https://dsp-trk.eskimi.com/tracking/cssession?tst&id=34337&url=https%3A%2F%2Fwww.zenga.hu%2Felado%2Bhaz&t=1770663346373",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://dsp-ap.eskimi.com/v2/gtr?id=34337&url=https%3A%2F%2Fwww.zenga.hu%2Felado%2Bhaz&t=1770663346374",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://gahu.hit.gemius.pl/_1770663346512/rexdot.js?l=100&sendf=24&id=zChLofAUED5f.jy17h7wKscQzQYwxU8z57SK41eg8OT.s7&et=view&hsrc=1&initsonar=1&extra=&eventid=0&tz=-60&fv=-&href=https%3A%2F%2Fwww.zenga.hu%2Felado%2Bhaz&screen=1280x720r1000&col=24&window=1280x720&vis=1&lsdata=-NOCONSENT&fpdata=-NOCONSENT&fr=1&ref=&inner=_ver%3D400%7C_min%3D1%7C_ch_arch%3Darm%7C_ch_pm%3DmacOS%7C_ch_pver%3D15.6.1%7C_ch_bits%3D64%7C_ch_mobile%3D0%7C_ch_wow64%3D0%7C_ch_brands%3D%7B%22Chromium%22%2C%22145.0.7632.6%22%7D%2C%7B%22Not%3AA-Brand%22%2C%2299.0.0.0%22%7D&nc=1&exid=-NOCONSENT&brts=1770663346",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "GET",
+    "url": "https://gahu.hit.gemius.pl/_1770663346514/redot.js?l=106&sendf=16&id=zChLofAUED5f.jy17h7wKscQzQYwxU8z57SK41eg8OT.s7&et=view&hsrc=2&extra=&eventid=0&tz=-60&fv=-&href=https%3A%2F%2Fwww.zenga.hu%2Felado%2Bhaz&screen=1280x720r1000&col=24&window=1280x720&vis=1&lsdata=-NOCONSENT&fpdata=-NOCONSENT&fr=1&ref=&inner=_ver%3D400%7C_min%3D1%7C_ch_arch%3Darm%7C_ch_pm%3DmacOS%7C_ch_pver%3D15.6.1%7C_ch_bits%3D64%7C_ch_mobile%3D0%7C_ch_wow64%3D0%7C_ch_brands%3D%7B%22Chromium%22%2C%22145.0.7632.6%22%7D%2C%7B%22Not%3AA-Brand%22%2C%2299.0.0.0%22%7D&nc=1&exid=-NOCONSENT&brts=1770663346",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": null
+  },
+  {
+    "method": "POST",
+    "url": "https://region1.google-analytics.com/g/collect?v=2&tid=G-GVYFSWV50R&gtm=45je6261h2v888913979z8866847804za20gzb866847804zd866847804&_p=1770663341760&gcs=G100&gcd=13p3p3p2p5l1&npa=1&dma_cps=-&dma=1&tcfd=10001&gdid=dMWZhNz&gtm_up=1&cid=551960286.1770663343&ecid=988199120&ul=en-us&sr=1280x720&uaa=arm&uab=64&uafvl=Chromium%3B145.0.7632.6%7CNot%253AA-Brand%3B99.0.0.0&uamb=0&uam=&uap=macOS&uapv=15.6.1&uaw=0&are=1&frm=0&pscdl=denied&ngs=1&tag_exp=102015666~103116026~103200004~104527906~104528500~104684208~104684211~115938465~115938469~116185181~116185182~116988316&dl=https%3A%2F%2Fwww.zenga.hu%2Fbudapest%2Belado%2Blakas&dt=Elad%C3%B3%20h%C3%A1zak%20orsz%C3%A1gosan%20(0%20ingatlanhirdet%C3%A9s)&sid=1770663343&sct=1&seg=1&_tu=CAg&_s=3&tfd=8177",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.zenga.hu/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"145\", \"Not:A-Brand\";v=\"99\"",
+      "content-type": "text/plain;charset=UTF-8",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "postData": "en=page_view&ep.page_type=lista_ingatlan&ep.user_login_state=NOT_LOGGED_IN_ROUTE&ep.abTest_1=same_tab&_et=25\r\nen=page_view&ep.page_type=lista_ingatlan&ep.user_login_state=NOT_LOGGED_IN_ROUTE&ep.abTest_1=same_tab&_et=25&dl=https%3A%2F%2Fwww.zenga.hu%2Felado%2Bhaz&dt=zenga.hu%20-%20Minden%2C%20ami%20ingatlan.%20Minden%2C%20amire%20sz%C3%BCks%C3%A9ged%20van."
+  }
+]

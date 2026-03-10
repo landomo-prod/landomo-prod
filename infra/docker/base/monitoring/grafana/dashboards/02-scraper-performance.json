@@ -1,0 +1,636 @@
+{
+  "title": "Scraper Performance",
+  "tags": [
+    "landomo",
+    "scrapers",
+    "performance"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "1m",
+  "uid": "landomo-scraper-performance",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Scraper Success Rate (24h)",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  ROUND(100.0 * COUNT(*) FILTER (WHERE status = 'completed') / NULLIF(COUNT(*), 0), 2) as \"Success Rate %\"\nFROM scrape_runs \nWHERE started_at > NOW() - INTERVAL '24 hours'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 70,
+                "color": "yellow"
+              },
+              {
+                "value": 90,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "percent",
+          "decimals": 1
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Total Scrape Runs (24h)",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Total Runs\" FROM scrape_runs WHERE started_at > NOW() - INTERVAL '24 hours'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Average Scrape Duration",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  AVG(EXTRACT(EPOCH FROM (finished_at - started_at))) as \"Avg Duration\"\nFROM scrape_runs \nWHERE started_at > NOW() - INTERVAL '24 hours' \n  AND status = 'completed'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 300,
+                "color": "yellow"
+              },
+              {
+                "value": 600,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "s",
+          "decimals": 1
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Failed Runs (24h)",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Failed\" FROM scrape_runs WHERE started_at > NOW() - INTERVAL '24 hours' AND status = 'failed'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 1,
+                "color": "yellow"
+              },
+              {
+                "value": 5,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Scraper Success Rate by Portal",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal as metric,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE status = 'completed') / NULLIF(COUNT(*), 0), 1) as value\nFROM scrape_runs \nWHERE started_at > NOW() - INTERVAL '7 days'\nGROUP BY portal \nHAVING COUNT(*) > 0\nORDER BY value ASC",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 70,
+                "color": "yellow"
+              },
+              {
+                "value": 90,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Average Listings Found per Portal",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal as metric,\n  ROUND(AVG(listings_found), 0) as value\nFROM scrape_runs \nWHERE started_at > NOW() - INTERVAL '7 days' \n  AND status = 'completed'\nGROUP BY portal \nORDER BY value DESC",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Scrape Run Status Over Time",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  date_trunc('hour', started_at) as time,\n  COUNT(*) FILTER (WHERE status = 'completed') as \"Completed\",\n  COUNT(*) FILTER (WHERE status = 'failed') as \"Failed\",\n  COUNT(*) FILTER (WHERE status = 'running') as \"Running\"\nFROM scrape_runs \nWHERE started_at > NOW() - INTERVAL '7 days'\nGROUP BY time \nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "showPoints": "never",
+            "stacking": {
+              "mode": "normal"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Completed"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failed"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Running"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Scrape Duration by Portal",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  finished_at as time,\n  portal as metric,\n  EXTRACT(EPOCH FROM (finished_at - started_at)) as value\nFROM scrape_runs \nWHERE finished_at > NOW() - INTERVAL '7 days' \n  AND status = 'completed'\nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 0,
+            "showPoints": "auto"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "s"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Listings Found Trend",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  finished_at as time,\n  portal as metric,\n  listings_found as value\nFROM scrape_runs \nWHERE finished_at > NOW() - INTERVAL '7 days' \n  AND status = 'completed'\nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "showPoints": "auto"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "title": "New vs Updated Listings",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  date_trunc('hour', finished_at) as time,\n  SUM(listings_new) as \"New Listings\",\n  SUM(listings_updated) as \"Updated Listings\"\nFROM scrape_runs \nWHERE finished_at > NOW() - INTERVAL '7 days' \n  AND status = 'completed'\nGROUP BY time \nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "New Listings"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Updated Listings"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Portal Performance Details",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal as \"Portal\",\n  COUNT(*) as \"Total Runs\",\n  COUNT(*) FILTER (WHERE status = 'completed') as \"Successful\",\n  COUNT(*) FILTER (WHERE status = 'failed') as \"Failed\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE status = 'completed') / NULLIF(COUNT(*), 0), 1) as \"Success %\",\n  ROUND(AVG(listings_found) FILTER (WHERE status = 'completed'), 0) as \"Avg Found\",\n  ROUND(AVG(EXTRACT(EPOCH FROM (finished_at - started_at))) FILTER (WHERE status = 'completed'), 1) as \"Avg Duration (s)\",\n  MAX(started_at) as \"Last Run\"\nFROM scrape_runs \nWHERE started_at > NOW() - INTERVAL '7 days'\nGROUP BY portal \nORDER BY \"Total Runs\" DESC",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Success %",
+            "desc": false
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "title": "Running Scrapers",
+      "type": "table",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal as \"Portal\",\n  started_at as \"Started At\",\n  EXTRACT(EPOCH FROM (NOW() - started_at)) as \"Running For (s)\",\n  listings_found as \"Listings Found\",\n  listings_new as \"New\",\n  listings_updated as \"Updated\"\nFROM scrape_runs \nWHERE status = 'running'\nORDER BY started_at DESC",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    }
+  ],
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m"
+    ]
+  }
+}

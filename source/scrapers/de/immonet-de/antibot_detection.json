@@ -1,0 +1,11 @@
+{
+  "url": "immonet.de",
+  "cloudflare": false,
+  "akamai": false,
+  "aws_waf": false,
+  "imperva": false,
+  "generic_waf": false,
+  "details": [],
+  "status_code": 403,
+  "error": null
+}

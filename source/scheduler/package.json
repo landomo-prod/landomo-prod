@@ -1,0 +1,33 @@
+{
+  "name": "@landomo/scheduler",
+  "version": "1.0.0",
+  "description": "Centralized scheduler for landomo scrapers",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "landomo",
+    "scheduler",
+    "cron"
+  ],
+  "dependencies": {
+    "axios": "^1.6.5",
+    "express": "^4.18.2",
+    "ioredis": "^5.9.2",
+    "node-cron": "^3.0.3",
+    "pino": "^10.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/ioredis": "^4.28.10",
+    "@types/node": "^20.0.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/pino": "^7.0.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3"
+  }
+}

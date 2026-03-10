@@ -1,0 +1,226 @@
+{
+  "timestamp": "2026-02-14T07:49:25.677Z",
+  "totalListings": 20,
+  "totalPassed": 20,
+  "totalFailed": 0,
+  "totalTransformErrors": 0,
+  "categories": {
+    "Apartment": {
+      "status": "PASS",
+      "listings": 5,
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "details": [
+        {
+          "hashId": 2212697420,
+          "title": "Prodej bytu 3+kk 72 m²",
+          "passed": 20,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 1556706124,
+          "title": "Prodej bytu 3+1 84 m² (Jednopodlažní)",
+          "passed": 21,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 3926995788,
+          "title": "Prodej bytu 3+kk 103 m² (Jednopodlažní)",
+          "passed": 20,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 3874304844,
+          "title": "Prodej bytu 2+kk 58 m² (Mezonet)",
+          "passed": 20,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 303100748,
+          "title": "Prodej bytu 3+1 70 m²",
+          "passed": 21,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        }
+      ]
+    },
+    "House": {
+      "status": "PASS",
+      "listings": 5,
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "details": [
+        {
+          "hashId": 1256882764,
+          "title": "Prodej  rodinného domu 149 m², pozemek 213 m²",
+          "passed": 20,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 2358760268,
+          "title": "Prodej  rodinného domu 340 m², pozemek 551 m²",
+          "passed": 20,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 3310961228,
+          "title": "Prodej  rodinného domu 160 m², pozemek 228 m²",
+          "passed": 19,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 1387279180,
+          "title": "Prodej  rodinného domu 200 m², pozemek 586 m²",
+          "passed": 20,
+          "failed": 0,
+          "warnings": 1,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 4054979404,
+          "title": "Prodej  rodinného domu 120 m², pozemek 467 m²",
+          "passed": 20,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        }
+      ]
+    },
+    "Land": {
+      "status": "PASS",
+      "listings": 5,
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "details": [
+        {
+          "hashId": 295908172,
+          "title": "Prodej  stavebního pozemku 806 m²",
+          "passed": 11,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 234845004,
+          "title": "Prodej  stavebního pozemku 15 153 m²",
+          "passed": 11,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 1047028556,
+          "title": "Prodej  stavebního pozemku 875 m²",
+          "passed": 11,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 2644386636,
+          "title": "Prodej  stavebního pozemku 334 m²",
+          "passed": 11,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 3820823372,
+          "title": "Prodej  stavebního pozemku 2 166 m²",
+          "passed": 11,
+          "failed": 0,
+          "warnings": 0,
+          "failedFields": [],
+          "error": null
+        }
+      ]
+    },
+    "Commercial": {
+      "status": "PASS",
+      "listings": 5,
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "details": [
+        {
+          "hashId": 2913366860,
+          "title": "Prodej ubytovacího zařízení 870 m²",
+          "passed": 12,
+          "failed": 0,
+          "warnings": 3,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 2926076748,
+          "title": "Prodej výrobní haly, prostoru 704 m²",
+          "passed": 13,
+          "failed": 0,
+          "warnings": 3,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 319460172,
+          "title": "Prodej apartmánů 1 453 m²",
+          "passed": 12,
+          "failed": 0,
+          "warnings": 3,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 1182741324,
+          "title": "Prodej kanceláře 194 m²",
+          "passed": 13,
+          "failed": 0,
+          "warnings": 3,
+          "failedFields": [],
+          "error": null
+        },
+        {
+          "hashId": 2056721228,
+          "title": "Prodej činžovního domu 515 m²",
+          "passed": 12,
+          "failed": 0,
+          "warnings": 3,
+          "failedFields": [],
+          "error": null
+        }
+      ]
+    }
+  },
+  "overallPass": true
+}

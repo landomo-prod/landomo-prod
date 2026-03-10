@@ -1,0 +1,478 @@
+{
+  "compilation_status": "SUCCESS",
+  "timestamp": "2026-02-07T20:09:11.868Z",
+  "sample_listings_count": 5,
+  "test_results": [
+    {
+      "listing_id": "1001",
+      "listing_title": "3+kk byt s balkonem, Praha 2, Vinohrady",
+      "tier1": {
+        "passed": 8,
+        "total": 8,
+        "details": {
+          "title": true,
+          "description": true,
+          "source_url": true,
+          "source_platform": true,
+          "price": true,
+          "currency": true,
+          "transaction_type": true,
+          "property_type": true
+        }
+      },
+      "tier2": {
+        "passed": 18,
+        "total": 18,
+        "details": {
+          "czech_disposition": true,
+          "czech_ownership": true,
+          "condition": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area_living": true,
+          "area_plot": true,
+          "floor_location": true,
+          "floor_number": true,
+          "coordinates": true,
+          "image_urls": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "published_date": true,
+          "updated_date": true,
+          "days_on_market": true
+        }
+      },
+      "tier3": {
+        "passed": 30,
+        "total": 30,
+        "details": {
+          "id": true,
+          "url": true,
+          "property_type": true,
+          "transaction_type": true,
+          "rooms_text": true,
+          "condition": true,
+          "ownership": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area": true,
+          "plot_area": true,
+          "location_city": true,
+          "location_district": true,
+          "location_address": true,
+          "coordinates": true,
+          "images": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "floor_plans": true,
+          "realtor_name": true,
+          "realtor_phone": true,
+          "realtor_email": true,
+          "views": true,
+          "published_date": true,
+          "updated_date": true,
+          "features": true,
+          "description": true,
+          "extracted_attributes": true
+        }
+      },
+      "realtor_extraction": {
+        "name_extracted": true,
+        "phone_extracted": true,
+        "email_extracted": true,
+        "details": {
+          "expected_name": "Mgr. Pavel Novotný",
+          "actual_name": "Mgr. Pavel Novotný",
+          "expected_phone": "+420 721 456 789",
+          "actual_phone": "+420 721 456 789",
+          "expected_email": "pavel.novotny@reality.cz",
+          "actual_email": "pavel.novotny@reality.cz"
+        }
+      },
+      "transformation_successful": true
+    },
+    {
+      "listing_id": "1002",
+      "listing_title": "Pronájem 1+1 bytu, Brno, Žabovřesky",
+      "tier1": {
+        "passed": 8,
+        "total": 8,
+        "details": {
+          "title": true,
+          "description": true,
+          "source_url": true,
+          "source_platform": true,
+          "price": true,
+          "currency": true,
+          "transaction_type": true,
+          "property_type": true
+        }
+      },
+      "tier2": {
+        "passed": 18,
+        "total": 18,
+        "details": {
+          "czech_disposition": true,
+          "czech_ownership": true,
+          "condition": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area_living": true,
+          "area_plot": true,
+          "floor_location": true,
+          "floor_number": true,
+          "coordinates": true,
+          "image_urls": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "published_date": true,
+          "updated_date": true,
+          "days_on_market": true
+        }
+      },
+      "tier3": {
+        "passed": 30,
+        "total": 30,
+        "details": {
+          "id": true,
+          "url": true,
+          "property_type": true,
+          "transaction_type": true,
+          "rooms_text": true,
+          "condition": true,
+          "ownership": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area": true,
+          "plot_area": true,
+          "location_city": true,
+          "location_district": true,
+          "location_address": true,
+          "coordinates": true,
+          "images": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "floor_plans": true,
+          "realtor_name": true,
+          "realtor_phone": true,
+          "realtor_email": true,
+          "views": true,
+          "published_date": true,
+          "updated_date": true,
+          "features": true,
+          "description": true,
+          "extracted_attributes": true
+        }
+      },
+      "realtor_extraction": {
+        "name_extracted": true,
+        "phone_extracted": true,
+        "email_extracted": true,
+        "details": {
+          "expected_name": "Eva Kopřivová",
+          "actual_name": "Eva Kopřivová",
+          "expected_phone": "+420 776 234 567",
+          "actual_phone": "+420 776 234 567",
+          "expected_email": "eva.koprivova@reality.cz",
+          "actual_email": "eva.koprivova@reality.cz"
+        }
+      },
+      "transformation_successful": true
+    },
+    {
+      "listing_id": "1003",
+      "listing_title": "Prodej rodinného domu, Ostrava, Poruba",
+      "tier1": {
+        "passed": 8,
+        "total": 8,
+        "details": {
+          "title": true,
+          "description": true,
+          "source_url": true,
+          "source_platform": true,
+          "price": true,
+          "currency": true,
+          "transaction_type": true,
+          "property_type": true
+        }
+      },
+      "tier2": {
+        "passed": 18,
+        "total": 18,
+        "details": {
+          "czech_disposition": true,
+          "czech_ownership": true,
+          "condition": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area_living": true,
+          "area_plot": true,
+          "floor_location": true,
+          "floor_number": true,
+          "coordinates": true,
+          "image_urls": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "published_date": true,
+          "updated_date": true,
+          "days_on_market": true
+        }
+      },
+      "tier3": {
+        "passed": 30,
+        "total": 30,
+        "details": {
+          "id": true,
+          "url": true,
+          "property_type": true,
+          "transaction_type": true,
+          "rooms_text": true,
+          "condition": true,
+          "ownership": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area": true,
+          "plot_area": true,
+          "location_city": true,
+          "location_district": true,
+          "location_address": true,
+          "coordinates": true,
+          "images": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "floor_plans": true,
+          "realtor_name": true,
+          "realtor_phone": true,
+          "realtor_email": true,
+          "views": true,
+          "published_date": true,
+          "updated_date": true,
+          "features": true,
+          "description": true,
+          "extracted_attributes": true
+        }
+      },
+      "realtor_extraction": {
+        "name_extracted": true,
+        "phone_extracted": true,
+        "email_extracted": true,
+        "details": {
+          "expected_name": "Ing. Miroslav Kučera",
+          "actual_name": "Ing. Miroslav Kučera",
+          "expected_phone": "+420 603 987 654",
+          "actual_phone": "+420 603 987 654",
+          "expected_email": "miroslav.kucera@reality.cz",
+          "actual_email": "miroslav.kucera@reality.cz"
+        }
+      },
+      "transformation_successful": true
+    },
+    {
+      "listing_id": "1004",
+      "listing_title": "Kancelářský prostor k pronájmu, Plzeň, centrum",
+      "tier1": {
+        "passed": 8,
+        "total": 8,
+        "details": {
+          "title": true,
+          "description": true,
+          "source_url": true,
+          "source_platform": true,
+          "price": true,
+          "currency": true,
+          "transaction_type": true,
+          "property_type": true
+        }
+      },
+      "tier2": {
+        "passed": 16,
+        "total": 18,
+        "details": {
+          "czech_disposition": false,
+          "czech_ownership": false,
+          "condition": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area_living": true,
+          "area_plot": true,
+          "floor_location": true,
+          "floor_number": true,
+          "coordinates": true,
+          "image_urls": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "published_date": true,
+          "updated_date": true,
+          "days_on_market": true
+        }
+      },
+      "tier3": {
+        "passed": 30,
+        "total": 30,
+        "details": {
+          "id": true,
+          "url": true,
+          "property_type": true,
+          "transaction_type": true,
+          "rooms_text": true,
+          "condition": true,
+          "ownership": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area": true,
+          "plot_area": true,
+          "location_city": true,
+          "location_district": true,
+          "location_address": true,
+          "coordinates": true,
+          "images": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "floor_plans": true,
+          "realtor_name": true,
+          "realtor_phone": true,
+          "realtor_email": true,
+          "views": true,
+          "published_date": true,
+          "updated_date": true,
+          "features": true,
+          "description": true,
+          "extracted_attributes": true
+        }
+      },
+      "realtor_extraction": {
+        "name_extracted": true,
+        "phone_extracted": true,
+        "email_extracted": true,
+        "details": {
+          "expected_name": "Hana Kratochvílová",
+          "actual_name": "Hana Kratochvílová",
+          "expected_phone": "+420 732 111 222",
+          "actual_phone": "+420 732 111 222",
+          "expected_email": "hana.kratochvilova@reality.cz",
+          "actual_email": "hana.kratochvilova@reality.cz"
+        }
+      },
+      "transformation_successful": true
+    },
+    {
+      "listing_id": "1005",
+      "listing_title": "Pozemek s možností stavby, Liberec",
+      "tier1": {
+        "passed": 8,
+        "total": 8,
+        "details": {
+          "title": true,
+          "description": true,
+          "source_url": true,
+          "source_platform": true,
+          "price": true,
+          "currency": true,
+          "transaction_type": true,
+          "property_type": true
+        }
+      },
+      "tier2": {
+        "passed": 12,
+        "total": 18,
+        "details": {
+          "czech_disposition": false,
+          "czech_ownership": true,
+          "condition": false,
+          "energy_rating": false,
+          "heating_type": false,
+          "construction_type": false,
+          "furnished": false,
+          "area_living": true,
+          "area_plot": true,
+          "floor_location": true,
+          "floor_number": true,
+          "coordinates": true,
+          "image_urls": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "published_date": true,
+          "updated_date": true,
+          "days_on_market": true
+        }
+      },
+      "tier3": {
+        "passed": 30,
+        "total": 30,
+        "details": {
+          "id": true,
+          "url": true,
+          "property_type": true,
+          "transaction_type": true,
+          "rooms_text": true,
+          "condition": true,
+          "ownership": true,
+          "energy_rating": true,
+          "heating_type": true,
+          "construction_type": true,
+          "furnished": true,
+          "area": true,
+          "plot_area": true,
+          "location_city": true,
+          "location_district": true,
+          "location_address": true,
+          "coordinates": true,
+          "images": true,
+          "image_count": true,
+          "virtual_tour_url": true,
+          "floor_plans": true,
+          "realtor_name": true,
+          "realtor_phone": true,
+          "realtor_email": true,
+          "views": true,
+          "published_date": true,
+          "updated_date": true,
+          "features": true,
+          "description": true,
+          "extracted_attributes": true
+        }
+      },
+      "realtor_extraction": {
+        "name_extracted": true,
+        "phone_extracted": true,
+        "email_extracted": true,
+        "details": {
+          "expected_name": "David Šimáček",
+          "actual_name": "David Šimáček",
+          "expected_phone": "+420 608 555 666",
+          "actual_phone": "+420 608 555 666",
+          "expected_email": "david.simacek@reality.cz",
+          "actual_email": "david.simacek@reality.cz"
+        }
+      },
+      "transformation_successful": true
+    }
+  ],
+  "summary": {
+    "tier1_total": 40,
+    "tier1_passed": 40,
+    "tier2_total": 90,
+    "tier2_passed": 82,
+    "tier3_total": 150,
+    "tier3_passed": 150,
+    "realtor_tests": 15,
+    "realtor_passed": 15,
+    "transformation_errors": 0
+  }
+}

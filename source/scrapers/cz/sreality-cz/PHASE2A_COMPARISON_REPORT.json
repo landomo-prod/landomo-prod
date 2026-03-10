@@ -1,0 +1,399 @@
+{
+  "report_metadata": {
+    "title": "Phase 2a Amenity Field Extraction - Bug Fix Re-Test Comparison",
+    "test_date": "2026-02-07",
+    "description": "Comparison of Phase 2a extraction results BEFORE and AFTER the attempted elevator/numeric bug fixes",
+    "status": "INCOMPLETE - Numeric fix not properly implemented",
+    "critical_finding": "Elevator false positive bug is FIXED, but balcony numeric string values still not recognized"
+  },
+  "test_parameters": {
+    "listings_tested": 6,
+    "critical_test_cases": {
+      "elevator_false_positive_test": 2983228236,
+      "balcony_numeric_3sqm_test": 750941004,
+      "balcony_numeric_13sqm_test": 2437342028,
+      "balcony_numeric_with_elevator_test": 3024319308
+    },
+    "listing_ids": [
+      2437342028,
+      340882252,
+      3430052684,
+      750941004,
+      3024319308,
+      2983228236
+    ]
+  },
+  "field_by_field_comparison": {
+    "has_elevator": {
+      "previous_test": {
+        "date": "2026-02-07T19:25:37.585Z",
+        "api_availability": "42% (5/12)",
+        "extraction_success_rate": "60% (3/5)",
+        "true_count": 3,
+        "false_count": 0,
+        "undefined_count": 9,
+        "issues": [
+          {
+            "type": "false_positive_extraction",
+            "description": "Elevator items with boolean false value incorrectly extracted as true",
+            "frequency": "At least 1 out of 5 items (20%)",
+            "severity": "HIGH"
+          }
+        ]
+      },
+      "retest_results": {
+        "date": "2026-02-07T19:36:27.068Z",
+        "api_availability": "67% (4/6)",
+        "extraction_success_rate": "75% (3/4)",
+        "true_count": 3,
+        "false_count": 1,
+        "undefined_count": 2,
+        "issues": []
+      },
+      "improvement": {
+        "api_availability_change": "+25%",
+        "extraction_rate_change": "+15%",
+        "false_positives_fixed": true,
+        "false_positives_count_before": 1,
+        "false_positives_count_after": 0,
+        "status": "✅ BUG FIXED",
+        "root_cause_fixed": "isPositiveValue() now explicitly checks for 'false' string and returns false"
+      },
+      "critical_validation": {
+        "test_case": "Listing 2983228236 - Elevator with API value: false",
+        "previous_extraction": "true (FALSE POSITIVE BUG)",
+        "new_extraction": "false (CORRECT)",
+        "fix_confirmed": true
+      }
+    },
+    "has_balcony": {
+      "previous_test": {
+        "date": "2026-02-07T19:25:37.585Z",
+        "api_availability": "33% (4/12)",
+        "extraction_success_rate": "50% (2/4)",
+        "true_count": 2,
+        "false_count": 0,
+        "undefined_count": 10,
+        "issues": [
+          {
+            "type": "missed_numeric_values",
+            "description": "Balcony items with numeric string values ('3', '13') not extracted",
+            "frequency": "2 out of 4 items (50%)",
+            "severity": "MEDIUM",
+            "api_value_type": "String (e.g., '3', '13' m²)",
+            "extraction_logic": "isPositiveValue() only handles keywords, not numeric strings"
+          }
+        ]
+      },
+      "retest_results": {
+        "date": "2026-02-07T19:36:27.068Z",
+        "api_availability": "50% (3/6)",
+        "extraction_success_rate": "0% (0/3)",
+        "true_count": 0,
+        "false_count": 0,
+        "undefined_count": 3,
+        "issues": [
+          {
+            "type": "numeric_string_values_not_recognized",
+            "description": "API returns balcony values as STRING type ('3', '13'), not numeric",
+            "impact": "REGRESSION - now 0% extraction instead of 50%",
+            "severity": "CRITICAL",
+            "root_cause": "isPositiveValue() does not parse numeric strings - INCOMPLETE FIX"
+          }
+        ]
+      },
+      "improvement": {
+        "api_availability_change": "+17%",
+        "extraction_rate_change": "-50% (REGRESSION!)",
+        "numeric_fix_applied": false,
+        "numeric_fix_reason": "Fix was incomplete - code change exists but doesn't handle STRING numeric values",
+        "status": "❌ BUG NOT FIXED - REGRESSION OCCURRED",
+        "actual_issue": "API returns '3' and '13' as strings, not numbers, but isPositiveValue() only handles numeric type"
+      },
+      "critical_validation": {
+        "test_cases": [
+          {
+            "listing_id": 2437342028,
+            "api_value": "13",
+            "api_value_type": "string",
+            "previous_extraction": "true (CORRECT)",
+            "new_extraction": "undefined (REGRESSION)",
+            "fix_status": "NOT FIXED - Numeric string type not handled"
+          },
+          {
+            "listing_id": 750941004,
+            "api_value": "3",
+            "api_value_type": "string",
+            "previous_extraction": "undefined (BUG)",
+            "new_extraction": "undefined (STILL BUG)",
+            "fix_status": "NOT FIXED - Numeric string type not handled"
+          },
+          {
+            "listing_id": 3024319308,
+            "api_value": "3",
+            "api_value_type": "string",
+            "previous_extraction": "undefined (BUG)",
+            "new_extraction": "undefined (STILL BUG)",
+            "fix_status": "NOT FIXED - Numeric string type not handled"
+          }
+        ]
+      }
+    },
+    "has_terrace": {
+      "previous_test": {
+        "date": "2026-02-07T19:25:37.585Z",
+        "api_availability": "0% (0/12)",
+        "extraction_success_rate": "0%",
+        "true_count": 0,
+        "false_count": 0,
+        "undefined_count": 12,
+        "issues": [
+          {
+            "type": "not_found_in_test_data",
+            "description": "No terrace items found in 12 listings"
+          }
+        ]
+      },
+      "retest_results": {
+        "date": "2026-02-07T19:36:27.068Z",
+        "api_availability": "0% (0/6)",
+        "extraction_success_rate": "0%",
+        "true_count": 0,
+        "false_count": 0,
+        "undefined_count": 6,
+        "issues": [
+          {
+            "type": "not_found_in_test_data",
+            "description": "No terrace items found in 6 listings"
+          }
+        ]
+      },
+      "improvement": {
+        "status": "NO CHANGE - No terrace data in sample to test"
+      }
+    },
+    "has_ac": {
+      "previous_test": {
+        "api_availability": "0%",
+        "extraction_success_rate": "0%",
+        "status": "Not found in test data"
+      },
+      "retest_results": {
+        "api_availability": "0%",
+        "extraction_success_rate": "0%",
+        "status": "Not found in test data"
+      },
+      "improvement": {
+        "status": "NO CHANGE - No data in sample"
+      }
+    },
+    "has_security": {
+      "previous_test": {
+        "api_availability": "0%",
+        "extraction_success_rate": "0%",
+        "status": "Not found in test data"
+      },
+      "retest_results": {
+        "api_availability": "0%",
+        "extraction_success_rate": "0%",
+        "status": "Not found in test data"
+      },
+      "improvement": {
+        "status": "NO CHANGE - No data in sample"
+      }
+    },
+    "has_fireplace": {
+      "previous_test": {
+        "api_availability": "0%",
+        "extraction_success_rate": "0%",
+        "status": "Not found in test data"
+      },
+      "retest_results": {
+        "api_availability": "0%",
+        "extraction_success_rate": "0%",
+        "status": "Not found in test data"
+      },
+      "improvement": {
+        "status": "NO CHANGE - No data in sample"
+      }
+    }
+  },
+  "overall_summary": {
+    "extraction_rate_comparison": {
+      "has_elevator": {
+        "before": "60%",
+        "after": "75%",
+        "change": "+15%",
+        "status": "✅ IMPROVED"
+      },
+      "has_balcony": {
+        "before": "50%",
+        "after": "0%",
+        "change": "-50%",
+        "status": "❌ REGRESSED"
+      },
+      "has_terrace": {
+        "before": "0%",
+        "after": "0%",
+        "change": "0%",
+        "status": "→ NO CHANGE"
+      },
+      "overall_enrichment_impact": {
+        "estimated_properties_enriched_before": "~7-8% of listings",
+        "estimated_properties_enriched_after": "~5-6% of listings (LOWER)",
+        "data_quality_change": "Deteriorated - Lost balcony enrichment"
+      }
+    }
+  },
+  "critical_findings": {
+    "finding_1": {
+      "title": "Elevator False Positive Bug: FIXED ✅",
+      "description": "The critical bug where properties without elevators (API false value) were incorrectly marked as having elevators has been fixed.",
+      "evidence": {
+        "test_case": "Listing 2983228236",
+        "api_value": false,
+        "before": true,
+        "after": false,
+        "fix_reason": "isPositiveValue() now returns false for string 'false'"
+      },
+      "impact": "HIGH - Improves data quality by eliminating false positives",
+      "severity": "RESOLVED"
+    },
+    "finding_2": {
+      "title": "Balcony Numeric Values Bug: NOT FIXED ❌",
+      "description": "The bug where balcony items with numeric area values are not extracted has NOT been fixed. In fact, extraction rate REGRESSED from 50% to 0%.",
+      "root_cause": {
+        "issue": "API returns balcony values as STRING type ('3', '13'), not numeric type",
+        "code_problem": "isPositiveValue() only handles numeric type (number), not string numeric values",
+        "expected_fix": "Should parse numeric strings with parseFloat() or parseInt()",
+        "actual_code": "Code only checks: if (typeof value === 'number') { return value > 0; }",
+        "missing_implementation": "No handling for String('3') or String('13')"
+      },
+      "evidence": {
+        "test_cases": [
+          {
+            "listing": 2437342028,
+            "api_value": "13",
+            "type": "string",
+            "before": true,
+            "after": undefined,
+            "regression": true
+          },
+          {
+            "listing": 750941004,
+            "api_value": "3",
+            "type": "string",
+            "before": undefined,
+            "after": undefined,
+            "fixed": false
+          },
+          {
+            "listing": 3024319308,
+            "api_value": "3",
+            "type": "string",
+            "before": undefined,
+            "after": undefined,
+            "fixed": false
+          }
+        ]
+      },
+      "impact": "CRITICAL - Data quality deteriorated, 50% regression in balcony extraction",
+      "severity": "BLOCKING"
+    },
+    "finding_3": {
+      "title": "Incomplete Implementation",
+      "description": "The numeric fix was mentioned in the requirements but only partially implemented. It handles numeric types but not numeric string types.",
+      "requirements": "Update isPositiveValue() to recognize numeric values > 0",
+      "implemented": "Only handles: typeof value === 'number' && value > 0",
+      "missing": "String numeric values like '3', '13' are not parsed",
+      "fix_needed": "Add parseFloat() check before keyword matching"
+    }
+  },
+  "code_analysis": {
+    "isPositiveValue_function": {
+      "file": "src/transformers/srealityTransformer.ts",
+      "line_range": "754-777",
+      "current_logic": {
+        "step_1": "Check if undefined/null → return false",
+        "step_2": "Check if numeric type > 0 → return true ✓",
+        "step_3": "Convert to string and check for negative keywords (ne, no, false) → return false ✓",
+        "step_4": "Check for positive keywords (ano, yes, true, etc.) → return boolean",
+        "missing": "Parse numeric STRING values like '3', '13' BEFORE keyword check"
+      },
+      "api_value_types_observed": {
+        "elevator": "boolean (true/false)",
+        "balcony": "string ('3', '13')",
+        "terrace": "Not tested",
+        "problem": "Code assumes all non-numeric values are keywords, but API returns area values as strings"
+      }
+    }
+  },
+  "recommendations": {
+    "priority_1_critical": {
+      "issue": "Balcony numeric string extraction broken",
+      "action": "Update isPositiveValue() to parse numeric strings before keyword matching",
+      "implementation": "Add: const numVal = parseFloat(str); if (!isNaN(numVal) && numVal > 0) return true;",
+      "timeline": "IMMEDIATE - Currently broken",
+      "testing": "Re-test with all 6 listings, verify no regressions"
+    },
+    "priority_2_high": {
+      "issue": "Elevator extraction needs documentation",
+      "action": "Document the false-positive fix and ensure it's properly tested",
+      "testing": "Verify false value handling in CI/CD"
+    },
+    "priority_3_medium": {
+      "issue": "Expand test dataset",
+      "action": "Test with 50+ listings to verify AC, Security, Fireplace extraction",
+      "impact": "Currently 0% availability in sample, but likely present in larger dataset"
+    }
+  },
+  "extraction_rate_table": {
+    "before_and_after": [
+      {
+        "field": "has_elevator",
+        "phase2a_previous": "60% (3/5)",
+        "phase2a_retest": "75% (3/4)",
+        "improvement": "+15%",
+        "status": "✅ Better (no false positives)",
+        "note": "Higher rate and no false positives = improved"
+      },
+      {
+        "field": "has_balcony",
+        "phase2a_previous": "50% (2/4)",
+        "phase2a_retest": "0% (0/3)",
+        "improvement": "-50%",
+        "status": "❌ REGRESSION (numeric string fix incomplete)",
+        "note": "API returns string '3', but code only handles numeric type"
+      },
+      {
+        "field": "has_terrace",
+        "phase2a_previous": "0% (0/12)",
+        "phase2a_retest": "0% (0/6)",
+        "improvement": "→",
+        "status": "→ No data",
+        "note": "Not present in test sample"
+      }
+    ]
+  },
+  "test_execution_summary": {
+    "start_time": "2026-02-07T19:36:00Z",
+    "end_time": "2026-02-07T19:36:27Z",
+    "duration_seconds": 27,
+    "listings_tested": 6,
+    "api_calls": 6,
+    "success_rate": "100%",
+    "errors": 0,
+    "critical_cases_validated": 4
+  },
+  "conclusion": {
+    "overall_assessment": "MIXED RESULTS - One bug fixed, one bug still broken (regression)",
+    "elevator_false_positive": "✅ FIXED - No more false positives on false values",
+    "balcony_numeric": "❌ NOT FIXED - Numeric STRING values still not recognized, extraction rate regressed",
+    "next_steps": [
+      "Apply numeric string parsing fix to isPositiveValue()",
+      "Re-test to verify extraction rates improve",
+      "Ensure no regressions in other fields"
+    ],
+    "data_quality_impact": "NEGATIVE - Overall enrichment rate decreased due to balcony regression"
+  }
+}

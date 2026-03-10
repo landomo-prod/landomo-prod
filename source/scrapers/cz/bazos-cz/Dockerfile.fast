@@ -1,0 +1,56 @@
+# Fast build using npm cache and avoiding problematic npm ci
+FROM node:20-alpine AS shared-builder
+WORKDIR /shared
+COPY shared-components/package*.json ./
+COPY shared-components/tsconfig.json ./
+RUN npm ci
+COPY shared-components/src ./src
+RUN npm run build
+
+# Build scraper
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+# Copy built shared-components
+COPY --from=shared-builder /shared /shared
+
+# Copy package files and modify before install
+COPY ["scrapers/Czech Republic/bazos/package.json", "./package.json"]
+COPY ["scrapers/Czech Republic/bazos/package-lock.json", "./package-lock.json"]
+
+# Point to shared and install in one layer
+RUN sed -i 's|file:../../../shared-components|file:///shared|g' package.json && \
+    npm install --prefer-offline --no-audit
+
+# Copy source and build
+COPY ["scrapers/Czech Republic/bazos/src", "./src"]
+COPY ["scrapers/Czech Republic/bazos/tsconfig.json", "./tsconfig.json"]
+RUN npm run build
+
+# Runtime stage
+FROM node:20-alpine
+WORKDIR /app
+
+# Copy built shared
+COPY --from=shared-builder /shared /shared
+
+# Copy package and install production deps
+COPY ["scrapers/Czech Republic/bazos/package.json", "./package.json"]
+RUN sed -i 's|file:../../../shared-components|file:///shared|g' package.json && \
+    npm install --production --prefer-offline --no-audit --no-package-lock
+
+# Copy built app
+COPY --from=builder /app/dist ./dist
+
+# Create non-root user
+RUN addgroup -g 1001 scraper && \
+    adduser -D -u 1001 -G scraper scraper && \
+    chown -R scraper:scraper /app
+
+USER scraper
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"
+
+CMD ["npm", "start"]

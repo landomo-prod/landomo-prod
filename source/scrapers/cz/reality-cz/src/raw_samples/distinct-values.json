@@ -1,0 +1,3280 @@
+{
+  "meta": {
+    "scraper": "reality-cz",
+    "listings_fetched": 541,
+    "details_fetched": 541,
+    "timestamp": "2026-02-27T08:08:57.603Z"
+  },
+  "listing_fields": {
+    "badge.color": {
+      "types": {
+        "string": 298
+      },
+      "non_null_count": 298,
+      "null_count": 0,
+      "distinct_count": 8,
+      "all_distinct_values": [
+        "#81BE19",
+        "#1A60F2",
+        "#E40004",
+        "#006EDB",
+        "#FBC723",
+        "#838383",
+        "#FF8E35",
+        "#FF0000"
+      ],
+      "value_counts": {
+        "#81BE19": 243,
+        "#1A60F2": 16,
+        "#E40004": 14,
+        "#006EDB": 12,
+        "#FBC723": 5,
+        "#838383": 4,
+        "#FF8E35": 2,
+        "#FF0000": 2
+      }
+    },
+    "badge.text": {
+      "types": {
+        "string": 298
+      },
+      "non_null_count": 298,
+      "null_count": 0,
+      "distinct_count": 19,
+      "all_distinct_values": [
+        "Novinka",
+        "Rezervace",
+        "zm\u011bna ceny",
+        "TOP",
+        "Obnoveno",
+        "sleva o 3 %",
+        "sleva o 5 %",
+        "sleva o 4 %",
+        "sleva o 6 %",
+        "sleva o 1 %",
+        "Dra\u017eba",
+        "Pronajato",
+        "sleva o 11 %",
+        "r\u016fst ceny o 4 %",
+        "sleva o 7 %",
+        "r\u016fst ceny o 13 %",
+        "r\u016fst ceny o 5 %",
+        "sleva o 2 %",
+        "r\u016fst ceny o 7 %"
+      ],
+      "value_counts": {
+        "Novinka": 243,
+        "Rezervace": 16,
+        "zm\u011bna ceny": 8,
+        "TOP": 5,
+        "Obnoveno": 4,
+        "sleva o 3 %": 3,
+        "sleva o 5 %": 2,
+        "sleva o 4 %": 2,
+        "sleva o 6 %": 2,
+        "sleva o 1 %": 2,
+        "Dra\u017eba": 2,
+        "Pronajato": 2,
+        "sleva o 11 %": 1,
+        "r\u016fst ceny o 4 %": 1,
+        "sleva o 7 %": 1,
+        "r\u016fst ceny o 13 %": 1,
+        "r\u016fst ceny o 5 %": 1,
+        "sleva o 2 %": 1,
+        "r\u016fst ceny o 7 %": 1
+      }
+    },
+    "featured": {
+      "types": {
+        "string": 277
+      },
+      "non_null_count": 277,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "N",
+        "R",
+        "D",
+        "X"
+      ],
+      "value_counts": {
+        "N": 257,
+        "R": 16,
+        "D": 2,
+        "X": 2
+      }
+    },
+    "featured_text": {
+      "types": {
+        "string": 281
+      },
+      "non_null_count": 281,
+      "null_count": 0,
+      "distinct_count": 21,
+      "all_distinct_values": [
+        "NOVINKA 26.2.2026",
+        "NOVINKA 25.2.2026",
+        "NOVINKA 23.2.2026",
+        "NOVINKA 24.2.2026",
+        "NOVINKA 27.2.2026",
+        "NOVINKA 22.2.2026",
+        "OBNOVENO",
+        "NOVINKA 20.2.2026",
+        "REZERVACE 25.2.2026",
+        "NOVINKA 21.2.2026",
+        "REZERVACE 23.2.2026",
+        "REZERVACE 20.2.2026",
+        "REZERVACE 19.2.2026",
+        "P\u0158IPRAVUJE SE",
+        "PRONAJATO",
+        "REZERVACE 17.2.2026",
+        "REZERVACE 16.2.2026",
+        "REZERVACE 11.2.2026",
+        "REZERVACE 26.2.2026",
+        "REZERVACE 27.2.2026",
+        "REZERVACE 22.1.2026"
+      ],
+      "value_counts": {
+        "NOVINKA 26.2.2026": 98,
+        "NOVINKA 25.2.2026": 71,
+        "NOVINKA 23.2.2026": 28,
+        "NOVINKA 24.2.2026": 26,
+        "NOVINKA 27.2.2026": 23,
+        "NOVINKA 22.2.2026": 5,
+        "OBNOVENO": 4,
+        "NOVINKA 20.2.2026": 4,
+        "REZERVACE 25.2.2026": 4,
+        "NOVINKA 21.2.2026": 2,
+        "REZERVACE 23.2.2026": 2,
+        "REZERVACE 20.2.2026": 2,
+        "REZERVACE 19.2.2026": 2,
+        "P\u0158IPRAVUJE SE": 2,
+        "PRONAJATO": 2,
+        "REZERVACE 17.2.2026": 1,
+        "REZERVACE 16.2.2026": 1,
+        "REZERVACE 11.2.2026": 1,
+        "REZERVACE 26.2.2026": 1,
+        "REZERVACE 27.2.2026": 1,
+        "REZERVACE 22.1.2026": 1
+      }
+    },
+    "gps.lat": {
+      "types": {
+        "number": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 474,
+      "min": 0,
+      "max": 51.008539,
+      "sample_values": [
+        50.768728,
+        49.201928,
+        49.195611,
+        50.208058,
+        49.967081,
+        50.077861,
+        49.994419,
+        50.131978,
+        49.275167,
+        49.138083
+      ]
+    },
+    "gps.lng": {
+      "types": {
+        "number": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 474,
+      "min": 0,
+      "max": 18.351214,
+      "sample_values": [
+        15.062408,
+        16.639681,
+        16.609497,
+        14.8439,
+        14.509839,
+        14.458903,
+        14.59905,
+        14.134181,
+        16.600481,
+        13.230442
+      ]
+    },
+    "id": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 540,
+      "sample_values": [
+        "081-BT634L",
+        "EXN-G35TB2",
+        "EXN-OT1BW0",
+        "B51-655454",
+        "DM8-PNYTC5",
+        "DM8-962560",
+        "BL1-001044",
+        "EXN-PN153P",
+        "ASJ-002758",
+        "EXN-DXHPHB"
+      ]
+    },
+    "offer_type": {
+      "types": {
+        "number": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 3,
+      "min": 1,
+      "max": 4,
+      "all_distinct_values": [
+        "1",
+        "2",
+        "4"
+      ],
+      "value_counts": {
+        "1": 398,
+        "2": 141,
+        "4": 2
+      }
+    },
+    "photo_id": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 534,
+      "sample_values": [
+        "/photo/1767716682/081bt634l_0.jpg",
+        "/photo/1770205575/exng35tb2_0.jpg",
+        "/photo/1768981753/exnot1bw0_0.jpg",
+        "/photo/1772176836/b51655454_0.jpg",
+        "/photo/1771063751/dm8pnytc5_0.jpg",
+        "/photo/1771932444/dm8962560_0.jpg",
+        "/photo/1772148105/bl1001044_0.jpg",
+        "/photo/1768218618/exnpn153p_0.jpg",
+        "/photo/1772130381/asj002758_0.jpg",
+        "/photo/1772033720/exndxhphb_0.jpg"
+      ]
+    },
+    "photos[]": {
+      "types": {
+        "string": 9448
+      },
+      "non_null_count": 9448,
+      "null_count": 0,
+      "distinct_count": 9418,
+      "sample_values": [
+        "/photo/1767716682/081bt634l_0.jpg",
+        "/photo/1767716684/081bt634l_1.jpg",
+        "/photo/1767716685/081bt634l_2.jpg",
+        "/photo/1767716687/081bt634l_3.jpg",
+        "/photo/1767716689/081bt634l_4.jpg",
+        "/photo/1767716691/081bt634l_5.jpg",
+        "/photo/1767716693/081bt634l_6.jpg",
+        "/photo/1767716695/081bt634l_7.jpg",
+        "/photo/1767716697/081bt634l_8.jpg",
+        "/photo/1767716698/081bt634l_9.jpg"
+      ]
+    },
+    "place": {
+      "types": {
+        "string": 533
+      },
+      "non_null_count": 533,
+      "null_count": 8,
+      "distinct_count": 458,
+      "sample_values": [
+        "Gutenbergova, Liberec V - Kristi\u00e1nov",
+        "Star\u00e1 osada, \u017didenice",
+        "Kobli\u017en\u00e1, Brno-st\u0159ed - Brno - m\u011bsto",
+        "S\u00eddli\u0161t\u011b, Lys\u00e1 nad Labem",
+        "V L\u00e1zn\u00edch, Jesenice (okres Praha z\u00e1pad)",
+        "Vinohradsk\u00e1, Praha 3 - \u017di\u017ekov",
+        "Nupack\u00e1, Nupaky",
+        "Litevsk\u00e1, Kladno - Kro\u010dehlavy",
+        "Z\u00e1mez\u00ed, Jehnice",
+        "Javorsk\u00e1, \u017delezn\u00e1 Ruda"
+      ]
+    },
+    "price.auction.opening_bid": {
+      "types": {
+        "number": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "min": 2800000,
+      "max": 4500000,
+      "all_distinct_values": [
+        "4500000",
+        "2800000"
+      ],
+      "value_counts": {
+        "2800000": 1,
+        "4500000": 1
+      }
+    },
+    "price.auction.unit": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "K\u010d"
+      ],
+      "value_counts": {
+        "K\u010d": 2
+      }
+    },
+    "price.previous": {
+      "types": {
+        "number": 31
+      },
+      "non_null_count": 31,
+      "null_count": 0,
+      "distinct_count": 26,
+      "min": 0,
+      "max": 49900000,
+      "all_distinct_values": [
+        "0",
+        "35990",
+        "26900000",
+        "3990000",
+        "4990000",
+        "8100000",
+        "7690000",
+        "7990000",
+        "5790000",
+        "4390000",
+        "8484000",
+        "5880000",
+        "5550000",
+        "4490000",
+        "827400",
+        "6100000",
+        "49900000",
+        "29990000",
+        "13300",
+        "14800",
+        "14000",
+        "9000",
+        "23000",
+        "16990",
+        "13990",
+        "31000"
+      ],
+      "value_counts": {
+        "0": 5,
+        "9000": 1,
+        "13300": 1,
+        "13990": 1,
+        "14000": 1,
+        "14800": 1,
+        "16990": 1,
+        "23000": 1,
+        "31000": 1,
+        "35990": 2,
+        "827400": 1,
+        "3990000": 1,
+        "4390000": 1,
+        "4490000": 1,
+        "4990000": 1,
+        "5550000": 1,
+        "5790000": 1,
+        "5880000": 1,
+        "6100000": 1,
+        "7690000": 1,
+        "7990000": 1,
+        "8100000": 1,
+        "8484000": 1,
+        "26900000": 1,
+        "29990000": 1,
+        "49900000": 1
+      }
+    },
+    "price.previous_price": {
+      "types": {
+        "string": 31
+      },
+      "non_null_count": 31,
+      "null_count": 0,
+      "distinct_count": 26,
+      "all_distinct_values": [
+        "cena neuvedena",
+        "35.990 K\u010d/m\u011bs.",
+        "26.900.000 K\u010d",
+        "3.990.000 K\u010d",
+        "4.990.000 K\u010d",
+        "8.100.000 K\u010d \u2013 8.150.000 K\u010d",
+        "7.690.000 K\u010d",
+        "7.990.000 K\u010d",
+        "5.790.000 K\u010d",
+        "4.390.000 K\u010d",
+        "8.484.000 K\u010d",
+        "5.880.000 K\u010d",
+        "5.550.000 K\u010d",
+        "4.490.000 K\u010d",
+        "827.400 K\u010d",
+        "6.100.000 K\u010d",
+        "49.900.000 K\u010d",
+        "29.990.000 K\u010d",
+        "13.300 K\u010d/m\u011bs.",
+        "14.800 K\u010d/m\u011bs.",
+        "14.000 K\u010d/m\u011bs.",
+        "9.000 K\u010d/m\u011bs.",
+        "23.000 K\u010d/m\u011bs.",
+        "16.990 K\u010d/m\u011bs. \u2013 18.990 K\u010d/m\u011bs.",
+        "13.990 K\u010d/m\u011bs.",
+        "31.000 K\u010d/m\u011bs."
+      ],
+      "value_counts": {
+        "cena neuvedena": 5,
+        "35.990 K\u010d/m\u011bs.": 2,
+        "26.900.000 K\u010d": 1,
+        "3.990.000 K\u010d": 1,
+        "4.990.000 K\u010d": 1,
+        "8.100.000 K\u010d \u2013 8.150.000 K\u010d": 1,
+        "7.690.000 K\u010d": 1,
+        "7.990.000 K\u010d": 1,
+        "5.790.000 K\u010d": 1,
+        "4.390.000 K\u010d": 1,
+        "8.484.000 K\u010d": 1,
+        "5.880.000 K\u010d": 1,
+        "5.550.000 K\u010d": 1,
+        "4.490.000 K\u010d": 1,
+        "827.400 K\u010d": 1,
+        "6.100.000 K\u010d": 1,
+        "49.900.000 K\u010d": 1,
+        "29.990.000 K\u010d": 1,
+        "13.300 K\u010d/m\u011bs.": 1,
+        "14.800 K\u010d/m\u011bs.": 1,
+        "14.000 K\u010d/m\u011bs.": 1,
+        "9.000 K\u010d/m\u011bs.": 1,
+        "23.000 K\u010d/m\u011bs.": 1,
+        "16.990 K\u010d/m\u011bs. \u2013 18.990 K\u010d/m\u011bs.": 1,
+        "13.990 K\u010d/m\u011bs.": 1,
+        "31.000 K\u010d/m\u011bs.": 1
+      }
+    },
+    "price.rent.price": {
+      "types": {
+        "number": 136
+      },
+      "non_null_count": 136,
+      "null_count": 0,
+      "distinct_count": 81,
+      "min": 3700,
+      "max": 190000,
+      "all_distinct_values": [
+        "15000",
+        "13000",
+        "12500",
+        "20000",
+        "22000",
+        "25000",
+        "19000",
+        "17000",
+        "15500",
+        "8500",
+        "50000",
+        "40000",
+        "27000",
+        "29500",
+        "12000",
+        "35000",
+        "24000",
+        "59000",
+        "14000",
+        "10000",
+        "14500",
+        "14900",
+        "23000",
+        "16990",
+        "17990",
+        "28000",
+        "44000",
+        "8000",
+        "18000",
+        "34990",
+        "19900",
+        "7200",
+        "4100",
+        "9300",
+        "8300",
+        "3700",
+        "14300",
+        "6600",
+        "8100",
+        "15900",
+        "37000",
+        "54000",
+        "33000",
+        "10800",
+        "21000",
+        "19500",
+        "27500",
+        "20500",
+        "16600",
+        "11000",
+        "33990",
+        "24990",
+        "5500",
+        "14600",
+        "18500",
+        "16000",
+        "11800",
+        "13700",
+        "23999",
+        "7669",
+        "12900",
+        "23500",
+        "62500",
+        "13490",
+        "34000",
+        "100000",
+        "72000",
+        "42000",
+        "190000",
+        "180000",
+        "65000",
+        "29000",
+        "70000",
+        "48000",
+        "99000",
+        "28500",
+        "85000",
+        "80000",
+        "95000",
+        "45000",
+        "9000"
+      ],
+      "value_counts": {
+        "3700": 1,
+        "4100": 1,
+        "5500": 1,
+        "6600": 1,
+        "7200": 1,
+        "7669": 1,
+        "8000": 2,
+        "8100": 1,
+        "8300": 1,
+        "8500": 3,
+        "9000": 1,
+        "9300": 1,
+        "10000": 2,
+        "10800": 1,
+        "11000": 1,
+        "11800": 1,
+        "12000": 2,
+        "12500": 5,
+        "12900": 1,
+        "13000": 5,
+        "13490": 1,
+        "13700": 1,
+        "14000": 2,
+        "14300": 1,
+        "14500": 2,
+        "14600": 1,
+        "14900": 2,
+        "15000": 6,
+        "15500": 3,
+        "15900": 1,
+        "16000": 1,
+        "16600": 1,
+        "16990": 2,
+        "17000": 3,
+        "17990": 2,
+        "18000": 2,
+        "18500": 1,
+        "19000": 3,
+        "19500": 1,
+        "19900": 1,
+        "20000": 5,
+        "20500": 1,
+        "21000": 1,
+        "22000": 5,
+        "23000": 2,
+        "23500": 1,
+        "23999": 1,
+        "24000": 2,
+        "24990": 1,
+        "25000": 4,
+        "27000": 3,
+        "27500": 1,
+        "28000": 2,
+        "28500": 1,
+        "29000": 1,
+        "29500": 2,
+        "33000": 1,
+        "33990": 1,
+        "34000": 1,
+        "34990": 2,
+        "35000": 2,
+        "37000": 1,
+        "40000": 3,
+        "42000": 1,
+        "44000": 2,
+        "45000": 1,
+        "48000": 1,
+        "50000": 3,
+        "54000": 1,
+        "59000": 2,
+        "62500": 1,
+        "65000": 1,
+        "70000": 1,
+        "72000": 1,
+        "80000": 1,
+        "85000": 1,
+        "95000": 1,
+        "99000": 1,
+        "100000": 1,
+        "180000": 1,
+        "190000": 1
+      }
+    },
+    "price.rent.unit": {
+      "types": {
+        "string": 136
+      },
+      "non_null_count": 136,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "K\u010d/m\u011bs.",
+        "K\u010d/m\u011bs./m\u00b2"
+      ],
+      "value_counts": {
+        "K\u010d/m\u011bs.": 134,
+        "K\u010d/m\u011bs./m\u00b2": 2
+      }
+    },
+    "price.sale.price": {
+      "types": {
+        "number": 348
+      },
+      "non_null_count": 348,
+      "null_count": 0,
+      "distinct_count": 252,
+      "min": 15,
+      "max": 260000000,
+      "sample_values": [
+        8900000,
+        8850000,
+        23900000,
+        7850000,
+        20990000,
+        5098360,
+        6699000,
+        5500000,
+        13600000,
+        6600000
+      ]
+    },
+    "price.sale.unit": {
+      "types": {
+        "string": 348
+      },
+      "non_null_count": 348,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "K\u010d",
+        "K\u010d/m\u00b2"
+      ],
+      "value_counts": {
+        "K\u010d": 339,
+        "K\u010d/m\u00b2": 9
+      }
+    },
+    "type": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 498,
+      "sample_values": [
+        "byt 3+1, 114 m\u00b2, cihla, osobn\u00ed",
+        "byt 4+1, 90 m\u00b2, osobn\u00ed",
+        "byt 4+kk, 200 m\u00b2, osobn\u00ed",
+        "byt 3+1, 72 m\u00b2, panel, osobn\u00ed",
+        "byt 2+kk, 47 m\u00b2, cihla, osobn\u00ed",
+        "byt 4+1, 121 m\u00b2, cihla, osobn\u00ed",
+        "byt 2+kk, osobn\u00ed",
+        "byt 3+1, 91 m\u00b2, osobn\u00ed",
+        "byt 1+1, 42 m\u00b2, cihla, osobn\u00ed",
+        "byt 3+kk, 104 m\u00b2, osobn\u00ed"
+      ]
+    }
+  },
+  "detail_fields": {
+    "auction.date": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "2026-04-21 14:00:00",
+        "2026-03-26 10:00:00"
+      ],
+      "value_counts": {
+        "2026-04-21 14:00:00": 1,
+        "2026-03-26 10:00:00": 1
+      }
+    },
+    "auction.location": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "www.eurodrazby.cz/seznam-nemovitosti/drazba?id=10361",
+        "www.eurodrazby.cz/seznam-nemovitosti/drazba?id=10356"
+      ],
+      "value_counts": {
+        "www.eurodrazby.cz/seznam-nemovitosti/drazba?id=10361": 1,
+        "www.eurodrazby.cz/seznam-nemovitosti/drazba?id=10356": 1
+      }
+    },
+    "auction.title": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "Ve\u0159ejn\u00e1 dra\u017eba p\u0159ipravovan\u00e1"
+      ],
+      "value_counts": {
+        "Ve\u0159ejn\u00e1 dra\u017eba p\u0159ipravovan\u00e1": 2
+      }
+    },
+    "auction.type": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "nedobrovoln\u00e1"
+      ],
+      "value_counts": {
+        "nedobrovoln\u00e1": 2
+      }
+    },
+    "auction.visits[]": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "2026-04-09 11:00:00",
+        "2026-03-10 12:00:00"
+      ],
+      "value_counts": {
+        "2026-04-09 11:00:00": 1,
+        "2026-03-10 12:00:00": 1
+      }
+    },
+    "badge.color": {
+      "types": {
+        "string": 293
+      },
+      "non_null_count": 293,
+      "null_count": 0,
+      "distinct_count": 7,
+      "all_distinct_values": [
+        "#81BE19",
+        "#1A60F2",
+        "#E40004",
+        "#006EDB",
+        "#838383",
+        "#FF8E35",
+        "#FF0000"
+      ],
+      "value_counts": {
+        "#81BE19": 243,
+        "#1A60F2": 16,
+        "#E40004": 15,
+        "#006EDB": 12,
+        "#838383": 3,
+        "#FF8E35": 2,
+        "#FF0000": 2
+      }
+    },
+    "badge.text": {
+      "types": {
+        "string": 293
+      },
+      "non_null_count": 293,
+      "null_count": 0,
+      "distinct_count": 18,
+      "all_distinct_values": [
+        "Novinka",
+        "Rezervace",
+        "zm\u011bna ceny",
+        "sleva o 5 %",
+        "Obnoveno",
+        "sleva o 3 %",
+        "sleva o 4 %",
+        "sleva o 6 %",
+        "sleva o 1 %",
+        "Dra\u017eba",
+        "Pronajato",
+        "sleva o 11 %",
+        "r\u016fst ceny o 4 %",
+        "sleva o 7 %",
+        "r\u016fst ceny o 13 %",
+        "r\u016fst ceny o 5 %",
+        "sleva o 2 %",
+        "r\u016fst ceny o 7 %"
+      ],
+      "value_counts": {
+        "Novinka": 243,
+        "Rezervace": 16,
+        "zm\u011bna ceny": 8,
+        "sleva o 5 %": 3,
+        "Obnoveno": 3,
+        "sleva o 3 %": 3,
+        "sleva o 4 %": 2,
+        "sleva o 6 %": 2,
+        "sleva o 1 %": 2,
+        "Dra\u017eba": 2,
+        "Pronajato": 2,
+        "sleva o 11 %": 1,
+        "r\u016fst ceny o 4 %": 1,
+        "sleva o 7 %": 1,
+        "r\u016fst ceny o 13 %": 1,
+        "r\u016fst ceny o 5 %": 1,
+        "sleva o 2 %": 1,
+        "r\u016fst ceny o 7 %": 1
+      }
+    },
+    "badges[].color": {
+      "types": {
+        "string": 318
+      },
+      "non_null_count": 318,
+      "null_count": 0,
+      "distinct_count": 7,
+      "all_distinct_values": [
+        "#81BE19",
+        "#838383",
+        "#006EDB",
+        "#E40004",
+        "#1A60F2",
+        "#FF8E35",
+        "#FF0000"
+      ],
+      "value_counts": {
+        "#81BE19": 252,
+        "#838383": 19,
+        "#006EDB": 18,
+        "#E40004": 15,
+        "#1A60F2": 10,
+        "#FF8E35": 2,
+        "#FF0000": 2
+      }
+    },
+    "badges[].text": {
+      "types": {
+        "string": 318
+      },
+      "non_null_count": 318,
+      "null_count": 0,
+      "distinct_count": 20,
+      "all_distinct_values": [
+        "novinka",
+        "n\u00e1vrat do inzerce",
+        "zm\u011bna ceny",
+        "Rezervace",
+        "vy\u0159azeno z inzerce",
+        "sleva o 5 %",
+        "sleva o 3 %",
+        "sleva o 4 %",
+        "sleva o 6 %",
+        "sleva o 1 %",
+        "Dra\u017eba",
+        "Pronajato",
+        "sleva o 11 %",
+        "r\u016fst ceny o 4 %",
+        "sleva o 7 %",
+        "r\u016fst ceny o 13 %",
+        "r\u016fst ceny o 5 %",
+        "sleva o 2 %",
+        "r\u016fst ceny o 7 %",
+        "r\u016fst ceny o 2 %"
+      ],
+      "value_counts": {
+        "novinka": 252,
+        "n\u00e1vrat do inzerce": 14,
+        "zm\u011bna ceny": 13,
+        "Rezervace": 10,
+        "vy\u0159azeno z inzerce": 5,
+        "sleva o 5 %": 3,
+        "sleva o 3 %": 3,
+        "sleva o 4 %": 2,
+        "sleva o 6 %": 2,
+        "sleva o 1 %": 2,
+        "Dra\u017eba": 2,
+        "Pronajato": 2,
+        "sleva o 11 %": 1,
+        "r\u016fst ceny o 4 %": 1,
+        "sleva o 7 %": 1,
+        "r\u016fst ceny o 13 %": 1,
+        "r\u016fst ceny o 5 %": 1,
+        "sleva o 2 %": 1,
+        "r\u016fst ceny o 7 %": 1,
+        "r\u016fst ceny o 2 %": 1
+      }
+    },
+    "contact.advertiser.company": {
+      "types": {
+        "string": 3
+      },
+      "non_null_count": 3,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "Univerzita Karlova"
+      ],
+      "value_counts": {
+        "Univerzita Karlova": 3
+      }
+    },
+    "contact.advertiser.has_name": {
+      "types": {
+        "boolean": 4
+      },
+      "non_null_count": 4,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 3,
+        "true": 1
+      }
+    },
+    "contact.advertiser.name": {
+      "types": {
+        "string": 4
+      },
+      "non_null_count": 4,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "jm\u00e9no neuvedeno",
+        "Petr Hlava"
+      ],
+      "value_counts": {
+        "jm\u00e9no neuvedeno": 3,
+        "Petr Hlava": 1
+      }
+    },
+    "contact.advertiser.phone": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "+420 607 856 012"
+      ],
+      "value_counts": {
+        "+420 607 856 012": 1
+      }
+    },
+    "contact.advertiser.phones[]": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "+420 607 856 012"
+      ],
+      "value_counts": {
+        "+420 607 856 012": 1
+      }
+    },
+    "contact.advertiser.title": {
+      "types": {
+        "string": 4
+      },
+      "non_null_count": 4,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "majitel nemovitosti",
+        "Nemovitost nab\u00edz\u00ed"
+      ],
+      "value_counts": {
+        "majitel nemovitosti": 3,
+        "Nemovitost nab\u00edz\u00ed": 1
+      }
+    },
+    "contact.broker.email": {
+      "types": {
+        "string": 311
+      },
+      "non_null_count": 311,
+      "null_count": 0,
+      "distinct_count": 179,
+      "sample_values": [
+        "arch-liberec@seznam.cz",
+        "rambouskova@dumrealit.cz",
+        "jaroslav.kares@century21.cz",
+        "prochazkova@unicareal.cz",
+        "poptavky@slpartners.cz",
+        "j.valenta@dumrealit.cz",
+        "martina.popenkova@re-max.cz",
+        "jana.ondercaninova@kuzopartners.cz",
+        "livia.gulasova@housevip.cz",
+        "ivana.reiberova@vdfreality.cz"
+      ]
+    },
+    "contact.broker.gender": {
+      "types": {
+        "number": 311
+      },
+      "non_null_count": 311,
+      "null_count": 0,
+      "distinct_count": 3,
+      "min": 1,
+      "max": 3,
+      "all_distinct_values": [
+        "1",
+        "2",
+        "3"
+      ],
+      "value_counts": {
+        "1": 236,
+        "2": 71,
+        "3": 4
+      }
+    },
+    "contact.broker.name": {
+      "types": {
+        "string": 311
+      },
+      "non_null_count": 311,
+      "null_count": 0,
+      "distinct_count": 185,
+      "sample_values": [
+        "Ing. Lubom\u00edr Bure\u0161",
+        "Ivana Rambouskov\u00e1",
+        "Jaroslav Kare\u0161",
+        "Pavl\u00edna Proch\u00e1zkov\u00e1",
+        "Jan Sokolowski",
+        "Josef Valenta",
+        "Ing. Martina Popenkov\u00e1",
+        "Jana Onder\u010daninov\u00e1",
+        "L\u00edvia Gula\u0161ov\u00e1",
+        "Ivana M\u00e1dle Reiberov\u00e1"
+      ]
+    },
+    "contact.broker.phones[]": {
+      "types": {
+        "string": 424
+      },
+      "non_null_count": 424,
+      "null_count": 0,
+      "distinct_count": 191,
+      "sample_values": [
+        "+420 604 201 487",
+        "+420 725 256 366",
+        "+420 739 682 221",
+        "+420 774 927 528",
+        "+420 541 211 876",
+        "+420 606 070 888",
+        "+420 777 772 271",
+        "+420 605 536 942",
+        "+420 773 504 010",
+        "+420 602 402 710"
+      ]
+    },
+    "contact.broker.photo": {
+      "types": {
+        "string": 219
+      },
+      "non_null_count": 219,
+      "null_count": 0,
+      "distinct_count": 133,
+      "sample_values": [
+        "/photo/1439804569/makler/081001big.jpg",
+        "/photo/4294967295/makler/B51580.jpg",
+        "/photo/makler/DM8000.jpg",
+        "/photo/4294967295/makler/ASJ009.jpg",
+        "/photo/1682081170/makler/YJ6000.jpg",
+        "/photo/4294967295/makler/B5151S.jpg",
+        "/photo/4294967295/makler/YIU016.jpg",
+        "/photo/makler/BTI006.jpg",
+        "/photo/4294967295/makler/YIU002.jpg",
+        "/photo/1547801352/makler/EYH001.jpg"
+      ]
+    },
+    "contact.broker.title": {
+      "types": {
+        "string": 311
+      },
+      "non_null_count": 311,
+      "null_count": 0,
+      "distinct_count": 3,
+      "all_distinct_values": [
+        "Makl\u00e9\u0159",
+        "Makl\u00e9\u0159ka",
+        "Kontakt"
+      ],
+      "value_counts": {
+        "Makl\u00e9\u0159": 236,
+        "Makl\u00e9\u0159ka": 71,
+        "Kontakt": 4
+      }
+    },
+    "contact.broker.url": {
+      "types": {
+        "string": 72
+      },
+      "non_null_count": 72,
+      "null_count": 0,
+      "distinct_count": 20,
+      "all_distinct_values": [
+        "http://www.remax-czech.cz/reality/re-max-monarcha",
+        "http://www.remaxalfa.cz",
+        "http://www.internetove-drazby.cz",
+        "http://www.donnareality.cz",
+        "http://www.dachi.cz",
+        "http://www.remax-czech.cz/reality/re-max-alfa",
+        "http://www.rk23.cz",
+        "http://www.realityortova.cz/",
+        "http://www.motyckareality.cz",
+        "http://Www.MilanBrecka.cz",
+        "http://www.eurodrazby.cz",
+        "http://www.kuzopartners.cz",
+        "http://www.gpre.cz/dream",
+        "http://www.kotula.cz",
+        "http://www.metropolisreality.com",
+        "http://www.gpre.cz/boars",
+        "http://www.proklidreality.cz",
+        "http://www.radekstribrny.cz",
+        "http://www.gpre.cz/tobi",
+        "http://www.onereality.cz"
+      ],
+      "value_counts": {
+        "http://www.remax-czech.cz/reality/re-max-monarcha": 14,
+        "http://www.remaxalfa.cz": 12,
+        "http://www.internetove-drazby.cz": 9,
+        "http://www.donnareality.cz": 6,
+        "http://www.dachi.cz": 5,
+        "http://www.remax-czech.cz/reality/re-max-alfa": 4,
+        "http://www.rk23.cz": 3,
+        "http://www.realityortova.cz/": 3,
+        "http://www.motyckareality.cz": 2,
+        "http://Www.MilanBrecka.cz": 2,
+        "http://www.eurodrazby.cz": 2,
+        "http://www.kuzopartners.cz": 2,
+        "http://www.gpre.cz/dream": 1,
+        "http://www.kotula.cz": 1,
+        "http://www.metropolisreality.com": 1,
+        "http://www.gpre.cz/boars": 1,
+        "http://www.proklidreality.cz": 1,
+        "http://www.radekstribrny.cz": 1,
+        "http://www.gpre.cz/tobi": 1,
+        "http://www.onereality.cz": 1
+      }
+    },
+    "contact.real_estate.address": {
+      "types": {
+        "string": 537
+      },
+      "non_null_count": 537,
+      "null_count": 0,
+      "distinct_count": 85,
+      "all_distinct_values": [
+        "Jir\u00e1skovo n\u00e1m\u011bst\u00ed 2684/2\n326 00 Plze\u0148 ",
+        "Nad Podbabskou sk\u00e1lou 350/17, Lysolaje\n165 00 Praha 6",
+        "Sp\u00e1len\u00e1 97/29\n110 00 Praha 1",
+        "Svornosti 8\n150 00 Praha 5",
+        "Husova 1354/49\n460 01 Liberec",
+        "Politick\u00fdch v\u011bz\u0148\u016f 21\n110 00 Praha 1",
+        "Masarykova t\u0159\u00edda 105/29\n779 00  Olomouc",
+        "Zlatnick\u00e1 1582/10\n110 00 Praha 1",
+        "Olbrachtova 599/8\n293 01 Mlad\u00e1 Boleslav",
+        "Veletr\u017en\u00ed 924/14\n170 00 Praha 7",
+        "V h\u00e1ji 1092\n170 00 Praha 7",
+        "Sokolovsk\u00e1 668/136d\n180 00 Praha 8",
+        "Vyb\u00edralova 932/19\n198 00 Praha 9",
+        "Polsk\u00e1 1211/26\n120 00 Praha 2 - Vinohrady",
+        "Hlinky 44/112a\n603 00 Brno",
+        "P\u0159emyslovsk\u00e1 2845/43\n130 00 Praha 3",
+        "Kmochova 585\n407 47 Varnsdorf",
+        "Slav\u00edkova 1608/15\n130 00 Praha 3",
+        "Bedn\u00e1\u0159sk\u00e1 91/6\n460 01 Liberec",
+        "Boleslavova  27/36\n140 00 Praha 4 \u2013 Nusle",
+        "Lipov\u00e1 1915\n580 01 Havl\u00ed\u010dk\u016fv Brod",
+        "Ztracen\u00e1 34\n779 00 Olomouc",
+        "Rybn\u00e1 716/24\n110 00 Praha 1",
+        "\u0160afa\u0159\u00edkova 201/17\n120 00 Praha 2",
+        "N\u00e1m\u011bst\u00ed 28.dubna 2/1069\n635 00 Brno",
+        "\u010ceskomoravsk\u00e1 2510/19\n190 00 Praha 9",
+        "V\u00edchov\u00e1 nad Jizerou 7\n512 41 V\u00edchov\u00e1 nad Jizerou",
+        "Arbesova 3371/14\n466 04 Jablonec nad Nisou - M\u0161eno nad Nisou",
+        "N\u00e1dra\u017en\u00ed n\u00e1m\u011bst\u00ed 299/8\n353 01 Mari\u00e1nsk\u00e9 L\u00e1zn\u011b",
+        "Ml\u00fdnsk\u00e1 326/13\n602 00 Brno-Trnit\u00e1",
+        "Dubrovnick\u00e1 1057\n150 00 Praha 5",
+        "N\u00e1m\u011bst\u00ed 184\n341 92 Ka\u0161persk\u00e9 Hory",
+        "Anton\u00edna Dvo\u0159\u00e1ka 286\n511 01 Turnov",
+        "Pa\u0159\u00ed\u017esk\u00e1 1323/2\n415 01 \u00dast\u00ed nad Labem",
+        "Komensk\u00e9ho 939/21a\n466 01 Jablonec nad Nisou",
+        "Krkono\u0161sk\u00e1 604/6\n468 41 Tanvald",
+        "Smetanovo n\u00e1m. 120\n570 01 Litomy\u0161l",
+        "Zahradnick\u00e1 131\n500 09 Hradec Kr\u00e1lov\u00e9",
+        "Moskevsk\u00e1  637/6\n460 01 Liberec",
+        "\u0160r\u00e1mkova 3210/6\n400 11 \u00dast\u00ed nad Labem",
+        "Popel\u00edn 26\n378 53 Popel\u00edn ",
+        "N\u00e1m.14. \u0158\u00edjna 1307/2\n150 00 Praha 5",
+        "Stochovsk\u00e1 786/53\n161 00 Praha 6",
+        "Litovelsk\u00e1 1340/2C\n779 00 Olomouc",
+        "n\u00e1m. T. G. Masaryka 456/22\n301 00 Plze\u0148",
+        "Rohansk\u00e9 n\u00e1b\u0159e\u017e\u00ed 671/15\n186 00 Praha 8",
+        "D\u011btsk\u00e1 2451/25\n100 00 Praha 10",
+        "\u010cimick\u00e1 780/61\n181 00 Praha 8",
+        "Plze\u0148sk\u00e1 3350/18\n150 00 Praha 5",
+        "Dr. Milady Hor\u00e1kov\u00e9 391/1\n460 01 Liberec IV-Per\u0161t\u00fdn",
+        "Jinolick\u00e1 864\n190 12 Praha 9",
+        "Lond\u00fdnsk\u00e1 11\n120 00 Praha 2",
+        "\u017dirovnick\u00e1 3133/6\n106 00 Praha 10",
+        "\u017delezni\u010dn\u00ed 197\n381 01 \u010cesk\u00fd Krumlov",
+        "\u00davoz 489/24\n602 00 Brno-st\u0159ed-Star\u00e9 Brno",
+        "Na Per\u0161t\u00fdn\u011b 342/1\n110 00 Praha 1",
+        "Nad Kesnerkou 10\n150 00 Praha 5",
+        "Husova t\u0159\u00edda 640/33\n370 05 \u010cesk\u00e9 Bud\u011bjovice",
+        "Soukenn\u00e9 n\u00e1m\u011bst\u00ed 23/10\n460 07 Liberec",
+        "V\u00e1clavsk\u00e9 n\u00e1m\u011bst\u00ed 18\n110 00 Praha 1",
+        "ul. 8. b\u0159ezna 12/3\n460 01 Liberec",
+        "\tLegion\u00e1\u0159sk\u00e1 1319/10\n779 00 Olomouc",
+        "Tasovice 86\n671 25 Tasovice",
+        "Podbabsk\u00e1 20\n160 00 Praha 6",
+        "B. Martin\u016f 950\n563 01 Lan\u0161kroun",
+        "Ja\u017elovick\u00e1 1323/22\n149 00 Praha 4",
+        "Humpoleck\u00e1 1886/26\n140 00 Praha 4 - Kr\u010d",
+        "\u017di\u017ekova 708\n261 01 P\u0159\u00edbram",
+        "Velk\u00e9 n\u00e1m\u011bst\u00ed 27/19\n397 01 P\u00edsek",
+        "Ke\u0159ov\u00e1 360/7\n301 00 Plze\u0148",
+        "Sokolovsk\u00e1 192/79\n186 00 Praha 8 - Karl\u00edn",
+        "Levsk\u00e9ho 3208\n143 00 Praha 4",
+        "V\u00edde\u0148sk\u00e1 239/21\n639 00 Brno - \u0160t\u00fd\u0159ice",
+        "Bo\u017eeny N\u011bmcov\u00e9 2042\n356 01 Sokolov",
+        "Smilova 777\n530 02 Pardubice",
+        "Perlov\u00e1 237/11\n460 01 Liberec ",
+        "Ocel\u00e1\u0159sk\u00e1 1354/35\n190 00 Praha 9",
+        "Pr\u016fmyslov\u00e1 1472/11\n102 00 Praha 10",
+        "Slezsk\u00e1 57/981\n130 00 Praha 3",
+        "V J\u00e1m\u011b 1, 3. patro\n110 00 Praha 1 ",
+        "Sokolovsk\u00e1 192/79\n186 00 Praha 8",
+        "5. kv\u011btna 15\n252 29 Dob\u0159ichovice",
+        "D\u0159evn\u00e1 382/2\n128 00 Praha 2",
+        "Horn\u00ed Slivno 148\n294 79 Horn\u00ed Slivno",
+        "n\u00e1m. W. Churchilla 1800/2\n113 59 Praha 3"
+      ],
+      "value_counts": {
+        "Jir\u00e1skovo n\u00e1m\u011bst\u00ed 2684/2\n326 00 Plze\u0148 ": 153,
+        "Nad Podbabskou sk\u00e1lou 350/17, Lysolaje\n165 00 Praha 6": 44,
+        "Sp\u00e1len\u00e1 97/29\n110 00 Praha 1": 29,
+        "Svornosti 8\n150 00 Praha 5": 21,
+        "Husova 1354/49\n460 01 Liberec": 21,
+        "Politick\u00fdch v\u011bz\u0148\u016f 21\n110 00 Praha 1": 17,
+        "Masarykova t\u0159\u00edda 105/29\n779 00  Olomouc": 14,
+        "Zlatnick\u00e1 1582/10\n110 00 Praha 1": 13,
+        "Olbrachtova 599/8\n293 01 Mlad\u00e1 Boleslav": 13,
+        "Veletr\u017en\u00ed 924/14\n170 00 Praha 7": 12,
+        "V h\u00e1ji 1092\n170 00 Praha 7": 12,
+        "Sokolovsk\u00e1 668/136d\n180 00 Praha 8": 10,
+        "Vyb\u00edralova 932/19\n198 00 Praha 9": 9,
+        "Polsk\u00e1 1211/26\n120 00 Praha 2 - Vinohrady": 8,
+        "Hlinky 44/112a\n603 00 Brno": 7,
+        "P\u0159emyslovsk\u00e1 2845/43\n130 00 Praha 3": 7,
+        "Kmochova 585\n407 47 Varnsdorf": 6,
+        "Slav\u00edkova 1608/15\n130 00 Praha 3": 6,
+        "Bedn\u00e1\u0159sk\u00e1 91/6\n460 01 Liberec": 5,
+        "Boleslavova  27/36\n140 00 Praha 4 \u2013 Nusle": 5,
+        "Lipov\u00e1 1915\n580 01 Havl\u00ed\u010dk\u016fv Brod": 5,
+        "Ztracen\u00e1 34\n779 00 Olomouc": 5,
+        "Rybn\u00e1 716/24\n110 00 Praha 1": 5,
+        "\u0160afa\u0159\u00edkova 201/17\n120 00 Praha 2": 4,
+        "N\u00e1m\u011bst\u00ed 28.dubna 2/1069\n635 00 Brno": 4,
+        "\u010ceskomoravsk\u00e1 2510/19\n190 00 Praha 9": 4,
+        "V\u00edchov\u00e1 nad Jizerou 7\n512 41 V\u00edchov\u00e1 nad Jizerou": 4,
+        "Arbesova 3371/14\n466 04 Jablonec nad Nisou - M\u0161eno nad Nisou": 3,
+        "N\u00e1dra\u017en\u00ed n\u00e1m\u011bst\u00ed 299/8\n353 01 Mari\u00e1nsk\u00e9 L\u00e1zn\u011b": 3,
+        "Ml\u00fdnsk\u00e1 326/13\n602 00 Brno-Trnit\u00e1": 3,
+        "Dubrovnick\u00e1 1057\n150 00 Praha 5": 3,
+        "N\u00e1m\u011bst\u00ed 184\n341 92 Ka\u0161persk\u00e9 Hory": 3,
+        "Anton\u00edna Dvo\u0159\u00e1ka 286\n511 01 Turnov": 3,
+        "Pa\u0159\u00ed\u017esk\u00e1 1323/2\n415 01 \u00dast\u00ed nad Labem": 3,
+        "Komensk\u00e9ho 939/21a\n466 01 Jablonec nad Nisou": 3,
+        "Krkono\u0161sk\u00e1 604/6\n468 41 Tanvald": 3,
+        "Smetanovo n\u00e1m. 120\n570 01 Litomy\u0161l": 3,
+        "Zahradnick\u00e1 131\n500 09 Hradec Kr\u00e1lov\u00e9": 3,
+        "Moskevsk\u00e1  637/6\n460 01 Liberec": 2,
+        "\u0160r\u00e1mkova 3210/6\n400 11 \u00dast\u00ed nad Labem": 2,
+        "Popel\u00edn 26\n378 53 Popel\u00edn ": 2,
+        "N\u00e1m.14. \u0158\u00edjna 1307/2\n150 00 Praha 5": 2,
+        "Stochovsk\u00e1 786/53\n161 00 Praha 6": 2,
+        "Litovelsk\u00e1 1340/2C\n779 00 Olomouc": 2,
+        "n\u00e1m. T. G. Masaryka 456/22\n301 00 Plze\u0148": 2,
+        "Rohansk\u00e9 n\u00e1b\u0159e\u017e\u00ed 671/15\n186 00 Praha 8": 2,
+        "D\u011btsk\u00e1 2451/25\n100 00 Praha 10": 2,
+        "\u010cimick\u00e1 780/61\n181 00 Praha 8": 2,
+        "Plze\u0148sk\u00e1 3350/18\n150 00 Praha 5": 2,
+        "Dr. Milady Hor\u00e1kov\u00e9 391/1\n460 01 Liberec IV-Per\u0161t\u00fdn": 2,
+        "Jinolick\u00e1 864\n190 12 Praha 9": 2,
+        "Lond\u00fdnsk\u00e1 11\n120 00 Praha 2": 2,
+        "\u017dirovnick\u00e1 3133/6\n106 00 Praha 10": 1,
+        "\u017delezni\u010dn\u00ed 197\n381 01 \u010cesk\u00fd Krumlov": 1,
+        "\u00davoz 489/24\n602 00 Brno-st\u0159ed-Star\u00e9 Brno": 1,
+        "Na Per\u0161t\u00fdn\u011b 342/1\n110 00 Praha 1": 1,
+        "Nad Kesnerkou 10\n150 00 Praha 5": 1,
+        "Husova t\u0159\u00edda 640/33\n370 05 \u010cesk\u00e9 Bud\u011bjovice": 1,
+        "Soukenn\u00e9 n\u00e1m\u011bst\u00ed 23/10\n460 07 Liberec": 1,
+        "V\u00e1clavsk\u00e9 n\u00e1m\u011bst\u00ed 18\n110 00 Praha 1": 1,
+        "ul. 8. b\u0159ezna 12/3\n460 01 Liberec": 1,
+        "\tLegion\u00e1\u0159sk\u00e1 1319/10\n779 00 Olomouc": 1,
+        "Tasovice 86\n671 25 Tasovice": 1,
+        "Podbabsk\u00e1 20\n160 00 Praha 6": 1,
+        "B. Martin\u016f 950\n563 01 Lan\u0161kroun": 1,
+        "Ja\u017elovick\u00e1 1323/22\n149 00 Praha 4": 1,
+        "Humpoleck\u00e1 1886/26\n140 00 Praha 4 - Kr\u010d": 1,
+        "\u017di\u017ekova 708\n261 01 P\u0159\u00edbram": 1,
+        "Velk\u00e9 n\u00e1m\u011bst\u00ed 27/19\n397 01 P\u00edsek": 1,
+        "Ke\u0159ov\u00e1 360/7\n301 00 Plze\u0148": 1,
+        "Sokolovsk\u00e1 192/79\n186 00 Praha 8 - Karl\u00edn": 1,
+        "Levsk\u00e9ho 3208\n143 00 Praha 4": 1,
+        "V\u00edde\u0148sk\u00e1 239/21\n639 00 Brno - \u0160t\u00fd\u0159ice": 1,
+        "Bo\u017eeny N\u011bmcov\u00e9 2042\n356 01 Sokolov": 1,
+        "Smilova 777\n530 02 Pardubice": 1,
+        "Perlov\u00e1 237/11\n460 01 Liberec ": 1,
+        "Ocel\u00e1\u0159sk\u00e1 1354/35\n190 00 Praha 9": 1,
+        "Pr\u016fmyslov\u00e1 1472/11\n102 00 Praha 10": 1,
+        "Slezsk\u00e1 57/981\n130 00 Praha 3": 1,
+        "V J\u00e1m\u011b 1, 3. patro\n110 00 Praha 1 ": 1,
+        "Sokolovsk\u00e1 192/79\n186 00 Praha 8": 1,
+        "5. kv\u011btna 15\n252 29 Dob\u0159ichovice": 1,
+        "D\u0159evn\u00e1 382/2\n128 00 Praha 2": 1,
+        "Horn\u00ed Slivno 148\n294 79 Horn\u00ed Slivno": 1,
+        "n\u00e1m. W. Churchilla 1800/2\n113 59 Praha 3": 1
+      }
+    },
+    "contact.real_estate.email": {
+      "types": {
+        "string": 537
+      },
+      "non_null_count": 537,
+      "null_count": 0,
+      "distinct_count": 85,
+      "all_distinct_values": [
+        "okrealitnisluzby@bcas.cz",
+        "info@dumrealit.cz",
+        "info@remaxalfa.cz",
+        "",
+        "info@genera.cz",
+        "praha@gavlas.cz",
+        "monarcha@re-max.cz",
+        "radka.vajo@century21.cz",
+        "info@kuzopartners.cz",
+        "info@housevip.cz",
+        "info@bohemianestates.com",
+        "jan.hospodar@probus.cz",
+        "zeusreality@zeusreality.cz",
+        "info@faraon.cz",
+        "info@unicareal.cz",
+        "ruby@century21.cz",
+        "andrea.wernerova@vdfreality.cz",
+        "info@donnareality.cz",
+        "info@slpartners.cz",
+        "magdalena.gomezova@century21.cz",
+        "radek.perina@tiscali.cz",
+        "dachi@dachi.cz",
+        "kancelar@vilimkovareality.cz",
+        "info@quantumreality.cz",
+        "allinclusive@century21.cz",
+        "olga.faltova@cetin.cz",
+        "pohorela.a@thebrokers.cz",
+        "info@rkcentrum.cz",
+        "info@rk23.cz",
+        "laurinova@conre.cz",
+        "breckamilan@gmail.com",
+        "korcova@sumavskarealitka.cz",
+        "ortovam@seznam.cz",
+        "ladislav.blazek@century21.cz",
+        "hcn@hcnreality.cz",
+        "brezar@brezar.cz",
+        "reality@consultvk.cz",
+        "info@onereality.cz",
+        "arch-liberec@seznam.cz",
+        "petr.motycka@gpre.cz",
+        "vojtechsnizek@email.cz",
+        "f.hrdousek@email.cz",
+        "jirka@svoboda-bydleni.cz",
+        "info@metr2reality.cz",
+        "vejvodova@jvreality.cz",
+        "reality@connecte.cz",
+        "info@hannes.cz",
+        "info@eurodrazby.cz",
+        "info@4develop.cz",
+        "Vaclav.louzecky@gpre.cz",
+        "astonereality@seznam.cz",
+        "connect.reality@seznam.cz",
+        "realitytaborska@email.cz",
+        "ambruzekdan@seznam.cz",
+        "kristyna.snajdrova@gpre.cz",
+        "info@kotula.cz",
+        "info@metropolisreality.com",
+        "boars@gpre.cz",
+        "partner.liberec@century21.cz",
+        "reality@pokorny.cz",
+        "reality@relia.cz",
+        "info@proklidreality.cz",
+        "michal.arbeiter@housify.cz",
+        "info@farmy.cz",
+        "pepa.fuchs@fuchsreality.cz",
+        "nada.rydlova@realitynr.com",
+        "info@realityplus.cz",
+        "jitka@11solutionbp.cz",
+        "info@rgreality.cz",
+        "licita@licita.cz",
+        "jakub.parak@gpre.cz",
+        "reality-jindrich@seznam.cz",
+        "daniel.kyjonka@gpre.cz",
+        "juraexalto@csrealitni.cz",
+        "j.machkova@rk-hlavacova.cz",
+        "zlesak@zlesak.cz",
+        "hadravova@trefoil.cz",
+        "info@contentreality.cz",
+        "sprava.nemovitosti@seznam.cz",
+        "gonio@gonio.cz",
+        "magdalena.soukupova@gpre.cz",
+        "ivana.gaspar@gpre.cz",
+        "info@tide.cz",
+        "ondrej.horacek@realitypartnershb.cz",
+        "minarikova@praharnk.cz"
+      ],
+      "value_counts": {
+        "okrealitnisluzby@bcas.cz": 153,
+        "info@dumrealit.cz": 44,
+        "info@remaxalfa.cz": 29,
+        "": 21,
+        "info@genera.cz": 21,
+        "praha@gavlas.cz": 17,
+        "monarcha@re-max.cz": 14,
+        "radka.vajo@century21.cz": 13,
+        "info@kuzopartners.cz": 13,
+        "info@housevip.cz": 12,
+        "info@bohemianestates.com": 12,
+        "jan.hospodar@probus.cz": 10,
+        "zeusreality@zeusreality.cz": 9,
+        "info@faraon.cz": 8,
+        "info@unicareal.cz": 7,
+        "ruby@century21.cz": 7,
+        "andrea.wernerova@vdfreality.cz": 6,
+        "info@donnareality.cz": 6,
+        "info@slpartners.cz": 5,
+        "magdalena.gomezova@century21.cz": 5,
+        "radek.perina@tiscali.cz": 5,
+        "dachi@dachi.cz": 5,
+        "kancelar@vilimkovareality.cz": 5,
+        "info@quantumreality.cz": 4,
+        "allinclusive@century21.cz": 4,
+        "olga.faltova@cetin.cz": 4,
+        "pohorela.a@thebrokers.cz": 4,
+        "info@rkcentrum.cz": 3,
+        "info@rk23.cz": 3,
+        "laurinova@conre.cz": 3,
+        "breckamilan@gmail.com": 3,
+        "korcova@sumavskarealitka.cz": 3,
+        "ortovam@seznam.cz": 3,
+        "ladislav.blazek@century21.cz": 3,
+        "hcn@hcnreality.cz": 3,
+        "brezar@brezar.cz": 3,
+        "reality@consultvk.cz": 3,
+        "info@onereality.cz": 3,
+        "arch-liberec@seznam.cz": 2,
+        "petr.motycka@gpre.cz": 2,
+        "vojtechsnizek@email.cz": 2,
+        "f.hrdousek@email.cz": 2,
+        "jirka@svoboda-bydleni.cz": 2,
+        "info@metr2reality.cz": 2,
+        "vejvodova@jvreality.cz": 2,
+        "reality@connecte.cz": 2,
+        "info@hannes.cz": 2,
+        "info@eurodrazby.cz": 2,
+        "info@4develop.cz": 2,
+        "Vaclav.louzecky@gpre.cz": 2,
+        "astonereality@seznam.cz": 2,
+        "connect.reality@seznam.cz": 2,
+        "realitytaborska@email.cz": 1,
+        "ambruzekdan@seznam.cz": 1,
+        "kristyna.snajdrova@gpre.cz": 1,
+        "info@kotula.cz": 1,
+        "info@metropolisreality.com": 1,
+        "boars@gpre.cz": 1,
+        "partner.liberec@century21.cz": 1,
+        "reality@pokorny.cz": 1,
+        "reality@relia.cz": 1,
+        "info@proklidreality.cz": 1,
+        "michal.arbeiter@housify.cz": 1,
+        "info@farmy.cz": 1,
+        "pepa.fuchs@fuchsreality.cz": 1,
+        "nada.rydlova@realitynr.com": 1,
+        "info@realityplus.cz": 1,
+        "jitka@11solutionbp.cz": 1,
+        "info@rgreality.cz": 1,
+        "licita@licita.cz": 1,
+        "jakub.parak@gpre.cz": 1,
+        "reality-jindrich@seznam.cz": 1,
+        "daniel.kyjonka@gpre.cz": 1,
+        "juraexalto@csrealitni.cz": 1,
+        "j.machkova@rk-hlavacova.cz": 1,
+        "zlesak@zlesak.cz": 1,
+        "hadravova@trefoil.cz": 1,
+        "info@contentreality.cz": 1,
+        "sprava.nemovitosti@seznam.cz": 1,
+        "gonio@gonio.cz": 1,
+        "magdalena.soukupova@gpre.cz": 1,
+        "ivana.gaspar@gpre.cz": 1,
+        "info@tide.cz": 1,
+        "ondrej.horacek@realitypartnershb.cz": 1,
+        "minarikova@praharnk.cz": 1
+      }
+    },
+    "contact.real_estate.logo": {
+      "types": {
+        "string": 520
+      },
+      "non_null_count": 520,
+      "null_count": 0,
+      "distinct_count": 78,
+      "all_distinct_values": [
+        "/photo/logo/EXN.png",
+        "/photo/logo/B51.png",
+        "/photo/logo/AP7.png",
+        "/photo/logo/R57.png",
+        "/photo/logo/645.png",
+        "/photo/logo/NRJ.png",
+        "/photo/logo/DK9.png",
+        "/photo/logo/DM8.png",
+        "/photo/logo/AO5.png",
+        "/photo/logo/YIU.png",
+        "/photo/logo/AUZ.png",
+        "/photo/logo/YLV.png",
+        "/photo/logo/668.png",
+        "/photo/logo/X78.png",
+        "/photo/logo/ASJ.png",
+        "/photo/logo/H31.png",
+        "/photo/logo/BTI.png",
+        "/photo/logo/BYI.png",
+        "/photo/logo/DN3.png",
+        "/photo/logo/YJ6.png",
+        "/photo/logo/CR2.png",
+        "/photo/logo/ASQ.png",
+        "/photo/logo/DEI.png",
+        "/photo/logo/FE2.png",
+        "/photo/logo/CNF.png",
+        "/photo/logo/F91.png",
+        "/photo/logo/YLH.png",
+        "/photo/logo/AFC.png",
+        "/photo/logo/EYH.png",
+        "/photo/logo/APW.png",
+        "/photo/logo/YM1.png",
+        "/photo/logo/YLA.png",
+        "/photo/logo/YLK.png",
+        "/photo/logo/T44.png",
+        "/photo/logo/862.png",
+        "/photo/logo/AMZ.png",
+        "/photo/logo/081.png",
+        "/photo/logo/YL3.png",
+        "/photo/logo/AS5.png",
+        "/photo/logo/DRO.png",
+        "/photo/logo/CUU.png",
+        "/photo/logo/EWB.png",
+        "/photo/logo/YLP.png",
+        "/photo/logo/DMQ.png",
+        "/photo/logo/B78.png",
+        "/photo/logo/DQA.png",
+        "/photo/logo/YJZ.png",
+        "/photo/logo/BNB.png",
+        "/photo/logo/878.png",
+        "/photo/logo/BL1.png",
+        "/photo/logo/YLW.png",
+        "/photo/logo/YK8.png",
+        "/photo/logo/FGB.png",
+        "/photo/logo/CPY.png",
+        "/photo/logo/FDN.png",
+        "/photo/logo/010.png",
+        "/photo/logo/770.png",
+        "/photo/logo/YKX.png",
+        "/photo/logo/YM6.png",
+        "/photo/logo/AC6.png",
+        "/photo/logo/YKC.png",
+        "/photo/logo/YMD.png",
+        "/photo/logo/I93.png",
+        "/photo/logo/BAV.png",
+        "/photo/logo/BDR.png",
+        "/photo/logo/YLC.png",
+        "/photo/logo/YLZ.png",
+        "/photo/logo/CPW.png",
+        "/photo/logo/ABM.png",
+        "/photo/logo/E11.png",
+        "/photo/logo/YMJ.png",
+        "/photo/logo/551.png",
+        "/photo/logo/149.png",
+        "/photo/logo/YJC.png",
+        "/photo/logo/YLB.png",
+        "/photo/logo/675.png",
+        "/photo/logo/YL5.png",
+        "/photo/logo/P89.png"
+      ],
+      "value_counts": {
+        "/photo/logo/EXN.png": 153,
+        "/photo/logo/B51.png": 44,
+        "/photo/logo/AP7.png": 29,
+        "/photo/logo/R57.png": 21,
+        "/photo/logo/645.png": 17,
+        "/photo/logo/NRJ.png": 15,
+        "/photo/logo/DK9.png": 14,
+        "/photo/logo/DM8.png": 13,
+        "/photo/logo/AO5.png": 13,
+        "/photo/logo/YIU.png": 12,
+        "/photo/logo/AUZ.png": 12,
+        "/photo/logo/YLV.png": 10,
+        "/photo/logo/668.png": 9,
+        "/photo/logo/X78.png": 8,
+        "/photo/logo/ASJ.png": 7,
+        "/photo/logo/H31.png": 7,
+        "/photo/logo/BTI.png": 6,
+        "/photo/logo/BYI.png": 6,
+        "/photo/logo/DN3.png": 6,
+        "/photo/logo/YJ6.png": 5,
+        "/photo/logo/CR2.png": 5,
+        "/photo/logo/ASQ.png": 5,
+        "/photo/logo/DEI.png": 5,
+        "/photo/logo/FE2.png": 4,
+        "/photo/logo/CNF.png": 4,
+        "/photo/logo/F91.png": 4,
+        "/photo/logo/YLH.png": 4,
+        "/photo/logo/AFC.png": 3,
+        "/photo/logo/EYH.png": 3,
+        "/photo/logo/APW.png": 3,
+        "/photo/logo/YM1.png": 3,
+        "/photo/logo/YLA.png": 3,
+        "/photo/logo/YLK.png": 3,
+        "/photo/logo/T44.png": 3,
+        "/photo/logo/862.png": 3,
+        "/photo/logo/AMZ.png": 3,
+        "/photo/logo/081.png": 2,
+        "/photo/logo/YL3.png": 2,
+        "/photo/logo/AS5.png": 2,
+        "/photo/logo/DRO.png": 2,
+        "/photo/logo/CUU.png": 2,
+        "/photo/logo/EWB.png": 2,
+        "/photo/logo/YLP.png": 2,
+        "/photo/logo/DMQ.png": 2,
+        "/photo/logo/B78.png": 2,
+        "/photo/logo/DQA.png": 2,
+        "/photo/logo/YJZ.png": 2,
+        "/photo/logo/BNB.png": 2,
+        "/photo/logo/878.png": 2,
+        "/photo/logo/BL1.png": 1,
+        "/photo/logo/YLW.png": 1,
+        "/photo/logo/YK8.png": 1,
+        "/photo/logo/FGB.png": 1,
+        "/photo/logo/CPY.png": 1,
+        "/photo/logo/FDN.png": 1,
+        "/photo/logo/010.png": 1,
+        "/photo/logo/770.png": 1,
+        "/photo/logo/YKX.png": 1,
+        "/photo/logo/YM6.png": 1,
+        "/photo/logo/AC6.png": 1,
+        "/photo/logo/YKC.png": 1,
+        "/photo/logo/YMD.png": 1,
+        "/photo/logo/I93.png": 1,
+        "/photo/logo/BAV.png": 1,
+        "/photo/logo/BDR.png": 1,
+        "/photo/logo/YLC.png": 1,
+        "/photo/logo/YLZ.png": 1,
+        "/photo/logo/CPW.png": 1,
+        "/photo/logo/ABM.png": 1,
+        "/photo/logo/E11.png": 1,
+        "/photo/logo/YMJ.png": 1,
+        "/photo/logo/551.png": 1,
+        "/photo/logo/149.png": 1,
+        "/photo/logo/YJC.png": 1,
+        "/photo/logo/YLB.png": 1,
+        "/photo/logo/675.png": 1,
+        "/photo/logo/YL5.png": 1,
+        "/photo/logo/P89.png": 1
+      }
+    },
+    "contact.real_estate.name": {
+      "types": {
+        "string": 537
+      },
+      "non_null_count": 537,
+      "null_count": 0,
+      "distinct_count": 86,
+      "all_distinct_values": [
+        "REALITYSPOLU.cz",
+        "Dumrealit.cz",
+        "RE/MAX Alfa",
+        "GENERA s.r.o.",
+        "GAVLAS, spol. s r.o.",
+        "Reallity 11",
+        "RE/MAX MONARCHA",
+        "CENTURY 21 Premium",
+        "KUZO Partners s.r.o.",
+        "House ViP, s.r.o.",
+        "Bohemian Estates International",
+        "Probus Invest s.r.o.",
+        "Zeus realitn\u00ed kancel\u00e1\u0159 s.r.o.",
+        "FARAON reality, s.r.o.",
+        "Unicareal s.r.o.",
+        "CENTURY 21 Ruby",
+        "EU-Grand Reality",
+        "Home 4 People",
+        "Realitn\u00ed kancel\u00e1\u0159 Donna s.r.o.",
+        "S&L a partners s.r.o.",
+        "CENTURY 21 Alex",
+        "Reality Vyso\u010dina s.r.o.",
+        "DACHI s.r.o.",
+        "Jana Vil\u00edmkov\u00e1",
+        "Quantum reality, spol. s r.o.",
+        "CENTURY 21 All Inclusive",
+        "CETIN a.s.",
+        "The Brokers s.r.o.",
+        "RK CENTRUM s.r.o.",
+        "MUZOR, s.r.o.",
+        "ConRe s.r.o.",
+        "Milans apartment services",
+        "\u0160umavsk\u00e1 Realitka",
+        "Reality Ortov\u00e1",
+        "CENTURY 21 Imagine Housing",
+        "RK Hrab\u00e1k & Cerman & Nachtnebl",
+        "Zden\u011bk Brezar",
+        "CONSULT VK Litomy\u0161l, s.r.o.",
+        "ONE Reality - Realitn\u00ed a znaleck\u00e1 kancel\u00e1\u0159",
+        "ARCH Liberec",
+        "GEPARD REALITY / Moty\u010dka Reality a Finance s.r.o.",
+        "NEMA reality Vojt\u011bch Sn\u00ed\u017eek",
+        "Realitni-Servis",
+        "Svoboda bydlen\u00ed s.r.o.",
+        "metr2 reality s. r. o.",
+        "JV REALITY GROUP, a.s.",
+        "Connecte REALITY s.r.o.",
+        "HANNES.CZ Reality",
+        "EURODRA\u017dBY.CZ a.s.",
+        "4 DEVELOP REALITY, s.r.o.",
+        "GEPARD REALITY / Specialist\u00e9 na bydlen\u00ed",
+        "ASTONE Reality",
+        "CONNECT realitn\u00ed kancel\u00e1\u0159-pron\u00e1jem a prodej nemovitost\u00ed s.r.o. - J. Kub\u00ed\u010dkov\u00e1",
+        "REALITY T\u00e1borsk\u00e1",
+        "Daniel Ambr\u016f\u017eek",
+        "GEPARD REALITY /  Dream",
+        "Realitn\u00ed kancel\u00e1\u0159 KOTULA",
+        "Metropolis",
+        "GEPARD REALITY / BOARS",
+        "CENTURY 21 Partner Liberec",
+        "Realitn\u00ed kancel\u00e1\u0159 Pokorn\u00fd, s.r.o.",
+        "RELIA s.r.o.,",
+        "Proklidreality s.r.o.",
+        "Housify s.r.o.",
+        "FARMY.CZ",
+        "Ing. Josef Fuchs, MBA",
+        "Nad\u011b\u017eda Rydlov\u00e1",
+        "KVP reality servis s.r.o.",
+        "PB Realitn\u00ed",
+        "RG Realitn\u00ed kancel\u00e1\u0159 s.r.o.",
+        "LICITA s.r.o.",
+        "GEPARD REALITY / Kuba\u2019s Eleven s.r.o.",
+        "Radek Jind\u0159ich",
+        "GEPARD REALITY / Reality&Hypot\u00e9ky",
+        "\u010cesk\u00e1 Spole\u010dnost Realitn\u00ed / Jura ex alto s.r.o.",
+        "REALITY HLAV\u00c1\u010cOV\u00c1 spol. s r.o.",
+        "RENKO Liberec s.r.o.",
+        "Trefoil Reality s. r. o.",
+        "CONTENT REALITY s.r.o.",
+        "Miroslava Zemanov\u00e1",
+        "Realitn\u00ed kancel\u00e1\u0159 Gonio, Ing. Zden\u011bk Houb",
+        "GEPARD REALITY / Tobi reality a finance",
+        "GEPARD REALITY / MARATHON Reality s.r.o.",
+        "TIDE REALITY  s.r.o.",
+        "Reality H&B partners",
+        "Reality na kl\u00ed\u010d Praha s.r.o."
+      ],
+      "value_counts": {
+        "REALITYSPOLU.cz": 153,
+        "Dumrealit.cz": 44,
+        "RE/MAX Alfa": 29,
+        "GENERA s.r.o.": 21,
+        "GAVLAS, spol. s r.o.": 17,
+        "Reallity 11": 15,
+        "RE/MAX MONARCHA": 14,
+        "CENTURY 21 Premium": 13,
+        "KUZO Partners s.r.o.": 13,
+        "House ViP, s.r.o.": 12,
+        "Bohemian Estates International": 12,
+        "Probus Invest s.r.o.": 10,
+        "Zeus realitn\u00ed kancel\u00e1\u0159 s.r.o.": 9,
+        "FARAON reality, s.r.o.": 8,
+        "Unicareal s.r.o.": 7,
+        "CENTURY 21 Ruby": 7,
+        "EU-Grand Reality": 6,
+        "Home 4 People": 6,
+        "Realitn\u00ed kancel\u00e1\u0159 Donna s.r.o.": 6,
+        "S&L a partners s.r.o.": 5,
+        "CENTURY 21 Alex": 5,
+        "Reality Vyso\u010dina s.r.o.": 5,
+        "DACHI s.r.o.": 5,
+        "Jana Vil\u00edmkov\u00e1": 5,
+        "Quantum reality, spol. s r.o.": 4,
+        "CENTURY 21 All Inclusive": 4,
+        "CETIN a.s.": 4,
+        "The Brokers s.r.o.": 4,
+        "RK CENTRUM s.r.o.": 3,
+        "MUZOR, s.r.o.": 3,
+        "ConRe s.r.o.": 3,
+        "Milans apartment services": 3,
+        "\u0160umavsk\u00e1 Realitka": 3,
+        "Reality Ortov\u00e1": 3,
+        "CENTURY 21 Imagine Housing": 3,
+        "RK Hrab\u00e1k & Cerman & Nachtnebl": 3,
+        "Zden\u011bk Brezar": 3,
+        "CONSULT VK Litomy\u0161l, s.r.o.": 3,
+        "ONE Reality - Realitn\u00ed a znaleck\u00e1 kancel\u00e1\u0159": 3,
+        "ARCH Liberec": 2,
+        "GEPARD REALITY / Moty\u010dka Reality a Finance s.r.o.": 2,
+        "NEMA reality Vojt\u011bch Sn\u00ed\u017eek": 2,
+        "Realitni-Servis": 2,
+        "Svoboda bydlen\u00ed s.r.o.": 2,
+        "metr2 reality s. r. o.": 2,
+        "JV REALITY GROUP, a.s.": 2,
+        "Connecte REALITY s.r.o.": 2,
+        "HANNES.CZ Reality": 2,
+        "EURODRA\u017dBY.CZ a.s.": 2,
+        "4 DEVELOP REALITY, s.r.o.": 2,
+        "GEPARD REALITY / Specialist\u00e9 na bydlen\u00ed": 2,
+        "ASTONE Reality": 2,
+        "CONNECT realitn\u00ed kancel\u00e1\u0159-pron\u00e1jem a prodej nemovitost\u00ed s.r.o. - J. Kub\u00ed\u010dkov\u00e1": 2,
+        "REALITY T\u00e1borsk\u00e1": 1,
+        "Daniel Ambr\u016f\u017eek": 1,
+        "GEPARD REALITY /  Dream": 1,
+        "Realitn\u00ed kancel\u00e1\u0159 KOTULA": 1,
+        "Metropolis": 1,
+        "GEPARD REALITY / BOARS": 1,
+        "CENTURY 21 Partner Liberec": 1,
+        "Realitn\u00ed kancel\u00e1\u0159 Pokorn\u00fd, s.r.o.": 1,
+        "RELIA s.r.o.,": 1,
+        "Proklidreality s.r.o.": 1,
+        "Housify s.r.o.": 1,
+        "FARMY.CZ": 1,
+        "Ing. Josef Fuchs, MBA": 1,
+        "Nad\u011b\u017eda Rydlov\u00e1": 1,
+        "KVP reality servis s.r.o.": 1,
+        "PB Realitn\u00ed": 1,
+        "RG Realitn\u00ed kancel\u00e1\u0159 s.r.o.": 1,
+        "LICITA s.r.o.": 1,
+        "GEPARD REALITY / Kuba\u2019s Eleven s.r.o.": 1,
+        "Radek Jind\u0159ich": 1,
+        "GEPARD REALITY / Reality&Hypot\u00e9ky": 1,
+        "\u010cesk\u00e1 Spole\u010dnost Realitn\u00ed / Jura ex alto s.r.o.": 1,
+        "REALITY HLAV\u00c1\u010cOV\u00c1 spol. s r.o.": 1,
+        "RENKO Liberec s.r.o.": 1,
+        "Trefoil Reality s. r. o.": 1,
+        "CONTENT REALITY s.r.o.": 1,
+        "Miroslava Zemanov\u00e1": 1,
+        "Realitn\u00ed kancel\u00e1\u0159 Gonio, Ing. Zden\u011bk Houb": 1,
+        "GEPARD REALITY / Tobi reality a finance": 1,
+        "GEPARD REALITY / MARATHON Reality s.r.o.": 1,
+        "TIDE REALITY  s.r.o.": 1,
+        "Reality H&B partners": 1,
+        "Reality na kl\u00ed\u010d Praha s.r.o.": 1
+      }
+    },
+    "contact.real_estate.phones[]": {
+      "types": {
+        "string": 602
+      },
+      "non_null_count": 602,
+      "null_count": 0,
+      "distinct_count": 123,
+      "sample_values": [
+        "+420 604 201 487",
+        "+420 604 201 488",
+        "+420 800 100 164",
+        "+420 603 892 407",
+        "+420 724 299 880",
+        "+420 774 740 345",
+        "+420 541 211 876",
+        "+420 606 065 865",
+        "+420 296 240 400",
+        "+420 775 560 145"
+      ]
+    },
+    "contact.real_estate.title": {
+      "types": {
+        "string": 537
+      },
+      "non_null_count": 537,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "Realitn\u00ed kancel\u00e1\u0159"
+      ],
+      "value_counts": {
+        "Realitn\u00ed kancel\u00e1\u0159": 537
+      }
+    },
+    "created_at": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 120,
+      "sample_values": [
+        "2026-01-04",
+        "2026-02-04",
+        "2025-11-18",
+        "2026-02-27",
+        "2026-01-18",
+        "2025-06-30",
+        "2025-08-08",
+        "2026-02-26",
+        "2026-02-25",
+        "2026-02-23"
+      ]
+    },
+    "custom_id": {
+      "types": {
+        "string": 371
+      },
+      "non_null_count": 371,
+      "null_count": 0,
+      "distinct_count": 370,
+      "sample_values": [
+        "ID 78068",
+        "ID 74425",
+        "911409",
+        "1044",
+        "ID 75005",
+        "02758",
+        "ID 82754",
+        "ID 82655",
+        "01530",
+        "ID 82520"
+      ]
+    },
+    "description": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 517,
+      "sample_values": [
+        "Byt 3+1 (110 m\u00b2) s lod\u017ei\u00ed (3,8 m\u00b2) ve zd\u011bn\u00e9m historick\u00e9m dom\u011b (postaven\u00e9m kolem r. 1920) v centru Liberce, s kr\u00e1sn\u00fdm v\u00fdhledem do parku Clam-Gallas\u016f. D\u016fm je postaven\u00fd v Gutenbergov\u011b ul. vedle hotelu Zlat\u00fd lev, tzn. v centru m\u011bsta (350m od radnice) a p\u0159itom v klidn\u00e9m prost\u0159ed\u00ed. Gutenbergova ul. je slep\u00e1 - je v n\u00ed pouze uzav\u0159en\u00e9 parkovi\u0161t\u011b hotelu a parkovac\u00ed st\u00e1n\u00ed pro rezidenty. V\u00fdhled z lod\u017eie (i ze v\u0161ech 3 pokoj\u016f) je nejen na park, ale tak\u00e9 na libereck\u00fd z\u00e1mek, za kter\u00fdm se schov\u00e1v\u00e1 Je\u0161t\u011bd. Na posledn\u00ed fotografii uveden\u00e9 v inzer\u00e1tu je v\u00fdhled z terasy p\u0159\u00edstupn\u00e9 z p\u016fdn\u00edch prostor domu. \r\nDispozice bytu: 1.pokoj 20,8m\u00b2, ob\u00fdv. pokoj 28,3m\u00b2 + lod\u017eie 3,8m\u00b2, 3.pokoj 18,1m\u00b2, kuchy\u0148 s j\u00eddelnou 23,6m\u00b2, koupelna 8,8m\u00b2, p\u0159eds\u00ed\u0148 10,6m\u00b2 a komora 1,55m\u00b2.\r\nByt je um\u00edst\u011bn\u00fd ve 2.pat\u0159e v dom\u011b s v\u00fdtahem. V\u0161echny pokoje jsou orientovan\u00e9 na jih - s v\u00fdhledem do parku. Kuchy\u0148 a koupelna maj\u00ed okna na sever - do mal\u00e9ho m\u00e1lo udr\u017eovan\u00e9ho dvora (okna do dvora jsou matn\u00e1 - nepr\u016fhledn\u00e1).\r\nKuchy\u0148sk\u00e1 linka m\u00e1 3 \u010d\u00e1sti: 1.\u010d\u00e1st s el. induk\u010dn\u00ed varnou deskou, porcel\u00e1nov\u00fdm dvoud\u0159ezem a my\u010dkou, 2.\u010d\u00e1st s n\u011bkolika sk\u0159\u00ed\u0148kami, horkovzdu\u0161nou troubou a mikrovlnnou troubou. 3.\u010d\u00e1st tvo\u0159\u00ed velk\u00fd serv\u00edrovac\u00ed st\u016fl. V\u0161echny 3 \u010d\u00e1sti maj\u00ed pracovn\u00ed desky i obklady z r\u016f\u017eov\u00e9 \u0161pan\u011blsk\u00e9 \u017euly.\r\nKoupelna je vybaven\u00e1 rohovou vanou, um\u00fdvadlem a sprchov\u00fdm koutem, kter\u00fd je oblo\u017een\u00fd zelenou mozaikou. Cestovatel\u00e9 mo\u017en\u00e1 ocen\u00ed, \u017ee um\u00fdvadlo a dekory jsou ru\u010dn\u011b vyr\u00e1b\u011bn\u00e9, dovezen\u00e9 z Mexika. Za polop\u0159\u00ed\u010dkou (v prostoru za pra\u010dkou) je um\u00edst\u011bn\u00e9 z\u00e1v\u011bsn\u00e9 WC - kompletn\u011b oblo\u017een\u00e9 b\u011b\u017en\u00fdm obkladem. \r\nPodlahy v kuchyni, v p\u0159eds\u00edni a ve 2 pokoj\u00edch jsou plovouc\u00ed. V posledn\u00edm pokoji je polo\u017eeno PVC, v koupeln\u011b je keramick\u00e1 dla\u017eba. Dve\u0159e jsou v\u011bt\u0161inou p\u016fvodn\u00ed d\u0159ev\u011bn\u00e9, z masivu, s oblo\u017ekov\u00fdmi z\u00e1rubn\u011bmi. Okna do parku jsou p\u016fvodn\u00ed d\u0159ev\u011bn\u00e1, okna do dvora jsou nov\u00e1 plastov\u00e1, s matn\u00fdmi skly.\r\nV dom\u011b je proveden rozvod \u00fast\u0159edn\u00edho topen\u00ed z domovn\u00ed plynov\u00e9 kotelny. Oh\u0159ev tepl\u00e9 u\u017eitkov\u00e9 vody zaji\u0161\u0165uje plynov\u00e1 karma.\r\nK bytu p\u0159\u00edslu\u0161\u00ed sklepn\u00ed k\u00f3je 7,1m\u00b2 (kterou sou\u010dasn\u00fd vlastn\u00edk nevyu\u017e\u00edv\u00e1) a u\u017e\u00edv\u00e1n\u00ed \u010d\u00e1sti p\u016fdn\u00edho prostoru.",
+        "Prostorn\u00fd byt 4+1 se dv\u011bma lod\u017eiemi \u2013 Brno, Star\u00e1 Osada\n\nHled\u00e1te velk\u00fd byt pro rodinu v obl\u00edben\u00e9 \u010d\u00e1sti Brna? Pr\u00e1v\u011b jste ji na\u0161li. Nab\u00edz\u00edme byt 4+1 se dv\u011bma lod\u017eiemi v lokalit\u011b Star\u00e1 Osada, kter\u00e1 je vyhl\u00e1\u0161en\u00e1 skv\u011blou dostupnost\u00ed do centra a kompletn\u00ed ob\u010danskou vybavenost\u00ed.\n\nZ\u00e1kladn\u00ed informace:\n\nDispozice: 4+1\n\n2\u00d7 lod\u017eie \u2013 ide\u00e1ln\u00ed pro relax i praktick\u00e9 vyu\u017eit\u00ed\n\nByt je sv\u011btl\u00fd a velmi prostorn\u00fd\n\nPraktick\u00e9 rozlo\u017een\u00ed m\u00edstnost\u00ed \u2013 ide\u00e1ln\u00ed pro rodinn\u00e9 bydlen\u00ed\n\nD\u016fm je udr\u017eovan\u00fd, okol\u00ed pln\u00e9 zelen\u011b\n\nLokalita \u2013 Star\u00e1 Osada:\n\nV\u00fdborn\u00e1 dopravn\u00ed dostupnost (MHD, rychl\u00e9 napojen\u00ed do centra)\n\nV p\u011b\u0161\u00ed vzd\u00e1lenosti \u0161koly, \u0161kolky, obchody, l\u00e9ka\u0159i\n\nKlidn\u00e1 reziden\u010dn\u00ed \u010dtvr\u0165 s dostatkem zelen\u011b\n\nIde\u00e1ln\u00ed kombinace m\u011bstsk\u00e9ho \u017eivota a pohodov\u00e9ho bydlen\u00ed\n\nByt nab\u00edz\u00ed velk\u00fd potenci\u00e1l k modernizaci dle vlastn\u00edch p\u0159edstav.\n\nPro v\u00edce informac\u00ed a domluven\u00ed prohl\u00eddky m\u011b nev\u00e1hejte kontaktovat.\nR\u00e1d v\u00e1m byt osobn\u011b p\u0159edstav\u00edm.",
+        "Nab\u00edz\u00edme k prodeji exkluzivn\u00ed, luxusn\u011b zrekonstruovan\u00fd a kompletn\u011b klimatizovan\u00fd byt o dispozici 4+kk s celkovou v\u00fdm\u011brou 200 m\u00b2, z toho 95,3 m\u00b2 \u010din\u00ed podlahov\u00e1 plocha a 104,7 m\u00b2 p\u0159edstavuj\u00ed prostorn\u00e9 venkovn\u00ed terasy. Nemovitost se nach\u00e1z\u00ed v samotn\u00e9m srdci Brna na ulici Kobli\u017en\u00e1 a nab\u00edz\u00ed kombinaci modern\u00edho designu, nadstandardn\u00edch materi\u00e1l\u016f a mimo\u0159\u00e1dn\u011b sv\u011btl\u00e9ho, vzdu\u0161n\u00e9ho interi\u00e9ru. V cel\u00e9m byt\u011b je z\u00e1rove\u0148 p\u0159ipravena instalace venkovn\u00edch \u017ealuzi\u00ed.\n\nHlavn\u00ed \u010d\u00e1st\u00ed bytu je velk\u00e1, prosv\u011btlen\u00e1 ob\u00fdvac\u00ed m\u00edstnost propojen\u00e1 s modern\u00ed kuchy\u0148skou linkou vybavenou kvalitn\u00edmi spot\u0159ebi\u010di. Z ob\u00fdvac\u00edho prostoru se vstupuje na soukromou terasu situovanou v horn\u00edm pat\u0159e, kter\u00e1 poskytuje ide\u00e1ln\u00ed m\u00edsto pro relaxaci nebo posezen\u00ed s p\u0159\u00e1teli a nab\u00edz\u00ed kr\u00e1sn\u00fd v\u00fdhled na centrum m\u011bsta.\n\nV byt\u011b se nach\u00e1zej\u00ed dv\u011b designov\u00e9 koupelny \u2013 jedna vybaven\u00e1 prostornou vanou a toaletou a druh\u00e1 se sprchov\u00fdm koutem a takt\u00e9\u017e s toaletou. Elegantn\u00ed chodba s efektn\u00edm kulat\u00fdm zrcadlem dotv\u00e1\u0159\u00ed luxusn\u00ed atmosf\u00e9ru cel\u00e9ho interi\u00e9ru a poskytuje dostatek prostoru a \u00falo\u017en\u00fdch mo\u017enost\u00ed.\n\nByt se nach\u00e1z\u00ed v jedn\u00e9 z nej\u017e\u00e1dan\u011bj\u0161\u00edch lokalit v Brn\u011b, kde m\u00e1te doslova v\u0161e na dosah ruky \u2013 obchody, restaurace, kav\u00e1rny, kulturn\u00ed vy\u017eit\u00ed i perfektn\u00ed dopravn\u00ed dostupnost. Jedn\u00e1 se o mimo\u0159\u00e1dnou nab\u00eddku, kter\u00e1 je ide\u00e1ln\u00ed pro ty, kdo hledaj\u00ed modern\u00ed a nadstandardn\u00ed bydlen\u00ed v centru m\u011bsta s v\u00fdjime\u010dn\u00fdm prostorem a soukromou terasou.\n\nPrvn\u00edch \u0161est fotografi\u00ed p\u0159edstavuje vizualizace mo\u017en\u00e9ho uspo\u0159\u00e1d\u00e1n\u00ed a vybaven\u00ed m\u00edstnost\u00ed.\n\nPro v\u00edce informac\u00ed nebo sjedn\u00e1n\u00ed prohl\u00eddky n\u00e1s nev\u00e1hejte kontaktovat.",
+        "Nab\u00edz\u00edme prodej udr\u017eovan\u00e9ho a prostorn\u00e9ho bytu 3+1/2x lod\u017eie, kter\u00fd se nach\u00e1z\u00ed ve 4. podla\u017e\u00ed sedmi podla\u017en\u00edho domu s v\u00fdtahem na s\u00eddli\u0161ti v Lys\u00e9 nad Labem. Byt je v osobn\u00edm vlastnictv\u00ed, dispozice bytu je nepr\u016fchoz\u00ed, plocha bytu \u010din\u00ed 72 m\u00b2. D\u016fm je zateplen\u00fd. Je zavedena elekt\u0159ina 230V, 400V, d\u00e1lkov\u00fd vodovod, m\u011bstsk\u00e1 kanalizace. Vyt\u00e1p\u011bn\u00ed je \u00fast\u0159edn\u00ed d\u00e1lkov\u00e9. Mo\u017enost p\u0159ipojen\u00ed k internetu s optick\u00fdm kabelem. V byt\u011b z\u016fst\u00e1v\u00e1 rohov\u00e1 kuchy\u0148sk\u00e1 linka. K bytu n\u00e1le\u017e\u00ed komora na chodb\u011b, v dom\u011b je spole\u010dn\u00e1 kol\u00e1rna. Zaveden internet s optick\u00fdm kabelem a kabelov\u00e1 televize. Cesta po d\u00e1lnici do Prahy trv\u00e1 15 minut j\u00edzdy autem. Ev. \u010d\u00edslo: 654840.",
+        "Jesenice u Prahy, lokalita, kter\u00e1 pat\u0159\u00ed dlouhodob\u011b k jedn\u00e9 z nejatraktivn\u011bj\u0161\u00edch periferi\u00ed hlavn\u00edho m\u011bsta. Lokalita, kde p\u0159\u00edmo v m\u00edst\u011b \u010di p\u0159ilehl\u00e9m okol\u00ed m\u00e1te k dispozici n\u011bkolik z\u00e1kladn\u00edch \u0161kol a \u0161kolek (i cizojazy\u010dn\u00fdch), st\u00e1tn\u00ed i soukrom\u00e1 zdravotn\u00ed za\u0159\u00edzen\u00ed, men\u0161\u00ed obchody \u010di supermarkety a v neposledn\u00ed \u0159ad\u011b tak\u00e9 kvalitn\u00ed dopravn\u00ed dostupnost s p\u0159\u00edm\u00fdm napojen\u00edm na Pra\u017esk\u00fd okruh. \nV bl\u00edzkosti pomysln\u00e9ho centra Jesenice stoj\u00ed od roku 2008 komorn\u00ed a uzav\u0159en\u00fd projekt s n\u00e1zvem Rezidence Jesenice, kde nab\u00edz\u00edme k prodeji \u010d\u00e1ste\u010dn\u011b za\u0159\u00edzen\u00fd byt o dispozici 2+kk 47m\u00b2 s rohov\u00fdm balk\u00f3nem 14m\u00b2 a vlastn\u00edm venkovn\u00edm parkovac\u00edm st\u00e1n\u00edm. Bytov\u00e1 jednotka se nach\u00e1z\u00ed v 1. pat\u0159e \u010dty\u0159podla\u017en\u00edho domu s v\u00fdtahem a m\u00e1 ji\u017en\u00ed orientaci sm\u011brem do spole\u010dn\u00e9 soukrom\u00e9 zahrady o velikosti cca 4500 m\u00b2, kter\u00e1 je hlavn\u00ed devizou cel\u00e9ho projektu. Nejdeme zde velk\u00e9 okrasn\u00e9 jez\u00edrko, otev\u0159en\u00e9 ohni\u0161t\u011b \u010di m\u00edsta k relaxaci a odpo\u010dinku. Projekt Rezidence Jesenice se skl\u00e1d\u00e1 ze dvou bytov\u00fdch dom\u016f a sv\u00fdm pavla\u010dov\u00fdm pojet\u00edm, um\u00edst\u011bn\u00edm uprost\u0159ed ji\u017e zm\u00edn\u011bn\u00e9 zelen\u011b a kompletn\u00edm oplocen\u00edm cel\u00e9ho pozemku, navozuje p\u0159\u00edjemnou atmosf\u00e9ru dovolenkov\u00fdch apartm\u00e1n\u016f. \nNab\u00edzen\u00fd byt m\u00e1 d\u0159ev\u011bn\u00e9 podlahy, d\u0159ev\u011bn\u00e1 okna, vyt\u00e1p\u011bn\u00ed zaji\u0161\u0165uj\u00ed radi\u00e1tory a plynov\u00fd kotel, koupelna je se sprchov\u00fdm koutem a toaletou, kuchyn\u011b na m\u00edru za\u0159\u00edzena a vybavena, \nNemovitost je ihned k dispozici a p\u0159ipravena k vlastn\u00edmu u\u017e\u00edv\u00e1n\u00ed \u010di k okam\u017eit\u00e9mu a bezprobl\u00e9mov\u00e9mu pron\u00e1jmu, o kter\u00fd je v t\u00e9to lokalit\u011b velk\u00fd z\u00e1jem. \nAtraktivitu tohoto bydlen\u00ed je\u0161t\u011b podpo\u0159\u00ed vlastn\u00ed venkovn\u00ed parkovac\u00ed st\u00e1n\u00ed p\u0159\u00edmo v objektu.\nPro bli\u017e\u0161\u00ed informace kontaktujte, pros\u00edm, makl\u00e9\u0159e.",
+        "Kr\u00e1lovsk\u00e9 Vinohrady jsou u\u017e sv\u00fdm n\u00e1zvem bezesporu jednou z nejatraktivn\u011bj\u0161\u00edch a nejcenn\u011bj\u0161\u00edch lokalit v Praze. Jsou m\u00edstem, kde se historie potk\u00e1v\u00e1 s modern\u00ed v\u00fdstavbou, kde pojmy jako \"\u0161ir\u0161\u00ed centrum\" a \"kvalitn\u00ed ob\u010dansk\u00e1 vybavenost\" skute\u010dn\u011b maj\u00ed v\u00fdznam a jsou tak\u00e9 m\u00edstem, kter\u00e9 si jako sv\u016fj domov, a\u0165 u\u017e v honosn\u00fdch vil\u00e1ch \u010di rozlehl\u00fdch bytech s vysok\u00fdmi stropy, vybralo nespo\u010det velik\u00e1n\u016f sv\u00e9 doby. \nA pr\u00e1v\u011b jednu takovou unik\u00e1tn\u00ed nemovitost v m\u011b\u0161\u0165ansk\u00e9m duchu V\u00e1m nab\u00edz\u00edme, konkr\u00e9tn\u011b byt s dispozic\u00ed 4+1 a rozlohou 121 m\u00b2, s 3 m\u00b2 velkou lod\u017ei\u00ed do vnitrobloku, na katastr\u00e1ln\u00edm rozhran\u00ed \u017di\u017ekova a Vinohrad, p\u0159\u00edmo na Vinohradsk\u00e9 t\u0159\u00edd\u011b. Byt se nach\u00e1z\u00ed na \u0161est\u00e9m nadzemn\u00edm podla\u017e\u00ed sedmipatrov\u00e9ho funkcionalistick\u00e9ho domu z p\u0159elomu 19. a 20. stolet\u00ed, kter\u00fd je po revitalizaci v\u010detn\u011b ve\u0161ker\u00fdch rozvod\u016f, nov\u00fdch d\u0159ev\u011bn\u00fdch oken s klasickou podobou a tak\u00e9 nov\u00fdm v\u00fdtahem dle po\u017eadovan\u00fdch evropsk\u00fdch norem. Aktu\u00e1ln\u011b byla tak\u00e9 dokon\u010dena renovace \u010deln\u00ed fas\u00e1dy. P\u016fvabn\u00fd vstupn\u00ed koridor a zachoval\u00e9 prvky v interi\u00e9ru jen dokresluj\u00ed podobu klasick\u00e9ho \u010din\u017eovn\u00edho domu na Vinohradech.\nN\u00e1mi nab\u00edzen\u00fd byt je v pr\u016fb\u011bhu doby v rekonstruovan\u00e9m a udr\u017eovan\u00e9m stavu, vhodn\u00fd k rekonstrukci dle sou\u010dasn\u00fdch trend\u016f, av\u0161ak z\u00e1rove\u0148 ihned k u\u017e\u00edv\u00e1n\u00ed bez nutnost\u00ed technick\u00fdch investic. Za to V\u00e1m nab\u00eddne kr\u00e1sn\u00e9 zachoval\u00e9 jasanov\u00e9 parkety ve v\u0161ech pokoj\u00edch, kamenn\u00e9 parapety u ji\u017e zm\u00edn\u011bn\u00fdch nov\u00fdch velkoform\u00e1tov\u00fdch oken nebo t\u0159eba jen tradi\u010dn\u00ed vzhled funkcionalistick\u00e9ho balkonu do vnitrobloku. Sou\u010dasn\u00e1 dispozice bytu je vedena jako 4+1, nicm\u00e9n\u011b m\u016f\u017ee b\u00fdt i 5+kk \u010di 5+1. Dominantou bytu jsou jist\u011b dva propojen\u00e9 pokoje, kter\u00e9 maj\u00ed spole\u010dn\u011b skoro 50 m\u00b2 a kter\u00e9 maj\u00ed z\u00e1rove\u0148 vlastn\u00ed vstup z haly, kter\u00e1 jim p\u0159edch\u00e1z\u00ed. V byt\u011b je d\u00e1le k dispozici kuchyn\u011b, ze kter\u00e9 je vstup do pokoje, kter\u00fd d\u0159\u00edve slou\u017eil slu\u017eebnictvu, komora, praktick\u00e1 sp\u00ed\u017e, koupelna se dv\u011bma umyvadly a samostatn\u00e1 toaleta. K bytu je mo\u017en\u00e9 u\u017e\u00edvat sklep \u010di spole\u010dn\u00e9 prostory. V dom\u011b je vlastn\u00ed plynov\u00e1 kotelna, kter\u00e1 zaji\u0161\u0165uje rozvod tepla a tepl\u00e9 vody. \n\nDispozice:\nP\u0159eds\u00ed\u0148 8 m\u00b2\nKomora 1,2 m\u00b2\nSp\u00ed\u017e 2,9 m\u00b2\nHala 12,4 m\u00b2\nKuchyn\u011b 11,7 m\u00b2\nPokoj I 23 m\u00b2\nPokoj II 21,2 m\u00b2\nPokoj III 26,2 m\u00b2\nPokoj IV 5,6 m\u00b2\nKoupelna 6,5 m\u00b2\nWC 1,8 m\u00b2\nLod\u017eie 3 m\u00b2\n\nSou\u010d\u00e1st\u00ed prodeje je mo\u017enost nav\u00e1zat na aktu\u00e1ln\u00ed pron\u00e1jem gar\u00e1\u017eov\u00e9ho st\u00e1n\u00ed v \u010derstv\u011b zrekonstruovan\u00fdch Gar\u00e1\u017e\u00edch Flora, kter\u00e9 jsou jen n\u011bkolik des\u00edtek metr\u016f od domu. \nPro bli\u017e\u0161\u00ed informace kontaktujte, pros\u00edm, makl\u00e9\u0159e.",
+        "V zastoupen\u00ed majitele V\u00e1m nab\u00edz\u00edm ke koupi nov\u00fd byt 2+kk o v\u00fdm\u011b\u0159e 42 m\u00b2 v prvn\u00edm pat\u0159e t\u0159\u00edpatrov\u00e9 budovy v obci Nupaky, Praha v\u00fdchod.\r\n\r\nByt \u010d. 11 - za cenu 5,098.360,- K\u010d,-. K bytu n\u00e1le\u017e\u00ed jedno zamykateln\u00e9 parkovac\u00ed st\u00e1n\u00ed p\u0159ed domem..\r\n\r\nNa pat\u0159e se nach\u00e1z\u00ed celkem 8 byt\u016f 2+kk. Moment\u00e1ln\u011b jsou k dispozici ji\u017e posledn\u00ed \u010dty\u0159i byty 2+kk.\r\n\r\nVyt\u00e1p\u011bn\u00ed byt\u016f - ust\u0159edn\u00ed plynov\u00e9.\r\n\r\nV ob\u00fdvac\u00edm pokoji s kuchy\u0148sk\u00fdm koutem a lo\u017enici je lamin\u00e1tov\u00e1 plovouc\u00ed podlaha, v koupeln\u011b keramick\u00e1 dla\u017eba. \r\nV koupeln\u011b je sprchov\u00fd kout, umyvadlo se sk\u0159\u00ed\u0148kou, osv\u011btlen\u00e9 zrcadlo, topn\u00e9 t\u011bleso, toaleta a prostor na pra\u010dku s p\u0159ipraven\u00fdmi v\u00fdvody na vodu a odpad. \r\nProveden\u00ed ve standardu, nen\u00ed pot\u0159eba dokon\u010dovac\u00edch prac\u00ed. \r\nV byt\u011b jsou plastov\u00e1 t\u0159\u00edkomorov\u00e1 okna a bezpe\u010dnostn\u00ed vstupn\u00ed dve\u0159e. Vchodov\u00e9 dve\u0159e do domu maj\u00ed bezpe\u010dnostn\u00ed z\u00e1mek ovladateln\u00fd z mobiln\u00edho telefonu.\r\nNov\u00e1 plynov\u00e1 kotelna v objektu a nov\u00fd v\u00fdtah.\r\n\r\nByty budou zkolaudov\u00e1ny v \u010dervnu 2026. Ji\u017e dnes si m\u016f\u017eete byt prohl\u00e9dnou a zarezervovat.\r\n\r\nV are\u00e1lu rezidence se nach\u00e1z\u00ed restaurace a ve\u010derka.\r\n\r\nObec Nupaky je situovan\u00e1 v okrese Praha-v\u00fdchod, vedle \u0158\u00ed\u010dan a kousek od Prahy.\r\nPraha-Nupaky je v\u00fdborn\u00e1 lokalita s kompletn\u00ed ob\u010danskou vybavenost\u00ed. Potraviny jde koupit p\u0159\u00edmo v obci. Kousek v \u010cestlic\u00edch je toho v\u00edce, aquapark, nap\u0159\u00edklad Albert, Lidl, Billa, Makro, KFC i velk\u00e9 obchodn\u00ed centrum. Boj\u00edte se, \u017ee budete d\u011bti vozit za vzd\u011bl\u00e1n\u00edm n\u011bkam daleko? Mate\u0159sk\u00e1 \u0161kola je hned kousek od Rezidence, z\u00e1kladn\u00ed \u0161kola a\u017e do dev\u00e1t\u00e9ho ro\u010dn\u00edku v \u010cestlic\u00edch. S\u00eddl\u00ed zde tak\u00e9 z\u00e1kladn\u00ed um\u011bleck\u00e1 \u0161kola a ve Spole\u010densk\u00e9m centru Nupaky najdete z\u00e1jmov\u00e9 aktivity pro d\u011bti. Nesm\u00edme zapomenout ani na zdravotn\u00ed slu\u017eby. V Praze-Nupak\u00e1ch je praktick\u00fd l\u00e9ka\u0159 pro dosp\u011bl\u00e9, pro d\u011bti si ur\u010dit\u011b vyberete pediatra v \u0158\u00ed\u010danech, kde je n\u011bkolik zdravotn\u00edch st\u0159edisek v\u010detn\u011b dal\u0161\u00edch odborn\u00fdch ordinac\u00ed. Nejbli\u017e\u0161\u00ed l\u00e9k\u00e1rna je v \u010cestlic\u00edch.\r\n\r\nNab\u00edz\u00ed se zde i p\u0159\u00edm\u00e9 spojen\u00ed MHD na metro Opatov, s dojezdem 10 min. Autobusov\u00e1 zast\u00e1vka je cca 100m od domu.\r\n\r\nSrde\u010dn\u011b V\u00e1s zvu na prohl\u00eddku.",
+        "K prodeji nab\u00edz\u00edme prostorn\u00fd a sv\u011btl\u00fd byt o dispozici 3+1 (aktu\u00e1ln\u011b vyu\u017e\u00edv\u00e1n jako 4+kk) o celkov\u00e9 v\u00fdm\u011b\u0159e 91\u202fm\u00b2.\nNach\u00e1z\u00ed se v klidn\u00e9 a velmi vyhled\u00e1van\u00e9 \u010d\u00e1sti Kladna \u2013 Kro\u010dehlavy, konkr\u00e9tn\u011b v ulici Litevsk\u00e1, v panelov\u00e9m dom\u011b po celkov\u00e9 revitalizaci. Byt je po rekonstrukci a ve v\u00fdborn\u00e9m stavu, p\u0159ipraven\u00fd k okam\u017eit\u00e9mu nast\u011bhov\u00e1n\u00ed bez nutnosti dal\u0161\u00edch investic. Dispozice nab\u00edz\u00ed velk\u00fd ob\u00fdvac\u00ed pokoj propojen\u00fd s kuchyn\u00ed a j\u00eddelnou, dv\u011b samostatn\u00e9 lo\u017enice, d\u011btsk\u00fd pokoj, zrekonstruovanou koupelnu s rohovou vanou i sprchov\u00fdm koutem, samostatn\u00e9 WC, zasklenou lod\u017eii orientovanou do klidn\u00e9ho vnitrobloku se zelen\u00ed a sklepn\u00ed k\u00f3ji. Z lod\u017eie je n\u00e1dhern\u00fd v\u00fdhled do okoln\u00edho lesa, ide\u00e1ln\u00edho na ka\u017edodenn\u00ed proch\u00e1zky, sport nebo relax. D\u016fm je zateplen\u00fd, m\u00e1 plastov\u00e1 okna a udr\u017eovan\u00e9 spole\u010dn\u00e9 prostory. Lokalita je perfektn\u011b ob\u010dansky vybaven\u00e1 \u2013 v p\u011b\u0161\u00ed vzd\u00e1lenosti se nach\u00e1z\u00ed obchodn\u00ed centrum O\u00e1za, mate\u0159sk\u00e1 a z\u00e1kladn\u00ed \u0161kola, zdravotn\u00ed st\u0159edisko, sportovi\u0161t\u011b i d\u011btsk\u00e1 h\u0159i\u0161t\u011b. V\u00fdborn\u00e1 dopravn\u00ed dostupnost je zaji\u0161t\u011bna pomoc\u00ed MHD i vlakov\u00e9ho spojen\u00ed sm\u011brem do centra Kladna i do Prahy. Parkov\u00e1n\u00ed je mo\u017en\u00e9 p\u0159\u00edmo p\u0159ed domem. Byt je v osobn\u00edm vlastnictv\u00ed a bez pr\u00e1vn\u00edch vad. Financov\u00e1n\u00ed hypote\u010dn\u00edm \u00fav\u011brem je mo\u017en\u00e9 \u2013 s vy\u0159\u00edzen\u00edm r\u00e1di pom\u016f\u017eeme. V p\u0159\u00edpad\u011b z\u00e1jmu o prohl\u00eddku m\u011b nev\u00e1hejte kontaktovat.",
+        "Ve v\u00fdhradn\u00edm zastoupen\u00ed V\u00e1m nab\u00edz\u00edme zprost\u0159edkov\u00e1n\u00ed prodeje p\u011bkn\u00e9ho bytu v osobn\u00edm vlastnictv\u00ed 1+1 na ulici Z\u00e1mez\u00ed, kter\u00fd se nach\u00e1z\u00ed v \u017e\u00e1dan\u00e9 lokalit\u011b Brno - Jehnice. \r\nBrno-Jehnice je m\u011bstsk\u00e1 \u010d\u00e1st na severn\u00edm okraji Brna, obklopen\u00e1 zalesn\u011bn\u00fdm \u00fazem\u00edm Sob\u011b\u0161ick\u00e9 vrchoviny v \u00fadol\u00ed Jehnick\u00e9ho potoka. Le\u017e\u00ed severn\u011b od \u010dtvrt\u00ed Mokr\u00e1 Hora a Ivanovice, pobl\u00ed\u017e obc\u00ed \u010cesk\u00e1 a Lelekovice. Jde o klidnou, p\u0159ev\u00e1\u017en\u011b reziden\u010dn\u00ed lokalitu.\r\n\r\nByt je velmi p\u011bkn\u00fd a kombinuje modern\u00ed komfort, dostatek prostoru a skv\u011blou lokalitu. Tento sv\u011btl\u00fd a vzdu\u0161n\u00fd byt je ide\u00e1ln\u00ed volbou pro za\u010d\u00ednaj\u00edc\u00ed p\u00e1ry, i jako investi\u010dn\u00ed p\u0159\u00edle\u017eitost. K bytu n\u00e1le\u017e\u00ed venkovn\u00ed \u00falo\u017en\u00fd prostor na pat\u0159e.\r\nCelkov\u00e1 v\u00fdm\u011bra bytu \u010din\u00ed 42,1m\u00b2, u\u017eitn\u00e1 plocha 40m\u00b2 nach\u00e1z\u00ed se ve 1/NP cihlov\u00e9ho domu bez v\u00fdtahu. \r\n\r\nDispozice bytu: \r\nProstorn\u00e1 chodba se vstupy do koupelny, kuchyn\u011b a pokoje. V chodb\u011b se nach\u00e1z\u00ed plynov\u00fd kotel, kombinovan\u00fd na oh\u0159ev tepl\u00e9 vody. Jeho hlavn\u00ed obytn\u00fd prostor je tvo\u0159en ob\u00fdvac\u00edm pokojem s lo\u017enic\u00ed s velk\u00fdmi okny a v\u00fdhledem do zahrady. Kuchyn\u011b je vybavena kuchy\u0148skou linkou elektrick\u00fdm spor\u00e1kem se sklo-keramickou deskou, elektrickou troubou, digesto\u0159\u00ed, lednice s mraz\u00e1kem. Kuchy\u0148 nab\u00edz\u00ed dostatek pracovn\u00edho i \u00falo\u017en\u00e9ho prostoru. \r\nKoupelna s vanou, umyvadlem , topn\u00fdm \u017eeb\u0159\u00edkem, toaletou v\u010d. prostoru pro pra\u010dku. \r\nOkna v cel\u00e9m byt\u011b jsou plastov\u00e1, podlahy dla\u017eba , PVC v imitac\u00ed plovouc\u00ed podlahy.\r\nM\u011bs\u00ed\u010dn\u00ed n\u00e1klady na bydlen\u00ed jsou 5 500 ,- \u010d v\u010detn\u011b fondu oprav. \r\n\r\nPokud v\u00e1s nemovitost zaujala, nev\u00e1hejte mne kontaktovat.\r\nZ d\u016fvodu nedod\u00e1n\u00ed energetick\u00e9ho \u0161t\u00edtku je uvedena energetick\u00e1 n\u00e1ro\u010dnost t\u0159\u00eddy G.",
+        "Nab\u00edz\u00edme k prodeji prostorn\u00fd,mezonetov\u00fd a sv\u011btl\u00fd byt o velikosti 104,5m\u00b2 s lod\u017ei\u00ed 12,76m\u00b2 v nov\u00e9m developersk\u00e9m projektu Apartm\u00e1ny Javorsk\u00e1 v srdci \u0160umavy \u2014 \u017delezn\u00e1 Ruda. Byt je kompletn\u011b vybaven\u00fd, p\u0159ipraven\u00fd k okam\u017eit\u00e9mu u\u017e\u00edv\u00e1n\u00ed: sta\u010d\u00ed p\u0159iv\u00e9zt osobn\u00ed v\u011bci a u\u017e\u00edvat si pobyt na hor\u00e1ch. Sou\u010d\u00e1st\u00ed je sklep; mo\u017enost dokoupen\u00ed parkovac\u00edho st\u00e1n\u00ed v gar\u00e1\u017ei za 400 000 K\u010d v\u010d. DPH.\n\nDispozice a vybaven\u00ed:\n\n U\u017eitn\u00e1 plocha:104,5m\u00b2 + lod\u017eie 12,76m\u00b2\n Modern\u00ed kuchy\u0148sk\u00e1 linka se spot\u0159ebi\u010di\n Koupelna se sprchov\u00fdm koutem / WC\n Vestav\u011bn\u00e9 sk\u0159\u00edn\u011b a \u00falo\u017en\u00e9 prostory\n Sklep v cen\u011b bytu- 3m\u00b2 vhodn\u00fd k uskladn\u011bn\u00ed ly\u017e\u00ed nebo kol\n Mo\u017enost parkovac\u00edho st\u00e1n\u00ed v gar\u00e1\u017ei: 400 000 K\u010d v\u010d. DPH (voliteln\u00e9)\n\nLokalita \u2014 pro\u010d \u017delezn\u00e1 Ruda:\n\n Apartm\u00e1ny Javorsk\u00e1 le\u017e\u00ed v klidn\u00e9 horsk\u00e9 lokalit\u011b s v\u00fdbornou dostupnost\u00ed p\u0159\u00edrody a outdoorov\u00fdch aktivit.\n Ide\u00e1ln\u00ed m\u00edsto pro milovn\u00edky ly\u017eov\u00e1n\u00ed (rozs\u00e1hl\u00e9 sjezdovky a b\u011b\u017eeck\u00e9 trat\u011b v okol\u00ed), turistiky a cyklistiky.\n Bl\u00edzkost n\u00e1rodn\u00edho parku \u0160umava, obl\u00edben\u00e1 m\u00edsta: \u010cern\u00e9 a \u010certovo jezero, vrchol \u0160pi\u010d\u00e1k, nau\u010dn\u00e9 stezky a p\u0159ekr\u00e1sn\u00e9 v\u00fdhledy.\n Dobr\u00e1 dopravn\u00ed dostupnost: \u017delezn\u00e1 Ruda u n\u011bmeck\u00fdch hranic \u2014 mo\u017enost v\u00fdlet\u016f do Bavorska, spojen\u00ed autem i ve\u0159ejnou dopravou do bl\u00edzk\u00fdch m\u011bst.\n Vyv\u00e1\u017een\u00e9 kombinace klidu horsk\u00e9ho prost\u0159ed\u00ed s dostupnost\u00ed slu\u017eeb (obchody, restaurace, slu\u017eby v obci).\n\nC\u00edlov\u00e9 vyu\u017eit\u00ed:\n\n Trval\u00e9 bydlen\u00ed pro z\u00e1jemce hledaj\u00edc\u00ed klid a kontakt s p\u0159\u00edrodou\n Rekrea\u010dn\u00ed byt / investice k pron\u00e1jmu turist\u016fm\n Skv\u011bl\u00e1 volba jako druh\u00e9 bydlen\u00ed v hor\u00e1ch\n\nCena:\n\n Byt: 6 600 000 K\u010d\n Parkovac\u00ed st\u00e1n\u00ed (voliteln\u00e9): 400 000 K\u010d v\u010d. DPH\n\nV\u00fdhody:\n\n Kompletn\u00ed vybaven\u00ed \u2014 okam\u017eit\u00e9 nast\u011bhov\u00e1n\u00ed nebo pron\u00e1jem bez dal\u0161\u00edch investic\n Atraktivn\u00ed lokalita \u0160umavy s celoro\u010dn\u00edm turistick\u00fdm potenci\u00e1lem\n Modern\u00ed developersk\u00fd projekt s kvalitn\u00edm proveden\u00edm\n\nPro v\u00edce informac\u00ed, aktu\u00e1ln\u00ed dostupnost a domluven\u00ed prohl\u00eddky pi\u0161te nebo volejte:"
+      ]
+    },
+    "featured": {
+      "types": {
+        "string": 277
+      },
+      "non_null_count": 277,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "N",
+        "R",
+        "D",
+        "X"
+      ],
+      "value_counts": {
+        "N": 257,
+        "R": 16,
+        "D": 2,
+        "X": 2
+      }
+    },
+    "featured_text": {
+      "types": {
+        "string": 281
+      },
+      "non_null_count": 281,
+      "null_count": 0,
+      "distinct_count": 25,
+      "all_distinct_values": [
+        "NOVINKA 26.2.2026",
+        "NOVINKA 25.2.2026",
+        "NOVINKA 23.2.2026",
+        "NOVINKA 24.2.2026",
+        "NOVINKA 27.2.2026",
+        "NOVINKA 22.2.2026",
+        "NOVINKA 20.2.2026",
+        "REZERVACE 25.2.2026",
+        "NOVINKA 21.2.2026",
+        "REZERVACE 23.2.2026",
+        "REZERVACE 20.2.2026",
+        "REZERVACE 19.2.2026",
+        "PRONAJATO",
+        "OBNOVENO 26.2.2026",
+        "OBNOVENO 25.2.2026",
+        "OBNOVENO 23.2.2026",
+        "REZERVACE 17.2.2026",
+        "REZERVACE 16.2.2026",
+        "KON\u00c1 SE 21.4.2026 VE 14.00",
+        "REZERVACE 11.2.2026",
+        "KON\u00c1 SE 26.3.2026 V 10.00",
+        "OBNOVENO",
+        "REZERVACE 26.2.2026",
+        "REZERVACE 27.2.2026",
+        "REZERVACE 22.1.2026"
+      ],
+      "value_counts": {
+        "NOVINKA 26.2.2026": 98,
+        "NOVINKA 25.2.2026": 71,
+        "NOVINKA 23.2.2026": 28,
+        "NOVINKA 24.2.2026": 26,
+        "NOVINKA 27.2.2026": 23,
+        "NOVINKA 22.2.2026": 5,
+        "NOVINKA 20.2.2026": 4,
+        "REZERVACE 25.2.2026": 4,
+        "NOVINKA 21.2.2026": 2,
+        "REZERVACE 23.2.2026": 2,
+        "REZERVACE 20.2.2026": 2,
+        "REZERVACE 19.2.2026": 2,
+        "PRONAJATO": 2,
+        "OBNOVENO 26.2.2026": 1,
+        "OBNOVENO 25.2.2026": 1,
+        "OBNOVENO 23.2.2026": 1,
+        "REZERVACE 17.2.2026": 1,
+        "REZERVACE 16.2.2026": 1,
+        "KON\u00c1 SE 21.4.2026 VE 14.00": 1,
+        "REZERVACE 11.2.2026": 1,
+        "KON\u00c1 SE 26.3.2026 V 10.00": 1,
+        "OBNOVENO": 1,
+        "REZERVACE 26.2.2026": 1,
+        "REZERVACE 27.2.2026": 1,
+        "REZERVACE 22.1.2026": 1
+      }
+    },
+    "id": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 540,
+      "sample_values": [
+        "081-BT634L",
+        "EXN-G35TB2",
+        "EXN-OT1BW0",
+        "B51-655454",
+        "DM8-PNYTC5",
+        "DM8-962560",
+        "BL1-001044",
+        "EXN-PN153P",
+        "ASJ-002758",
+        "EXN-DXHPHB"
+      ]
+    },
+    "information[].key": {
+      "types": {
+        "string": 6445
+      },
+      "non_null_count": 6445,
+      "null_count": 0,
+      "distinct_count": 52,
+      "all_distinct_values": [
+        "Stav objektu:",
+        "Energet. n\u00e1ro\u010dnost:",
+        "Po\u010det NP:",
+        "Podlahov\u00e1 plocha:",
+        "Forma vlastnictv\u00ed:",
+        "Plocha bytu:",
+        "Kanalizace:",
+        "Voda:",
+        "Pozemek celkem:",
+        "Druh budovy:",
+        "Patro:",
+        "Typ budovy:",
+        "Elektroinstalace:",
+        "Velikost bytu:",
+        "Plyn:",
+        "Za\u0159\u00edzen\u00ed n\u00e1bytkem:",
+        "Um\u00edst\u011bn\u00ed v obci:",
+        "Topen\u00ed:",
+        "Parkov\u00e1n\u00ed:",
+        "Zastav\u011bn\u00e1 plocha:",
+        "Sklep:",
+        "Typ objektu:",
+        "V\u00fdtah:",
+        "Po\u010det PP:",
+        "Po\u010det pokoj\u016f:",
+        "Po\u010det st\u00e1n\u00ed:",
+        "Vybavenost:",
+        "Zahrada:",
+        "Gar\u00e1\u017e:",
+        "Dostupnost pozemku:",
+        "\u00da\u010del pozemku:",
+        "Balkon, terasa:",
+        "Ostatn\u00ed plocha:",
+        "Telefon:",
+        "Po\u010det byt\u016f:",
+        "V\u00fdroba a sklad:",
+        "Velikost domu:",
+        "Soci\u00e1ln\u00ed za\u0159\u00edzen\u00ed:",
+        "Druh za\u0159\u00edzen\u00ed:",
+        "Kancel\u00e1\u0159e:",
+        "\u010c\u00e1ste\u010dn\u00e1 rekonstrukce:",
+        "V\u00fdstavba:",
+        "Ter\u00e9n pozemku:",
+        "Kompletn\u00ed rekonstrukce:",
+        "V panel. s\u00eddli\u0161ti:",
+        "St\u00e1vaj\u00edc\u00ed stavby:",
+        "Obchodn\u00ed plocha:",
+        "Pole:",
+        "Po\u010det voln\u00fdch byt\u016f:",
+        "St\u00e1vaj\u00edc\u00ed porosty:",
+        "Les-voda:",
+        "\u00da\u010del:"
+      ],
+      "value_counts": {
+        "Stav objektu:": 431,
+        "Energet. n\u00e1ro\u010dnost:": 404,
+        "Po\u010det NP:": 392,
+        "Podlahov\u00e1 plocha:": 351,
+        "Forma vlastnictv\u00ed:": 341,
+        "Plocha bytu:": 317,
+        "Kanalizace:": 279,
+        "Voda:": 277,
+        "Pozemek celkem:": 267,
+        "Druh budovy:": 244,
+        "Patro:": 239,
+        "Typ budovy:": 225,
+        "Elektroinstalace:": 224,
+        "Velikost bytu:": 205,
+        "Plyn:": 176,
+        "Za\u0159\u00edzen\u00ed n\u00e1bytkem:": 175,
+        "Um\u00edst\u011bn\u00ed v obci:": 173,
+        "Topen\u00ed:": 159,
+        "Parkov\u00e1n\u00ed:": 157,
+        "Zastav\u011bn\u00e1 plocha:": 135,
+        "Sklep:": 132,
+        "Typ objektu:": 123,
+        "V\u00fdtah:": 111,
+        "Po\u010det PP:": 91,
+        "Po\u010det pokoj\u016f:": 90,
+        "Po\u010det st\u00e1n\u00ed:": 88,
+        "Vybavenost:": 82,
+        "Zahrada:": 75,
+        "Gar\u00e1\u017e:": 74,
+        "Dostupnost pozemku:": 61,
+        "\u00da\u010del pozemku:": 55,
+        "Balkon, terasa:": 47,
+        "Ostatn\u00ed plocha:": 42,
+        "Telefon:": 33,
+        "Po\u010det byt\u016f:": 26,
+        "V\u00fdroba a sklad:": 20,
+        "Velikost domu:": 19,
+        "Soci\u00e1ln\u00ed za\u0159\u00edzen\u00ed:": 15,
+        "Druh za\u0159\u00edzen\u00ed:": 14,
+        "Kancel\u00e1\u0159e:": 14,
+        "\u010c\u00e1ste\u010dn\u00e1 rekonstrukce:": 13,
+        "V\u00fdstavba:": 12,
+        "Ter\u00e9n pozemku:": 8,
+        "Kompletn\u00ed rekonstrukce:": 7,
+        "V panel. s\u00eddli\u0161ti:": 5,
+        "St\u00e1vaj\u00edc\u00ed stavby:": 4,
+        "Obchodn\u00ed plocha:": 4,
+        "Pole:": 3,
+        "Po\u010det voln\u00fdch byt\u016f:": 2,
+        "St\u00e1vaj\u00edc\u00ed porosty:": 2,
+        "Les-voda:": 1,
+        "\u00da\u010del:": 1
+      }
+    },
+    "information[].value": {
+      "types": {
+        "string": 6427
+      },
+      "non_null_count": 6427,
+      "null_count": 18,
+      "distinct_count": 985,
+      "sample_values": [
+        "3+1",
+        "Centrum obce",
+        "110 m\u00b2",
+        "\u0158adov\u00fd",
+        "Cihlov\u00e1",
+        "4",
+        "1",
+        "osobn\u00ed",
+        "2. patro",
+        "114 m\u00b2"
+      ]
+    },
+    "location.gps.lat": {
+      "types": {
+        "number": 540
+      },
+      "non_null_count": 540,
+      "null_count": 0,
+      "distinct_count": 478,
+      "min": 48.669653,
+      "max": 51.008539,
+      "sample_values": [
+        50.768728,
+        49.201928,
+        49.195611,
+        50.208058,
+        49.967081,
+        50.077861,
+        49.994419,
+        50.131978,
+        49.275167,
+        49.138083
+      ]
+    },
+    "location.gps.lng": {
+      "types": {
+        "number": 540
+      },
+      "non_null_count": 540,
+      "null_count": 0,
+      "distinct_count": 478,
+      "min": 12.178436,
+      "max": 18.351214,
+      "sample_values": [
+        15.062408,
+        16.639681,
+        16.609497,
+        14.8439,
+        14.509839,
+        14.458903,
+        14.59905,
+        14.134181,
+        16.600481,
+        13.230442
+      ]
+    },
+    "location.show_location": {
+      "types": {
+        "boolean": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "true",
+        "false"
+      ],
+      "value_counts": {
+        "true": 393,
+        "false": 148
+      }
+    },
+    "location.street[][].lat": {
+      "types": {
+        "number": 3390
+      },
+      "non_null_count": 3390,
+      "null_count": 0,
+      "distinct_count": 3130,
+      "min": 48.760178,
+      "max": 50.903956,
+      "sample_values": [
+        50.209111,
+        50.208928,
+        50.209083,
+        50.209108,
+        50.209133,
+        50.208689,
+        50.208472,
+        50.208425,
+        50.208231,
+        50.208017
+      ]
+    },
+    "location.street[][].lng": {
+      "types": {
+        "number": 3390
+      },
+      "non_null_count": 3390,
+      "null_count": 0,
+      "distinct_count": 3202,
+      "min": 12.178206,
+      "max": 18.340153,
+      "sample_values": [
+        14.843753,
+        14.843544,
+        14.843194,
+        14.843117,
+        14.842964,
+        14.842481,
+        14.842917,
+        14.843006,
+        14.842806,
+        14.843364
+      ]
+    },
+    "modified_at": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 50,
+      "all_distinct_values": [
+        "2026-02-26",
+        "2026-02-25",
+        "2026-02-23",
+        "2026-02-24",
+        "2026-02-27",
+        "2026-02-17",
+        "2026-02-18",
+        "2026-02-10",
+        "2026-02-19",
+        "2026-02-20",
+        "2026-02-15",
+        "2026-02-22",
+        "2026-02-16",
+        "2026-02-06",
+        "2026-02-09",
+        "2026-01-21",
+        "2026-02-11",
+        "2026-02-03",
+        "2025-11-17",
+        "2026-02-13",
+        "2026-01-19",
+        "2026-02-05",
+        "2026-01-26",
+        "2026-02-21",
+        "2026-01-30",
+        "2026-01-29",
+        "2026-01-05",
+        "2026-01-22",
+        "2026-02-12",
+        "2026-02-07",
+        "2026-01-15",
+        "2025-12-09",
+        "2026-01-16",
+        "2026-01-27",
+        "2026-01-28",
+        "2025-12-10",
+        "2026-02-14",
+        "2026-01-20",
+        "2026-02-04",
+        "2026-01-08",
+        "2026-01-06",
+        "2026-01-14",
+        "2026-01-24",
+        "2026-02-02",
+        "2026-01-12",
+        "2026-02-01",
+        "2025-12-22",
+        "2025-12-08",
+        "2025-12-07",
+        "2026-01-09"
+      ],
+      "value_counts": {
+        "2026-02-26": 115,
+        "2026-02-25": 83,
+        "2026-02-23": 42,
+        "2026-02-24": 41,
+        "2026-02-27": 34,
+        "2026-02-17": 16,
+        "2026-02-18": 16,
+        "2026-02-10": 16,
+        "2026-02-19": 14,
+        "2026-02-20": 14,
+        "2026-02-15": 13,
+        "2026-02-22": 11,
+        "2026-02-16": 9,
+        "2026-02-06": 9,
+        "2026-02-09": 8,
+        "2026-01-21": 7,
+        "2026-02-11": 7,
+        "2026-02-03": 6,
+        "2025-11-17": 6,
+        "2026-02-13": 6,
+        "2026-01-19": 5,
+        "2026-02-05": 5,
+        "2026-01-26": 5,
+        "2026-02-21": 4,
+        "2026-01-30": 4,
+        "2026-01-29": 3,
+        "2026-01-05": 3,
+        "2026-01-22": 3,
+        "2026-02-12": 3,
+        "2026-02-07": 3,
+        "2026-01-15": 2,
+        "2025-12-09": 2,
+        "2026-01-16": 2,
+        "2026-01-27": 2,
+        "2026-01-28": 2,
+        "2025-12-10": 2,
+        "2026-02-14": 2,
+        "2026-01-20": 2,
+        "2026-02-04": 2,
+        "2026-01-08": 2,
+        "2026-01-06": 1,
+        "2026-01-14": 1,
+        "2026-01-24": 1,
+        "2026-02-02": 1,
+        "2026-01-12": 1,
+        "2026-02-01": 1,
+        "2025-12-22": 1,
+        "2025-12-08": 1,
+        "2025-12-07": 1,
+        "2026-01-09": 1
+      }
+    },
+    "offer_type": {
+      "types": {
+        "number": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 3,
+      "min": 1,
+      "max": 4,
+      "all_distinct_values": [
+        "1",
+        "2",
+        "4"
+      ],
+      "value_counts": {
+        "1": 398,
+        "2": 141,
+        "4": 2
+      }
+    },
+    "photos[].name": {
+      "types": {
+        "string": 9448
+      },
+      "non_null_count": 9448,
+      "null_count": 0,
+      "distinct_count": 9418,
+      "sample_values": [
+        "/photo/1767716682/081bt634l_0.jpg",
+        "/photo/1767716684/081bt634l_1.jpg",
+        "/photo/1767716685/081bt634l_2.jpg",
+        "/photo/1767716687/081bt634l_3.jpg",
+        "/photo/1767716689/081bt634l_4.jpg",
+        "/photo/1767716691/081bt634l_5.jpg",
+        "/photo/1767716693/081bt634l_6.jpg",
+        "/photo/1767716695/081bt634l_7.jpg",
+        "/photo/1767716697/081bt634l_8.jpg",
+        "/photo/1767716698/081bt634l_9.jpg"
+      ]
+    },
+    "photos[].title": {
+      "types": {
+        "string": 7861
+      },
+      "non_null_count": 7861,
+      "null_count": 0,
+      "distinct_count": 519,
+      "sample_values": [
+        "081-BT634L",
+        "EXN-G35TB2",
+        "EXN-OT1BW0",
+        "B51-655454",
+        "BL1-001044",
+        "EXN-PN153P",
+        "ASJ-002758",
+        "EXN-DXHPHB",
+        "EXN-ELFENE",
+        "YJ6-001530"
+      ]
+    },
+    "place": {
+      "types": {
+        "string": 533
+      },
+      "non_null_count": 533,
+      "null_count": 8,
+      "distinct_count": 458,
+      "sample_values": [
+        "Gutenbergova, Kristi\u00e1nov",
+        "Star\u00e1 osada, \u017didenice",
+        "Kobli\u017en\u00e1, m\u011bsto",
+        "S\u00eddli\u0161t\u011b, Lys\u00e1 nad Labem",
+        "V L\u00e1zn\u00edch, Jesenice",
+        "Vinohradsk\u00e1, \u017di\u017ekov",
+        "Nupack\u00e1, Nupaky",
+        "Litevsk\u00e1, Kro\u010dehlavy",
+        "Z\u00e1mez\u00ed, Jehnice",
+        "Javorsk\u00e1, \u017delezn\u00e1 Ruda"
+      ]
+    },
+    "price.advance.price": {
+      "types": {
+        "number": 15
+      },
+      "non_null_count": 15,
+      "null_count": 0,
+      "distinct_count": 13,
+      "min": 300,
+      "max": 20000,
+      "all_distinct_values": [
+        "9000",
+        "4500",
+        "4400",
+        "13000",
+        "2500",
+        "5000",
+        "4800",
+        "6000",
+        "20000",
+        "7500",
+        "11000",
+        "700",
+        "300"
+      ],
+      "value_counts": {
+        "300": 1,
+        "700": 1,
+        "2500": 1,
+        "4400": 1,
+        "4500": 2,
+        "4800": 1,
+        "5000": 1,
+        "6000": 1,
+        "7500": 1,
+        "9000": 2,
+        "11000": 1,
+        "13000": 1,
+        "20000": 1
+      }
+    },
+    "price.advance.unit": {
+      "types": {
+        "string": 15
+      },
+      "non_null_count": 15,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "K\u010d/m\u011bs."
+      ],
+      "value_counts": {
+        "K\u010d/m\u011bs.": 15
+      }
+    },
+    "price.auction.appraisal": {
+      "types": {
+        "number": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "min": 6000000,
+      "max": 7500000,
+      "all_distinct_values": [
+        "7500000",
+        "6000000"
+      ],
+      "value_counts": {
+        "6000000": 1,
+        "7500000": 1
+      }
+    },
+    "price.auction.deposit": {
+      "types": {
+        "number": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "min": 150000,
+      "max": 200000,
+      "all_distinct_values": [
+        "200000",
+        "150000"
+      ],
+      "value_counts": {
+        "150000": 1,
+        "200000": 1
+      }
+    },
+    "price.auction.increment": {
+      "types": {
+        "number": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "min": 50000,
+      "max": 50000,
+      "all_distinct_values": [
+        "50000"
+      ],
+      "value_counts": {
+        "50000": 2
+      }
+    },
+    "price.auction.opening_bid": {
+      "types": {
+        "number": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "min": 2800000,
+      "max": 4500000,
+      "all_distinct_values": [
+        "4500000",
+        "2800000"
+      ],
+      "value_counts": {
+        "2800000": 1,
+        "4500000": 1
+      }
+    },
+    "price.auction.unit": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "K\u010d"
+      ],
+      "value_counts": {
+        "K\u010d": 2
+      }
+    },
+    "price.commission": {
+      "types": {
+        "boolean": 539
+      },
+      "non_null_count": 539,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "true",
+        "false"
+      ],
+      "value_counts": {
+        "true": 399,
+        "false": 140
+      }
+    },
+    "price.discount": {
+      "types": {
+        "number": 19
+      },
+      "non_null_count": 19,
+      "null_count": 0,
+      "distinct_count": 9,
+      "min": 1,
+      "max": 13,
+      "all_distinct_values": [
+        "5",
+        "4",
+        "3",
+        "6",
+        "1",
+        "7",
+        "11",
+        "13",
+        "2"
+      ],
+      "value_counts": {
+        "1": 2,
+        "2": 1,
+        "3": 3,
+        "4": 3,
+        "5": 4,
+        "6": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1
+      }
+    },
+    "price.note": {
+      "types": {
+        "string": 252
+      },
+      "non_null_count": 252,
+      "null_count": 0,
+      "distinct_count": 154,
+      "sample_values": [
+        "v\u010detn\u011b provize",
+        "V\u010detn\u011b provize, poplatk\u016f a pr\u00e1vn\u00edho servisu",
+        "Slu\u017eby 8tis. + el.",
+        "Uveden\u00e1 cena je v\u010detn\u011b provize RK a pr\u00e1vn\u00edho servisu",
+        "+ provize RK, v\u010detn\u011b pr\u00e1vn\u00edho servisu",
+        "v\u010detn\u011b poplatk\u016f, v\u010detn\u011b provize, v\u010detn\u011b pr\u00e1vn\u00edho servisu",
+        "+popl. 3934",
+        "Za nemovitosti, cena v\u010detn\u011b RK a pr\u00e1vn\u00edho servisu.",
+        "bez poplatk\u016f, + provize RK, v\u010detn\u011b pr\u00e1vn\u00edho servisu",
+        "v\u010detn\u011b provize, v\u010detn\u011b pr\u00e1vn\u00edho servisu"
+      ]
+    },
+    "price.previous": {
+      "types": {
+        "number": 31
+      },
+      "non_null_count": 31,
+      "null_count": 0,
+      "distinct_count": 26,
+      "min": 0,
+      "max": 49900000,
+      "all_distinct_values": [
+        "0",
+        "35990",
+        "26900000",
+        "3990000",
+        "4990000",
+        "8100000",
+        "7690000",
+        "7990000",
+        "5790000",
+        "4390000",
+        "8484000",
+        "5880000",
+        "5550000",
+        "4490000",
+        "827400",
+        "6100000",
+        "49900000",
+        "29990000",
+        "13300",
+        "14800",
+        "14000",
+        "9000",
+        "23000",
+        "16990",
+        "13990",
+        "31000"
+      ],
+      "value_counts": {
+        "0": 5,
+        "9000": 1,
+        "13300": 1,
+        "13990": 1,
+        "14000": 1,
+        "14800": 1,
+        "16990": 1,
+        "23000": 1,
+        "31000": 1,
+        "35990": 2,
+        "827400": 1,
+        "3990000": 1,
+        "4390000": 1,
+        "4490000": 1,
+        "4990000": 1,
+        "5550000": 1,
+        "5790000": 1,
+        "5880000": 1,
+        "6100000": 1,
+        "7690000": 1,
+        "7990000": 1,
+        "8100000": 1,
+        "8484000": 1,
+        "26900000": 1,
+        "29990000": 1,
+        "49900000": 1
+      }
+    },
+    "price.previous_price": {
+      "types": {
+        "string": 31
+      },
+      "non_null_count": 31,
+      "null_count": 0,
+      "distinct_count": 26,
+      "all_distinct_values": [
+        "cena neuvedena",
+        "35.990 K\u010d/m\u011bs.",
+        "26.900.000 K\u010d",
+        "3.990.000 K\u010d",
+        "4.990.000 K\u010d",
+        "8.100.000 K\u010d \u2013 8.150.000 K\u010d",
+        "7.690.000 K\u010d",
+        "7.990.000 K\u010d",
+        "5.790.000 K\u010d",
+        "4.390.000 K\u010d",
+        "8.484.000 K\u010d",
+        "5.880.000 K\u010d",
+        "5.550.000 K\u010d",
+        "4.490.000 K\u010d",
+        "827.400 K\u010d",
+        "6.100.000 K\u010d",
+        "49.900.000 K\u010d",
+        "29.990.000 K\u010d",
+        "13.300 K\u010d/m\u011bs.",
+        "14.800 K\u010d/m\u011bs.",
+        "14.000 K\u010d/m\u011bs.",
+        "9.000 K\u010d/m\u011bs.",
+        "23.000 K\u010d/m\u011bs.",
+        "16.990 K\u010d/m\u011bs. \u2013 18.990 K\u010d/m\u011bs.",
+        "13.990 K\u010d/m\u011bs.",
+        "31.000 K\u010d/m\u011bs."
+      ],
+      "value_counts": {
+        "cena neuvedena": 5,
+        "35.990 K\u010d/m\u011bs.": 2,
+        "26.900.000 K\u010d": 1,
+        "3.990.000 K\u010d": 1,
+        "4.990.000 K\u010d": 1,
+        "8.100.000 K\u010d \u2013 8.150.000 K\u010d": 1,
+        "7.690.000 K\u010d": 1,
+        "7.990.000 K\u010d": 1,
+        "5.790.000 K\u010d": 1,
+        "4.390.000 K\u010d": 1,
+        "8.484.000 K\u010d": 1,
+        "5.880.000 K\u010d": 1,
+        "5.550.000 K\u010d": 1,
+        "4.490.000 K\u010d": 1,
+        "827.400 K\u010d": 1,
+        "6.100.000 K\u010d": 1,
+        "49.900.000 K\u010d": 1,
+        "29.990.000 K\u010d": 1,
+        "13.300 K\u010d/m\u011bs.": 1,
+        "14.800 K\u010d/m\u011bs.": 1,
+        "14.000 K\u010d/m\u011bs.": 1,
+        "9.000 K\u010d/m\u011bs.": 1,
+        "23.000 K\u010d/m\u011bs.": 1,
+        "16.990 K\u010d/m\u011bs. \u2013 18.990 K\u010d/m\u011bs.": 1,
+        "13.990 K\u010d/m\u011bs.": 1,
+        "31.000 K\u010d/m\u011bs.": 1
+      }
+    },
+    "price.rent.price": {
+      "types": {
+        "number": 136
+      },
+      "non_null_count": 136,
+      "null_count": 0,
+      "distinct_count": 81,
+      "min": 3700,
+      "max": 190000,
+      "all_distinct_values": [
+        "15000",
+        "13000",
+        "12500",
+        "20000",
+        "22000",
+        "25000",
+        "19000",
+        "17000",
+        "15500",
+        "8500",
+        "50000",
+        "40000",
+        "27000",
+        "29500",
+        "12000",
+        "35000",
+        "24000",
+        "59000",
+        "14000",
+        "10000",
+        "14500",
+        "14900",
+        "23000",
+        "16990",
+        "17990",
+        "28000",
+        "44000",
+        "8000",
+        "18000",
+        "34990",
+        "19900",
+        "7200",
+        "4100",
+        "9300",
+        "8300",
+        "3700",
+        "14300",
+        "6600",
+        "8100",
+        "15900",
+        "37000",
+        "54000",
+        "33000",
+        "10800",
+        "21000",
+        "19500",
+        "27500",
+        "20500",
+        "16600",
+        "11000",
+        "33990",
+        "24990",
+        "5500",
+        "14600",
+        "18500",
+        "16000",
+        "11800",
+        "13700",
+        "23999",
+        "7669",
+        "12900",
+        "23500",
+        "62500",
+        "13490",
+        "34000",
+        "100000",
+        "72000",
+        "42000",
+        "190000",
+        "180000",
+        "65000",
+        "29000",
+        "70000",
+        "48000",
+        "99000",
+        "28500",
+        "85000",
+        "80000",
+        "95000",
+        "45000",
+        "9000"
+      ],
+      "value_counts": {
+        "3700": 1,
+        "4100": 1,
+        "5500": 1,
+        "6600": 1,
+        "7200": 1,
+        "7669": 1,
+        "8000": 2,
+        "8100": 1,
+        "8300": 1,
+        "8500": 3,
+        "9000": 1,
+        "9300": 1,
+        "10000": 2,
+        "10800": 1,
+        "11000": 1,
+        "11800": 1,
+        "12000": 2,
+        "12500": 5,
+        "12900": 1,
+        "13000": 5,
+        "13490": 1,
+        "13700": 1,
+        "14000": 2,
+        "14300": 1,
+        "14500": 2,
+        "14600": 1,
+        "14900": 2,
+        "15000": 6,
+        "15500": 3,
+        "15900": 1,
+        "16000": 1,
+        "16600": 1,
+        "16990": 2,
+        "17000": 3,
+        "17990": 2,
+        "18000": 2,
+        "18500": 1,
+        "19000": 3,
+        "19500": 1,
+        "19900": 1,
+        "20000": 5,
+        "20500": 1,
+        "21000": 1,
+        "22000": 5,
+        "23000": 2,
+        "23500": 1,
+        "23999": 1,
+        "24000": 2,
+        "24990": 1,
+        "25000": 4,
+        "27000": 3,
+        "27500": 1,
+        "28000": 2,
+        "28500": 1,
+        "29000": 1,
+        "29500": 2,
+        "33000": 1,
+        "33990": 1,
+        "34000": 1,
+        "34990": 2,
+        "35000": 2,
+        "37000": 1,
+        "40000": 3,
+        "42000": 1,
+        "44000": 2,
+        "45000": 1,
+        "48000": 1,
+        "50000": 3,
+        "54000": 1,
+        "59000": 2,
+        "62500": 1,
+        "65000": 1,
+        "70000": 1,
+        "72000": 1,
+        "80000": 1,
+        "85000": 1,
+        "95000": 1,
+        "99000": 1,
+        "100000": 1,
+        "180000": 1,
+        "190000": 1
+      }
+    },
+    "price.rent.unit": {
+      "types": {
+        "string": 136
+      },
+      "non_null_count": 136,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "K\u010d/m\u011bs.",
+        "K\u010d/m\u011bs./m\u00b2"
+      ],
+      "value_counts": {
+        "K\u010d/m\u011bs.": 134,
+        "K\u010d/m\u011bs./m\u00b2": 2
+      }
+    },
+    "price.sale.price": {
+      "types": {
+        "number": 348
+      },
+      "non_null_count": 348,
+      "null_count": 0,
+      "distinct_count": 252,
+      "min": 15,
+      "max": 260000000,
+      "sample_values": [
+        8900000,
+        8850000,
+        23900000,
+        7850000,
+        20990000,
+        5098360,
+        6699000,
+        5500000,
+        13600000,
+        6600000
+      ]
+    },
+    "price.sale.unit": {
+      "types": {
+        "string": 348
+      },
+      "non_null_count": 348,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "K\u010d",
+        "K\u010d/m\u00b2"
+      ],
+      "value_counts": {
+        "K\u010d": 339,
+        "K\u010d/m\u00b2": 9
+      }
+    },
+    "title": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 170,
+      "sample_values": [
+        "",
+        "Byt 3+1. 72 m\u00b2, lod\u017eie, Lys\u00e1 nad Labem",
+        "Atraktivn\u00ed byt s vlastn\u00edm parkovac\u00edm st\u00e1n\u00edm, 2+kk/B, 61m\u00b2, Jesenice u Prahy, Prahaz\u00e1pad",
+        "Rozlehl\u00fd byt 4+1, 124m\u00b2, Praha 3, \u017di\u017ekov, Vinohradsk\u00e1 ulice",
+        "Prodej bytu 3+kk, 68m\u00b2 + lod\u017eie 3m\u00b2, ul. Ke K\u0159\u00ed\u017ei, proj",
+        "Prodej bytu 1+1 57m\u00b2, na prodej",
+        "Prodej prostorn\u00e9ho bytu 2+kk s v\u00fdtahem v klasick\u00e9 cihlov\u00e9 budov\u011b v Michli",
+        "2+kk s velkou lod\u017ei\u00ed Teplice-Trnovany, ihned k nast\u011bhov\u00e1n\u00ed",
+        "Byt 2+1 Brno - Star\u00fd L\u00edskovec",
+        "Prodej bytu 2+1, 52 m\u00b2, Plze\u0148sk\u00e1, \u010cesk\u00e9 Bud\u011bjovice"
+      ]
+    },
+    "type": {
+      "types": {
+        "string": 541
+      },
+      "non_null_count": 541,
+      "null_count": 0,
+      "distinct_count": 498,
+      "sample_values": [
+        "byt 3+1, 114 m\u00b2, cihla, osobn\u00ed",
+        "byt 4+1, 90 m\u00b2, osobn\u00ed",
+        "byt 4+kk, 200 m\u00b2, osobn\u00ed",
+        "byt 3+1, 72 m\u00b2, panel, osobn\u00ed",
+        "byt 2+kk, 47 m\u00b2, cihla, osobn\u00ed",
+        "byt 4+1, 121 m\u00b2, cihla, osobn\u00ed",
+        "byt 2+kk, osobn\u00ed",
+        "byt 3+1, 91 m\u00b2, osobn\u00ed",
+        "byt 1+1, 42 m\u00b2, cihla, osobn\u00ed",
+        "byt 3+kk, 104 m\u00b2, osobn\u00ed"
+      ]
+    },
+    "videos[].type": {
+      "types": {
+        "string": 31
+      },
+      "non_null_count": 31,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "youtube"
+      ],
+      "value_counts": {
+        "youtube": 31
+      }
+    },
+    "videos[].url": {
+      "types": {
+        "string": 31
+      },
+      "non_null_count": 31,
+      "null_count": 0,
+      "distinct_count": 27,
+      "all_distinct_values": [
+        "YkDicHCXMDQ",
+        "rJjNT8y8DLI",
+        "7ZFJtb7rWPQ",
+        "yDVcs2BbcNs",
+        "-GImOKfR2fI",
+        "o_QtOs96gZU",
+        "f4JthwplZLk",
+        "htKqAaX8H7Y",
+        "RyiOTu0RoUo",
+        "om1L5EnkPQU",
+        "a1Jt3WOHXGo",
+        "iyIhsT-KGMU",
+        "aFpZYt3khw0",
+        "FTrY21-FqTw",
+        "5dB_rCLR5yo",
+        "SahHQYeDiXg",
+        "k_r4_XhZtR8",
+        "3bWm2zS2pfQ",
+        "tQrN5yKXoPU",
+        "0Ljw_4GNQc0",
+        "w5DnhOxQET0",
+        "zQtJKQca1JU",
+        "wV58QjWEdZU",
+        "M4XMzuz-i7g",
+        "mvV8BAX4dE4",
+        "YJGPAH5YLHg",
+        "9zwtvc7sZqE"
+      ],
+      "value_counts": {
+        "YkDicHCXMDQ": 2,
+        "rJjNT8y8DLI": 2,
+        "7ZFJtb7rWPQ": 2,
+        "yDVcs2BbcNs": 2,
+        "-GImOKfR2fI": 1,
+        "o_QtOs96gZU": 1,
+        "f4JthwplZLk": 1,
+        "htKqAaX8H7Y": 1,
+        "RyiOTu0RoUo": 1,
+        "om1L5EnkPQU": 1,
+        "a1Jt3WOHXGo": 1,
+        "iyIhsT-KGMU": 1,
+        "aFpZYt3khw0": 1,
+        "FTrY21-FqTw": 1,
+        "5dB_rCLR5yo": 1,
+        "SahHQYeDiXg": 1,
+        "k_r4_XhZtR8": 1,
+        "3bWm2zS2pfQ": 1,
+        "tQrN5yKXoPU": 1,
+        "0Ljw_4GNQc0": 1,
+        "w5DnhOxQET0": 1,
+        "zQtJKQca1JU": 1,
+        "wV58QjWEdZU": 1,
+        "M4XMzuz-i7g": 1,
+        "mvV8BAX4dE4": 1,
+        "YJGPAH5YLHg": 1,
+        "9zwtvc7sZqE": 1
+      }
+    },
+    "virtual_tours[].type": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "matterport"
+      ],
+      "value_counts": {
+        "matterport": 1
+      }
+    },
+    "virtual_tours[].url": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "https://my.matterport.com/show/?m=hMKG3zSLbvJ"
+      ],
+      "value_counts": {
+        "https://my.matterport.com/show/?m=hMKG3zSLbvJ": 1
+      }
+    },
+    "visited": {
+      "types": {
+        "boolean": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "true"
+      ],
+      "value_counts": {
+        "true": 1
+      }
+    }
+  }
+}

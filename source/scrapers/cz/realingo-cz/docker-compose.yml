@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  realingo-scraper:
+    build:
+      context: ../../..
+      dockerfile: scrapers/Czech Republic/realingo/Dockerfile
+    container_name: realingo-scraper
+    restart: unless-stopped
+    ports:
+      - "8103:8103"
+    env_file:
+      - .env.docker
+    networks:
+      - landomo-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8103/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "scraper.name=realingo"
+      - "scraper.country=czech-republic"
+      - "scraper.category=primary"
+
+networks:
+  landomo-network:
+    external: true

@@ -1,0 +1,352 @@
+version: '3.8'
+
+# ============================================================================
+# LANDOMO Iceland - Complete Infrastructure
+# Project: landomo-is
+# ============================================================================
+
+networks:
+  landomo-is:
+    name: landomo-is-network
+    driver: bridge
+
+volumes:
+  postgres-is-data:
+    name: landomo-is-postgres-data
+  redis-is-data:
+    name: landomo-is-redis-data
+
+services:
+  # ==========================================================================
+  # INFRASTRUCTURE
+  # ==========================================================================
+
+  redis-is:
+    image: redis:7-alpine
+    container_name: landomo-is-redis
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "6384:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --appendfsync everysec --stop-writes-on-bgsave-error no
+    volumes:
+      - redis-is-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 128M
+
+  postgres-is:
+    image: imresamu/postgis:16-3.4-alpine
+    container_name: landomo-is-postgres
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "5438:5432"
+    environment:
+      POSTGRES_USER: landomo
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: landomo_is
+    volumes:
+      - postgres-is-data:/var/lib/postgresql/data
+    shm_size: 256MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U landomo -d landomo_is"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ==========================================================================
+  # INGEST API - REST endpoint for scrapers to submit property data
+  # ==========================================================================
+
+  ingest-api-is:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-is-ingest-api
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "3016:3000"
+    environment:
+      INSTANCE_COUNTRY: is
+      DB_HOST: landomo-is-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_is
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-is-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      API_KEYS: ${API_KEYS_IS}
+      PORT: 3000
+      NODE_ENV: production
+    depends_on:
+      postgres-is:
+        condition: service_healthy
+      redis-is:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ==========================================================================
+  # BATCH WORKERS - Background processors that consume BullMQ jobs and write to DB
+  # ==========================================================================
+
+  batch-worker-is-1:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-is-batch-worker-1
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    environment:
+      INSTANCE_COUNTRY: is
+      DB_HOST: landomo-is-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_is
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-is-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      BATCH_SIZE: 25
+      BATCH_WORKERS: 5
+      BATCH_TIMEOUT: 120000
+      NODE_ENV: production
+    command: node dist/start-worker.js
+    depends_on:
+      postgres-is:
+        condition: service_healthy
+      redis-is:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  batch-worker-is-2:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-is-batch-worker-2
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    environment:
+      INSTANCE_COUNTRY: is
+      DB_HOST: landomo-is-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_is
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-is-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      BATCH_SIZE: 25
+      BATCH_WORKERS: 5
+      BATCH_TIMEOUT: 120000
+      NODE_ENV: production
+    command: node dist/start-worker.js
+    depends_on:
+      postgres-is:
+        condition: service_healthy
+      redis-is:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  # ==========================================================================
+  # SCRAPERS - ICELAND
+  # ==========================================================================
+
+  scraper-fasteignir-is:
+    build:
+      context: ..
+      dockerfile: scrapers/Iceland/fasteignir-is/Dockerfile
+    container_name: landomo-is-scraper-fasteignir
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "8300:8300"
+    environment:
+      PORT: 8300
+      INGEST_API_URL: http://landomo-is-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_IS}
+      NODE_ENV: production
+    depends_on:
+      ingest-api-is:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8300/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  scraper-mbl-is:
+    build:
+      context: ..
+      dockerfile: scrapers/Iceland/mbl-is/Dockerfile
+    container_name: landomo-is-scraper-mbl
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "8301:8301"
+    environment:
+      PORT: 8301
+      INGEST_API_URL: http://landomo-is-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_IS}
+      NODE_ENV: production
+    depends_on:
+      ingest-api-is:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8301/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  scraper-fasteignaleitin-is:
+    build:
+      context: ..
+      dockerfile: scrapers/Iceland/fasteignaleitin-is/Dockerfile
+    container_name: landomo-is-scraper-fasteignaleitin
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "8302:8302"
+    environment:
+      PORT: 8302
+      INGEST_API_URL: http://landomo-is-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_IS}
+      NODE_ENV: production
+    depends_on:
+      ingest-api-is:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8302/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  scraper-husaskjol-is:
+    build:
+      context: ..
+      dockerfile: scrapers/Iceland/husaskjol-is/Dockerfile
+    container_name: landomo-is-scraper-husaskjol
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "8303:8303"
+    environment:
+      PORT: 8303
+      INGEST_API_URL: http://landomo-is-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_IS}
+      NODE_ENV: production
+    depends_on:
+      ingest-api-is:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8303/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  scraper-fastinn-is:
+    build:
+      context: ..
+      dockerfile: scrapers/Iceland/fastinn-is/Dockerfile
+    container_name: landomo-is-scraper-fastinn
+    restart: unless-stopped
+    networks:
+      - landomo-is
+    ports:
+      - "8304:8304"
+    environment:
+      PORT: 8304
+      INGEST_API_URL: http://landomo-is-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_IS}
+      NODE_ENV: production
+    depends_on:
+      ingest-api-is:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8304/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M

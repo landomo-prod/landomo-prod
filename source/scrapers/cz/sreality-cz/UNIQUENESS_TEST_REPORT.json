@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-02-07T20:20:02.367Z",
+  "categoryAnalysis": [
+    {
+      "category": "Apartments",
+      "categoryId": 1,
+      "totalFetched": 500,
+      "uniqueCount": 500,
+      "duplicatesInCategory": 0
+    },
+    {
+      "category": "Houses",
+      "categoryId": 2,
+      "totalFetched": 500,
+      "uniqueCount": 500,
+      "duplicatesInCategory": 0
+    },
+    {
+      "category": "Land",
+      "categoryId": 3,
+      "totalFetched": 500,
+      "uniqueCount": 494,
+      "duplicatesInCategory": 6
+    },
+    {
+      "category": "Commercial",
+      "categoryId": 4,
+      "totalFetched": 500,
+      "uniqueCount": 500,
+      "duplicatesInCategory": 0
+    }
+  ],
+  "crossCategoryAnalysis": {
+    "totalUniqueHashIds": 1994,
+    "crossCategoryDuplicates": 6,
+    "listingsInMultipleCategories": 6,
+    "expectedTotalIfNoOverlap": 2000,
+    "actualUnique": 1994,
+    "overlapPercentage": 0.3
+  },
+  "conclusion": "6 listings appear in multiple categories"
+}

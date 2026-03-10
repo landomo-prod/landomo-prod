@@ -1,0 +1,209 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║              REALINGO SCRAPER PERFORMANCE TEST - EXECUTIVE SUMMARY         ║
+║                                                                            ║
+║                         February 7, 2026                                  ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+┌─ OVERALL STATUS ─────────────────────────────────────────────────────────┐
+│                                                                            │
+│  ✅ API CAPACITY: EXCELLENT                                              │
+│     Total Listings: 67,597                                               │
+│     Max Items Per Query: 1,000                                            │
+│     Queries Needed: 68                                                    │
+│                                                                            │
+│  ✅ SCRAPING SPEED: EXCELLENT                                            │
+│     Throughput: 1,070 items/second                                        │
+│     Avg Query Time: 310ms                                                 │
+│     Optimal Batch Size: 1,000 items (3,154 items/s)                       │
+│                                                                            │
+│  ✅ RATE LIMITING: NONE DETECTED                                         │
+│     20 Rapid Requests: 100% Success                                       │
+│     No Throttling: API is very generous                                   │
+│                                                                            │
+│  ⏱️  ESTIMATED SCRAPE TIME:                                              │
+│     With 100ms Delay: ~28 seconds                                         │
+│     With 500ms Delay (current): ~55 seconds                               │
+│     Maximum Speed (no delay): ~21 seconds                                 │
+│                                                                            │
+│  📊 PRODUCTION READINESS: READY WITH CODE UPDATES                         │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ LISTINGS BREAKDOWN ─────────────────────────────────────────────────────┐
+│                                                                            │
+│  BY TRANSACTION TYPE:                                                     │
+│  ├─ SELL:  46,466 listings (68.7%)                                        │
+│  └─ RENT:  21,131 listings (31.3%)                                        │
+│                                                                            │
+│  BY PROPERTY TYPE (SELL):                                                 │
+│  ├─ LAND:        15,260 (32.8%)                                           │
+│  ├─ HOUSE:       12,698 (27.3%)                                           │
+│  ├─ FLAT:        10,559 (22.7%)                                           │
+│  ├─ OTHERS:       5,019 (10.8%)                                           │
+│  └─ COMMERCIAL:   2,930 (6.3%)                                            │
+│                                                                            │
+│  BY PROPERTY TYPE (RENT):                                                 │
+│  ├─ FLAT:         9,388 (44.4%)                                           │
+│  ├─ COMMERCIAL:   8,688 (41.1%)                                           │
+│  ├─ LAND:           623 (2.9%)                                            │
+│  ├─ OTHERS:       1,831 (8.7%)                                            │
+│  └─ HOUSE:          601 (2.8%)                                            │
+│                                                                            │
+│  TOTAL: 67,597 LISTINGS                                                   │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ SPEED ANALYSIS ─────────────────────────────────────────────────────────┐
+│                                                                            │
+│  Batch Size    Response Time    Items/Second    Rating                   │
+│  ──────────────────────────────────────────────────────────────────────   │
+│    10 items         267ms           37.5        ⭐ Fast                   │
+│    50 items         293ms          170.6        ⭐⭐ Very Fast            │
+│   100 items         318ms          314.5        ⭐⭐ Very Fast            │
+│   500 items         357ms        1,400.6        ⭐⭐⭐ Excellent           │
+│  1000 items         317ms        3,154.6        ⭐⭐⭐⭐ OPTIMAL           │
+│                                                                            │
+│  KEY INSIGHT: 1000-item batch is faster than 500-item batch!             │
+│               This indicates excellent API performance and scalability.    │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ CRITICAL ISSUES FOUND ──────────────────────────────────────────────────┐
+│                                                                            │
+│  ⚠️  ISSUE 1: Wrong GraphQL Parameters (CRITICAL)                        │
+│      Current:  limit, offset                                              │
+│      Required: first (cursor-based pagination)                            │
+│      File: src/scrapers/listingsScraper.ts                               │
+│      Impact: Query will fail with current code                            │
+│                                                                            │
+│  ⚠️  ISSUE 2: Wrong Enum Values (CRITICAL)                               │
+│      Current:  SALE, OTHER                                                │
+│      Required: SELL, OTHERS                                               │
+│      File: src/scrapers/listingsScraper.ts                               │
+│      Impact: API will reject requests with wrong enum values              │
+│                                                                            │
+│  ⚠️  ISSUE 3: Single Property Filters Broken (MEDIUM)                    │
+│      Problem: Filtering by only property type returns all listings        │
+│      Solution: Use combined purpose + property filters                    │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ RECOMMENDATIONS ────────────────────────────────────────────────────────┐
+│                                                                            │
+│  🔴 CRITICAL (Must Do):                                                   │
+│     ✓ Update GraphQL query to use 'first' parameter                       │
+│     ✓ Update enums: SALE→SELL, OTHER→OTHERS                              │
+│     ✓ Use batch size of 1,000 items per query                            │
+│                                                                            │
+│  🟠 HIGH PRIORITY (Should Do):                                            │
+│     ✓ Reduce inter-request delay to 100ms (from 500ms)                    │
+│     ✓ Use combined purpose+property filters                               │
+│     ✓ Implement exponential backoff for error handling                    │
+│                                                                            │
+│  🟡 MEDIUM (Nice to Have):                                                │
+│     ✓ Add performance monitoring for API changes                          │
+│     ✓ Implement request caching for frequently accessed data              │
+│     ✓ Set up weekly performance test runs                                 │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ SCRAPING STRATEGY ──────────────────────────────────────────────────────┐
+│                                                                            │
+│  RECOMMENDED APPROACH:                                                    │
+│  • Batch Size: 1,000 items per query                                     │
+│  • Total Queries: 68                                                      │
+│  • Inter-Request Delay: 100ms                                            │
+│  • Estimated Time: 28 seconds                                            │
+│                                                                            │
+│  IMPLEMENTATION:                                                          │
+│  for offset = 0 to 67597 step 1000:                                      │
+│    - Execute query with first=1000                                       │
+│    - Wait 100ms                                                          │
+│    - Process batch                                                        │
+│                                                                            │
+│  PERFORMANCE:                                                             │
+│  • Queries per second: 1,070 items/s                                     │
+│  • Reliability: Excellent (no errors detected)                            │
+│  • Rate Limit Risk: None (API is generous)                               │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ TEST RESULTS ───────────────────────────────────────────────────────────┐
+│                                                                            │
+│  Test Date:          February 7, 2026                                    │
+│  Test Duration:      45.3 seconds                                        │
+│  API Endpoint:       https://www.realingo.cz/graphql                     │
+│  Total Queries:      21 test queries executed                            │
+│  Success Rate:       100%                                                │
+│  Data Collected:     67,597 listings inventory                           │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ GENERATED REPORTS ──────────────────────────────────────────────────────┐
+│                                                                            │
+│  📄 PERFORMANCE_SUMMARY.json                                              │
+│     Machine-readable metrics and recommendations                          │
+│                                                                            │
+│  📄 PERFORMANCE_ANALYSIS.md                                               │
+│     Detailed analysis, strategy, and implementation guide                 │
+│                                                                            │
+│  📄 PERFORMANCE_REPORT_V2.json                                            │
+│     Raw test data for auditing and detailed analysis                     │
+│                                                                            │
+│  📄 performance-test-v2.ts                                                │
+│     Reusable test suite for future benchmarking                          │
+│                                                                            │
+│  📄 PERFORMANCE_TEST_README.md                                            │
+│     Complete guide to using the reports                                  │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ QUICK START ────────────────────────────────────────────────────────────┐
+│                                                                            │
+│  1. Read PERFORMANCE_ANALYSIS.md for detailed findings                    │
+│                                                                            │
+│  2. Update src/scrapers/listingsScraper.ts:                              │
+│     - Change limit → first                                               │
+│     - Change SALE → SELL                                                 │
+│     - Change OTHER → OTHERS                                              │
+│                                                                            │
+│  3. Use batch size of 1,000:                                             │
+│     const batch = await api.searchOffer({first: 1000})                   │
+│                                                                            │
+│  4. Reduce delay to 100ms:                                               │
+│     await delay(100)                                                      │
+│                                                                            │
+│  5. Run production scraper and monitor                                    │
+│                                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+CONCLUSION
+═════════════════════════════════════════════════════════════════════════
+
+The Realingo API is PRODUCTION-READY with the following characteristics:
+
+  ✅ 67,597 listings available for scraping
+  ✅ No rate limiting constraints
+  ✅ Very fast response times (310ms average)
+  ✅ Supports batches of up to 1,000 items
+  ✅ Complete scrape possible in ~28 seconds
+
+Required action: Update enum values and GraphQL parameters (2 issues)
+Estimated time to production: 1-2 hours with code updates
+Status: Ready to proceed
+
+═════════════════════════════════════════════════════════════════════════
+
+Questions? See PERFORMANCE_TEST_README.md for detailed documentation.

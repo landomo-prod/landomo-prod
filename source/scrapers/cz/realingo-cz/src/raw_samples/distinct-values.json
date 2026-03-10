@@ -1,0 +1,711 @@
+{
+  "meta": {
+    "scraper": "realingo-cz",
+    "listings_fetched": 3960,
+    "details_fetched": 0,
+    "timestamp": "2026-02-27T08:09:14.380Z"
+  },
+  "listing_fields": {
+    "adId": {
+      "types": {
+        "string": 1964
+      },
+      "non_null_count": 1964,
+      "null_count": 1996,
+      "distinct_count": 1921,
+      "sample_values": [
+        "1044",
+        "1696",
+        "N116466",
+        "899",
+        "29721",
+        "431173",
+        "933413",
+        "934553",
+        "994043",
+        "433370"
+      ]
+    },
+    "area.balcony": {
+      "types": {
+        "number": 15
+      },
+      "non_null_count": 15,
+      "null_count": 3945,
+      "distinct_count": 9,
+      "min": 1,
+      "max": 15,
+      "all_distinct_values": [
+        "4",
+        "8",
+        "2",
+        "1",
+        "6",
+        "7",
+        "3",
+        "5",
+        "15"
+      ],
+      "value_counts": {
+        "1": 1,
+        "2": 2,
+        "3": 1,
+        "4": 5,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 2,
+        "15": 1
+      }
+    },
+    "area.built": {
+      "types": {
+        "number": 582
+      },
+      "non_null_count": 582,
+      "null_count": 3378,
+      "distinct_count": 305,
+      "min": 1,
+      "max": 20000,
+      "sample_values": [
+        214,
+        501,
+        75,
+        239,
+        610,
+        415,
+        256,
+        329,
+        90,
+        247
+      ]
+    },
+    "area.cellar": {
+      "types": {
+        "number": 45
+      },
+      "non_null_count": 45,
+      "null_count": 3915,
+      "distinct_count": 18,
+      "min": 1,
+      "max": 200,
+      "all_distinct_values": [
+        "2",
+        "3",
+        "4",
+        "1",
+        "5",
+        "12",
+        "20",
+        "7",
+        "33",
+        "98",
+        "8",
+        "25",
+        "54",
+        "19",
+        "200",
+        "6",
+        "9",
+        "86"
+      ],
+      "value_counts": {
+        "1": 3,
+        "2": 13,
+        "3": 6,
+        "4": 4,
+        "5": 3,
+        "6": 1,
+        "7": 2,
+        "8": 1,
+        "9": 1,
+        "12": 2,
+        "19": 1,
+        "20": 2,
+        "25": 1,
+        "33": 1,
+        "54": 1,
+        "86": 1,
+        "98": 1,
+        "200": 1
+      }
+    },
+    "area.floor": {
+      "types": {
+        "number": 482
+      },
+      "non_null_count": 482,
+      "null_count": 3478,
+      "distinct_count": 211,
+      "min": 1,
+      "max": 7087,
+      "sample_values": [
+        42,
+        40,
+        58,
+        32,
+        54,
+        68,
+        70,
+        36,
+        61,
+        64
+      ]
+    },
+    "area.garden": {
+      "types": {
+        "number": 41
+      },
+      "non_null_count": 41,
+      "null_count": 3919,
+      "distinct_count": 37,
+      "min": 10,
+      "max": 2152,
+      "all_distinct_values": [
+        "200",
+        "585",
+        "90",
+        "1100",
+        "779",
+        "773",
+        "1814",
+        "744",
+        "1183",
+        "486",
+        "1414",
+        "353",
+        "267",
+        "1200",
+        "480",
+        "903",
+        "250",
+        "686",
+        "510",
+        "863",
+        "204",
+        "163",
+        "1046",
+        "412",
+        "560",
+        "671",
+        "55",
+        "972",
+        "473",
+        "2152",
+        "1629",
+        "784",
+        "489",
+        "150",
+        "713",
+        "136",
+        "10"
+      ],
+      "value_counts": {
+        "10": 1,
+        "55": 1,
+        "90": 2,
+        "136": 1,
+        "150": 1,
+        "163": 1,
+        "200": 3,
+        "204": 1,
+        "250": 1,
+        "267": 1,
+        "353": 1,
+        "412": 1,
+        "473": 1,
+        "480": 1,
+        "486": 1,
+        "489": 1,
+        "510": 1,
+        "560": 1,
+        "585": 2,
+        "671": 1,
+        "686": 1,
+        "713": 1,
+        "744": 1,
+        "773": 1,
+        "779": 1,
+        "784": 1,
+        "863": 1,
+        "903": 1,
+        "972": 1,
+        "1046": 1,
+        "1100": 1,
+        "1183": 1,
+        "1200": 1,
+        "1414": 1,
+        "1629": 1,
+        "1814": 1,
+        "2152": 1
+      }
+    },
+    "area.loggia": {
+      "types": {
+        "number": 11
+      },
+      "non_null_count": 11,
+      "null_count": 3949,
+      "distinct_count": 7,
+      "min": 2,
+      "max": 17,
+      "all_distinct_values": [
+        "6",
+        "8",
+        "3",
+        "4",
+        "7",
+        "17",
+        "2"
+      ],
+      "value_counts": {
+        "2": 1,
+        "3": 2,
+        "4": 1,
+        "6": 3,
+        "7": 1,
+        "8": 2,
+        "17": 1
+      }
+    },
+    "area.plot": {
+      "types": {
+        "number": 1129
+      },
+      "non_null_count": 1129,
+      "null_count": 2831,
+      "distinct_count": 592,
+      "min": 1,
+      "max": 2020000,
+      "sample_values": [
+        40,
+        501,
+        75,
+        239,
+        54,
+        36,
+        256,
+        95,
+        78,
+        101
+      ]
+    },
+    "area.terrace": {
+      "types": {
+        "number": 24
+      },
+      "non_null_count": 24,
+      "null_count": 3936,
+      "distinct_count": 16,
+      "min": 3,
+      "max": 163,
+      "all_distinct_values": [
+        "13",
+        "12",
+        "15",
+        "6",
+        "10",
+        "23",
+        "4",
+        "16",
+        "68",
+        "8",
+        "30",
+        "163",
+        "50",
+        "21",
+        "3",
+        "20"
+      ],
+      "value_counts": {
+        "3": 1,
+        "4": 1,
+        "6": 2,
+        "8": 1,
+        "10": 2,
+        "12": 3,
+        "13": 3,
+        "15": 3,
+        "16": 1,
+        "20": 1,
+        "21": 1,
+        "23": 1,
+        "30": 1,
+        "50": 1,
+        "68": 1,
+        "163": 1
+      }
+    },
+    "category": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 33,
+      "all_distinct_values": [
+        "HOUSE_FAMILY",
+        "LAND_HOUSING",
+        "OTHERS_GARAGE",
+        "OTHERS_OTHERS",
+        "OTHERS_FLAT",
+        "COMMERCIAL_BUSINESS",
+        "LAND_GARDEN",
+        "COMMERCIAL_STORAGE",
+        "COMMERCIAL_OFFICE",
+        "OTHERS_HUT",
+        "FLAT21",
+        "FLAT2_KK",
+        "COMMERCIAL_RESTAURANT",
+        "FLAT1_KK",
+        "LAND_COMMERCIAL",
+        "FLAT31",
+        "FLAT3_KK",
+        "COMMERCIAL_ACCOMMODATION",
+        "FLAT11",
+        "COMMERCIAL_MANUFACTURING",
+        "LAND_AGRICULTURAL",
+        "OTHERS_COTTAGE",
+        "LAND_MEADOW",
+        "FLAT41",
+        "HOUSE_APARTMENT",
+        "OTHERS_FARMHOUSE",
+        "FLAT4_KK",
+        "HOUSE_MANSION",
+        "COMMERCIAL_AGRICULTURAL",
+        "LAND_FOREST",
+        "FLAT5_KK",
+        "OTHERS_POND",
+        "OTHERS_MONUMENTS"
+      ],
+      "value_counts": {
+        "HOUSE_FAMILY": 770,
+        "LAND_HOUSING": 466,
+        "OTHERS_GARAGE": 410,
+        "OTHERS_OTHERS": 327,
+        "OTHERS_FLAT": 321,
+        "COMMERCIAL_BUSINESS": 216,
+        "LAND_GARDEN": 164,
+        "COMMERCIAL_STORAGE": 163,
+        "COMMERCIAL_OFFICE": 160,
+        "OTHERS_HUT": 151,
+        "FLAT21": 98,
+        "FLAT2_KK": 85,
+        "COMMERCIAL_RESTAURANT": 74,
+        "FLAT1_KK": 70,
+        "LAND_COMMERCIAL": 67,
+        "FLAT31": 59,
+        "FLAT3_KK": 55,
+        "COMMERCIAL_ACCOMMODATION": 55,
+        "FLAT11": 46,
+        "COMMERCIAL_MANUFACTURING": 41,
+        "LAND_AGRICULTURAL": 38,
+        "OTHERS_COTTAGE": 29,
+        "LAND_MEADOW": 21,
+        "FLAT41": 16,
+        "HOUSE_APARTMENT": 16,
+        "OTHERS_FARMHOUSE": 10,
+        "FLAT4_KK": 9,
+        "HOUSE_MANSION": 8,
+        "COMMERCIAL_AGRICULTURAL": 6,
+        "LAND_FOREST": 5,
+        "FLAT5_KK": 2,
+        "OTHERS_POND": 1,
+        "OTHERS_MONUMENTS": 1
+      }
+    },
+    "createdAt": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 3959,
+      "sample_values": [
+        "2026-02-26T23:24:19.263Z",
+        "2026-02-26T23:23:48.636Z",
+        "2026-02-26T23:22:22.022Z",
+        "2026-02-26T23:22:16.122Z",
+        "2026-02-26T23:21:14.393Z",
+        "2026-02-26T23:20:25.057Z",
+        "2026-02-26T23:14:12.975Z",
+        "2026-02-26T23:13:04.865Z",
+        "2026-02-26T23:12:43.012Z",
+        "2026-02-26T23:10:06.602Z"
+      ]
+    },
+    "id": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 3959,
+      "sample_values": [
+        "24517297",
+        "24517291",
+        "24517273",
+        "24517272",
+        "24517263",
+        "24517258",
+        "24517246",
+        "24517242",
+        "24517241",
+        "24517238"
+      ]
+    },
+    "location.address": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 2565,
+      "sample_values": [
+        "Postoloprty, 439 42",
+        "Jen\u0161tejn, 250 73",
+        "Olomouc, 779 00",
+        "Prost\u011bjov, 796 01",
+        "Nov\u00fd Bor, 473 01",
+        "Volary, 384 51",
+        "Zl\u00edn, 760 01",
+        "Praha, 180 00",
+        "Nupack\u00e1, Nupaky",
+        "Ostrava, 708 00"
+      ]
+    },
+    "location.latitude": {
+      "types": {
+        "number": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 2644,
+      "min": 45.4408474,
+      "max": 58.889,
+      "sample_values": [
+        50.360685,
+        50.146546,
+        49.593577,
+        49.465893,
+        50.754486,
+        48.900274,
+        49.22567,
+        50.1088,
+        49.9936720022304,
+        49.831118
+      ]
+    },
+    "location.longitude": {
+      "types": {
+        "number": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 2655,
+      "min": 9.04,
+      "max": 19.132491,
+      "sample_values": [
+        13.700809,
+        14.601688,
+        17.29866,
+        17.110519,
+        14.552422,
+        13.886032,
+        17.668762,
+        14.467449,
+        14.6000391261347,
+        18.168983
+      ]
+    },
+    "photos.list": {
+      "types": {
+        "string": 220
+      },
+      "non_null_count": 220,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "[]"
+      ],
+      "value_counts": {
+        "[]": 220
+      }
+    },
+    "photos.list[]": {
+      "types": {
+        "string": 41878
+      },
+      "non_null_count": 41878,
+      "null_count": 0,
+      "distinct_count": 10000,
+      "sample_values": [
+        "offer/jdd/jddupxdjfv-1200x900x909090",
+        "offer/2xd/2xd66ztg6q-1200x900xb0b090",
+        "offer/una/unahwgvw97-1200x900xb09070",
+        "offer/z4s/z4sqfqea3s-1200x900x101010",
+        "offer/bfh/bfhxyd3gx2-1200x900x303030",
+        "offer/dem/dem728f6f6-1200x900x909090",
+        "offer/rf5/rf5s3x8bw2-1200x900x303030",
+        "offer/hda/hdaf6uhtau-1200x900x909090",
+        "offer/ea4/ea42s1p6dx-900x1200x101010",
+        "offer/bf1/bf1v6dbfjr-1200x900xb09090"
+      ]
+    },
+    "photos.main": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 3960,
+      "sample_values": [
+        "offer/gdt/gdtfc21pgk-1200x900x707070",
+        "offer/j61/j61ddzk7nu-1200x800x5070b0",
+        "offer/26v/26va4v7bw8-900x1200xd0f0f0",
+        "offer/3ft/3ftut3pxge-1200x676xd0d0b0",
+        "offer/21c/21cp85fq51-1200x900x101010",
+        "offer/avu/avu6faynbw-1200x644x90b0d0",
+        "offer/nqj/nqju4sf4qz-800x533xb0b0b0",
+        "offer/119/1196xb3vr9-1024x1024xf0d0d0",
+        "offer/tq8/tq8r3x4q4k-1600x1200xf0f0f0",
+        "offer/bs3/bs3w6kz5ms-1200x600x505050"
+      ]
+    },
+    "price.currency": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "CZK",
+        "EUR"
+      ],
+      "value_counts": {
+        "CZK": 3957,
+        "EUR": 3
+      }
+    },
+    "price.total": {
+      "types": {
+        "number": 3453
+      },
+      "non_null_count": 3453,
+      "null_count": 507,
+      "distinct_count": 1269,
+      "min": 1,
+      "max": 379320000,
+      "sample_values": [
+        3150000,
+        4930000,
+        3850000,
+        2390000,
+        2940000,
+        7290000,
+        13390000,
+        5098360,
+        3200000,
+        2650000
+      ]
+    },
+    "price.vat": {
+      "types": {
+        "string": 27
+      },
+      "non_null_count": 27,
+      "null_count": 3933,
+      "distinct_count": 3,
+      "all_distinct_values": [
+        "WITH_VAT",
+        "WITHOUT_VAT",
+        "NO_VAT"
+      ],
+      "value_counts": {
+        "WITH_VAT": 17,
+        "WITHOUT_VAT": 9,
+        "NO_VAT": 1
+      }
+    },
+    "property": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 5,
+      "all_distinct_values": [
+        "HOUSE",
+        "LAND",
+        "COMMERCIAL",
+        "OTHERS",
+        "FLAT"
+      ],
+      "value_counts": {
+        "HOUSE": 800,
+        "LAND": 800,
+        "COMMERCIAL": 800,
+        "OTHERS": 800,
+        "FLAT": 760
+      }
+    },
+    "purpose": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "RENT",
+        "SELL"
+      ],
+      "value_counts": {
+        "RENT": 2000,
+        "SELL": 1960
+      }
+    },
+    "updatedAt": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 3959,
+      "sample_values": [
+        "2026-02-26T23:24:19.263Z",
+        "2026-02-26T23:23:48.636Z",
+        "2026-02-26T23:22:22.022Z",
+        "2026-02-26T23:22:16.122Z",
+        "2026-02-26T23:21:14.393Z",
+        "2026-02-26T23:20:25.057Z",
+        "2026-02-26T23:14:12.975Z",
+        "2026-02-26T23:13:04.865Z",
+        "2026-02-26T23:20:42.326Z",
+        "2026-02-26T23:10:06.602Z"
+      ]
+    },
+    "url": {
+      "types": {
+        "string": 3960
+      },
+      "non_null_count": 3960,
+      "null_count": 0,
+      "distinct_count": 3959,
+      "sample_values": [
+        "/prodej/byt-ostatni-byty-postoloprty-439-42/24517297",
+        "/prodej/byt-ostatni-byty-jenstejn-250-73/24517291",
+        "/prodej/byt-ostatni-byty-olomouc-779-00/24517273",
+        "/prodej/byt-ostatni-byty-prostejov-796-01/24517272",
+        "/prodej/byt-ostatni-byty-novy-bor-473-01/24517263",
+        "/prodej/byt-ostatni-byty-volary-384-51/24517258",
+        "/prodej/byt-ostatni-byty-zlin-760-01/24517246",
+        "/prodej/byt-ostatni-byty-praha-180-00/24517242",
+        "/prodej/byt-2+kk-nupacka-nupaky/24517241",
+        "/prodej/byt-ostatni-byty-ostrava-708-00/24517238"
+      ]
+    }
+  },
+  "detail_fields": {}
+}

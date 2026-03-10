@@ -1,0 +1,90 @@
+{
+  "timestamp": "2026-02-07T20:18:00.534Z",
+  "tests": [
+    {
+      "category": "Flats for Sale",
+      "url": "https://reality.idnes.cz/s/prodej/byty/",
+      "pages": [
+        {
+          "pageNumber": 1,
+          "listingsFound": 26,
+          "loadTimeMs": 6308
+        },
+        {
+          "pageNumber": 2,
+          "listingsFound": 26,
+          "loadTimeMs": 4818
+        },
+        {
+          "pageNumber": 3,
+          "listingsFound": 26,
+          "loadTimeMs": 5346
+        }
+      ],
+      "totalListings": 78,
+      "totalTime": 16472,
+      "avgTimePerPage": 5490.666666666667,
+      "avgListingsPerSecond": 4.73530840213696
+    },
+    {
+      "category": "Flats for Rent",
+      "url": "https://reality.idnes.cz/s/pronajem/byty/",
+      "pages": [
+        {
+          "pageNumber": 1,
+          "listingsFound": 26,
+          "loadTimeMs": 3450
+        },
+        {
+          "pageNumber": 2,
+          "listingsFound": 26,
+          "loadTimeMs": 4907
+        },
+        {
+          "pageNumber": 3,
+          "listingsFound": 26,
+          "loadTimeMs": 4820
+        }
+      ],
+      "totalListings": 78,
+      "totalTime": 13177,
+      "avgTimePerPage": 4392.333333333333,
+      "avgListingsPerSecond": 5.9194050239052896
+    },
+    {
+      "category": "Houses for Sale",
+      "url": "https://reality.idnes.cz/s/prodej/domy/",
+      "pages": [
+        {
+          "pageNumber": 1,
+          "listingsFound": 26,
+          "loadTimeMs": 4609
+        },
+        {
+          "pageNumber": 2,
+          "listingsFound": 26,
+          "loadTimeMs": 5195
+        },
+        {
+          "pageNumber": 3,
+          "listingsFound": 26,
+          "loadTimeMs": 4755
+        }
+      ],
+      "totalListings": 78,
+      "totalTime": 14559,
+      "avgTimePerPage": 4853,
+      "avgListingsPerSecond": 5.35751081805069
+    }
+  ],
+  "summary": {
+    "totalCategoriesTested": 3,
+    "totalPagesTested": 9,
+    "totalListingsFound": 234,
+    "totalTimeMs": 44208,
+    "avgTimePerPage": 4912,
+    "listingsPerSecond": 5.293159609120521,
+    "pagesPerSecond": 0.20358306188925082,
+    "estimatedTotalListings": 3510
+  }
+}

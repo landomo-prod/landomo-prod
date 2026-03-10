@@ -1,0 +1,137 @@
+Starting comprehensive SReality integration test...
+
+Step 1: Fetching 5 random listings from SReality API...
+Fetching page 1...
+Fetching page 2...
+Total hash_ids fetched: 40
+Successfully fetched 5 listings
+
+Step 2: Running transformer on each listing...
+Testing listing 1/5 (hash_id: undefined)...
+Testing listing 2/5 (hash_id: undefined)...
+Testing listing 3/5 (hash_id: undefined)...
+Testing listing 4/5 (hash_id: undefined)...
+Testing listing 5/5 (hash_id: undefined)...
+
+Completed transformation testing for 5 listings
+
+Step 3: Calculating coverage metrics...
+
+================================================================================
+SREALITY SCRAPER - COMPREHENSIVE INTEGRATION TEST REPORT
+================================================================================
+
+Timestamp: 2026-02-07T20:10:46.861Z
+Test Duration: 5444ms
+
+SUMMARY:
+  Total Listings Tested: 5
+  Successful Transformations: 4
+  Failed Transformations: 1
+  Overall Success Rate: 80.00%
+
+COMPILATION STATUS:
+  SUCCESS: All transformations compiled without errors
+
+FIELD AVAILABILITY (Coverage Metrics):
+  New Features:
+    - Seller Company: 4/5 (80.0%)
+    - Seller Rating: 0/5 (0.0%)
+    - Seller Reviews: 0/5 (0.0%)
+    - Has Accessibility: 1/5 (20.0%)
+    - Virtual Tour URL: 0/5 (0.0%)
+    - Built Area: 0/5 (0.0%)
+
+  Phase 3 Area Fields:
+    - Balcony Area: 2/5 (40.0%)
+    - Terrace Area: 1/5 (20.0%)
+    - Garden Area: 0/5 (0.0%)
+    - Cellar Area: 2/5 (40.0%)
+    - Loggia Area: 0/5 (0.0%)
+
+  Existing Fields:
+    - Price: 4/5 (80.0%)
+    - Bedrooms: 0/5 (0.0%)
+    - SQM: 0/5 (0.0%)
+    - Has Balcony: 0/5 (0.0%)
+    - Has Elevator: 1/5 (20.0%)
+
+SAMPLE RESULTS (First 5 Listings):
+
+  Listing 1 (hash_id: undefined):
+    URL: https://www.sreality.cz/detail/undefined
+    Transformation: SUCCESS
+    - Price: 27900 CZK
+    - Location: Na Výšince, Praha 5 - Radotín
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: Unknown
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+  Listing 2 (hash_id: undefined):
+    URL: https://www.sreality.cz/detail/undefined
+    Transformation: SUCCESS
+    - Price: 10947779 CZK
+    - Location: Marie Podvalové, Praha - Čakovice
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: Unknown
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: Yes
+
+  Listing 3 (hash_id: undefined):
+    URL: https://www.sreality.cz/detail/undefined
+    Transformation: FAILED
+    Error: input.toLowerCase is not a function (TypeError: input.toLowerCase is not a function
+    at normalizeHeatingType (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/shared/czech-value-mappings.js:256:25)
+    at transformSRealityToStandard (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/src/transformers/srealityTransformer.js:99:75)
+    at testTransformer (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/comprehensive_integration_test.js:126:88)
+    at runIntegrationTest (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/comprehensive_integration_test.js:261:24)
+    at async main (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/comprehensive_integration_test.js:293:24))
+    - Price: undefined CZK
+    - Location: undefined
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: N/A
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+  Listing 4 (hash_id: undefined):
+    URL: https://www.sreality.cz/detail/undefined
+    Transformation: SUCCESS
+    - Price: 11900 CZK
+    - Location: Horova, Hradec Králové - Pražské Předměstí
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: Unknown
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+  Listing 5 (hash_id: undefined):
+    URL: https://www.sreality.cz/detail/undefined
+    Transformation: SUCCESS
+    - Price: 5500000 CZK
+    - Location: Padělky VIII, Zlín
+    - SQM: undefined m²
+    - Bedrooms: undefined
+    - Seller: Unknown
+    - Virtual Tour: No
+    - Built Area: N/A
+    - Accessibility: No
+
+ISSUES ENCOUNTERED:
+  - Listing undefined: input.toLowerCase is not a function (TypeError: input.toLowerCase is not a function
+    at normalizeHeatingType (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/shared/czech-value-mappings.js:256:25)
+    at transformSRealityToStandard (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/src/transformers/srealityTransformer.js:99:75)
+    at testTransformer (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/comprehensive_integration_test.js:126:88)
+    at runIntegrationTest (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/comprehensive_integration_test.js:261:24)
+    at async main (/Users/samuelseidel/Development/landomo-world/scrapers/Czech Republic/sreality/comprehensive_integration_test.js:293:24))
+
+================================================================================
+
+Detailed JSON report saved to: ./COMPREHENSIVE_INTEGRATION_TEST_REPORT.json

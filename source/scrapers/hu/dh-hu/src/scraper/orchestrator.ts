@@ -1,0 +1,135 @@
+import { ChecksumClient } from '@landomo/core';
+import { ListingsScraper } from '../scrapers/listingsScraper';
+import { addDetailJobs } from '../queue/detailQueue';
+import crypto from 'crypto';
+
+export interface PhaseStats {
+  phase1: {
+    regionsProcessed: number;
+    totalListings: number;
+    durationMs: number;
+  };
+  phase2: {
+    totalChecked: number;
+    new: number;
+    changed: number;
+    unchanged: number;
+    savingsPercent: number;
+    durationMs: number;
+  };
+  phase3: {
+    queued: number;
+    durationMs: number;
+  };
+}
+
+function createChecksum(listing: { referenceNumber?: string; id: string; price: number; area?: number; title: string }): string {
+  const payload = `${listing.price}|${listing.area || ''}|${listing.title}`;
+  return crypto.createHash('md5').update(payload).digest('hex');
+}
+
+export async function runTwoPhaseScrape(
+  scrapeRunId?: string,
+  maxRegions?: number,
+  maxPages?: number
+): Promise<PhaseStats> {
+  const stats: PhaseStats = {
+    phase1: { regionsProcessed: 0, totalListings: 0, durationMs: 0 },
+    phase2: { totalChecked: 0, new: 0, changed: 0, unchanged: 0, savingsPercent: 0, durationMs: 0 },
+    phase3: { queued: 0, durationMs: 0 },
+  };
+
+  const checksumClient = new ChecksumClient(
+    process.env.INGEST_API_URL || 'http://localhost:3004',
+    process.env.INGEST_API_KEY || ''
+  );
+
+  const scraper = new ListingsScraper();
+
+  // Phase 1: Fast scan all regions
+  const phase1Start = Date.now();
+  console.log(JSON.stringify({ level: 'info', service: 'dh-hu', msg: 'Phase 1: Fast scan starting' }));
+
+  const allListings = await scraper.scrapeAll(maxRegions, maxPages);
+  stats.phase1.totalListings = allListings.length;
+  stats.phase1.regionsProcessed = maxRegions || 38; // total regions
+  stats.phase1.durationMs = Date.now() - phase1Start;
+
+  console.log(JSON.stringify({ level: 'info', service: 'dh-hu', msg: 'Phase 1 complete', totalListings: allListings.length, durationMs: stats.phase1.durationMs }));
+
+  if (allListings.length === 0) return stats;
+
+  // Phase 2: Checksum comparison
+  const phase2Start = Date.now();
+  console.log(JSON.stringify({ level: 'info', service: 'dh-hu', msg: 'Phase 2: Checksum comparison starting' }));
+
+  const checksums = allListings.map(listing => ({
+    portal: 'dh-hu',
+    portalId: listing.referenceNumber || listing.id,
+    contentHash: createChecksum(listing),
+  }));
+
+  const comparison = await checksumClient.compareChecksumsInBatches(
+    checksums,
+    scrapeRunId,
+    5000,
+    (current, total) => {
+      console.log(JSON.stringify({ level: 'info', service: 'dh-hu', msg: 'Checksum progress', current, total }));
+    }
+  );
+
+  stats.phase2.totalChecked = comparison.total;
+  stats.phase2.new = comparison.new;
+  stats.phase2.changed = comparison.changed;
+  stats.phase2.unchanged = comparison.unchanged;
+  stats.phase2.durationMs = Date.now() - phase2Start;
+  stats.phase2.savingsPercent = comparison.total > 0
+    ? Math.round((comparison.unchanged / comparison.total) * 100)
+    : 0;
+
+  // Store checksums
+  try {
+    await checksumClient.updateChecksums(checksums, scrapeRunId);
+  } catch (error: any) {
+    console.error(JSON.stringify({ level: 'error', service: 'dh-hu', msg: 'Failed to store checksums', err: error.message }));
+  }
+
+  console.log(JSON.stringify({ level: 'info', service: 'dh-hu', msg: 'Phase 2 complete', new: comparison.new, changed: comparison.changed, unchanged: comparison.unchanged, savingsPercent: stats.phase2.savingsPercent }));
+
+  // Phase 3: Queue new/changed for transform + ingest
+  const phase3Start = Date.now();
+  const toFetchSet = new Set(
+    comparison.results.filter(r => r.status !== 'unchanged').map(r => r.portalId)
+  );
+
+  const jobs = allListings
+    .filter(listing => toFetchSet.has(listing.referenceNumber || listing.id))
+    .map(listing => ({
+      portalId: listing.referenceNumber || listing.id,
+      listing,
+    }));
+
+  if (jobs.length > 0) {
+    await addDetailJobs(jobs);
+  }
+
+  stats.phase3.queued = jobs.length;
+  stats.phase3.durationMs = Date.now() - phase3Start;
+
+  console.log(JSON.stringify({ level: 'info', service: 'dh-hu', msg: 'Phase 3 complete', queued: jobs.length }));
+
+  return stats;
+}
+
+export function printSummary(stats: PhaseStats): void {
+  const totalMs = stats.phase1.durationMs + stats.phase2.durationMs + stats.phase3.durationMs;
+  console.log(JSON.stringify({
+    level: 'info',
+    service: 'dh-hu',
+    msg: 'Two-phase scrape summary',
+    phase1: { totalListings: stats.phase1.totalListings, durationMs: stats.phase1.durationMs },
+    phase2: { totalChecked: stats.phase2.totalChecked, new: stats.phase2.new, changed: stats.phase2.changed, unchanged: stats.phase2.unchanged, savingsPercent: stats.phase2.savingsPercent, durationMs: stats.phase2.durationMs },
+    phase3: { queued: stats.phase3.queued, durationMs: stats.phase3.durationMs },
+    totalMs,
+  }));
+}

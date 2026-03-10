@@ -1,0 +1,397 @@
+version: '3.8'
+
+# ============================================================================
+# LANDOMO Hungary - Complete Infrastructure
+# Project: landomo-hu
+# ============================================================================
+
+networks:
+  landomo-hu:
+    name: landomo-hu-network
+    driver: bridge
+
+volumes:
+  postgres-hu-data:
+    name: landomo-hu-postgres-data
+  redis-hu-data:
+    name: landomo-hu-redis-data
+
+services:
+  # ==========================================================================
+  # INFRASTRUCTURE
+  # ==========================================================================
+
+  redis-hu:
+    image: redis:7-alpine
+    container_name: landomo-hu-redis
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "6384:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --appendfsync everysec
+    volumes:
+      - redis-hu-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 128M
+
+  postgres-hu:
+    image: imresamu/postgis:16-3.4-alpine
+    container_name: landomo-hu-postgres
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "5438:5432"
+    environment:
+      POSTGRES_USER: landomo
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: landomo_hu
+    volumes:
+      - postgres-hu-data:/var/lib/postgresql/data
+    shm_size: 256MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U landomo -d landomo_hu"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ==========================================================================
+  # INGEST API
+  # ==========================================================================
+
+  ingest-api-hu:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-hu-ingest-api
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "3016:3000"
+    environment:
+      INSTANCE_COUNTRY: hu
+      DB_HOST: landomo-hu-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_hu
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      API_KEYS: ${API_KEYS_HU}
+      PORT: 3000
+      NODE_ENV: production
+    depends_on:
+      postgres-hu:
+        condition: service_healthy
+      redis-hu:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ==========================================================================
+  # BATCH WORKER
+  # ==========================================================================
+
+  worker-hu:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-hu-batch-worker
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    environment:
+      INSTANCE_COUNTRY: hu
+      DB_HOST: landomo-hu-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_hu
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      NODE_ENV: production
+    command: ["node", "dist/start-worker.js"]
+    depends_on:
+      ingest-api-hu:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ==========================================================================
+  # CLOUDFLARE BYPASS
+  # ==========================================================================
+
+  cloudflare-bypass:
+    build:
+      context: ..
+      dockerfile: cloudflare-bypass/Dockerfile.api
+    container_name: landomo-hu-cloudflare-bypass
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "8888:8888"
+    environment:
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    shm_size: 2gb
+    depends_on:
+      redis-hu:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; r = httpx.get('http://localhost:8888/health'); exit(0 if r.status_code == 200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 1G
+
+  # ==========================================================================
+  # SCRAPERS
+  # ==========================================================================
+
+  scraper-ingatlan-com:
+    build:
+      context: ..
+      dockerfile: scrapers/Hungary/ingatlan-com/Dockerfile
+    container_name: landomo-hu-scraper-ingatlan-com
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "8301:8101"
+    environment:
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      INGEST_API_URL: http://landomo-hu-ingest-api:3000
+      INGEST_API_KEY: dev_key_hu_1
+      BYPASS_API_URL: http://landomo-hu-cloudflare-bypass:8888
+      REGION_CONCURRENCY: '1'
+      PORT: 8101
+      NODE_ENV: production
+    depends_on:
+      ingest-api-hu:
+        condition: service_healthy
+      redis-hu:
+        condition: service_healthy
+      cloudflare-bypass:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8101/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+
+  scraper-dh-hu:
+    build:
+      context: ..
+      dockerfile: scrapers/Hungary/dh-hu/Dockerfile
+    container_name: landomo-hu-scraper-dh-hu
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "8302:8101"
+    environment:
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      INGEST_API_URL: http://landomo-hu-ingest-api:3000
+      INGEST_API_KEY: dev_key_hu_1
+      BYPASS_API_URL: http://landomo-hu-cloudflare-bypass:8888
+      REGION_CONCURRENCY: '1'
+      PORT: 8101
+      NODE_ENV: production
+    depends_on:
+      ingest-api-hu:
+        condition: service_healthy
+      redis-hu:
+        condition: service_healthy
+      cloudflare-bypass:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8101/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+
+  scraper-ingatlannet-hu:
+    build:
+      context: ..
+      dockerfile: scrapers/Hungary/ingatlannet-hu/Dockerfile
+    container_name: landomo-hu-scraper-ingatlannet-hu
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "8303:8101"
+    environment:
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      INGEST_API_URL: http://landomo-hu-ingest-api:3000
+      INGEST_API_KEY: dev_key_hu_1
+      BYPASS_API_URL: http://landomo-hu-cloudflare-bypass:8888
+      REGION_CONCURRENCY: '1'
+      PORT: 8101
+      NODE_ENV: production
+    depends_on:
+      ingest-api-hu:
+        condition: service_healthy
+      redis-hu:
+        condition: service_healthy
+      cloudflare-bypass:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8101/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+
+  scraper-oc-hu:
+    build:
+      context: ..
+      dockerfile: scrapers/Hungary/oc-hu/Dockerfile
+    container_name: landomo-hu-scraper-oc-hu
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "8304:8101"
+    environment:
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      INGEST_API_URL: http://landomo-hu-ingest-api:3000
+      INGEST_API_KEY: dev_key_hu_1
+      BYPASS_API_URL: http://landomo-hu-cloudflare-bypass:8888
+      REGION_CONCURRENCY: '1'
+      PORT: 8101
+      NODE_ENV: production
+    depends_on:
+      ingest-api-hu:
+        condition: service_healthy
+      redis-hu:
+        condition: service_healthy
+      cloudflare-bypass:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8101/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+
+  scraper-zenga-hu:
+    build:
+      context: ..
+      dockerfile: scrapers/Hungary/zenga-hu/Dockerfile
+    container_name: landomo-hu-scraper-zenga-hu
+    restart: unless-stopped
+    networks:
+      - landomo-hu
+    ports:
+      - "8305:8101"
+    environment:
+      REDIS_HOST: landomo-hu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      INGEST_API_URL: http://landomo-hu-ingest-api:3000
+      INGEST_API_KEY: dev_key_hu_1
+      BYPASS_API_URL: http://landomo-hu-cloudflare-bypass:8888
+      REGION_CONCURRENCY: '1'
+      PORT: 8101
+      NODE_ENV: production
+    depends_on:
+      ingest-api-hu:
+        condition: service_healthy
+      redis-hu:
+        condition: service_healthy
+      cloudflare-bypass:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8101/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M

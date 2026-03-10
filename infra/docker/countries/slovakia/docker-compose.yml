@@ -1,0 +1,336 @@
+version: '3.8'
+
+# ============================================================================
+# LANDOMO Slovakia - Complete Infrastructure
+# Project: landomo-sk
+# ============================================================================
+
+networks:
+  landomo-sk:
+    name: landomo-sk-network
+    driver: bridge
+
+volumes:
+  postgres-sk-data:
+    name: landomo-sk-postgres-data
+  redis-sk-data:
+    name: landomo-sk-redis-data
+
+services:
+  # ==========================================================================
+  # INFRASTRUCTURE
+  # ==========================================================================
+
+  redis-sk:
+    image: redis:7-alpine
+    container_name: landomo-sk-redis
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    ports:
+      - "6381:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --appendfsync everysec --stop-writes-on-bgsave-error no
+    volumes:
+      - redis-sk-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 128M
+
+  postgres-sk:
+    image: imresamu/postgis:16-3.4-alpine
+    container_name: landomo-sk-postgres
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: landomo
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: landomo_sk
+    volumes:
+      - postgres-sk-data:/var/lib/postgresql/data
+    shm_size: 256MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U landomo -d landomo_sk"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ==========================================================================
+  # INGEST API - REST endpoint for scrapers to submit property data
+  # ==========================================================================
+
+  ingest-api-sk:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-sk-ingest-api
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    ports:
+      - "3008:3000"
+    environment:
+      INSTANCE_COUNTRY: sk
+      DB_HOST: landomo-sk-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_sk
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-sk-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      API_KEYS: ${API_KEYS_SK}
+      PORT: 3000
+      NODE_ENV: production
+    depends_on:
+      postgres-sk:
+        condition: service_healthy
+      redis-sk:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ==========================================================================
+  # BATCH WORKERS - Background processors that consume BullMQ jobs and write to DB
+  # ==========================================================================
+
+  batch-worker-sk-1:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-sk-batch-worker-1
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    environment:
+      INSTANCE_COUNTRY: sk
+      DB_HOST: landomo-sk-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_sk
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-sk-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      BATCH_SIZE: 25
+      BATCH_WORKERS: 5
+      BATCH_TIMEOUT: 120000
+      NODE_ENV: production
+    command: node dist/start-worker.js
+    depends_on:
+      postgres-sk:
+        condition: service_healthy
+      redis-sk:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  batch-worker-sk-2:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-sk-batch-worker-2
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    environment:
+      INSTANCE_COUNTRY: sk
+      DB_HOST: landomo-sk-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_sk
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-sk-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      BATCH_SIZE: 25
+      BATCH_WORKERS: 5
+      BATCH_TIMEOUT: 120000
+      NODE_ENV: production
+    command: node dist/start-worker.js
+    depends_on:
+      postgres-sk:
+        condition: service_healthy
+      redis-sk:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  # ==========================================================================
+  # SCRAPERS - SLOVAKIA
+  # ==========================================================================
+
+  scraper-nehnutelnosti-sk:
+    build:
+      context: ..
+      dockerfile: scrapers/Slovakia/nehnutelnosti-sk/Dockerfile
+    container_name: landomo-sk-scraper-nehnutelnosti
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    ports:
+      - "8082:8082"
+    environment:
+      PORT: 8082
+      INGEST_API_URL: http://landomo-sk-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_SK}
+      INGEST_API_KEY_NEHNUTELNOSTI_SK: ${API_KEYS_SK}
+      USE_CHECKSUMS: "true"
+      NODE_ENV: production
+    depends_on:
+      ingest-api-sk:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8082/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  scraper-reality-sk:
+    build:
+      context: ..
+      dockerfile: scrapers/Slovakia/reality-sk/Dockerfile
+    container_name: landomo-sk-scraper-reality
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    ports:
+      - "8084:8084"
+    environment:
+      PORT: 8084
+      INGEST_API_URL: http://landomo-sk-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_SK}
+      INGEST_API_KEY_REALITY_SK: ${API_KEYS_SK}
+      ENABLE_CHECKSUM_MODE: "true"
+      CATEGORY_CONCURRENCY: "1"
+      NODE_ENV: production
+    depends_on:
+      ingest-api-sk:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8084/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  scraper-topreality-sk:
+    build:
+      context: ..
+      dockerfile: scrapers/Slovakia/topreality-sk/Dockerfile
+    container_name: landomo-sk-scraper-topreality
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    ports:
+      - "8085:8085"
+    environment:
+      PORT: 8085
+      INGEST_API_URL: http://landomo-sk-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_SK}
+      INGEST_API_KEY_TOPREALITY_SK: ${API_KEYS_SK}
+      CHECKSUM_MODE: "true"
+      REDIS_HOST: landomo-sk-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      WORKER_CONCURRENCY: "15"
+      CATEGORY_CONCURRENCY: "3"
+      NODE_ENV: production
+    depends_on:
+      ingest-api-sk:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8085/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  scraper-byty-sk:
+    build:
+      context: ..
+      dockerfile: scrapers/Slovakia/byty-sk/Dockerfile
+    container_name: landomo-sk-scraper-byty
+    restart: unless-stopped
+    networks:
+      - landomo-sk
+    ports:
+      - "8086:8086"
+    environment:
+      PORT: 8086
+      INGEST_API_URL: http://landomo-sk-ingest-api:3000
+      INGEST_API_KEY: ${API_KEYS_SK}
+      INGEST_API_KEY_BYTY_SK: ${API_KEYS_SK}
+      ENABLE_CHECKSUM_MODE: "true"
+      CATEGORY_CONCURRENCY: "1"
+      NODE_ENV: production
+    depends_on:
+      ingest-api-sk:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8086/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M

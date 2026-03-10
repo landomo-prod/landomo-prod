@@ -1,0 +1,279 @@
+{
+  "test_timestamp": "2026-02-07T19:35:20.504Z",
+  "test_type": "SEWAGE_FIX_VERIFICATION",
+  "phase2b_improvements": {
+    "sewage_type_previous": {
+      "success_rate": "0%",
+      "found": 0,
+      "total": 10,
+      "example_values": []
+    },
+    "sewage_type_current": {
+      "success_rate": "0%",
+      "found": 0,
+      "total": 10,
+      "example_values": []
+    },
+    "improvement": {
+      "absolute_improvement": 0,
+      "percentage_point_change": "+0pp",
+      "status": "UNCHANGED"
+    }
+  },
+  "all_fields_metrics": {
+    "water_supply": {
+      "success_rate": "40%",
+      "found": 4,
+      "total": 10,
+      "example_values": [
+        "Vodovod"
+      ]
+    },
+    "gas_supply": {
+      "success_rate": "30%",
+      "found_true": 0,
+      "found_false": 3,
+      "total": 10
+    },
+    "bathrooms": {
+      "success_rate": "100%",
+      "found": 10,
+      "total": 10,
+      "example_values": [
+        1
+      ]
+    },
+    "recently_renovated": {
+      "success_rate": "60%",
+      "found_true": 0,
+      "found_false": 6,
+      "total": 10
+    }
+  },
+  "test_results": [
+    {
+      "hash_id": 3014853452,
+      "address": "Praha 4 - Újezd u Průhonic",
+      "property_type": "house",
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "gas_supply": false,
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "raw_sewage_item": {
+        "name": "Odpad",
+        "value": [
+          {
+            "name": "Odpad",
+            "value": "Veřejná kanalizace"
+          }
+        ]
+      }
+    },
+    {
+      "hash_id": 1867608908,
+      "address": "Horní, Dobšice",
+      "property_type": "house",
+      "extracted_fields": {
+        "bathrooms": 1
+      }
+    },
+    {
+      "hash_id": 390759244,
+      "address": "Tlumačovská, Praha 5 - Stodůlky",
+      "property_type": "house",
+      "extracted_fields": {
+        "bathrooms": 1
+      }
+    },
+    {
+      "hash_id": 526713676,
+      "address": "U Farmy, Srch",
+      "property_type": "house",
+      "extracted_fields": {
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "raw_sewage_item": {
+        "name": "Odpad",
+        "value": [
+          {
+            "name": "Odpad",
+            "value": "Veřejná kanalizace"
+          }
+        ]
+      }
+    },
+    {
+      "hash_id": 5665612,
+      "address": "Ruská, Františkovy Lázně",
+      "property_type": "house",
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "gas_supply": false,
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "raw_sewage_item": {
+        "name": "Odpad",
+        "value": [
+          {
+            "name": "Odpad",
+            "value": "Veřejná kanalizace"
+          }
+        ]
+      }
+    },
+    {
+      "hash_id": 4230087500,
+      "address": "Praha 4 - Újezd u Průhonic",
+      "property_type": "land",
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "gas_supply": false,
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "raw_sewage_item": {
+        "name": "Odpad",
+        "value": [
+          {
+            "name": "Odpad",
+            "value": "Veřejná kanalizace"
+          }
+        ]
+      }
+    },
+    {
+      "hash_id": 1519919948,
+      "address": "Princova, Praha 5 - Zbraslav",
+      "property_type": "land",
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "raw_sewage_item": {
+        "name": "Odpad",
+        "value": [
+          {
+            "name": "Odpad",
+            "value": "Veřejná kanalizace"
+          }
+        ]
+      }
+    },
+    {
+      "hash_id": 2887349068,
+      "address": "Uherčice, okres Břeclav",
+      "property_type": "land",
+      "extracted_fields": {
+        "bathrooms": 1
+      }
+    },
+    {
+      "hash_id": 2679886668,
+      "address": "Nechvalice - Ředice, okres Příbram",
+      "property_type": "land",
+      "extracted_fields": {
+        "bathrooms": 1
+      }
+    },
+    {
+      "hash_id": 2952667980,
+      "address": "Charvatce, okres Mladá Boleslav",
+      "property_type": "land",
+      "extracted_fields": {
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "raw_sewage_item": {
+        "name": "Odpad",
+        "value": [
+          {
+            "name": "Odpad",
+            "value": "Veřejná kanalizace"
+          }
+        ]
+      }
+    }
+  ],
+  "test_hash_ids": [
+    3014853452,
+    1867608908,
+    390759244,
+    526713676,
+    5665612,
+    4230087500,
+    1519919948,
+    2887349068,
+    2679886668,
+    2952667980
+  ],
+  "analysis": {
+    "critical_fix_working": false,
+    "sewage_extraction_details": [
+      {
+        "hash_id": 3014853452,
+        "found": false,
+        "field_name_detected": "Odpad",
+        "raw_value": "[object Object]"
+      },
+      {
+        "hash_id": 1867608908,
+        "found": false,
+        "field_name_detected": null,
+        "raw_value": null
+      },
+      {
+        "hash_id": 390759244,
+        "found": false,
+        "field_name_detected": null,
+        "raw_value": null
+      },
+      {
+        "hash_id": 526713676,
+        "found": false,
+        "field_name_detected": "Odpad",
+        "raw_value": "[object Object]"
+      },
+      {
+        "hash_id": 5665612,
+        "found": false,
+        "field_name_detected": "Odpad",
+        "raw_value": "[object Object]"
+      },
+      {
+        "hash_id": 4230087500,
+        "found": false,
+        "field_name_detected": "Odpad",
+        "raw_value": "[object Object]"
+      },
+      {
+        "hash_id": 1519919948,
+        "found": false,
+        "field_name_detected": "Odpad",
+        "raw_value": "[object Object]"
+      },
+      {
+        "hash_id": 2887349068,
+        "found": false,
+        "field_name_detected": null,
+        "raw_value": null
+      },
+      {
+        "hash_id": 2679886668,
+        "found": false,
+        "field_name_detected": null,
+        "raw_value": null
+      },
+      {
+        "hash_id": 2952667980,
+        "found": false,
+        "field_name_detected": "Odpad",
+        "raw_value": "[object Object]"
+      }
+    ]
+  }
+}

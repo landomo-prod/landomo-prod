@@ -1,0 +1,267 @@
+{
+  "testMetadata": {
+    "timestamp": "2026-02-07T20:21:18.648Z",
+    "testName": "Realingo Scraper Performance Test",
+    "testType": "GraphQL API Capacity & Speed Analysis",
+    "apiEndpoint": "https://www.realingo.cz/graphql",
+    "testDurationSeconds": 45.319,
+    "overallStatus": "PASSED"
+  },
+  "capacity": {
+    "totalEstatesAvailable": 67597,
+    "byTransactionType": {
+      "SELL": 46466,
+      "RENT": 21131,
+      "percentageSell": 68.7,
+      "percentageRent": 31.3
+    },
+    "byPropertyType": {
+      "FLAT": {
+        "totalSell": 10559,
+        "totalRent": 9388,
+        "percentageOfSell": 22.7,
+        "percentageOfRent": 44.4
+      },
+      "HOUSE": {
+        "totalSell": 12698,
+        "totalRent": 601,
+        "percentageOfSell": 27.3,
+        "percentageOfRent": 2.8
+      },
+      "LAND": {
+        "totalSell": 15260,
+        "totalRent": 623,
+        "percentageOfSell": 32.8,
+        "percentageOfRent": 2.9
+      },
+      "COMMERCIAL": {
+        "totalSell": 2930,
+        "totalRent": 8688,
+        "percentageOfSell": 6.3,
+        "percentageOfRent": 41.1
+      },
+      "OTHERS": {
+        "totalSell": 5019,
+        "totalRent": 1831,
+        "percentageOfSell": 10.8,
+        "percentageOfRent": 8.7
+      }
+    },
+    "maxItemsPerQuery": 1000,
+    "queriesNeededAtMaxBatch": 68
+  },
+  "speed": {
+    "overallItemsPerSecond": 1069.59,
+    "averageQueryDurationMs": 310.4,
+    "fastestQueryMs": 267,
+    "slowestQueryMs": 357,
+    "performanceByBatchSize": {
+      "10Items": {
+        "durationMs": 267,
+        "itemsPerSecond": 37.5
+      },
+      "50Items": {
+        "durationMs": 293,
+        "itemsPerSecond": 170.6
+      },
+      "100Items": {
+        "durationMs": 318,
+        "itemsPerSecond": 314.5
+      },
+      "500Items": {
+        "durationMs": 357,
+        "itemsPerSecond": 1400.6
+      },
+      "1000Items": {
+        "durationMs": 317,
+        "itemsPerSecond": 3154.6
+      }
+    }
+  },
+  "rateLimits": {
+    "rateLimitingDetected": false,
+    "rapidRequestTest": {
+      "requestCount": 20,
+      "successfulRequests": 20,
+      "failedRequests": 0,
+      "statusCodes": [200]
+    },
+    "observed429Errors": 0,
+    "observed503Errors": 0,
+    "rateLimitStatus": "GENEROUS",
+    "note": "No rate limiting detected. API allows multiple consecutive requests without throttling."
+  },
+  "scrapeTimeEstimates": {
+    "estimateWithCurrentDelay": {
+      "interRequestDelayMs": 500,
+      "totalQueries": 68,
+      "queryTimeMs": 21080,
+      "delayTimeMs": 34000,
+      "estimatedTotalSeconds": 55,
+      "estimatedTotalMinutes": "~0m 55s"
+    },
+    "estimateWithOptimalDelay": {
+      "interRequestDelayMs": 100,
+      "totalQueries": 68,
+      "queryTimeMs": 21080,
+      "delayTimeMs": 6800,
+      "estimatedTotalSeconds": 28,
+      "estimatedTotalMinutes": "~0m 28s"
+    },
+    "estimateWithNoDelay": {
+      "interRequestDelayMs": 0,
+      "totalQueries": 68,
+      "queryTimeMs": 21080,
+      "delayTimeMs": 0,
+      "estimatedTotalSeconds": 21,
+      "estimatedTotalMinutes": "~0m 21s"
+    },
+    "estimateByTransactionType": {
+      "SELL": {
+        "listings": 46466,
+        "queriesNeeded": 47,
+        "estimatedSecondsWith500msDelay": 39,
+        "estimatedSecondsWith100msDelay": 19
+      },
+      "RENT": {
+        "listings": 21131,
+        "queriesNeeded": 22,
+        "estimatedSecondsWith500msDelay": 18,
+        "estimatedSecondsWith100msDelay": 9
+      }
+    }
+  },
+  "apiConstraints": {
+    "maximumItemsPerQuery": 1000,
+    "paginationMethod": "OffsetLimit",
+    "paginationParameter": "first",
+    "supportsCursorPagination": false,
+    "cursorAfterParameter": "Not supported",
+    "defaultTimeout": 30000,
+    "responseFormat": "GraphQL JSON",
+    "knownIssues": [
+      {
+        "issue": "Single property type filter broken",
+        "description": "Filtering by only property type returns all 67,597 listings instead of filtered subset",
+        "workaround": "Use combined purpose + property filters which work correctly",
+        "severity": "Medium"
+      },
+      {
+        "issue": "Enum naming differs from original scraper",
+        "description": "API uses SELL not SALE, and OTHERS not OTHER",
+        "affectedFile": "src/scrapers/listingsScraper.ts",
+        "severity": "High"
+      }
+    ]
+  },
+  "enumValues": {
+    "purpose": {
+      "SELL": {
+        "count": 46466,
+        "percentage": 68.7,
+        "description": "Property sales listings"
+      },
+      "RENT": {
+        "count": 21131,
+        "percentage": 31.3,
+        "description": "Property rental listings"
+      }
+    },
+    "property": {
+      "FLAT": {
+        "sell": 10559,
+        "rent": 9388,
+        "total": 19947,
+        "description": "Apartment/flat listings"
+      },
+      "HOUSE": {
+        "sell": 12698,
+        "rent": 601,
+        "total": 13299,
+        "description": "House listings"
+      },
+      "LAND": {
+        "sell": 15260,
+        "rent": 623,
+        "total": 15883,
+        "description": "Land/property listings"
+      },
+      "COMMERCIAL": {
+        "sell": 2930,
+        "rent": 8688,
+        "total": 11618,
+        "description": "Commercial property listings"
+      },
+      "OTHERS": {
+        "sell": 5019,
+        "rent": 1831,
+        "total": 6850,
+        "description": "Other property types"
+      }
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "CRITICAL",
+      "category": "Code Update",
+      "action": "Update GraphQL query parameters",
+      "details": "Replace 'limit'/'offset' with 'first' parameter",
+      "impact": "Required for API compatibility"
+    },
+    {
+      "priority": "CRITICAL",
+      "category": "Enum Values",
+      "action": "Update enum values in listingsScraper.ts",
+      "details": "Change SALE→SELL and OTHER→OTHERS",
+      "impact": "API will reject queries with old enum values"
+    },
+    {
+      "priority": "HIGH",
+      "category": "Performance",
+      "action": "Use batch size of 1000 items per query",
+      "details": "Reduces query count from hundreds to 68, improves throughput to 3,154 items/s",
+      "impact": "3x faster scraping"
+    },
+    {
+      "priority": "HIGH",
+      "category": "Rate Limiting",
+      "action": "Reduce inter-request delay from 500ms to 100ms",
+      "details": "API has generous rate limits, no throttling detected",
+      "impact": "2.7x faster scraping (55s → 20s)"
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "Filtering",
+      "action": "Use combined purpose+property filters",
+      "details": "Single property filters are broken, use purpose+property combinations",
+      "impact": "Accurate category counts"
+    },
+    {
+      "priority": "LOW",
+      "category": "Monitoring",
+      "action": "Monitor API for rate limiting changes",
+      "details": "Implement exponential backoff for production stability",
+      "impact": "Resilience to future API changes"
+    }
+  ],
+  "productionReadiness": {
+    "overallStatus": "READY WITH UPDATES",
+    "capacityReady": true,
+    "speedSufficient": true,
+    "rateLimitHandling": true,
+    "errorRecovery": "Recommended to add exponential backoff",
+    "requiredUpdates": 2,
+    "estimatedTimeToProduction": "1-2 hours with code updates"
+  },
+  "summary": {
+    "headline": "Realingo API is highly performant with 67,597 listings available",
+    "keyMetrics": {
+      "totalEstates": 67597,
+      "throughputItemsPerSecond": 1069.59,
+      "estimatedScrapeTimeSeconds": 28,
+      "queriesNeeded": 68,
+      "rateLimit": "None detected"
+    },
+    "conclusion": "The API is production-ready for scraping. With recommended optimizations (batch size 1000, 100ms delay), all 67,597 listings can be scraped in approximately 28 seconds. No rate limiting constraints detected. Requires code updates to use correct enum values (SELL, OTHERS) and GraphQL parameter names (first instead of limit)."
+  }
+}

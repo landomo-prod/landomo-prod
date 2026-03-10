@@ -1,0 +1,289 @@
+================================================================================
+              REALITY.CZ SCRAPER - PERFORMANCE TEST RESULTS
+================================================================================
+
+Test Date: February 7, 2026, 20:18 UTC
+Test Duration: 20.2 seconds
+Test Status: COMPLETE - CRITICAL ISSUE IDENTIFIED
+
+================================================================================
+CRITICAL FINDING
+================================================================================
+
+The Reality.cz scraper using HTML parsing (axios + cheerio) is NOT VIABLE.
+
+Root Cause: Reality.cz renders listing content dynamically via JavaScript.
+            The HTML parser receives no data and extracts 0 listings.
+
+Evidence:
+  - HTTP requests work fine (473ms average load time)
+  - No rate limiting or blocking detected
+  - All CSS selectors return zero matches
+  - HTML contains <noscript> warning about disabled JavaScript
+  - Content never appears in initial HTTP response
+
+Status: BLOCKING ISSUE - Entire scraper non-functional
+
+================================================================================
+TEST RESULTS SUMMARY
+================================================================================
+
+HTTP Performance:
+  - Total requests made: 10
+  - Success rate: 100%
+  - Average response time: 473 ms
+  - Rate limiting detected: None
+  - Error rate: 0%
+
+Listing Extraction:
+  - Total pages tested: 15
+  - Listings extracted: 0
+  - Success rate: 0%
+  - Categories working: 0/5
+
+Categories Tested:
+  1. Sales - Apartments (Byty na prodej) ................. 0 listings
+  2. Sales - Houses (Domy na prodej) .................... 0 listings
+  3. Sales - Land (Pozemky na prodej) ................... 0 listings
+  4. Rentals - Apartments (Byty k pronájmu) ............ 0 listings
+  5. Rentals - Houses (Domy k pronájmu) ................ 0 listings
+
+Total Capacity Found: 0 listings (INCONCLUSIVE)
+
+================================================================================
+ESTIMATED CAPACITY (Based on Code Documentation)
+================================================================================
+
+These estimates are theoretical since the scraper never successfully ran.
+
+Per Configuration:
+  - Items per page: 25
+  - Max pages per category: 40
+  - Categories: 5 (Sales: 3 types, Rentals: 2 types)
+
+Estimated Total:
+  - Sales: 3,000 listings (3 types × 40 pages × 25 items)
+  - Rentals: 2,000 listings (2 types × 40 pages × 25 items)
+  - Total: ~5,000 listings
+
+Note: These numbers are unverified since HTML parsing fails.
+
+================================================================================
+SPEED ANALYSIS (HTTP-level only)
+================================================================================
+
+What Works:
+  - HTTP requests: 0.5 seconds per page
+  - Network latency: Good (473ms average)
+  - Concurrent requests: Could handle multiple in parallel
+
+What Doesn't Work:
+  - HTML parsing: Cannot extract any data
+  - Selector matching: All attempts returned zero matches
+  - Content availability: Data not in initial HTTP response
+
+Assessment: Network speed is NOT the bottleneck.
+           Parsing method is incompatible with site architecture.
+
+================================================================================
+RATE LIMITING ASSESSMENT
+================================================================================
+
+Finding: NO RATE LIMITING DETECTED
+
+Evidence:
+  - 10/10 requests succeeded
+  - No 429 "Too Many Requests" errors
+  - No 403 "Forbidden" blocks
+  - No suspicious delays or rejections
+  - User-agent rotation working fine
+  - Server accepts requests from different user agents
+
+Good News: Site not blocking requests
+Bad News: Content isn't being sent anyway (JavaScript issue)
+
+================================================================================
+TECHNOLOGY RECOMMENDATIONS
+================================================================================
+
+Current Technology: INADEQUATE
+  - axios (HTTP client) ........... Works fine ✓
+  - cheerio (HTML parser) ......... No data to parse ✗
+  - nodejs (no browser) ........... Cannot execute JavaScript ✗
+  - Viability for this site ....... NOT VIABLE ✗
+
+Required Solution: Headless Browser Automation
+
+Recommended Options:
+
+1. PUPPETEER (Recommended)
+   - Implementation time: 3-5 days
+   - Performance: ~3-5 seconds per page
+   - Full catalog time: ~10-17 minutes
+   - Resource needs: 2-4 CPU, 1-2 GB RAM
+   - Viability: HIGH ✓
+   - Recommendation: BEST CHOICE
+
+2. PLAYWRIGHT (Alternative)
+   - Implementation time: 3-5 days
+   - Performance: ~3-5 seconds per page
+   - Full catalog time: ~10-17 minutes
+   - Resource needs: 2-4 CPU, 1-2 GB RAM
+   - Viability: HIGH ✓
+   - Recommendation: EXCELLENT alternative
+
+3. SELENIUM (Not Recommended)
+   - Implementation time: 5-7 days
+   - Performance: ~5-8 seconds per page
+   - Resource needs: 4-8 CPU, 2-4 GB RAM
+   - Viability: MEDIUM
+   - Recommendation: Overkill for this project
+
+4. Paid API Services (Last Resort)
+   - Cost: $0.001-0.01 per page ($5-50/month)
+   - Performance: 3-8 seconds + network latency
+   - Viability: LOW (expensive)
+   - Recommendation: Only if local solution fails
+
+================================================================================
+PERFORMANCE ESTIMATES (After Implementation)
+================================================================================
+
+Sequential Execution (1 browser):
+  - Time per page: 4 seconds (JavaScript rendering)
+  - Total pages: 200 (5 categories × 40 pages max)
+  - Estimated time: 800 seconds = 13.3 minutes
+  - Speed: 250 listings/minute = 15,000 listings/hour
+
+Parallel Execution (2 concurrent browsers):
+  - Time per page: 4 seconds
+  - Effective throughput: 2 pages at once
+  - Estimated time: 400 seconds = 6.7 minutes
+  - Speed: 500 listings/minute = 30,000 listings/hour
+
+Recommended Strategy: 2 concurrent browsers
+  - Balance: Good speed without excessive resource usage
+  - Estimated daily capacity: 5,000-10,000 listings
+  - Recommended frequency: Daily or every 6 hours
+
+================================================================================
+IMPLEMENTATION ROADMAP
+================================================================================
+
+Phase 1: Setup (1 day)
+  - Install Puppeteer npm package
+  - Create new browser scraper class
+  - Set up test environment
+
+Phase 2: Core Implementation (3-4 days)
+  - Implement browser launch/navigation
+  - Add JavaScript wait strategies
+  - Update parsing logic
+  - Error handling and retries
+  - Memory cleanup
+
+Phase 3: Optimization (1-2 days)
+  - Browser pooling (2-3 concurrent)
+  - Page caching
+  - Performance tuning
+  - Graceful degradation
+
+Phase 4: Testing & Deployment (1-2 days)
+  - Integration testing
+  - Performance benchmarking
+  - Docker image update
+  - Production deployment
+
+Total Timeline: 1-2 weeks (40-80 hours)
+
+================================================================================
+GENERATED REPORTS
+================================================================================
+
+1. performance-report.json (8.3 KB)
+   - Machine-readable JSON format
+   - All metrics and recommendations
+   - Suitable for automated processing
+   - Location: /Users/samuelseidel/Development/landomo-world/scrapers/Czech\ Republic/reality/
+
+2. PERFORMANCE_TEST_REPORT.md (13 KB)
+   - Detailed technical analysis
+   - Evidence and reasoning
+   - Implementation guide
+   - Risk assessment
+   - Human-readable format
+   - Location: /Users/samuelseidel/Development/landomo-world/scrapers/Czech\ Republic/reality/
+
+3. performance-test.js (15 KB)
+   - Reusable test script
+   - Can be run independently
+   - Tests all 5 categories
+   - Generates JSON reports
+   - Location: /Users/samuelseidel/Development/landomo-world/scrapers/Czech\ Republic/reality/
+
+================================================================================
+KEY METRICS SUMMARY
+================================================================================
+
+HTTP Performance: EXCELLENT
+  - Page load time: 473 ms
+  - Success rate: 100%
+  - Error rate: 0%
+  - Rate limiting: None detected
+
+Parsing Performance: FAILED
+  - Listings extracted: 0
+  - Success rate: 0%
+  - CSS selectors matched: 0
+  - Categories working: 0/5
+
+Overall Assessment: NOT VIABLE (Critical blocker)
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+Immediate Actions (24 hours):
+  [ ] Review this report with team
+  [ ] Assess resource availability
+  [ ] Check Reality.cz Terms of Service
+  [ ] Decide: Proceed with Puppeteer or abandon
+
+If Proceeding:
+  [ ] Start Phase 1 implementation
+  [ ] Set up test environment
+  [ ] Create integration tests
+  [ ] Target completion: 1-2 weeks
+
+Success Metrics:
+  - Extract 100% of listings from test categories
+  - Achieve 4-5 second average page time
+  - Implement 2 concurrent browser strategy
+  - Daily capacity: 5,000-10,000 listings
+
+================================================================================
+CONCLUSION
+================================================================================
+
+The Reality.cz scraper is currently NON-FUNCTIONAL due to architectural
+incompatibility: the site requires JavaScript execution to load content, but
+the current HTML parser cannot execute JavaScript.
+
+This is NOT a network, rate-limiting, or speed issue.
+This IS a fundamental technology mismatch.
+
+Solution: Implement headless browser automation (Puppeteer recommended)
+Timeline: 1-2 weeks
+Effort: 40-80 hours
+Expected Outcome: Fully functional scraper with ~5,000 listings capacity
+
+Status: CRITICAL - Action required to proceed.
+
+================================================================================
+
+Report Generated: February 7, 2026, 20:18 UTC
+Test Complete: YES
+Blocker Identified: YES (JavaScript rendering requirement)
+Recommendation: Proceed with Puppeteer implementation
+
+================================================================================

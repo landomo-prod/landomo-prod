@@ -1,0 +1,71 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'landomo-czech'
+    environment: 'production'
+
+rule_files:
+  - /etc/prometheus/alert-rules.yml
+
+scrape_configs:
+  # Ingest API server
+  - job_name: 'ingest-services'
+    static_configs:
+      - targets: ['cz-ingest:3000']
+    metrics_path: /metrics
+
+  # PostgreSQL metrics via postgres-exporter
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['cz-postgres-exporter:9187']
+    metrics_path: /metrics
+    scrape_interval: 30s
+
+  # Redis metrics via redis-exporter (BullMQ queue Redis)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['cz-redis-exporter:9121']
+    metrics_path: /metrics
+
+  # Redis search cache metrics
+  - job_name: 'redis-search'
+    static_configs:
+      - targets: ['cz-redis-search-exporter:9121']
+    metrics_path: /metrics
+
+  # Host machine metrics via node-exporter
+  - job_name: 'node'
+    static_configs:
+      - targets: ['cz-node-exporter:9100']
+    scrape_interval: 15s
+
+  # Container metrics via cAdvisor
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cz-cadvisor:8080']
+    scrape_interval: 15s
+
+  # Czech scrapers
+  - job_name: 'scrapers-czech'
+    static_configs:
+      - targets:
+        - 'cz-scraper-sreality:8102'
+        - 'cz-scraper-bezrealitky:8103'
+        - 'cz-scraper-reality:8104'
+        - 'cz-scraper-idnes:8105'
+        - 'cz-scraper-realingo:8106'
+        - 'cz-scraper-ulovdomov:8107'
+        - 'cz-scraper-ceskereality:8109'
+    metrics_path: /metrics
+
+  # Notification service
+  - job_name: 'notification-service'
+    static_configs:
+      - targets: ['cz-notification:3200']
+    metrics_path: /metrics
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

@@ -1,0 +1,102 @@
+{
+  "timestamp": "2026-02-07T19:35:21.336Z",
+  "data_source": "real_api",
+  "total_listings_tested": 8,
+  "property_types": {
+    "apartment": 3,
+    "house": 3,
+    "land": 2
+  },
+  "field_extraction_success": {
+    "has_parking": {
+      "rate": 0,
+      "count": 0,
+      "total": 8
+    },
+    "has_garage": {
+      "rate": 0,
+      "count": 0,
+      "total": 8
+    },
+    "area_total": {
+      "rate": 63,
+      "count": 5,
+      "total": 8
+    },
+    "area_plot": {
+      "rate": 63,
+      "count": 5,
+      "total": 8
+    },
+    "year_built": {
+      "rate": 0,
+      "count": 0,
+      "total": 8
+    }
+  },
+  "results": [
+    {
+      "hash_id": 1723728716,
+      "property_type": "apartment",
+      "area_total": 107,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 895644492,
+      "property_type": "apartment",
+      "area_total": 55,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 815600460,
+      "property_type": "apartment",
+      "area_total": 88,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 2405020492,
+      "property_type": "house",
+      "area_total": 444,
+      "area_plot": 2445,
+      "success": 2,
+      "total": 5
+    },
+    {
+      "hash_id": 1764401996,
+      "property_type": "house",
+      "area_total": 46,
+      "area_plot": 464,
+      "success": 2,
+      "total": 5
+    },
+    {
+      "hash_id": 2397373260,
+      "property_type": "house",
+      "area_plot": 412,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 1649832780,
+      "property_type": "land",
+      "area_plot": 5220,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 328008268,
+      "property_type": "land",
+      "area_plot": 1074,
+      "success": 1,
+      "total": 5
+    }
+  ],
+  "example_values": {
+    "area_total": 107,
+    "area_plot": 2445
+  },
+  "errors": []
+}

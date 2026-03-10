@@ -1,0 +1,149 @@
+{
+  "timestamp": "2026-02-07T20:19:22.263Z",
+  "categories": [
+    {
+      "name": "Flats for Sale",
+      "url": "https://reality.idnes.cz/s/prodej/byty/",
+      "type": "apartment",
+      "transaction": "sale",
+      "firstPageCount": 30,
+      "totalEstimated": 330,
+      "maxPagesAccessible": 11,
+      "paginationInfo": {
+        "listingCount": 30,
+        "hasNextButton": true
+      },
+      "bottleneck": null,
+      "success": true
+    },
+    {
+      "name": "Flats for Rent",
+      "url": "https://reality.idnes.cz/s/pronajem/byty/",
+      "type": "apartment",
+      "transaction": "rent",
+      "firstPageCount": 30,
+      "totalEstimated": 1500,
+      "maxPagesAccessible": 50,
+      "paginationInfo": {
+        "listingCount": 30,
+        "hasNextButton": true
+      },
+      "bottleneck": null,
+      "success": true
+    },
+    {
+      "name": "Houses for Sale",
+      "url": "https://reality.idnes.cz/s/prodej/domy/",
+      "type": "house",
+      "transaction": "sale",
+      "firstPageCount": 30,
+      "totalEstimated": 420,
+      "maxPagesAccessible": 14,
+      "paginationInfo": {
+        "listingCount": 30,
+        "hasNextButton": true
+      },
+      "bottleneck": "Bot detection triggered",
+      "success": true
+    },
+    {
+      "name": "Houses for Rent",
+      "url": "https://reality.idnes.cz/s/pronajem/domy/",
+      "type": "house",
+      "transaction": "rent",
+      "firstPageCount": 30,
+      "totalEstimated": 660,
+      "maxPagesAccessible": 22,
+      "paginationInfo": {
+        "listingCount": 30,
+        "hasNextButton": true
+      },
+      "bottleneck": "Bot detection triggered",
+      "success": true
+    },
+    {
+      "name": "Land for Sale",
+      "url": "https://reality.idnes.cz/s/prodej/pozemky/",
+      "type": "land",
+      "transaction": "sale",
+      "firstPageCount": 30,
+      "totalEstimated": 150,
+      "maxPagesAccessible": 5,
+      "paginationInfo": {
+        "listingCount": 30,
+        "hasNextButton": true
+      },
+      "bottleneck": "Bot detection triggered",
+      "success": true
+    },
+    {
+      "name": "Commercial for Sale",
+      "url": "https://reality.idnes.cz/s/prodej/komercni/",
+      "type": "commercial",
+      "transaction": "sale",
+      "firstPageCount": 0,
+      "totalEstimated": 0,
+      "maxPagesAccessible": 1,
+      "paginationInfo": {
+        "listingCount": 0,
+        "hasNextButton": false
+      },
+      "bottleneck": null,
+      "success": true
+    },
+    {
+      "name": "Commercial for Rent",
+      "url": "https://reality.idnes.cz/s/pronajem/komercni/",
+      "type": "commercial",
+      "transaction": "rent",
+      "firstPageCount": 0,
+      "totalEstimated": 0,
+      "maxPagesAccessible": 1,
+      "paginationInfo": {
+        "listingCount": 0,
+        "hasNextButton": false
+      },
+      "bottleneck": null,
+      "success": true
+    },
+    {
+      "name": "Recreation for Sale",
+      "url": "https://reality.idnes.cz/s/prodej/rekreacni/",
+      "type": "recreation",
+      "transaction": "sale",
+      "firstPageCount": 0,
+      "totalEstimated": 0,
+      "maxPagesAccessible": 1,
+      "paginationInfo": {
+        "listingCount": 0,
+        "hasNextButton": false
+      },
+      "bottleneck": null,
+      "success": true
+    }
+  ],
+  "analysis": {
+    "totalCategories": 8,
+    "successfulCategories": 8,
+    "estimatedTotalListings": 3060,
+    "estimatedByPropertyType": {
+      "apartments": 1830,
+      "houses": 1080,
+      "land": 150,
+      "commercial": 0,
+      "recreation": 0
+    },
+    "estimatedByTransaction": {
+      "sales": 900,
+      "rentals": 2160
+    },
+    "avgListingsPerPage": 19,
+    "maxPagesAccessible": 50,
+    "estimatedTimeToScrapeAll": {
+      "secondsPerPage": 5,
+      "pagesTotal": 400,
+      "estimatedTotalSeconds": 2000,
+      "estimatedHours": 1
+    }
+  }
+}

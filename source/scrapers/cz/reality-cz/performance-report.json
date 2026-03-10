@@ -1,0 +1,224 @@
+{
+  "testMetadata": {
+    "testedAt": "2026-02-07T20:18:08.981Z",
+    "testType": "HTML Parser Compatibility Test",
+    "portalUrl": "https://www.reality.cz",
+    "testStatus": "COMPLETED_WITH_LIMITATIONS",
+    "testDuration": "20.2s"
+  },
+  "criticalFinding": {
+    "issue": "JavaScript-Rendered Content",
+    "severity": "CRITICAL",
+    "description": "Reality.cz uses JavaScript to dynamically load listing content. The HTML parser (cheerio) receives a page with a <noscript> warning but no actual listing data in the initial HTML response.",
+    "htmlStructure": {
+      "pageType": "XHTML 1.0 Strict",
+      "dynamicContentLoader": true,
+      "requiresJavaScript": true,
+      "jsFramework": "jQuery",
+      "initialContentAvailable": false
+    },
+    "evidence": {
+      "noScriptTag": "<noscript><div class='error'>Váš prohlížeč má vypnutý Javascript...</div></noscript>",
+      "message": "The page warns that without JavaScript it will not work properly",
+      "testResult": "Zero listings extracted from HTML (0 found across 15 pages)",
+      "availableSelectors": ["None functional - content is JavaScript-rendered"]
+    }
+  },
+  "capacity": {
+    "testResult": "INCONCLUSIVE - JavaScript Required",
+    "totalListingsFound": 0,
+    "reason": "HTML parser cannot execute JavaScript to load listing data",
+    "estimatedCapacityBased": {
+      "source": "README.md documentation",
+      "perCategory": "~1,000 visible listings per search category",
+      "categories": 5,
+      "estimatedTotal": 5000,
+      "note": "This is based on code documentation, not tested"
+    },
+    "actualCapacity": {
+      "currentTechStack": "Cannot determine with HTML parser alone",
+      "recommendation": "See recommendations below"
+    }
+  },
+  "speed": {
+    "testResult": "PARTIAL - HTML Load Only",
+    "metrics": {
+      "totalHttpRequests": 10,
+      "successfulPages": 0,
+      "failedRequests": 0,
+      "averageHttpLoadTimeMs": 473,
+      "httpRequestsPerSecond": 0.5,
+      "listingsPerSecond": "N/A - No listings extracted"
+    },
+    "interpretation": {
+      "httpSpeedAdequate": true,
+      "httpResponseTime": "Good (473ms average)",
+      "limitation": "Speed is not the bottleneck - the parsing method is incompatible",
+      "actualBottleneck": "Parsing cannot handle JavaScript-rendered content"
+    }
+  },
+  "timingEstimates": {
+    "note": "Based on configuration only - not tested with working scraper",
+    "configurationFromCode": {
+      "delayMs": 1000,
+      "itemsPerPage": 25,
+      "maxPagesPerCategory": 40,
+      "categories": 5
+    },
+    "theoreticalEstimates": {
+      "totalPagesIfWorking": 200,
+      "totalListingsIfWorking": 5000,
+      "estimatedTimeMinutes": 240,
+      "estimatedTimeHours": 4,
+      "note": "These are best-case estimates assuming HTML parser works"
+    }
+  },
+  "rateLimiting": {
+    "detected": false,
+    "blocks": 0,
+    "errors": 0,
+    "userAgentRotation": "Configured (3 agents)",
+    "delayStrategy": "Configured (1000ms between requests)",
+    "httpTimeout": "30 seconds",
+    "assessment": "No rate limiting detected - HTTP requests succeed, content loading is the issue"
+  },
+  "technicalAnalysis": {
+    "currentImplementation": {
+      "technology": "axios + cheerio (HTML parsing)",
+      "userAgent": "Chrome/120.0 (rotated)",
+      "parser": "cheerio (jQuery-like HTML parsing)",
+      "javascript": "Not executed",
+      "capabilities": ["HTTP requests", "HTML parsing", "CSS selectors"]
+    },
+    "realityRequirements": {
+      "javascript": "REQUIRED - Page content loaded via JavaScript",
+      "rendering": "Browser automation needed",
+      "httpOnly": "NOT SUFFICIENT",
+      "dynamicContent": "YES - All listings are dynamically rendered"
+    },
+    "detectedTechs": {
+      "backend": "XHTML 1.0 Strict",
+      "frontend": "jQuery (2010s era framework)",
+      "rendering": "Client-side JavaScript",
+      "adsPresent": true,
+      "analytics": "Google Analytics"
+    }
+  },
+  "recommendations": {
+    "requiredTechStack": {
+      "current": "axios + cheerio",
+      "recommendation": "Puppeteer OR Playwright (headless browser automation)",
+      "rationale": "Must execute JavaScript to render dynamic content",
+      "priority": "CRITICAL - Must change or scraper will not work"
+    },
+    "headlessBrowserComparison": {
+      "puppeteer": {
+        "pros": ["Mature", "Good documentation", "Chrome/Chromium focused"],
+        "cons": ["Larger bundle", "More resource intensive"],
+        "estimatedTimePerPage": "2-5 seconds (much slower)",
+        "recommendedForThis": true
+      },
+      "playwright": {
+        "pros": ["Multi-browser support", "Better performance", "Modern"],
+        "cons": ["Slightly steeper learning curve"],
+        "estimatedTimePerPage": "2-5 seconds",
+        "recommendedForThis": true
+      },
+      "selenium": {
+        "pros": ["Most compatible"],
+        "cons": ["Slower", "More resource intensive"],
+        "estimatedTimePerPage": "3-8 seconds",
+        "recommendedForThis": false
+      }
+    },
+    "implementationStrategy": {
+      "step1": "Replace cheerio with Puppeteer/Playwright",
+      "step2": "Use page.goto() to fetch pages",
+      "step3": "Wait for dynamic content: page.waitForSelector()",
+      "step4": "Modify parsing to work with rendered DOM",
+      "step5": "Adjust delays for slower page loads (2-5s vs 0.5s)",
+      "estimatedEffort": "4-8 hours of development"
+    },
+    "performanceImplications": {
+      "speedImpact": "5-10x slower",
+      "newSpeedEstimate": {
+        "timePerPage": "3-5 seconds",
+        "fullCatalogMinutes": 1000,
+        "fullCatalogHours": 16.7,
+        "perDayPossible": "2,000-3,000 listings"
+      },
+      "resourceImpact": {
+        "cpuCores": "2-4 (vs 1)",
+        "memoryMb": "1024-2048 (vs 512)",
+        "diskSpaceGb": "1-2"
+      },
+      "costImplications": "Significant - browser automation has real costs"
+    },
+    "optimizationTips": {
+      "concurrency": "Max 2-3 parallel browsers (not sequential)",
+      "caching": "Cache seen listings to avoid re-scraping",
+      "incrementalScraping": "Track last-seen ID and only fetch new",
+      "cloudOptions": "Consider cloud-based browser services (BrowserStack, etc.)",
+      "scheduleStrategy": "Run during off-peak hours, batch processes"
+    }
+  },
+  "scrapeStrategyRecommendation": {
+    "currentStatus": "NOT VIABLE",
+    "recommendation": "SWITCH TO HEADLESS BROWSER",
+    "alternatives": [
+      {
+        "option": "Puppeteer (Recommended)",
+        "pros": "Mature, good ecosystem, Chrome focused",
+        "cons": "Higher resource usage",
+        "implementation": "3-5 days",
+        "viability": "High"
+      },
+      {
+        "option": "Playwright (Alternative)",
+        "pros": "Modern, faster, multi-browser",
+        "cons": "Larger bundle size",
+        "implementation": "3-5 days",
+        "viability": "High"
+      },
+      {
+        "option": "Proxy API (Cloud-based)",
+        "pros": "No local browser needed",
+        "cons": "Cost per request",
+        "implementation": "1-2 days",
+        "viability": "Medium (expensive)"
+      },
+      {
+        "option": "Reverse-engineer API",
+        "pros": "Most efficient if possible",
+        "cons": "May require deep inspection, terms of service",
+        "implementation": "2-7 days",
+        "viability": "Low (uncertain)"
+      }
+    ]
+  },
+  "deliveryOfWork": {
+    "status": "TEST COMPLETE - BLOCKER IDENTIFIED",
+    "findings": "HTML-based scraper is not viable for Reality.cz due to JavaScript-rendered content",
+    "nextSteps": [
+      "Decision: Implement headless browser solution",
+      "Recommended: Start with Puppeteer",
+      "Timeline: 1-2 weeks for implementation and testing",
+      "Testing: Full capacity test after implementation"
+    ],
+    "estimatedCapacityAfterFix": {
+      "totalListings": 5000,
+      "categories": 5,
+      "scrapeTimeHours": 16.7,
+      "listingsPerHour": 300,
+      "listingsPerDay": "3,000-5,000"
+    }
+  },
+  "summary": {
+    "testResult": "FAILED - Technical Incompatibility",
+    "rootCause": "Reality.cz renders listing content via JavaScript; HTML parser receives no data",
+    "currentSituation": "Scraper runs without errors but extracts zero listings",
+    "timelineToWorkingScraper": "1-2 weeks (includes dev, testing, deployment)",
+    "criticality": "HIGH - Entire scraper non-functional without fix",
+    "blockingIssue": "Must implement JavaScript execution (headless browser)"
+  }
+}

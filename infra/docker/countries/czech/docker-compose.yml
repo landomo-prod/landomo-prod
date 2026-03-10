@@ -1,0 +1,828 @@
+version: '3.8'
+
+# ============================================================
+# Landomo-World - Czech Republic Only Docker Compose
+# ============================================================
+# Standalone CZ deployment for dedicated VPS
+# Usage: docker compose -f docker-compose.cz.yml up -d
+# ============================================================
+
+secrets:
+  db_password:
+    file: ./secrets/db_password
+  redis_password:
+    file: ./secrets/redis_password
+  api_keys_czech:
+    file: ./secrets/api_keys_czech
+  api_keys_ml_pricing:
+    file: ./secrets/api_keys_ml_pricing
+  api_keys_polygon:
+    file: ./secrets/api_keys_polygon
+  db_read_password:
+    file: ./secrets/db_read_password
+
+networks:
+  cz-network:
+    driver: bridge
+
+volumes:
+  cz_postgres_data:
+  cz_redis_data:
+  cz_ml_models:
+  cz_prometheus_data:
+  cz_grafana_data:
+  cz_walg_logs:
+
+services:
+
+  # ============================================================
+  # POSTGRESQL - Czech-only database
+  # ============================================================
+  cz-postgres:
+    build:
+      context: ./postgres
+    container_name: cz-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-landomo}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-landomo_dev_pass}
+      POSTGRES_DB: postgres
+      # WAL-G: S3 credentials for archive_command (wal-push)
+      WALG_S3_PREFIX: ${WALG_S3_PREFIX}
+      AWS_ENDPOINT: ${AWS_ENDPOINT}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_FORCE_PATH_STYLE: ${AWS_S3_FORCE_PATH_STYLE:-true}
+      WALG_COMPRESSION_METHOD: ${WALG_COMPRESSION_METHOD:-brotli}
+    volumes:
+      - /opt/landomo/data/postgres/cz:/var/lib/postgresql/data
+      - ./postgres/init-czech-only.sh:/docker-entrypoint-initdb.d/01-init-databases.sh
+      - ./postgres/init-schema.sql:/docker-entrypoint-initdb.d/02-init-schema.sql
+      - ../ingest-service/migrations:/docker-entrypoint-initdb.d/migrations
+      - ./postgres/03-apply-migrations-czech.sh:/docker-entrypoint-initdb.d/03-apply-migrations.sh
+    command: >
+      postgres
+      -c shared_buffers=4GB
+      -c effective_cache_size=10GB
+      -c work_mem=16MB
+      -c max_parallel_workers_per_gather=1
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=64MB
+      -c random_page_cost=1.1
+      -c maintenance_work_mem=512MB
+      -c max_connections=400
+      -c wal_level=replica
+      -c archive_mode=on
+      -c archive_command='wal-g wal-push %p >> /tmp/walg-archive.log 2>&1'
+      -c archive_timeout=60
+      -c max_wal_senders=3
+      -c wal_keep_size=512
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    networks:
+      - cz-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-landomo}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  # ============================================================
+  # WAL-G BACKUP SIDECAR
+  # Runs scheduled base backups + retention cleanup.
+  # Continuous WAL archiving is handled by cz-postgres archive_command.
+  # ============================================================
+  cz-backup:
+    build:
+      context: ./backup
+    container_name: cz-backup
+    environment:
+      - WALG_S3_PREFIX=${WALG_S3_PREFIX}
+      - AWS_ENDPOINT=${AWS_ENDPOINT}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_S3_FORCE_PATH_STYLE=${AWS_S3_FORCE_PATH_STYLE:-true}
+      - WALG_COMPRESSION_METHOD=${WALG_COMPRESSION_METHOD:-brotli}
+      - WALG_DELTA_MAX_STEPS=${WALG_DELTA_MAX_STEPS:-6}
+      - PGHOST=cz-postgres
+      - PGPORT=5432
+      - PGUSER=${DB_USER:-landomo}
+      - PGPASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - PGDATABASE=postgres
+    volumes:
+      # Read-only access to postgres data dir for backup-push
+      - /opt/landomo/data/postgres/cz:/var/lib/postgresql/data:ro
+      - cz_walg_logs:/var/log/walg
+    depends_on:
+      cz-postgres:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+
+  # ============================================================
+  # REDIS - Job Queue
+  # ============================================================
+  cz-redis:
+    image: redis:7-alpine
+    container_name: cz-redis
+    command: >
+      sh -c '
+        if [ -f /run/secrets/redis_password ]; then
+          redis-server --appendonly yes --appendfsync everysec --maxmemory 8gb --maxmemory-policy allkeys-lru --save 900 1 --save 300 10 --save 3600 100000 --activedefrag yes --active-defrag-ignore-bytes 100mb --active-defrag-threshold-lower 10 --active-defrag-threshold-upper 100 --active-defrag-cycle-min 1 --active-defrag-cycle-max 25 --requirepass "$$(cat /run/secrets/redis_password)"
+        else
+          redis-server --appendonly yes --appendfsync everysec --maxmemory 8gb --maxmemory-policy allkeys-lru --save 900 1 --save 300 10 --save 3600 100000 --activedefrag yes --active-defrag-ignore-bytes 100mb --active-defrag-threshold-lower 10 --active-defrag-threshold-upper 100 --active-defrag-cycle-min 1 --active-defrag-cycle-max 25
+        fi
+      '
+    secrets:
+      - redis_password
+    volumes:
+      - cz_redis_data:/data
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - cz-network
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password 2>/dev/null)\" ping 2>/dev/null || redis-cli ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ============================================================
+  # INGEST SERVICE - Czech Republic
+  # ============================================================
+  cz-ingest:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: cz-ingest
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_czech
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=cz
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=cz-postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_cz
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_CZECH:-dev_key_cz_1,dev_key_cz_2}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-10}
+    ports:
+      - "3006:3000"
+    depends_on:
+      cz-postgres:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # WORKER - Czech Republic BullMQ processor
+  # ============================================================
+  cz-worker:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: cz-worker
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=cz
+      - DB_HOST=cz-postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_cz
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-20}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-10}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # ML PRICING SERVICE - Price predictions
+  # ============================================================
+  cz-ml-pricing:
+    build:
+      context: ..
+      dockerfile: ml-pricing-service/Dockerfile
+    container_name: cz-ml-pricing
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_ml_pricing
+        target: api_keys
+    environment:
+      - PORT=3500
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - SUPPORTED_COUNTRIES=czech
+      - DB_HOST=cz-postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_cz
+      - DB_READ_USER=ml_pricing_readonly
+      - DB_READ_PASSWORD=${ML_DB_READ_PASSWORD:-ml_pricing_readonly_dev}
+      - DB_MAX_CONNECTIONS=10
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - API_KEYS=${API_KEYS_ML_PRICING:-dev_ml_key_1}
+      - MODEL_STORAGE_PATH=/app/models
+      - PYTHON_PATH=python3
+      - TRAINING_CRON=0 2 * * 0
+      - MIN_TRAINING_SAMPLES=100
+      - LOG_LEVEL=info
+    volumes:
+      - cz_ml_models:/app/models
+    ports:
+      - "3500:3500"
+    depends_on:
+      cz-postgres:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3500/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # CZECH SCRAPERS
+  # ============================================================
+
+  # Sreality.cz (largest Czech portal)
+  cz-scraper-sreality:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/sreality/Dockerfile
+    container_name: cz-scraper-sreality
+    environment:
+      - PORT=8102
+      - WORKER_CONCURRENCY=30
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_SREALITY=${INGEST_API_KEY_SREALITY:-dev_key_cz_1}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8102:8102"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8102/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Bezrealitky.cz (no-agent portal)
+  cz-scraper-bezrealitky:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/bezrealitky/Dockerfile
+    container_name: cz-scraper-bezrealitky
+    environment:
+      - PORT=8103
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_BEZREALITKY=${INGEST_API_KEY_BEZREALITKY:-dev_key_cz_1}
+    ports:
+      - "8103:8103"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8103/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Reality.cz
+  cz-scraper-reality:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/reality/Dockerfile
+    container_name: cz-scraper-reality
+    environment:
+      - PORT=8104
+      - MAX_PAGES=100
+      - FETCH_DETAILS=false
+      - ENABLE_CHECKSUM_MODE=false
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_REALITY=${INGEST_API_KEY_REALITY:-dev_key_cz_1}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8104:8104"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8104/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # iDNES Reality (Czech media group portal)
+  cz-scraper-idnes:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/idnes-reality/Dockerfile
+    container_name: cz-scraper-idnes
+    environment:
+      - PORT=8105
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_IDNES_REALITY=${INGEST_API_KEY_IDNES_REALITY:-dev_key_cz_1}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - WORKER_CONCURRENCY=10
+    ports:
+      - "8105:8105"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    secrets:
+      - redis_password
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8105/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Realingo.cz (GraphQL-based portal)
+  cz-scraper-realingo:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/realingo/Dockerfile
+    container_name: cz-scraper-realingo
+    environment:
+      - PORT=8106
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_REALINGO=${INGEST_API_KEY_REALINGO:-dev_key_cz_1}
+    ports:
+      - "8106:8106"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8106/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # UlovDomov.cz (rental-focused portal)
+  cz-scraper-ulovdomov:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/ulovdomov/Dockerfile
+    container_name: cz-scraper-ulovdomov
+    environment:
+      - PORT=8107
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_ULOVDOMOV=${INGEST_API_KEY_ULOVDOMOV:-dev_key_cz_1}
+    ports:
+      - "8107:8107"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8107/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Bazos.cz (classifieds portal)
+  cz-scraper-bazos:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/bazos/Dockerfile
+    container_name: cz-scraper-bazos
+    environment:
+      - PORT=8108
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_BAZOS=${INGEST_API_KEY_BAZOS:-dev_key_cz_1}
+      - MAX_PAGES=10000
+    ports:
+      - "8108:8108"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8108/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # CeskeReality.cz
+  cz-scraper-ceskereality:
+    build:
+      context: ..
+      dockerfile: scrapers/Czech Republic/ceskereality/Dockerfile
+    container_name: cz-scraper-ceskereality
+    environment:
+      - PORT=8109
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=dev_key_cz_1
+      - INGEST_API_KEY_CESKEREALITY=${INGEST_API_KEY_CESKEREALITY:-dev_key_cz_1}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8109:8109"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8109/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # POLYGON SERVICE - Geo queries & boundary lookups
+  # ============================================================
+  cz-polygon-service:
+    build:
+      context: ..
+      dockerfile: polygon-service/Dockerfile
+    container_name: cz-polygon-service
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_polygon
+        target: api_keys
+    environment:
+      - PORT=3100
+      - HOST=0.0.0.0
+      - LOG_LEVEL=info
+      - DB_HOST=cz-postgres
+      - DB_PORT=5432
+      - DB_NAME=landomo_geocoding
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:-landomo_dev_pass}
+      - DB_MAX_CONNECTIONS=10
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - CACHE_TTL_SECONDS=3600
+      - API_KEYS=${API_KEYS_POLYGON:-dev_key_polygon_1}
+      - OVERPASS_API_URL=https://overpass-api.de/api/interpreter
+      - OVERPASS_TIMEOUT=6000
+      - OVERPASS_RETRY_DELAY=5000
+      - OVERPASS_MAX_RETRIES=3
+    ports:
+      - "${POLYGON_SERVICE_PORT:-4300}:3100"
+    depends_on:
+      cz-postgres:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3100/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # PGBOUNCER - Connection pooler for search-service
+  # Transaction mode: multiplexes 100 client connections → 25 real DB connections
+  # ============================================================
+  cz-pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: cz-pgbouncer
+    environment:
+      - DB_USER=search_readonly
+      - DB_PASSWORD=${SEARCH_DB_READ_PASSWORD:-search_readonly_dev}
+      - DB_HOST=cz-postgres
+      - DB_NAME=landomo_cz
+      - POOL_MODE=transaction
+      - MAX_CLIENT_CONN=200
+      - DEFAULT_POOL_SIZE=200
+      - AUTH_TYPE=plain
+      - SERVER_IDLE_TIMEOUT=600
+      - CLIENT_IDLE_TIMEOUT=0
+    ports:
+      - "6432:5432"
+    depends_on:
+      cz-postgres:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U search_readonly || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ============================================================
+  # SEARCH SERVICE - Federated search API
+  # ============================================================
+  cz-search:
+    build:
+      context: ..
+      dockerfile: search-service/Dockerfile
+    container_name: cz-search
+    secrets:
+      - db_read_password
+      - redis_password
+    environment:
+      - PORT=4000
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - SUPPORTED_COUNTRIES=czech
+      - DB_HOST=cz-pgbouncer
+      - DB_PORT=5432
+      - DB_READ_USER=search_readonly
+      - DB_READ_PASSWORD=${SEARCH_DB_READ_PASSWORD:-search_readonly_dev}
+      - DB_MAX_CONNECTIONS=200
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - DEFAULT_SEARCH_LIMIT=20
+      - MAX_SEARCH_LIMIT=100
+      - CACHE_SEARCH_TTL=300
+      - CACHE_DETAIL_TTL=1800
+      - CACHE_AGGREGATION_TTL=3600
+      - DEFAULT_GEO_RADIUS_KM=10
+      - MAX_GEO_RADIUS_KM=100
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-}
+      - RATE_LIMIT_DISABLED=true
+    ports:
+      - "${SEARCH_SERVICE_PORT:-4000}:4000"
+    depends_on:
+      cz-pgbouncer:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:4000/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # MONITORING STACK - Prometheus + Grafana + Exporters
+  # ============================================================
+
+  cz-prometheus:
+    image: prom/prometheus:latest
+    container_name: cz-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./monitoring/prometheus-cz.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+      - cz_prometheus_data:/prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    depends_on:
+      - cz-alertmanager
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  cz-alertmanager:
+    image: prom/alertmanager:latest
+    container_name: cz-alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    ports:
+      - "${ALERTMANAGER_PORT:-9093}:9093"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9093/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  cz-grafana:
+    image: grafana/grafana:latest
+    container_name: cz-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - cz_grafana_data:/var/lib/grafana
+      - ./monitoring/grafana-dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana-datasources-cz.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    depends_on:
+      - cz-prometheus
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: cz-postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${DB_USER:-landomo}:${DB_PASSWORD:-landomo_dev_pass}@cz-postgres:5432/postgres?sslmode=disable"
+      PG_EXPORTER_EXTEND_QUERY_PATH: /etc/postgres-exporter/postgres-queries.yml
+      PG_EXPORTER_AUTO_DISCOVER_DATABASES: "true"
+      PG_EXPORTER_EXCLUDE_DATABASES: "template0,template1"
+    volumes:
+      - ./monitoring/postgres-queries.yml:/etc/postgres-exporter/postgres-queries.yml:ro
+    ports:
+      - "${POSTGRES_EXPORTER_PORT:-9187}:9187"
+    depends_on:
+      cz-postgres:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9187/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  cz-redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: cz-redis-exporter
+    secrets:
+      - redis_password
+    environment:
+      - REDIS_ADDR=redis://cz-redis:6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+    ports:
+      - "${REDIS_EXPORTER_PORT:-9121}:9121"
+    depends_on:
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9121/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  cz-node-exporter:
+    image: prom/node-exporter:latest
+    container_name: cz-node-exporter
+    command:
+      - '--path.rootfs=/host'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - "${NODE_EXPORTER_PORT:-9100}:9100"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9100/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  cz-cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cz-cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "${CADVISOR_PORT:-8080}:8080"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s

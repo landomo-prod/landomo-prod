@@ -1,0 +1,699 @@
+{
+  "title": "Data Quality",
+  "tags": [
+    "landomo",
+    "data-quality",
+    "monitoring"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "5m",
+  "uid": "landomo-data-quality",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Data Completeness Score",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  ROUND(100.0 * COUNT(*) FILTER (WHERE \n    title IS NOT NULL AND \n    price IS NOT NULL AND \n    property_type IS NOT NULL AND \n    city IS NOT NULL\n  ) / NULLIF(COUNT(*), 0), 1) as \"Completeness %\"\nFROM properties \nWHERE created_at > NOW() - INTERVAL '24 hours'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 70,
+                "color": "yellow"
+              },
+              {
+                "value": 90,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "percent",
+          "decimals": 1
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Missing Titles",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Missing\" FROM properties WHERE title IS NULL OR title = ''",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 10,
+                "color": "yellow"
+              },
+              {
+                "value": 100,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Missing Prices",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Missing\" FROM properties WHERE price IS NULL OR price <= 0",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 10,
+                "color": "yellow"
+              },
+              {
+                "value": 100,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Missing Coordinates",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Missing\" FROM properties WHERE latitude IS NULL OR longitude IS NULL",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 50,
+                "color": "yellow"
+              },
+              {
+                "value": 200,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Field Completeness by Portal",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal as \"Portal\",\n  COUNT(*) as \"Total\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE title IS NOT NULL) / NULLIF(COUNT(*), 0), 1) as \"Title %\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE price IS NOT NULL AND price > 0) / NULLIF(COUNT(*), 0), 1) as \"Price %\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE property_type IS NOT NULL) / NULLIF(COUNT(*), 0), 1) as \"Type %\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE city IS NOT NULL) / NULLIF(COUNT(*), 0), 1) as \"City %\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE latitude IS NOT NULL AND longitude IS NOT NULL) / NULLIF(COUNT(*), 0), 1) as \"Coords %\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE bedrooms IS NOT NULL) / NULLIF(COUNT(*), 0), 1) as \"Bedrooms %\"\nFROM properties \nGROUP BY portal \nORDER BY \"Total\" DESC",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      }
+    },
+    {
+      "id": 6,
+      "title": "Critical Fields Missing",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  'Title' as metric,\n  COUNT(*) as value \nFROM properties \nWHERE title IS NULL OR title = ''\nUNION ALL\nSELECT \n  'Price' as metric,\n  COUNT(*) as value \nFROM properties \nWHERE price IS NULL OR price <= 0\nUNION ALL\nSELECT \n  'Property Type' as metric,\n  COUNT(*) as value \nFROM properties \nWHERE property_type IS NULL OR property_type = ''\nUNION ALL\nSELECT \n  'City' as metric,\n  COUNT(*) as value \nFROM properties \nWHERE city IS NULL OR city = ''\nUNION ALL\nSELECT \n  'Coordinates' as metric,\n  COUNT(*) as value \nFROM properties \nWHERE latitude IS NULL OR longitude IS NULL\nUNION ALL\nSELECT \n  'Images' as metric,\n  COUNT(*) as value \nFROM properties \nWHERE images IS NULL OR jsonb_array_length(images) = 0",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 10,
+                "color": "yellow"
+              },
+              {
+                "value": 50,
+                "color": "orange"
+              },
+              {
+                "value": 100,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Duplicate Detection (Same Portal ID)",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 16
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Duplicates\" FROM (\n  SELECT portal_id, portal, COUNT(*) as cnt \n  FROM properties \n  GROUP BY portal_id, portal \n  HAVING COUNT(*) > 1\n) sub",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 1,
+                "color": "yellow"
+              },
+              {
+                "value": 10,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 8,
+      "title": "Stale Listings (>72h)",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 16
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Stale\" FROM properties WHERE last_seen_at < NOW() - INTERVAL '72 hours' AND status = 'active'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 50,
+                "color": "yellow"
+              },
+              {
+                "value": 200,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 9,
+      "title": "Price Anomalies",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 16
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Anomalies\" FROM properties WHERE price > 0 AND (price < 1000 OR price > 50000000)",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 5,
+                "color": "yellow"
+              },
+              {
+                "value": 20,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Invalid Coordinates",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 16
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Invalid\" FROM properties WHERE (latitude < -90 OR latitude > 90 OR longitude < -180 OR longitude > 180) AND (latitude IS NOT NULL OR longitude IS NOT NULL)",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 1,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 11,
+      "title": "Data Quality Trend (24h)",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  date_trunc('hour', created_at) as time,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE title IS NOT NULL) / NULLIF(COUNT(*), 0), 1) as \"Title\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE price IS NOT NULL AND price > 0) / NULLIF(COUNT(*), 0), 1) as \"Price\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE latitude IS NOT NULL AND longitude IS NOT NULL) / NULLIF(COUNT(*), 0), 1) as \"Coordinates\",\n  ROUND(100.0 * COUNT(*) FILTER (WHERE images IS NOT NULL AND jsonb_array_length(images) > 0) / NULLIF(COUNT(*), 0), 1) as \"Images\"\nFROM properties \nWHERE created_at > NOW() - INTERVAL '24 hours'\nGROUP BY time \nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "title": "Property Changes (Last 24h)",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 30
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  date_trunc('hour', changed_at) as time,\n  COUNT(*) as \"Total Changes\"\nFROM property_changes \nWHERE changed_at > NOW() - INTERVAL '24 hours'\nGROUP BY time \nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "single"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "title": "Status Distribution",
+      "type": "piechart",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 30
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  COALESCE(status, 'unknown') as metric,\n  COUNT(*) as value \nFROM properties \nGROUP BY status",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "pieType": "donut",
+        "displayLabels": [
+          "name",
+          "percent"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "title": "Recent Price Changes",
+      "type": "table",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 30
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal,\n  old_value as \"Old Price\",\n  new_value as \"New Price\",\n  changed_at as \"Changed At\"\nFROM property_changes \nWHERE field_name = 'price' \n  AND changed_at > NOW() - INTERVAL '24 hours'\nORDER BY changed_at DESC \nLIMIT 20",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 15,
+      "title": "Ingestion Errors (24h)",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal as \"Portal\",\n  portal_id as \"Portal ID\",\n  error_message as \"Error\",\n  ingested_at as \"Time\"\nFROM ingestion_log \nWHERE error_message IS NOT NULL \n  AND ingested_at > NOW() - INTERVAL '24 hours'\nORDER BY ingested_at DESC \nLIMIT 50",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    }
+  ],
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h"
+    ]
+  }
+}

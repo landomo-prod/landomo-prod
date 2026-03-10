@@ -1,0 +1,280 @@
+{
+  "timestamp": "2026-02-16T07:55:54.171Z",
+  "scraper": "ceskereality",
+  "elapsed_seconds": 50.7,
+  "totalTested": 12,
+  "totalPassed": 12,
+  "allPass": true,
+  "categories": [
+    {
+      "name": "apartment",
+      "status": "PASS",
+      "listings": [
+        {
+          "url": "https://www.ceskereality.cz/prodej/byty/byty-2-kk/praha/prodej-bytu-2-kk-43-m2-valentova-3452097.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 22,
+          "keyValues": {
+            "property_category": "apartment",
+            "title": "Prodej bytu 2+kk 43 m²",
+            "price": "8787218 CZK",
+            "city": "Praha",
+            "images": 13,
+            "bedrooms": 1,
+            "sqm": 43,
+            "has_elevator": false,
+            "has_balcony": true,
+            "has_parking": true,
+            "has_basement": true,
+            "floor": 6,
+            "construction_type": "concrete",
+            "energy_class": "B"
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/byty/byty-2-kk/praha/prodej-bytu-2-kk-64-m2-28-pluku-3520415.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 23,
+          "keyValues": {
+            "property_category": "apartment",
+            "title": "Prodej bytu 2+kk 64 m²",
+            "price": "9100000 CZK",
+            "city": "Praha",
+            "images": 20,
+            "bedrooms": 1,
+            "sqm": 67,
+            "has_elevator": true,
+            "has_balcony": true,
+            "has_parking": false,
+            "has_basement": false,
+            "floor": 5,
+            "construction_type": "brick",
+            "condition": "good",
+            "energy_class": "D"
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/byty/byty-1-1/mladosovice/prodej-bytu-1-1-40-m2-3657691.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [
+            "price is 0"
+          ],
+          "fieldsExtracted": 20,
+          "keyValues": {
+            "property_category": "apartment",
+            "title": "Prodej bytu 1+1 40 m²",
+            "price": "0 CZK",
+            "city": "Mladošovice",
+            "images": 8,
+            "bedrooms": 0,
+            "sqm": 40,
+            "has_elevator": false,
+            "has_balcony": false,
+            "has_parking": false,
+            "has_basement": true,
+            "construction_type": "panel",
+            "condition": "good",
+            "energy_class": "G"
+          }
+        }
+      ],
+      "totalListings": 3,
+      "passedListings": 3
+    },
+    {
+      "name": "house",
+      "status": "PASS",
+      "listings": [
+        {
+          "url": "https://www.ceskereality.cz/prodej/rodinne-domy/rodinne-domy/jinin/prodej-rodinneho-domu-55-m2-3626868.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 19,
+          "keyValues": {
+            "property_category": "house",
+            "title": "Prodej rodinného domu 55 m²",
+            "price": "5100000 CZK",
+            "city": "Jinín",
+            "images": 25,
+            "bedrooms": 1,
+            "sqm_living": 55,
+            "sqm_plot": 838,
+            "has_garden": true,
+            "has_garage": false,
+            "has_parking": true,
+            "has_basement": true
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/rodinne-domy/rodinne-domy/trubska/prodej-rodinneho-domu-133-m2-3648324.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 19,
+          "keyValues": {
+            "property_category": "house",
+            "title": "Prodej rodinného domu 133 m²",
+            "price": "21500000 CZK",
+            "city": "Trubská",
+            "images": 20,
+            "bedrooms": 2,
+            "sqm_living": 133,
+            "sqm_plot": 1525,
+            "has_garden": true,
+            "has_garage": true,
+            "has_parking": true,
+            "has_basement": false
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/rodinne-domy/chaty/vrchlabi/prodej-chaty-12-m2-3655110.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 19,
+          "keyValues": {
+            "property_category": "house",
+            "title": "Prodej chaty 12 m²",
+            "price": "299000 CZK",
+            "city": "Vrchlabí",
+            "images": 20,
+            "bedrooms": 0,
+            "sqm_living": 12,
+            "sqm_plot": 400,
+            "has_garden": false,
+            "has_garage": false,
+            "has_parking": false,
+            "has_basement": false
+          }
+        }
+      ],
+      "totalListings": 3,
+      "passedListings": 3
+    },
+    {
+      "name": "land",
+      "status": "PASS",
+      "listings": [
+        {
+          "url": "https://www.ceskereality.cz/prodej/pozemky/louky/holin/prodej-louky-3-562-m2-2791004.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 13,
+          "keyValues": {
+            "property_category": "land",
+            "title": "Prodej louky 3 562 m²",
+            "price": "299000 CZK",
+            "city": "Holín",
+            "images": 3,
+            "area_plot_sqm": 3562
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/pozemky/stavebni-parcely/ricany/prodej-stavebni-parcely-533-m2-brezska-3610212.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [
+            "price is 0"
+          ],
+          "fieldsExtracted": 12,
+          "keyValues": {
+            "property_category": "land",
+            "title": "Prodej stavební parcely 533 m²",
+            "price": "0 CZK",
+            "city": "Říčany",
+            "images": 10,
+            "area_plot_sqm": 533
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/pozemky/stavebni-parcely/kamenice/prodej-stavebni-parcely-823-m2-tynska-3536907.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [
+            "price is 0"
+          ],
+          "fieldsExtracted": 12,
+          "keyValues": {
+            "property_category": "land",
+            "title": "Prodej stavební parcely 823 m²",
+            "price": "0 CZK",
+            "city": "Kamenice",
+            "images": 7,
+            "area_plot_sqm": 823
+          }
+        }
+      ],
+      "totalListings": 3,
+      "passedListings": 3
+    },
+    {
+      "name": "commercial",
+      "status": "PASS",
+      "listings": [
+        {
+          "url": "https://www.ceskereality.cz/prodej/pozemky/komercni/stara-paka/prodej-komercniho-pozemku-4-486-m2-3320206.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 16,
+          "keyValues": {
+            "property_category": "commercial",
+            "title": "Prodej komerčního pozemku 4 486 m²",
+            "price": "4400000 CZK",
+            "city": "Stará Paka",
+            "images": 6,
+            "sqm_total": 4486,
+            "has_elevator": false,
+            "has_parking": false,
+            "has_bathrooms": false
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/pozemky/komercni/pistin/prodej-komercniho-pozemku-3-503-m2-3101810.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 16,
+          "keyValues": {
+            "property_category": "commercial",
+            "title": "Prodej komerčního pozemku 3 503 m²",
+            "price": "8390000 CZK",
+            "city": "Pištín",
+            "images": 10,
+            "sqm_total": 3503,
+            "has_elevator": false,
+            "has_parking": false,
+            "has_bathrooms": false
+          }
+        },
+        {
+          "url": "https://www.ceskereality.cz/prodej/pozemky/komercni/velka-dobra/prodej-komercniho-pozemku-15-944-m2-3453881.html",
+          "pass": true,
+          "errors": [],
+          "warnings": [],
+          "fieldsExtracted": 16,
+          "keyValues": {
+            "property_category": "commercial",
+            "title": "Prodej komerčního pozemku 15 944 m²",
+            "price": "10900000 CZK",
+            "city": "Velká Dobrá",
+            "images": 12,
+            "sqm_total": 15944,
+            "has_elevator": false,
+            "has_parking": false,
+            "has_bathrooms": false
+          }
+        }
+      ],
+      "totalListings": 3,
+      "passedListings": 3
+    }
+  ]
+}

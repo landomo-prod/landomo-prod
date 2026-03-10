@@ -1,0 +1,220 @@
+{
+  "timestamp": "2026-02-07T19:35:10.338Z",
+  "total_tested": 8,
+  "listings": [
+    {
+      "hash_id": 0,
+      "property_type": "apartment",
+      "title": "Pronájem bytu 3+kk 107 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {
+        "area_terrace": 6,
+        "area_cellar": 5
+      },
+      "raw_items_with_area": [
+        {
+          "type": "boolean",
+          "name": "Balkón",
+          "value": true
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Terasa",
+          "value": "6"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Sklep",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "hash_id": 0,
+      "property_type": "apartment",
+      "title": "Prodej bytu 3+kk 62 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {
+        "area_cellar": 1,
+        "area_loggia": 6
+      },
+      "raw_items_with_area": [
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Lodžie",
+          "value": "6"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Sklep",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "hash_id": 0,
+      "property_type": "commercial",
+      "title": "Prodej ubytovacího zařízení 903 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {}
+    },
+    {
+      "hash_id": 0,
+      "property_type": "commercial",
+      "title": "Prodej ubytovacího zařízení 382 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {}
+    },
+    {
+      "hash_id": 0,
+      "property_type": "house",
+      "title": "Prodej  chalupy 99 m², pozemek 2 445 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {
+        "area_garden": 1915,
+        "area_cellar": 15
+      },
+      "raw_items_with_area": [
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Sklep",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "hash_id": 0,
+      "property_type": "house",
+      "title": "Prodej  chaty 24 m², pozemek 464 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {
+        "area_garden": 449,
+        "area_cellar": 2
+      },
+      "raw_items_with_area": [
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Sklep",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "hash_id": 0,
+      "property_type": "apartment",
+      "title": "Prodej bytu 4+1 80 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {
+        "area_cellar": 3,
+        "area_loggia": 5
+      },
+      "raw_items_with_area": [
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Lodžie",
+          "value": "5"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Sklep",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "hash_id": 0,
+      "property_type": "apartment",
+      "title": "Pronájem bytu 3+1 73 m²",
+      "url": "https://www.sreality.cz/detail/undefined",
+      "extracted_fields": {
+        "area_cellar": 4,
+        "area_loggia": 3
+      },
+      "raw_items_with_area": [
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Lodžie",
+          "value": "3"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Sklep",
+          "value": "4"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "field_extraction_rates": {
+      "area_balcony": {
+        "count": 0,
+        "percentage": "0.0%"
+      },
+      "area_terrace": {
+        "count": 1,
+        "percentage": "12.5%"
+      },
+      "area_garden": {
+        "count": 2,
+        "percentage": "25.0%"
+      },
+      "area_cellar": {
+        "count": 6,
+        "percentage": "75.0%"
+      },
+      "area_loggia": {
+        "count": 3,
+        "percentage": "37.5%"
+      },
+      "has_hot_water": {
+        "count": 0,
+        "percentage": "0.0%"
+      }
+    },
+    "area_statistics": {
+      "area_balcony": {
+        "unit": "sqm"
+      },
+      "area_terrace": {
+        "min": 6,
+        "max": 6,
+        "avg": 6,
+        "unit": "sqm"
+      },
+      "area_garden": {
+        "min": 449,
+        "max": 1915,
+        "avg": 1182,
+        "unit": "sqm"
+      },
+      "area_cellar": {
+        "min": 1,
+        "max": 15,
+        "avg": 5,
+        "unit": "sqm"
+      },
+      "area_loggia": {
+        "min": 3,
+        "max": 6,
+        "avg": 4.67,
+        "unit": "sqm"
+      }
+    },
+    "property_type_distribution": {
+      "apartment": 4,
+      "commercial": 2,
+      "house": 2
+    },
+    "format_variations_handled": []
+  }
+}

@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.next/
+out/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Secrets
+secrets/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ML models
+*.pkl
+*.joblib
+models/
+
+# Coverage
+coverage/
+
+# Docker volumes (local)
+data/
+
+# Temp
+tmp/
+.tmp/
+
+# Embedded git repos
+source/waitlist/

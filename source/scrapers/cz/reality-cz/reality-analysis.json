@@ -1,0 +1,228 @@
+{
+  "possibleContainers": [
+    {
+      "selector": "div.flr",
+      "count": 27
+    },
+    {
+      "selector": "div.clearboth",
+      "count": 31
+    },
+    {
+      "selector": "input.ui-helper-hidden-accessible",
+      "count": 9
+    },
+    {
+      "selector": "span.ui-button-text",
+      "count": 10
+    },
+    {
+      "selector": "div.fll",
+      "count": 7
+    },
+    {
+      "selector": "div.subgroup",
+      "count": 32
+    },
+    {
+      "selector": "div.hlavicka",
+      "count": 10
+    },
+    {
+      "selector": "div.subtelo",
+      "count": 13
+    },
+    {
+      "selector": "label.hlavicka",
+      "count": 14
+    },
+    {
+      "selector": "div.multak",
+      "count": 12
+    },
+    {
+      "selector": "button.ui-multiselect",
+      "count": 12
+    },
+    {
+      "selector": "span.ui-icon",
+      "count": 24
+    },
+    {
+      "selector": "div.ui-multiselect-menu",
+      "count": 12
+    },
+    {
+      "selector": "div.ui-multiselect-header",
+      "count": 12
+    },
+    {
+      "selector": "ul.ui-helper-reset",
+      "count": 12
+    },
+    {
+      "selector": "li.ui-multiselect-close",
+      "count": 12
+    },
+    {
+      "selector": "a.ui-multiselect-close",
+      "count": 12
+    },
+    {
+      "selector": "ul.ui-multiselect-checkboxes",
+      "count": 12
+    },
+    {
+      "selector": "li.lifirst",
+      "count": 12
+    },
+    {
+      "selector": "label.ui-state-hover",
+      "count": 12
+    },
+    {
+      "selector": "li.",
+      "count": 86
+    },
+    {
+      "selector": "div.tar",
+      "count": 12
+    },
+    {
+      "selector": "input.button",
+      "count": 14
+    },
+    {
+      "selector": "div.fltrdisp",
+      "count": 12
+    },
+    {
+      "selector": "div.xvypis",
+      "count": 25
+    },
+    {
+      "selector": "div.thumbnail",
+      "count": 25
+    },
+    {
+      "selector": "div.obaltextu",
+      "count": 25
+    },
+    {
+      "selector": "div.bmvypis",
+      "count": 25
+    },
+    {
+      "selector": "p.voko",
+      "count": 25
+    },
+    {
+      "selector": "p.vypisnaz",
+      "count": 25
+    },
+    {
+      "selector": "p.lokalita",
+      "count": 25
+    },
+    {
+      "selector": "p.vypiscena",
+      "count": 25
+    },
+    {
+      "selector": "p.vypisikony",
+      "count": 25
+    },
+    {
+      "selector": "a.hide",
+      "count": 25
+    },
+    {
+      "selector": "a.bookmark",
+      "count": 25
+    },
+    {
+      "selector": "a.detail",
+      "count": 25
+    },
+    {
+      "selector": "img.vat",
+      "count": 47
+    },
+    {
+      "selector": "div.clb",
+      "count": 24
+    },
+    {
+      "selector": "div.fancybox-bg",
+      "count": 8
+    },
+    {
+      "selector": "span.linkselectValue",
+      "count": 8
+    }
+  ],
+  "linkPatterns": [
+    "https://www.reality.cz/poptavka/prodej/byty/Ceska-republika/",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/#",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/#okresy",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/#mcasti",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/#gmapa",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/#jednotka",
+    "https://www.reality.cz/prodej/byty/Jihocesky-kraj/",
+    "https://www.reality.cz/prodej/byty/Jihomoravsky-kraj/",
+    "https://www.reality.cz/prodej/byty/Karlovarsky-kraj/",
+    "https://www.reality.cz/prodej/byty/Kralovehradecky-kraj/",
+    "https://www.reality.cz/prodej/byty/Liberecky-kraj/",
+    "https://www.reality.cz/prodej/byty/Moravskoslezsky-kraj/",
+    "https://www.reality.cz/prodej/byty/Olomoucky-kraj/",
+    "https://www.reality.cz/prodej/byty/Pardubicky-kraj/",
+    "https://www.reality.cz/prodej/byty/Plzensky-kraj/",
+    "https://www.reality.cz/prodej/byty/hlavni-mesto-Praha/",
+    "https://www.reality.cz/prodej/byty/Stredocesky-kraj/",
+    "https://www.reality.cz/prodej/byty/Ustecky-kraj/",
+    "https://www.reality.cz/prodej/byty/kraj-Vysocina/",
+    "https://www.reality.cz/prodej/byty/Zlinsky-kraj/",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/cena-X-X-X/",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/cena-X-max-X/",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=DX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=FX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=NX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=QX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=UX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=XX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=hX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?f=iX",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?p=i",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?p=s",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/#sort",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/X-X/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/X-XFXHX/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/YLD-X/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/EXN-ZXKDXN/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/APX-NX/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/BX-X/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/YMJ-X/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/ASX-X/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/DNX-X/?c=X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/?g=X-X-X_X",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/mapa/",
+    "https://www.reality.cz/prodej/byty/Ceska-republika/#hledevcf"
+  ],
+  "dataAttributes": [
+    "data-ad-client",
+    "data-ad-slot",
+    "data-ad-format",
+    "data-full-width-responsive",
+    "data-adsbygoogle-status",
+    "data-ad-status",
+    "data-google-ad-efd",
+    "data-google-vignette",
+    "data-google-interstitial",
+    "data-google-container-id",
+    "data-load-complete"
+  ],
+  "classPatterns": [
+    "as-selection-item blur",
+    "as-selection-item ml10 blur"
+  ]
+}

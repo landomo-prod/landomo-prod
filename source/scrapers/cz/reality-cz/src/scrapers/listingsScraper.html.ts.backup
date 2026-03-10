@@ -1,0 +1,685 @@
+import * as cheerio from 'cheerio';
+import { Page } from 'puppeteer';
+import { browserPool } from '../utils/browserPool';
+import {
+  RealityListing,
+  RealityScraperConfig,
+  ScrapingContext,
+  PropertyTypeCzech,
+  TransactionTypeCzech
+} from '../types/realityTypes';
+import { batchCreateRealityChecksums } from '../utils/checksumExtractor';
+import { ChecksumClient, ChecksumBatchResponse } from '@landomo/core';
+
+/**
+ * Reality.cz HTML scraper using Puppeteer + cheerio
+ * Uses headless browser for JavaScript rendering, then cheerio for HTML parsing
+ */
+export class ListingsScraper {
+  private config: RealityScraperConfig;
+  private userAgents: string[];
+  private initialized: boolean = false;
+
+  constructor() {
+    this.userAgents = [
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    ];
+
+    this.config = {
+      base_url: 'https://www.reality.cz',
+      items_per_page: 25, // Based on API inspection
+      max_pages: parseInt(process.env.MAX_PAGES || '10000', 10), // Configurable via env (default: effectively unlimited, stops after 3 consecutive empty pages)
+      delay_ms: 1500 // 1.5 second delay between requests (Puppeteer is slower than axios)
+    };
+  }
+
+  /**
+   * Initialize browser pool
+   */
+  async initialize(): Promise<void> {
+    if (this.initialized) {
+      return;
+    }
+
+    await browserPool.initialize();
+    this.initialized = true;
+  }
+
+  /**
+   * Shutdown browser pool
+   */
+  async shutdown(): Promise<void> {
+    await browserPool.shutdown();
+    this.initialized = false;
+  }
+
+  /**
+   * Get random user agent for rotation
+   */
+  private getRandomUserAgent(): string {
+    return this.userAgents[Math.floor(Math.random() * this.userAgents.length)];
+  }
+
+  /**
+   * Build URL for scraping
+   */
+  private buildUrl(context: ScrapingContext, page?: number): string {
+    const { transaction_type, property_type, region = 'Ceska-republika' } = context;
+
+    let url = `${this.config.base_url}/${transaction_type}/${property_type}/${region}/`;
+
+    // Add pagination if needed (based on API inspection: ?g=1-3-997_...)
+    // For simplicity, we'll scrape page by page using URL parameters
+    if (page && page > 1) {
+      // Reality.cz uses complex pagination params - we'll try standard page parameter
+      url += `?page=${page}`;
+    }
+
+    return url;
+  }
+
+  /**
+   * Fetch and parse a single page using Puppeteer for JavaScript rendering
+   */
+  private async scrapePage(url: string, context: ScrapingContext): Promise<RealityListing[]> {
+    let page: Page | null = null;
+
+    try {
+      console.log(`  Fetching: ${url}`);
+
+      // Get a page from the browser pool
+      page = await browserPool.getPage();
+
+      // Navigate to URL with retry logic
+      await browserPool.navigateWithRetry(page, url, 3, 'networkidle2');
+
+      // Get rendered content
+      const content = await browserPool.getPageContent(page);
+      const $ = cheerio.load(content);
+      const listings: RealityListing[] = [];
+      const pageUrl = url; // Store the search page URL for reference
+
+      // Parse listing cards using verified selectors from reality.cz
+      // Each listing is in a div.xvypis container
+      const $items = $('div.xvypis');
+
+      if ($items.length === 0) {
+        console.log('  No listings found with div.xvypis selector');
+        return [];
+      }
+
+      console.log(`  Found ${$items.length} listings`);
+
+
+      $items.each((i, element) => {
+        try {
+          const $item = $(element);
+
+          // Extract listing ID from the div id attribute (e.g., "id428016862", "id4001f09h3")
+          const itemId = $item.attr('id') || '';
+          const listingId = itemId.replace(/^id/, '') || `unknown_${i}`;
+
+          // Extract title and URL from p.vypisnaz > a
+          const $titleLink = $item.find('p.vypisnaz a').first();
+          const relativeUrl = $titleLink.attr('href') || '';
+          const url = relativeUrl ? (relativeUrl.startsWith('http') ? relativeUrl : this.config.base_url + relativeUrl) : '';
+          const title = $titleLink.text().trim() || 'Unknown';
+
+          // Extract price from p.vypiscena > span > strong
+          const priceText = $item.find('p.vypiscena span strong').first().text().trim();
+          const price = this.parsePrice(priceText);
+
+          // Extract location and property details from p.lokalita
+          // Format: "byt 2+1, 62 m², panel, osobní"
+          const lokaceText = $item.find('p.lokalita').first().text().trim();
+
+          // Parse disposition (e.g., "2+1", "1+kk")
+          const dispositionMatch = lokaceText.match(/(\d+\+(?:kk|\d))/i);
+          const disposition = dispositionMatch ? dispositionMatch[1] : undefined;
+
+          // Parse area (e.g., "62 m²")
+          const areaMatch = lokaceText.match(/(\d+)\s*m²/);
+          const area = areaMatch ? parseInt(areaMatch[1], 10) : undefined;
+          const areaText = areaMatch ? areaMatch[0] : '';
+
+          // Location is in the title (e.g., "Pod strání, Praha 10 - Strašnice")
+          const location = this.parseLocation(title);
+
+          // Extract image from div.thumbnail > a > img
+          const images: string[] = [];
+          const imgSrc = $item.find('div.thumbnail a img').first().attr('src');
+          if (imgSrc && !imgSrc.includes('placeholder') && !imgSrc.includes('icon')) {
+            const fullImgUrl = imgSrc.startsWith('http') ? imgSrc : this.config.base_url + imgSrc;
+            images.push(fullImgUrl);
+          }
+
+          const listing: RealityListing = {
+            id: listingId,
+            title,
+            transaction_type: context.transaction_type === 'prodej' ? 'sale' : 'rent',
+            property_type: this.mapPropertyType(context.property_type),
+            price,
+            price_text: priceText,
+            location,
+            area,
+            area_text: areaText,
+            description: lokaceText || undefined, // Use lokace text as description
+            images: images.length > 0 ? images : undefined,
+            url, // Individual listing URL
+            disposition,
+            scraped_at: new Date().toISOString(),
+            page_url: pageUrl // Search page URL where this listing was found
+          };
+
+          // Only add if we have at least a title and URL
+          if (listing.title && listing.title !== 'Unknown' && listing.url) {
+            listings.push(listing);
+          }
+
+        } catch (error: any) {
+          console.error(`  Error parsing listing item ${i}:`, error.message);
+        }
+      });
+
+      console.log(`  ✓ Parsed ${listings.length} listings from page`);
+      return listings;
+
+    } catch (error: any) {
+      console.error(`  Failed to scrape page ${url}:`, error.message);
+      throw error;
+    } finally {
+      // Always release the page back to the pool
+      if (page) {
+        await browserPool.releasePage(page);
+      }
+    }
+  }
+
+  /**
+   * Parse price from text
+   */
+  private parsePrice(priceText: string): number | undefined {
+    if (!priceText) return undefined;
+
+    // Remove spaces, "Kč", "CZK", etc.
+    const cleaned = priceText.replace(/\s/g, '').replace(/Kč|CZK|,-/gi, '');
+
+    // Extract numbers
+    const match = cleaned.match(/\d+/);
+    if (!match) return undefined;
+
+    const price = parseInt(match[0]);
+
+    // Check for thousands/millions indicators
+    if (priceText.toLowerCase().includes('mil')) {
+      return price * 1000000;
+    }
+    if (priceText.toLowerCase().includes('tis')) {
+      return price * 1000;
+    }
+
+    return price;
+  }
+
+  /**
+   * Parse location from text
+   */
+  private parseLocation(locationText: string): RealityListing['location'] {
+    if (!locationText) return {};
+
+    const parts = locationText.split(',').map(s => s.trim()).filter(Boolean);
+
+    return {
+      city: parts[0],
+      district: parts[1],
+      region: parts[2],
+      address: locationText
+    };
+  }
+
+  /**
+   * Parse area from text
+   */
+  private parseArea(areaText: string): number | undefined {
+    if (!areaText) return undefined;
+
+    const match = areaText.match(/(\d+(?:,\d+)?)\s*m/i);
+    if (!match) return undefined;
+
+    return parseFloat(match[1].replace(',', '.'));
+  }
+
+  /**
+   * Map Czech property type to standard
+   */
+  private mapPropertyType(czechType: PropertyTypeCzech): RealityListing['property_type'] {
+    const typeMap: Record<PropertyTypeCzech, RealityListing['property_type']> = {
+      'byty': 'apartment',
+      'domy': 'house',
+      'pozemky': 'land',
+      'komercni': 'commercial'
+    };
+    return typeMap[czechType] || 'other';
+  }
+
+  /**
+   * Parse floor from Czech format text
+   * Examples: "přízemí" (ground floor = 0), "1. podlaží", "3. patro"
+   */
+  private parseFloor(text?: string): number | undefined {
+    if (!text) return undefined;
+
+    // Normalize the text
+    const normalized = text.toLowerCase().trim();
+
+    // Check for ground floor
+    if (normalized.includes('přízemí')) {
+      return 0;
+    }
+
+    // Extract number from "N. podlaží" or "N. patro" or "N. floor"
+    const match = normalized.match(/(\d+)\.\s*(?:podlaží|patro|floor)/i);
+    if (match) {
+      return parseInt(match[1]);
+    }
+
+    // Also try just extracting a number if it's in the format like "3" or "2. podlaží"
+    const numberMatch = normalized.match(/^(\d+)/);
+    if (numberMatch) {
+      return parseInt(numberMatch[1]);
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Scrape all pages for a given context
+   */
+  private async scrapeContext(context: ScrapingContext): Promise<RealityListing[]> {
+    const allListings: RealityListing[] = [];
+    let currentPage = 1;
+    let consecutiveEmptyPages = 0;
+    const maxConsecutiveEmpty = 3;
+
+    console.log(`\nScraping ${context.transaction_type} - ${context.property_type}...`);
+
+    while (currentPage <= (this.config.max_pages || 40)) {
+      try {
+        const url = this.buildUrl(context, currentPage);
+        const listings = await this.scrapePage(url, context);
+
+        if (listings.length === 0) {
+          consecutiveEmptyPages++;
+          console.log(`  Page ${currentPage} returned no listings (${consecutiveEmptyPages}/${maxConsecutiveEmpty} empty)`);
+
+          if (consecutiveEmptyPages >= maxConsecutiveEmpty) {
+            console.log(`  Stopping after ${maxConsecutiveEmpty} consecutive empty pages`);
+            break;
+          }
+        } else {
+          consecutiveEmptyPages = 0;
+          allListings.push(...listings);
+          console.log(`  Total listings so far: ${allListings.length}`);
+        }
+
+        currentPage++;
+
+        // Respect rate limiting
+        if (currentPage <= (this.config.max_pages || 40)) {
+          const delay = this.config.delay_ms || 1000;
+          console.log(`  Waiting ${delay}ms before next page...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+
+      } catch (error: any) {
+        console.error(`  Error on page ${currentPage}:`, error.message);
+        consecutiveEmptyPages++;
+
+        if (consecutiveEmptyPages >= maxConsecutiveEmpty) {
+          console.log(`  Too many errors, stopping pagination`);
+          break;
+        }
+
+        currentPage++;
+      }
+    }
+
+    console.log(`✅ Completed ${context.transaction_type} - ${context.property_type}: ${allListings.length} listings`);
+    return allListings;
+  }
+
+  /**
+   * Scrape sales listings
+   */
+  async scrapeSales(): Promise<RealityListing[]> {
+    try {
+      await this.initialize();
+
+      const propertyTypes: PropertyTypeCzech[] = ['byty', 'domy', 'pozemky'];
+      const allListings: RealityListing[] = [];
+
+      for (const propertyType of propertyTypes) {
+        const listings = await this.scrapeContext({
+          transaction_type: 'prodej',
+          property_type: propertyType
+        });
+        allListings.push(...listings);
+      }
+
+      return allListings;
+    } finally {
+      // Note: Don't shutdown here - wait for rentals too
+    }
+  }
+
+  /**
+   * Scrape rental listings
+   */
+  async scrapeRentals(): Promise<RealityListing[]> {
+    try {
+      await this.initialize();
+
+      const propertyTypes: PropertyTypeCzech[] = ['byty', 'domy'];
+      const allListings: RealityListing[] = [];
+
+      for (const propertyType of propertyTypes) {
+        const listings = await this.scrapeContext({
+          transaction_type: 'pronajem',
+          property_type: propertyType
+        });
+        allListings.push(...listings);
+      }
+
+      return allListings;
+    } finally {
+      // Note: Don't shutdown here - wait for scrapeAll
+    }
+  }
+
+  /**
+   * Scrape detail page for a single listing using Puppeteer
+   */
+  private async scrapeDetailPage(url: string): Promise<Partial<RealityListing> | null> {
+    let page: Page | null = null;
+
+    try {
+      page = await browserPool.getPage();
+
+      // Navigate with retry
+      await browserPool.navigateWithRetry(page, url, 2, 'networkidle2');
+
+      // Get rendered content
+      const content = await browserPool.getPageContent(page);
+      const $ = cheerio.load(content);
+      const detail: Partial<RealityListing> = {};
+
+      // Extract detailed property attributes from parameter table/list
+      // Common Czech field names on detail pages
+      const attributeSelectors = [
+        '.parameters',
+        '.vlastnosti',
+        '[class*="parameter"]',
+        '[class*="attribute"]',
+        'table.properties',
+        'dl.properties'
+      ];
+
+      let attributes: Record<string, string> = {};
+
+      // Try to find parameters in various formats
+      for (const selector of attributeSelectors) {
+        $(selector).each((i, elem) => {
+          // Try table format (tr with td)
+          $(elem).find('tr').each((j, row) => {
+            const $cells = $(row).find('td, th');
+            if ($cells.length >= 2) {
+              const key = $cells.eq(0).text().trim().toLowerCase();
+              const value = $cells.eq(1).text().trim();
+              if (key && value) attributes[key] = value;
+            }
+          });
+
+          // Try list format (dt/dd)
+          $(elem).find('dt').each((j, dt) => {
+            const key = $(dt).text().trim().toLowerCase();
+            const value = $(dt).next('dd').text().trim();
+            if (key && value) attributes[key] = value;
+          });
+
+          // Try div format with label/value structure
+          $(elem).find('div').each((j, div) => {
+            const text = $(div).text().trim();
+            const parts = text.split(':');
+            if (parts.length === 2) {
+              const key = parts[0].trim().toLowerCase();
+              const value = parts[1].trim();
+              if (key && value) attributes[key] = value;
+            }
+          });
+        });
+      }
+
+      // Parse Czech attributes into standard fields
+      const parsedAttrs = this.parseDetailAttributes(attributes);
+      Object.assign(detail, parsedAttrs);
+
+      // Extract additional info that might not be in attributes
+      const description = $('#description, [class*="description"], [class*="popis"]').text().trim();
+      if (description) detail.description = description;
+
+      const features: string[] = [];
+      $('.features li, [class*="feature"], [class*="vybaveni"] li').each((i, elem) => {
+        const text = $(elem).text().trim();
+        if (text) features.push(text);
+      });
+      if (features.length > 0) detail.features = features;
+
+      return Object.keys(detail).length > 0 ? detail : null;
+
+    } catch (error: any) {
+      console.warn(`  Failed to scrape detail page ${url}:`, error.message);
+      return null;
+    } finally {
+      if (page) {
+        await browserPool.releasePage(page);
+      }
+    }
+  }
+
+  /**
+   * Parse Czech property attributes into standard fields
+   */
+  private parseDetailAttributes(attributes: Record<string, string>): Partial<RealityListing> {
+    const result: Partial<RealityListing> = {};
+
+    // Normalize attribute keys
+    const attrLower = Object.keys(attributes).reduce((acc, key) => {
+      acc[key.toLowerCase().replace(/\s+/g, ' ')] = attributes[key];
+      return acc;
+    }, {} as Record<string, string>);
+
+    // Map Czech attribute names
+    // Floor: "Podlaží" or "Patro"
+    if (attrLower['podlaží'] || attrLower['patro']) {
+      const floorText = attrLower['podlaží'] || attrLower['patro'];
+      result.floor = this.parseFloor(floorText);
+    }
+
+    if (attrLower['vlastnictví']) result.ownership = attrLower['vlastnictví'];
+    if (attrLower['stav objektu'] || attrLower['stav']) result.condition = attrLower['stav objektu'] || attrLower['stav'];
+    if (attrLower['vybavení']) result.furnished = attrLower['vybavení'];
+    if (attrLower['penb'] || attrLower['třída penb'] || attrLower['energetická třída']) {
+      result.energyRating = attrLower['penb'] || attrLower['třída penb'] || attrLower['energetická třída'];
+    }
+    if (attrLower['vytápění']) result.heatingType = attrLower['vytápění'];
+    if (attrLower['typ stavby'] || attrLower['stavba']) {
+      result.constructionType = attrLower['typ stavby'] || attrLower['stavba'];
+    }
+
+    // Store raw attributes for reference
+    if (Object.keys(attrLower).length > 0) {
+      result._attributes = attrLower;
+    }
+
+    return result;
+  }
+
+  /**
+   * Enrich listings with detail page data
+   */
+  private async enrichListingsWithDetails(listings: RealityListing[]): Promise<RealityListing[]> {
+    const shouldFetchDetails = process.env.FETCH_DETAILS !== 'false';
+
+    if (!shouldFetchDetails || listings.length === 0) {
+      return listings;
+    }
+
+    console.log(`\n📋 Fetching detail pages for ${listings.length} listings...`);
+    const enrichedListings: RealityListing[] = [];
+
+    for (let i = 0; i < listings.length; i++) {
+      const listing = listings[i];
+      try {
+        const details = await this.scrapeDetailPage(listing.url);
+        if (details) {
+          enrichedListings.push({ ...listing, ...details });
+
+          if ((i + 1) % 10 === 0) {
+            console.log(`   ✓ Enriched ${i + 1}/${listings.length} listings`);
+          }
+        } else {
+          enrichedListings.push(listing);
+        }
+      } catch (error) {
+        console.warn(`   ⚠️  Failed to fetch details for listing ${listing.id}`);
+        enrichedListings.push(listing);
+      }
+
+      // Rate limiting
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 500));
+    }
+
+    console.log(`   ✅ Detail page enrichment complete`);
+    return enrichedListings;
+  }
+
+  /**
+   * Scrape all listings (sales + rentals)
+   */
+  async scrapeAll(): Promise<RealityListing[]> {
+    console.log('Starting Reality.cz scrape...');
+
+    try {
+      await this.initialize();
+
+      const sales = await this.scrapeSales();
+      const rentals = await this.scrapeRentals();
+
+      const allListings = [...sales, ...rentals];
+
+      // Enrich with detail pages if enabled
+      return await this.enrichListingsWithDetails(allListings);
+    } finally {
+      await this.shutdown();
+    }
+  }
+}
+
+/**
+ * Scrape with checksum-based change detection
+ *
+ * This function:
+ * 1. Fetches all listings using existing scraper (sales + rentals)
+ * 2. Generates checksums from fetched listings
+ * 3. Compares checksums against database (identifies new/changed/unchanged)
+ * 4. Returns only new/changed listings for ingestion
+ * 5. Updates checksums in database
+ *
+ * Benefits:
+ * - 95-99% reduction in listings needing ingestion on subsequent scrapes
+ * - Avoids re-processing unchanged listings
+ * - Faster scrape completion
+ *
+ * @param ingestApiUrl - URL of the ingest API
+ * @param ingestApiKey - API key for the ingest API
+ * @param scrapeRunId - Optional scrape run ID for tracking
+ * @returns Object with filtered listings and statistics
+ */
+export async function scrapeWithChecksums(
+  ingestApiUrl: string,
+  ingestApiKey: string,
+  scrapeRunId?: string
+): Promise<{
+  listings: RealityListing[];
+  stats: {
+    total: number;
+    new: number;
+    changed: number;
+    unchanged: number;
+    savingsPercent: number;
+  };
+  comparison: ChecksumBatchResponse;
+}> {
+  console.log('Starting checksum-aware scraping...');
+
+  // 1. Fetch all listings using existing scraper
+  const scraper = new ListingsScraper();
+  const allListings = await scraper.scrapeAll();
+  console.log(`✅ Fetched ${allListings.length} listing pages`);
+
+  // 2. Generate checksums from all listings
+  console.log('Generating checksums...');
+  const checksums = batchCreateRealityChecksums(allListings);
+  console.log(`✅ Generated ${checksums.length} checksums`);
+
+  // 3. Compare against database
+  console.log('Comparing checksums against database...');
+  const checksumClient = new ChecksumClient(ingestApiUrl, ingestApiKey);
+  const comparison = await checksumClient.compareChecksums(checksums, scrapeRunId);
+  console.log(`✅ Comparison complete:`);
+  console.log(`   - New: ${comparison.new}`);
+  console.log(`   - Changed: ${comparison.changed}`);
+  console.log(`   - Unchanged: ${comparison.unchanged}`);
+
+  // 4. Filter to only new/changed listings
+  const changedPortalIds = new Set(
+    comparison.results
+      .filter(r => r.status === 'new' || r.status === 'changed')
+      .map(r => r.portalId)
+  );
+
+  const filteredListings = allListings.filter(listing =>
+    changedPortalIds.has(listing.id)
+  );
+
+  console.log(`✅ Filtered to ${filteredListings.length} listings needing ingestion`);
+
+  // 5. Update checksums in database
+  console.log('Updating checksums...');
+  await checksumClient.updateChecksums(checksums, scrapeRunId);
+  console.log('✅ Checksums updated');
+
+  // Calculate savings percentage
+  const savingsPercent = allListings.length > 0
+    ? Math.round((comparison.unchanged / allListings.length) * 100)
+    : 0;
+
+  console.log(`\n📊 Checksum-aware scraping complete:`);
+  console.log(`   Total listings: ${allListings.length}`);
+  console.log(`   Need ingestion: ${filteredListings.length}`);
+  console.log(`   Savings: ${savingsPercent}% (${comparison.unchanged} skipped)`);
+
+  return {
+    listings: filteredListings,
+    stats: {
+      total: allListings.length,
+      new: comparison.new,
+      changed: comparison.changed,
+      unchanged: comparison.unchanged,
+      savingsPercent,
+    },
+    comparison,
+  };
+}

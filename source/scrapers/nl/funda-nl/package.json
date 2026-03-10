@@ -1,0 +1,26 @@
+{
+  "name": "@landomo/scraper-funda-nl",
+  "version": "1.0.0",
+  "description": "Funda.nl scraper for landomo-world platform",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node --max-old-space-size=4096 dist/scrapers/Netherlands/funda-nl/src/index.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@landomo/core": "file:../../../shared-components",
+    "axios": "^1.6.0",
+    "bullmq": "^5.67.3",
+    "cheerio": "^1.0.0",
+    "express": "^4.18.2",
+    "p-limit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+}

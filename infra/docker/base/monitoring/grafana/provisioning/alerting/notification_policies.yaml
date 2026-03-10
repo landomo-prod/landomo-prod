@@ -1,0 +1,159 @@
+# Grafana Notification Policies - Security Alerts
+# Auto-provisioned notification routing for Landomo platform
+# Location: docker/grafana/provisioning/alerting/notification_policies.yaml
+
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: security-slack
+    receivers:
+      - uid: security_slack_webhook
+        type: slack
+        settings:
+          url: ${SLACK_WEBHOOK_URL}
+          username: Security Alert Bot
+          icon_emoji: ':shield:'
+          title: '{{ .GroupLabels.severity | toUpper }}: {{ .GroupLabels.alertname }}'
+          text: |
+            {{ range .Alerts }}
+            *Alert*: {{ .Labels.alertname }}
+            *Severity*: {{ .Labels.severity }}
+            *Instance*: {{ .Labels.instance }}
+            *Country*: {{ .Labels.country }}
+            *Description*: {{ .Annotations.description }}
+            *Dashboard*: {{ .Annotations.dashboard }}
+            *Runbook*: {{ .Annotations.runbook }}
+            {{ end }}
+        disableResolveMessage: false
+
+  - orgId: 1
+    name: security-email
+    receivers:
+      - uid: security_email_smtp
+        type: email
+        settings:
+          addresses: security@company.com
+          singleEmail: true
+        disableResolveMessage: false
+
+  - orgId: 1
+    name: security-pagerduty
+    receivers:
+      - uid: security_pagerduty_integration
+        type: pagerduty
+        settings:
+          integrationKey: ${PAGERDUTY_INTEGRATION_KEY}
+          severity: critical
+          class: security
+          component: ingest-service
+          group: landomo
+        disableResolveMessage: false
+
+  - orgId: 1
+    name: ops-slack
+    receivers:
+      - uid: ops_slack_webhook
+        type: slack
+        settings:
+          url: ${SLACK_WEBHOOK_URL_OPS}
+          username: Ops Alert Bot
+          icon_emoji: ':wrench:'
+          title: '{{ .GroupLabels.severity | toUpper }}: {{ .GroupLabels.alertname }}'
+          text: |
+            {{ range .Alerts }}
+            *Alert*: {{ .Labels.alertname }}
+            *Severity*: {{ .Labels.severity }}
+            *Instance*: {{ .Labels.instance }}
+            *Description*: {{ .Annotations.description }}
+            {{ end }}
+        disableResolveMessage: false
+
+  - orgId: 1
+    name: ops-pagerduty
+    receivers:
+      - uid: ops_pagerduty_integration
+        type: pagerduty
+        settings:
+          integrationKey: ${PAGERDUTY_INTEGRATION_KEY_OPS}
+          severity: critical
+          class: infrastructure
+        disableResolveMessage: false
+
+policies:
+  - orgId: 1
+    receiver: security-slack
+    group_by:
+      - alertname
+      - severity
+      - category
+    group_wait: 10s
+    group_interval: 5m
+    repeat_interval: 4h
+    routes:
+      # Security category alerts
+      - receiver: security-slack
+        matchers:
+          - category = security
+        group_by:
+          - alertname
+          - country
+        continue: true
+        routes:
+          # Critical security alerts -> Slack + Email + PagerDuty
+          - receiver: security-email
+            matchers:
+              - severity = critical
+            continue: true
+          - receiver: security-pagerduty
+            matchers:
+              - severity = critical
+            continue: false
+
+          # High security alerts -> Slack + Email
+          - receiver: security-email
+            matchers:
+              - severity = high
+            continue: false
+
+          # Medium security alerts -> Slack only (business hours)
+          - receiver: security-slack
+            matchers:
+              - severity = medium
+            mute_time_intervals:
+              - after_hours
+            continue: false
+
+      # Infrastructure category alerts
+      - receiver: ops-slack
+        matchers:
+          - category = infrastructure
+        group_by:
+          - alertname
+          - instance
+        continue: true
+        routes:
+          # Critical infrastructure alerts -> Slack + PagerDuty
+          - receiver: ops-pagerduty
+            matchers:
+              - severity = critical
+            continue: false
+
+muteTimeIntervals:
+  - orgId: 1
+    name: after_hours
+    time_intervals:
+      # Weekday nights (5pm - 9am)
+      - times:
+          - start_time: '17:00'
+            end_time: '09:00'
+        weekdays:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+      # All day Saturday and Sunday
+      - weekdays:
+          - saturday
+          - sunday

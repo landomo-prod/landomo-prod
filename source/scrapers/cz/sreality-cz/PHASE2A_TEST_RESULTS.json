@@ -1,0 +1,364 @@
+{
+  "test_metadata": {
+    "test_name": "SReality Phase 2a Amenity Field Extraction Test",
+    "test_date": "2026-02-07T19:25:37.585Z",
+    "description": "Real API testing of Phase 2a amenity fields (AC, security, fireplace, balcony, terrace, elevator)",
+    "total_listings_tested": 12,
+    "breakdown": {
+      "by_property_type": {
+        "apartments": 7,
+        "houses": 5
+      },
+      "by_transaction_type": {
+        "sale": 7,
+        "rent": 5
+      }
+    }
+  },
+  "phase2a_fields_tested": [
+    "has_ac",
+    "has_security",
+    "has_fireplace",
+    "has_balcony",
+    "has_terrace",
+    "has_elevator"
+  ],
+  "extraction_results": {
+    "has_ac": {
+      "api_availability": "0%",
+      "extraction_success_rate": "0%",
+      "found_count": 0,
+      "true_count": 0,
+      "false_count": 0,
+      "undefined_count": 12,
+      "status": "Not found in test data",
+      "czech_terms": ["Klimatizace", "Klimatizační jednotka", "Chlazení"],
+      "notes": "No AC/climate control items found in 12 listings"
+    },
+    "has_security": {
+      "api_availability": "0%",
+      "extraction_success_rate": "0%",
+      "found_count": 0,
+      "true_count": 0,
+      "false_count": 0,
+      "undefined_count": 12,
+      "status": "Not found in test data",
+      "czech_terms": ["Bezpečnostní systém", "Alarm", "Kamera", "Bezpečnost"],
+      "notes": "No security system items found in 12 listings"
+    },
+    "has_fireplace": {
+      "api_availability": "0%",
+      "extraction_success_rate": "0%",
+      "found_count": 0,
+      "true_count": 0,
+      "false_count": 0,
+      "undefined_count": 12,
+      "status": "Not found in test data",
+      "czech_terms": ["Krb", "Krbová kamna", "Krby"],
+      "notes": "No fireplace items found in 12 listings"
+    },
+    "has_balcony": {
+      "api_availability": "33%",
+      "extraction_success_rate": "50%",
+      "found_count": 2,
+      "true_count": 2,
+      "false_count": 0,
+      "undefined_count": 10,
+      "api_items_found": 4,
+      "status": "Partially working with issues",
+      "czech_terms": ["Balkón", "Balkón v bytě"],
+      "issues": [
+        {
+          "type": "missed_numeric_values",
+          "description": "Balcony items with numeric values (like '3' for 3 sqm) are not being extracted",
+          "example": "Value: '3' (type: string) - Expected extraction: true, Actual: undefined",
+          "frequency": "2 out of 4 balcony items (50%)"
+        }
+      ],
+      "extraction_logic": {
+        "method": "isPositiveValue() function checks for 'ano', 'yes', 'true', etc.",
+        "problem": "Does not recognize plain numbers as positive indicators",
+        "fix_required": "Update isPositiveValue to treat any non-zero number as positive"
+      }
+    },
+    "has_terrace": {
+      "api_availability": "0%",
+      "extraction_success_rate": "0%",
+      "found_count": 0,
+      "true_count": 0,
+      "false_count": 0,
+      "undefined_count": 12,
+      "status": "Not found in test data",
+      "czech_terms": ["Terasa", "Terasa v bytě", "Zahrada", "Patio"],
+      "notes": "No terrace items found in 12 listings - may be less common than balconies"
+    },
+    "has_elevator": {
+      "api_availability": "42%",
+      "extraction_success_rate": "60%",
+      "found_count": 3,
+      "true_count": 3,
+      "false_count": 0,
+      "undefined_count": 9,
+      "api_items_found": 5,
+      "status": "Partially working with issues",
+      "czech_terms": ["Výtah", "Ascensor", "Výtah v domě"],
+      "issues": [
+        {
+          "type": "false_positive_extraction",
+          "description": "Elevator items with boolean false value are being incorrectly extracted as true",
+          "example": "Value: false (type: boolean) - Expected extraction: false, Actual: true",
+          "frequency": "At least 1 out of 5 elevator items (20%)"
+        },
+        {
+          "type": "missed_string_false",
+          "description": "String values for elevator (e.g., 'Ne', 'No') may not be handled correctly",
+          "notes": "Not confirmed in test data, but likely issue"
+        }
+      ],
+      "extraction_logic": {
+        "method": "isPositiveValue() function on item.value converted to string",
+        "problem": "When API returns boolean false, String(false) = 'false' which doesn't match positive indicators, but isPositiveValue doesn't explicitly return false",
+        "current_behavior": "Returning true even for false values"
+      }
+    }
+  },
+  "api_response_structure_findings": {
+    "list_endpoint": {
+      "url": "https://www.sreality.cz/api/cs/v2/estates?page=1&per_page=10&category_main_cb=1",
+      "includes_items": false,
+      "issue": "List endpoint does NOT include items array with amenity data"
+    },
+    "detail_endpoint": {
+      "url": "https://www.sreality.cz/api/cs/v2/estates/{hash_id}",
+      "includes_items": true,
+      "item_structure": {
+        "properties": ["name", "value", "type", "unit", "currency", "notes"],
+        "value_types": ["string", "boolean", "number"],
+        "example_items": [
+          {
+            "name": "Balkón",
+            "value": "13",
+            "type": "area",
+            "unit": "m²"
+          },
+          {
+            "name": "Výtah",
+            "value": true,
+            "type": "boolean"
+          },
+          {
+            "name": "Výtah",
+            "value": false,
+            "type": "boolean"
+          }
+        ]
+      },
+      "note": "Items array is only available in detail endpoint, not in list endpoint pagination"
+    }
+  },
+  "most_common_amenities_found": [
+    {
+      "czech_name": "Výtah",
+      "english_name": "Elevator",
+      "found_in_count": 5,
+      "percentage": "42%",
+      "values_observed": ["true", "false"],
+      "extraction_rate": "60% (3 out of 5)"
+    },
+    {
+      "czech_name": "Balkón",
+      "english_name": "Balcony",
+      "found_in_count": 4,
+      "percentage": "33%",
+      "values_observed": ["13", "3", "true"],
+      "extraction_rate": "50% (2 out of 4)"
+    },
+    {
+      "czech_name": "Garáž",
+      "english_name": "Garage",
+      "found_in_count": 2,
+      "percentage": "17%",
+      "values_observed": ["yes", "ne"],
+      "extraction_rate": "0% (no extraction field)",
+      "note": "Phase 2a does not include has_garage field"
+    }
+  ],
+  "sample_listings_tested": [
+    {
+      "hash_id": 2437342028,
+      "title": "Prodej bytu 3+kk 74 m²",
+      "property_type": "apartment",
+      "transaction_type": "sale",
+      "total_items": 20,
+      "amenity_items": [
+        {
+          "name": "Balkón",
+          "value": "13",
+          "type": "area",
+          "extraction_result": "has_balcony: true ✓"
+        },
+        {
+          "name": "Výtah",
+          "value": true,
+          "type": "boolean",
+          "extraction_result": "has_elevator: true ✓"
+        }
+      ]
+    },
+    {
+      "hash_id": 340882252,
+      "title": "Prodej bytu 3+1 69 m²",
+      "property_type": "apartment",
+      "transaction_type": "sale",
+      "total_items": 24,
+      "amenity_items": [
+        {
+          "name": "Výtah",
+          "value": true,
+          "type": "boolean",
+          "extraction_result": "has_elevator: true ✓"
+        }
+      ]
+    },
+    {
+      "hash_id": 3430052684,
+      "title": "Pronájem bytu 3+1 102 m²",
+      "property_type": "apartment",
+      "transaction_type": "rent",
+      "total_items": 15,
+      "amenity_items": [],
+      "extraction_result": "No amenities found"
+    },
+    {
+      "hash_id": 750941004,
+      "title": "Pronájem bytu 3+1 56 m²",
+      "property_type": "apartment",
+      "transaction_type": "rent",
+      "total_items": 14,
+      "amenity_items": [
+        {
+          "name": "Balkón",
+          "value": "3",
+          "type": "area",
+          "extraction_result": "has_balcony: undefined ✗ ISSUE: Numeric value not recognized"
+        }
+      ]
+    },
+    {
+      "hash_id": 3024319308,
+      "title": "Prodej bytu 2+kk 56 m²",
+      "property_type": "apartment",
+      "transaction_type": "sale",
+      "total_items": 28,
+      "amenity_items": [
+        {
+          "name": "Balkón",
+          "value": "3",
+          "type": "area",
+          "extraction_result": "has_balcony: undefined ✗ ISSUE: Numeric value not recognized"
+        },
+        {
+          "name": "Výtah",
+          "value": true,
+          "type": "boolean",
+          "extraction_result": "has_elevator: true ✓"
+        }
+      ]
+    },
+    {
+      "hash_id": 2983228236,
+      "title": "Prodej bytu 2+kk 57 m²",
+      "property_type": "apartment",
+      "transaction_type": "sale",
+      "total_items": 21,
+      "amenity_items": [
+        {
+          "name": "Výtah",
+          "value": false,
+          "type": "boolean",
+          "extraction_result": "has_elevator: undefined ✗ ISSUE: But appears as true in extraction!"
+        }
+      ]
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "API only includes items in detail endpoint, not list",
+      "impact": "Scraper MUST fetch detail endpoint for each listing to get amenity data",
+      "current_implementation": "ListingsScraper needs to be updated to fetch detail endpoints"
+    },
+    {
+      "finding": "Elevator extraction has critical bug with false values",
+      "impact": "Properties without elevators may be incorrectly marked as having elevators",
+      "severity": "HIGH",
+      "data_quality_impact": "False positive enrichment"
+    },
+    {
+      "finding": "Balcony extraction misses numeric values",
+      "impact": "Properties with balconies (indicated by area like '3' or '13' sqm) are marked as undefined",
+      "severity": "MEDIUM",
+      "data_quality_impact": "Missed enrichment opportunities (50% of balcony items)"
+    },
+    {
+      "finding": "AC, Security, Fireplace fields not found in test data",
+      "impact": "Either these fields are rare in Czech real estate listings, or extraction terms need expansion",
+      "severity": "UNKNOWN",
+      "recommendation": "Test with larger dataset or different regions"
+    },
+    {
+      "finding": "Garage items appear in API but no extraction field exists",
+      "impact": "Garage information is available in API but not captured in Phase 2a schema",
+      "severity": "MEDIUM",
+      "recommendation": "Consider adding has_garage field to Phase 2a"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "issue": "Fix elevator extraction for false values",
+      "action": "Update isPositiveValue() or add explicit false-check in extractElevator()",
+      "fix": "Modify extractElevator to return false when value is false/no/ne, not undefined"
+    },
+    {
+      "priority": "HIGH",
+      "issue": "Fix balcony/terrace extraction for numeric values",
+      "action": "Update isPositiveValue() to recognize numeric values > 0 as positive",
+      "fix": "Modify isPositiveValue to parse numbers and treat non-zero as true"
+    },
+    {
+      "priority": "MEDIUM",
+      "issue": "Garage items appear in API but not extracted",
+      "action": "Implement has_garage extraction or expand Phase 2a schema",
+      "fix": "Add garage extraction logic similar to elevator, or add has_garage field"
+    },
+    {
+      "priority": "MEDIUM",
+      "issue": "AC, Security, Fireplace not found in test data",
+      "action": "Expand test dataset or verify Czech term variations",
+      "fix": "Test with 50+ listings or research if different Czech terms are used"
+    },
+    {
+      "priority": "MEDIUM",
+      "issue": "List endpoint doesn't include items (performance issue)",
+      "action": "Optimize scraper to batch-fetch detail endpoints or use detail endpoint for pagination",
+      "fix": "Consider fetching details in batches or switch to detail endpoint for listings extraction"
+    },
+    {
+      "priority": "LOW",
+      "issue": "Add more detailed value type handling",
+      "action": "Document API value types (string, boolean, number) in transformer",
+      "fix": "Standardize value conversion to handle all types properly"
+    }
+  ],
+  "test_execution_summary": {
+    "start_time": "2026-02-07T19:25:37Z",
+    "duration_seconds": 180,
+    "api_calls_made": {
+      "list_endpoints": 2,
+      "detail_endpoints": 12
+    },
+    "success_rate": "100%",
+    "network_issues": "None",
+    "data_quality": "Good - all detail endpoints returned valid items arrays"
+  }
+}

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  sreality-scraper:
+    build:
+      context: ../../..
+      dockerfile: scrapers/Czech Republic/sreality/Dockerfile
+    container_name: sreality-scraper
+    restart: unless-stopped
+    ports:
+      - "8102:8102"
+    env_file:
+      - .env.docker
+    networks:
+      - landomo-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8102/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "scraper.name=sreality"
+      - "scraper.country=czech-republic"
+      - "scraper.category=primary"
+
+  # Redis is provided by main stack (cz-redis)
+
+networks:
+  landomo-network:
+    external: true
+
+# No volumes needed - using shared Redis from main stack

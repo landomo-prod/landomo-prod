@@ -1,0 +1,204 @@
+version: '3.8'
+
+networks:
+  landomo-nl:
+    name: landomo-nl-network
+    driver: bridge
+
+volumes:
+  postgres-nl-data:
+    name: landomo-nl-postgres-data
+  redis-nl-data:
+    name: landomo-nl-redis-data
+
+services:
+  redis-nl:
+    image: redis:7-alpine
+    container_name: landomo-nl-redis
+    restart: unless-stopped
+    networks:
+      - landomo-nl
+    ports:
+      - "6385:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --appendfsync everysec
+    volumes:
+      - redis-nl-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  postgres-nl:
+    image: imresamu/postgis:16-3.4-alpine
+    container_name: landomo-nl-postgres
+    restart: unless-stopped
+    networks:
+      - landomo-nl
+    ports:
+      - "5439:5432"
+    environment:
+      POSTGRES_USER: landomo
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: landomo_nl
+    volumes:
+      - postgres-nl-data:/var/lib/postgresql/data
+    shm_size: 256MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U landomo -d landomo_nl"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  ingest-api-nl:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-nl-ingest-api
+    restart: unless-stopped
+    networks:
+      - landomo-nl
+    ports:
+      - "3017:3000"
+    environment:
+      INSTANCE_COUNTRY: nl
+      DB_HOST: landomo-nl-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_nl
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-nl-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      API_KEYS: ${API_KEY_NL}
+      PORT: 3000
+      NODE_ENV: production
+    depends_on:
+      postgres-nl:
+        condition: service_healthy
+      redis-nl:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  batch-worker-nl-1:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-nl-batch-worker-1
+    restart: unless-stopped
+    networks:
+      - landomo-nl
+    environment:
+      INSTANCE_COUNTRY: nl
+      DB_HOST: landomo-nl-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_nl
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-nl-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      BATCH_SIZE: 25
+      BATCH_WORKERS: 5
+      BATCH_TIMEOUT: 120000
+      NODE_ENV: production
+    command: node dist/start-worker.js
+    depends_on:
+      postgres-nl:
+        condition: service_healthy
+      redis-nl:
+        condition: service_healthy
+
+  batch-worker-nl-2:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-nl-batch-worker-2
+    restart: unless-stopped
+    networks:
+      - landomo-nl
+    environment:
+      INSTANCE_COUNTRY: nl
+      DB_HOST: landomo-nl-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_nl
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-nl-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      BATCH_SIZE: 25
+      BATCH_WORKERS: 5
+      BATCH_TIMEOUT: 120000
+      NODE_ENV: production
+    command: node dist/start-worker.js
+    depends_on:
+      postgres-nl:
+        condition: service_healthy
+      redis-nl:
+        condition: service_healthy
+
+  scraper-funda:
+    build:
+      context: ..
+      dockerfile: scrapers/Netherlands/funda-nl/Dockerfile
+    container_name: landomo-nl-scraper-funda
+    restart: unless-stopped
+    networks:
+      - landomo-nl
+    ports:
+      - "8220:8220"
+    environment:
+      PORT: 8220
+      INGEST_API_URL: http://ingest-api-nl:3000
+      INGEST_API_KEY: ${API_KEY_NL}
+      REDIS_HOST: redis-nl
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      WORKER_CONCURRENCY: 30
+      NODE_ENV: production
+    depends_on:
+      ingest-api-nl:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8220/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  scraper-pararius:
+    build:
+      context: ..
+      dockerfile: scrapers/Netherlands/pararius-nl/Dockerfile
+    container_name: landomo-nl-scraper-pararius
+    restart: unless-stopped
+    networks:
+      - landomo-nl
+    ports:
+      - "8221:8221"
+    environment:
+      PORT: 8221
+      INGEST_API_URL: http://ingest-api-nl:3000
+      INGEST_API_KEY: ${API_KEY_NL}
+      REDIS_HOST: redis-nl
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      WORKER_CONCURRENCY: 30
+      NODE_ENV: production
+    depends_on:
+      ingest-api-nl:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8221/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

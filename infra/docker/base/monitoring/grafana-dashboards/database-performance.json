@@ -1,0 +1,201 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 1,
+  "panels": [
+    {
+      "title": "Database Size",
+      "type": "bargauge",
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "pg_database_size_bytes",
+          "legendFormat": "{{database}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bytes" } }
+    },
+    {
+      "title": "Active Connections",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 0 },
+      "targets": [
+        {
+          "expr": "pg_active_connections_active_connections",
+          "legendFormat": "{{database}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "thresholds": { "steps": [ { "color": "green", "value": 0 }, { "color": "yellow", "value": 15 }, { "color": "red", "value": 20 } ] } } }
+    },
+    {
+      "title": "Cache Hit Ratio",
+      "type": "gauge",
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 0 },
+      "targets": [
+        {
+          "expr": "pg_cache_hit_ratio_cache_hit_ratio",
+          "legendFormat": "{{database}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "steps": [ { "color": "red", "value": 0 }, { "color": "yellow", "value": 80 }, { "color": "green", "value": 95 } ] } } }
+    },
+    {
+      "title": "Partition Sizes",
+      "type": "bargauge",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "targets": [
+        {
+          "expr": "pg_partition_row_counts_total_bytes",
+          "legendFormat": "{{partition_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bytes" } }
+    },
+    {
+      "title": "Partition Row Counts",
+      "type": "bargauge",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "targets": [
+        {
+          "expr": "pg_partition_row_counts_row_count",
+          "legendFormat": "{{partition_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    },
+    {
+      "title": "Transaction Rate (commits/sec)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "targets": [
+        {
+          "expr": "rate(pg_transaction_rates_commits[5m])",
+          "legendFormat": "{{database}} commits/s",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(pg_transaction_rates_rollbacks[5m])",
+          "legendFormat": "{{database}} rollbacks/s",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "ops", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Rows Inserted / Updated / Deleted (per sec)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "targets": [
+        {
+          "expr": "rate(pg_transaction_rates_rows_inserted[5m])",
+          "legendFormat": "{{database}} inserts/s",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(pg_transaction_rates_rows_updated[5m])",
+          "legendFormat": "{{database}} updates/s",
+          "refId": "B"
+        },
+        {
+          "expr": "rate(pg_transaction_rates_rows_deleted[5m])",
+          "legendFormat": "{{database}} deletes/s",
+          "refId": "C"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "ops", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Dead Tuples (VACUUM Health)",
+      "type": "table",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 22 },
+      "targets": [
+        {
+          "expr": "topk(15, pg_dead_tuples_dead_tuples)",
+          "legendFormat": "",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "title": "Dead Tuple Ratio %",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 30 },
+      "targets": [
+        {
+          "expr": "topk(10, pg_dead_tuples_dead_tuple_ratio)",
+          "legendFormat": "{{table}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Slow Queries (>5s)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 30 },
+      "targets": [
+        {
+          "expr": "pg_slow_queries_slow_query_count",
+          "legendFormat": "{{database}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "thresholds": { "steps": [ { "color": "green", "value": 0 }, { "color": "red", "value": 1 } ] } } }
+    },
+    {
+      "title": "Connection States",
+      "type": "bargauge",
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 38 },
+      "targets": [
+        {
+          "expr": "pg_connection_states_count",
+          "legendFormat": "{{database}} ({{state}})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    },
+    {
+      "title": "Locks by Mode",
+      "type": "bargauge",
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 38 },
+      "targets": [
+        {
+          "expr": "pg_locks_count",
+          "legendFormat": "{{database}} ({{lock_mode}})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    },
+    {
+      "title": "Table Sizes (Top 20)",
+      "type": "table",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 44 },
+      "targets": [
+        {
+          "expr": "topk(20, pg_table_sizes_total_size_bytes)",
+          "legendFormat": "",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bytes" } }
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": ["landomo", "database", "postgresql"],
+  "time": { "from": "now-6h", "to": "now" },
+  "title": "Landomo Database Performance",
+  "uid": "landomo-db-performance",
+  "version": 1
+}

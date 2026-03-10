@@ -1,0 +1,48 @@
+{
+  "name": "@landomo/core",
+  "version": "1.0.0",
+  "description": "Shared utilities and types for Landomo scraper ecosystem (optional, flexible utilities - not a framework)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "landomo",
+    "scraper",
+    "real-estate",
+    "utilities"
+  ],
+  "author": "Landomo",
+  "license": "MIT",
+  "dependencies": {
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.211.0",
+    "@opentelemetry/instrumentation-fastify": "^0.55.0",
+    "@opentelemetry/instrumentation-http": "^0.211.0",
+    "@opentelemetry/instrumentation-ioredis": "^0.59.0",
+    "@opentelemetry/instrumentation-pg": "^0.63.0",
+    "@opentelemetry/resources": "^2.5.0",
+    "@opentelemetry/sdk-node": "^0.211.0",
+    "@opentelemetry/semantic-conventions": "^1.39.0",
+    "axios": "^1.6.5",
+    "bullmq": "^5.1.0",
+    "pg": "^8.11.3",
+    "pino": "^9.6.0",
+    "prom-client": "^15.1.3",
+    "redis": "^4.6.12"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.5",
+    "@types/pg": "^8.10.9",
+    "jest": "^29.7.0",
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

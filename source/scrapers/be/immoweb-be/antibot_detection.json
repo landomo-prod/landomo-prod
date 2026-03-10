@@ -1,0 +1,13 @@
+{
+  "url": "https://www.immoweb.be",
+  "cloudflare": true,
+  "akamai": false,
+  "aws_waf": false,
+  "imperva": false,
+  "generic_waf": false,
+  "details": [
+    "Cloudflare"
+  ],
+  "status_code": 403,
+  "error": null
+}

@@ -1,0 +1,112 @@
+version: '3.8'
+
+# =============================================================================
+# Landomo DB Server — PostgreSQL + WAL-G backup sidecar
+# =============================================================================
+# Deployed on: landomo-db
+# Usage:
+#   docker compose -f docker-compose.db.yml --env-file .env up -d
+# =============================================================================
+
+networks:
+  db-network:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
+        - subnet: fd00:db::/80
+
+volumes:
+  walg_logs:
+
+services:
+
+  # ============================================================
+  # POSTGRESQL — PostGIS 17 with WAL-G embedded
+  # ============================================================
+  landomo-postgres:
+    image: landomo-postgres-walg:latest
+    container_name: landomo-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-landomo}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: postgres
+      # WAL-G S3 credentials (used by archive_command inside the container)
+      WALG_S3_PREFIX: ${WALG_S3_PREFIX}
+      AWS_ENDPOINT: ${AWS_ENDPOINT}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_FORCE_PATH_STYLE: ${AWS_S3_FORCE_PATH_STYLE:-true}
+      WALG_COMPRESSION_METHOD: ${WALG_COMPRESSION_METHOD:-zstd}
+    volumes:
+      - /opt/postgres-data:/var/lib/postgresql/data
+    command: >
+      postgres
+      -c wal_level=replica
+      -c archive_mode=on
+      -c archive_command='wal-g wal-push %p >> /tmp/walg-archive.log 2>&1'
+      -c archive_timeout=300
+      -c max_wal_senders=3
+      -c wal_keep_size=512
+      -c shared_buffers=2GB
+      -c effective_cache_size=6GB
+      -c work_mem=16MB
+      -c maintenance_work_mem=64MB
+      -c autovacuum_vacuum_cost_delay=20ms
+      -c autovacuum_vacuum_cost_limit=200
+      -c checkpoint_completion_target=0.95
+      -c wal_buffers=64MB
+      -c random_page_cost=1.1
+      -c max_connections=300
+      -c synchronous_commit=off
+      -c max_wal_size=4GB
+      -c wal_compression=zstd
+      -c gin_pending_list_limit=65536
+      -c max_parallel_workers_per_gather=0
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.track=all
+      -c pg_stat_statements.max=10000
+    ports:
+      - "5432:5432"
+    networks:
+      - db-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-landomo} -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ============================================================
+  # WAL-G BACKUP SIDECAR
+  # Runs scheduled base backups; WAL archiving is done by postgres above.
+  # ============================================================
+  landomo-backup:
+    image: landomo-backup:latest
+    container_name: landomo-backup
+    environment:
+      - WALG_S3_PREFIX=${WALG_S3_PREFIX}
+      - AWS_ENDPOINT=${AWS_ENDPOINT}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_S3_FORCE_PATH_STYLE=${AWS_S3_FORCE_PATH_STYLE:-true}
+      - WALG_COMPRESSION_METHOD=${WALG_COMPRESSION_METHOD:-zstd}
+      - WALG_DELTA_MAX_STEPS=${WALG_DELTA_MAX_STEPS:-6}
+      - PGHOST=landomo-postgres
+      - PGPORT=5432
+      - PGUSER=${DB_USER:-landomo}
+      - PGPASSWORD=${DB_PASSWORD}
+      - PGDATABASE=postgres
+    volumes:
+      # Read-only mount of postgres data dir for backup-push
+      - /opt/postgres-data:/var/lib/postgresql/data:ro
+      - walg_logs:/var/log/walg
+    depends_on:
+      landomo-postgres:
+        condition: service_healthy
+    network_mode: "container:landomo-postgres"
+    restart: unless-stopped

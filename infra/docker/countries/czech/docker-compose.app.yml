@@ -1,0 +1,1149 @@
+version: '3.8'
+
+# ============================================================
+# Landomo - Czech Republic (App Server Only)
+# DB lives on landomo-db (2a01:4f8:1c19:6b5b::1)
+# ============================================================
+
+secrets:
+  db_password:
+    file: ./secrets/db_password
+  redis_password:
+    file: ./secrets/redis_password
+  api_keys_czech:
+    file: ./secrets/api_keys_czech
+  api_keys_ml_pricing:
+    file: ./secrets/api_keys_ml_pricing
+  api_keys_polygon:
+    file: ./secrets/api_keys_polygon
+  db_read_password:
+    file: ./secrets/db_read_password
+  supabase_jwt_secret:
+    file: ./secrets/supabase_jwt_secret
+  supabase_anon_key:
+    file: ./secrets/supabase_anon_key
+  supabase_service_key:
+    file: ./secrets/supabase_service_key
+
+networks:
+  cz-network:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+        - subnet: fd00:dead:beef::/48
+
+volumes:
+  cz_redis_data:
+  cz_redis_search_data:
+  cz_ml_models:
+  cz_prometheus_data:
+  cz_grafana_data:
+  cz_fb_sessions:
+  cz_fb_screenshots:
+
+services:
+
+  # ============================================================
+  # REDIS - Job Queue
+  # ============================================================
+  cz-redis:
+    image: redis:7-alpine
+    container_name: cz-redis
+    command: >
+      sh -c '
+        if [ -f /run/secrets/redis_password ]; then
+          redis-server --appendonly yes --appendfsync everysec --maxmemory 8gb --maxmemory-policy noeviction --save 900 1 --save 300 10 --save 3600 100000 --activedefrag yes --active-defrag-ignore-bytes 100mb --active-defrag-threshold-lower 10 --active-defrag-threshold-upper 100 --active-defrag-cycle-min 1 --active-defrag-cycle-max 25 --requirepass "$$(cat /run/secrets/redis_password)"
+        else
+          redis-server --appendonly yes --appendfsync everysec --maxmemory 8gb --maxmemory-policy noeviction --save 900 1 --save 300 10 --save 3600 100000 --activedefrag yes --active-defrag-ignore-bytes 100mb --active-defrag-threshold-lower 10 --active-defrag-threshold-upper 100 --active-defrag-cycle-min 1 --active-defrag-cycle-max 25
+        fi
+      '
+    secrets:
+      - redis_password
+    volumes:
+      - cz_redis_data:/data
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    networks:
+      - cz-network
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password 2>/dev/null)\" ping 2>/dev/null || redis-cli ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ============================================================
+  # REDIS - Search Cache (isolated from BullMQ queues)
+  # ============================================================
+  cz-redis-search:
+    image: redis:7-alpine
+    container_name: cz-redis-search
+    command: >
+      sh -c '
+        if [ -f /run/secrets/redis_password ]; then
+          redis-server --maxmemory 2gb --maxmemory-policy allkeys-lru --appendonly no --save "" --requirepass "$$(cat /run/secrets/redis_password)"
+        else
+          redis-server --maxmemory 2gb --maxmemory-policy allkeys-lru --appendonly no --save ""
+        fi
+      '
+    secrets:
+      - redis_password
+    volumes:
+      - cz_redis_search_data:/data
+    networks:
+      - cz-network
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password 2>/dev/null)\" ping 2>/dev/null || redis-cli ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ============================================================
+  # INGEST SERVICE - Czech Republic
+  # ============================================================
+  cz-ingest:
+    build:
+      context: /opt/landomo/source
+      dockerfile: ingest/Dockerfile
+    container_name: cz-ingest
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_czech
+        target: api_keys
+    environment:
+      - INSTANCE_COUNTRY=cz
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=${DB_HOST:-2a01:4f8:1c19:6b5b::1}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=landomo_cz
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-15}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+      - API_KEYS=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-30}
+      - PELIAS_URL=http://cz-pelias-api:3100
+      - POLYGON_SERVICE_URL=http://cz-polygon-service:3100
+      - POLYGON_SERVICE_API_KEY=${API_KEYS_POLYGON:?API_KEYS_POLYGON is required}
+    ports:
+      - "3006:3000"
+    depends_on:
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # WORKER - Czech Republic BullMQ processor
+  # ============================================================
+  cz-worker:
+    build:
+      context: /opt/landomo/source
+      dockerfile: ingest/Dockerfile
+    container_name: cz-worker
+    command: ["node", "dist/start-worker.js"]
+    secrets:
+      - db_password
+      - redis_password
+    environment:
+      - INSTANCE_COUNTRY=cz
+      - DB_HOST=${DB_HOST:-2a01:4f8:1c19:6b5b::1}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=landomo_cz
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS:-15}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+      - BATCH_SIZE=${BATCH_SIZE:-100}
+      - BATCH_TIMEOUT=${BATCH_TIMEOUT:-10000}
+      - BATCH_WORKERS=${BATCH_WORKERS:-2}
+      - STALENESS_THRESHOLD_HOURS=${STALENESS_THRESHOLD_HOURS:-72}
+      - STALENESS_CRON=${STALENESS_CRON:-0 */6 * * *}
+      - STALENESS_BATCH_SIZE=${STALENESS_BATCH_SIZE:-500}
+      - PELIAS_URL=http://cz-pelias-api:3100
+      - POLYGON_SERVICE_URL=http://cz-polygon-service:3100
+      - POLYGON_SERVICE_API_KEY=${API_KEYS_POLYGON:?API_KEYS_POLYGON is required}
+      - GEO_BACKFILL_CRON=${GEO_BACKFILL_CRON:-0 * * * *}
+      - GEO_BACKFILL_BATCH_SIZE=${GEO_BACKFILL_BATCH_SIZE:-500}
+      - GEO_BACKFILL_THROTTLE_MS=${GEO_BACKFILL_THROTTLE_MS:-20}
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -e /proc/1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # ML PRICING SERVICE
+  # ============================================================
+  cz-ml-pricing:
+    build:
+      context: /opt/landomo/source
+      dockerfile: ml-pricing-service/Dockerfile
+    container_name: cz-ml-pricing
+    secrets:
+      - db_password
+      - redis_password
+      - source: api_keys_ml_pricing
+        target: api_keys
+    environment:
+      - PORT=3500
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - SUPPORTED_COUNTRIES=czech
+      - COUNTRY_DB_OVERRIDES=czech=landomo_cz
+      - DB_HOST=${DB_HOST:-2a01:4f8:1c19:6b5b::1}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=landomo_cz
+      - DB_READ_USER=ml_pricing_readonly
+      - DB_READ_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - DB_ADMIN_USER=${DB_USER:-landomo}
+      - DB_ADMIN_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - DB_MAX_CONNECTIONS=10
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+      - API_KEYS=${API_KEYS_ML_PRICING:?API_KEYS_ML_PRICING is required}
+      - MODEL_STORAGE_PATH=/app/models
+      - PYTHON_PATH=python3
+      - TRAINING_CRON=0 2 * * 0
+      - MIN_TRAINING_SAMPLES=100
+      - LOG_LEVEL=info
+    volumes:
+      - cz_ml_models:/app/models
+    ports:
+      - "3500:3500"
+    depends_on:
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3500/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # CZECH SCRAPERS
+  # ============================================================
+
+  cz-scraper-sreality:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/sreality-cz/Dockerfile
+    container_name: cz-scraper-sreality
+    environment:
+      - PORT=8102
+      - WORKER_CONCURRENCY=100
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_SREALITY=${INGEST_API_KEY_SREALITY:-}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8102:8102"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8102/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-scraper-bezrealitky:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/bezrealitky-cz/Dockerfile
+    container_name: cz-scraper-bezrealitky
+    environment:
+      - PORT=8103
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_BEZREALITKY=${INGEST_API_KEY_BEZREALITKY:-}
+    ports:
+      - "8103:8103"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8103/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-scraper-reality:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/reality-cz/Dockerfile
+    container_name: cz-scraper-reality
+    environment:
+      - PORT=8104
+      - MAX_PAGES=100
+      - FETCH_DETAILS=false
+      - ENABLE_CHECKSUM_MODE=false
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_REALITY=${INGEST_API_KEY_REALITY:-}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8104:8104"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8104/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-scraper-idnes:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/idnes-reality-cz/Dockerfile
+    container_name: cz-scraper-idnes
+    secrets:
+      - redis_password
+    environment:
+      - PORT=8105
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_IDNES_REALITY=${INGEST_API_KEY_IDNES_REALITY:-}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - WORKER_CONCURRENCY=50
+    ports:
+      - "8105:8105"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8105/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-scraper-realingo:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/realingo-cz/Dockerfile
+    container_name: cz-scraper-realingo
+    environment:
+      - PORT=8106
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_REALINGO=${INGEST_API_KEY_REALINGO:-}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8106:8106"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8106/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-scraper-ulovdomov:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/ulovdomov-cz/Dockerfile
+    container_name: cz-scraper-ulovdomov
+    environment:
+      - PORT=8107
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_ULOVDOMOV=${INGEST_API_KEY_ULOVDOMOV:-}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+    ports:
+      - "8107:8107"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8107/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-scraper-bazos:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/bazos-cz/Dockerfile
+    container_name: cz-scraper-bazos
+    environment:
+      - PORT=8108
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_BAZOS=${INGEST_API_KEY_BAZOS:-}
+      - MAX_PAGES=10000
+    ports:
+      - "8108:8108"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8108/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-scraper-ceskereality:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scrapers/cz/ceskereality-cz/Dockerfile
+    container_name: cz-scraper-ceskereality
+    environment:
+      - PORT=8109
+      - INGEST_API_URL=http://cz-ingest:3000
+      - INGEST_API_KEY=${API_KEYS_CZECH:?API_KEYS_CZECH is required}
+      - INGEST_API_KEY_CESKEREALITY=${INGEST_API_KEY_CESKEREALITY:-}
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - QUICK_SCAN_TIMEOUT_MS=180000
+    ports:
+      - "8109:8109"
+    depends_on:
+      cz-ingest:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8109/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # SCHEDULER — Two-tier: quick scans + full crawls
+  # ============================================================
+  cz-scheduler:
+    build:
+      context: /opt/landomo/source
+      dockerfile: scheduler/Dockerfile
+    container_name: cz-scheduler
+    environment:
+      - ENABLE_HTTP_TRIGGERS=true
+      - SCHEDULER_PORT=9000
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - SREALITY_URL=http://cz-scraper-sreality:8102/scrape
+      - BEZREALITKY_ENABLED=false
+      - REALITY_URL=http://cz-scraper-reality:8104/scrape
+      - IDNES_REALITY_URL=http://cz-scraper-idnes:8105/scrape
+      - REALINGO_URL=http://cz-scraper-realingo:8106/scrape
+      - ULOVDOMOV_URL=http://cz-scraper-ulovdomov:8107/scrape
+      - CESKEREALITY_URL=http://cz-scraper-ceskereality:8109/scrape
+      - BAZOS_ENABLED=false
+      # Disable all non-CZ scrapers
+      - IMMOBILIENSCOUT24_DE_ENABLED=false
+      - IMMONET_DE_ENABLED=false
+      - IMMOWELT_DE_ENABLED=false
+      - KLEINANZEIGEN_DE_ENABLED=false
+      - WG_GESUCHT_DE_ENABLED=false
+      - WILLHABEN_AT_ENABLED=false
+      - IMMOBILIENSCOUT24_AT_ENABLED=false
+      - WOHNNET_AT_ENABLED=false
+      - IMMOWELT_AT_ENABLED=false
+      - IMMODIREKT_AT_ENABLED=false
+      - NEHNUTELNOSTI_SK_ENABLED=false
+      - REALITY_SK_ENABLED=false
+      - TOPREALITY_SK_ENABLED=false
+      - BYTY_SK_ENABLED=false
+      - INGATLAN_COM_ENABLED=false
+      - OC_HU_ENABLED=false
+      - DH_HU_ENABLED=false
+      - ZENGA_HU_ENABLED=false
+      - INGATLANNET_HU_ENABLED=false
+    ports:
+      - "9000:9000"
+    depends_on:
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:9000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ============================================================
+  # POLYGON SERVICE
+  # ============================================================
+  cz-polygon-service:
+    build:
+      context: /opt/landomo/source
+      dockerfile: polygon-service/Dockerfile
+    container_name: cz-polygon-service
+    secrets:
+      - db_password
+      - source: api_keys_polygon
+        target: api_keys
+    environment:
+      - PORT=3100
+      - HOST=0.0.0.0
+      - LOG_LEVEL=info
+      - DB_HOST=${DB_HOST:-2a01:4f8:1c19:6b5b::1}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=landomo_geocoding
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - DB_MAX_CONNECTIONS=10
+      - API_KEYS=${API_KEYS_POLYGON:?API_KEYS_POLYGON is required}
+      - OVERPASS_API_URL=https://overpass-api.de/api/interpreter
+      - OVERPASS_TIMEOUT=6000
+      - OVERPASS_RETRY_DELAY=5000
+      - OVERPASS_MAX_RETRIES=3
+    ports:
+      - "${POLYGON_SERVICE_PORT:-4300}:3100"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3100/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================================
+  # PGBOUNCER - Connection pooler for search-service
+  # ============================================================
+  cz-pgbouncer:
+    build:
+      context: /opt/landomo/infra/docker/base/pgbouncer
+      dockerfile: Dockerfile
+    container_name: cz-pgbouncer
+    environment:
+      - DB_USER=${DB_USER:-landomo}
+      - DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - DB_HOST=${DB_HOST:-2a01:4f8:1c19:6b5b::1}
+      - DB_NAME=landomo_cz
+      - POOL_MODE=transaction
+      - MAX_CLIENT_CONN=500
+      - DEFAULT_POOL_SIZE=25
+      - AUTH_TYPE=plain
+      - SERVER_IDLE_TIMEOUT=600
+      - CLIENT_IDLE_TIMEOUT=0
+      - SEARCH_DB_READ_PASSWORD=${SEARCH_DB_READ_PASSWORD:?SEARCH_DB_READ_PASSWORD is required}
+    secrets:
+      - db_password
+      - db_read_password
+    ports:
+      - "6432:5432"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U landomo -d landomo_cz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ============================================================
+  # SEARCH SERVICE — 2 instances + nginx load balancer
+  # ============================================================
+  cz-search-1: &search-base
+    build:
+      context: /opt/landomo/source
+      dockerfile: search/Dockerfile
+    container_name: cz-search-1
+    secrets:
+      - db_read_password
+      - redis_password
+    environment:
+      - PORT=4000
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - SUPPORTED_COUNTRIES=czech
+      - DB_HOST=cz-pgbouncer
+      - DB_PORT=5432
+      - DB_READ_USER=search_readonly
+      - DB_READ_PASSWORD=${SEARCH_DB_READ_PASSWORD:?SEARCH_DB_READ_PASSWORD is required}
+      - DB_MAX_CONNECTIONS=80
+      - REDIS_HOST=cz-redis-search
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+      - DEFAULT_SEARCH_LIMIT=20
+      - MAX_SEARCH_LIMIT=100
+      - CACHE_SEARCH_TTL=300
+      - CACHE_DETAIL_TTL=1800
+      - CACHE_AGGREGATION_TTL=3600
+      - DEFAULT_GEO_RADIUS_KM=10
+      - MAX_GEO_RADIUS_KM=100
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-}
+      - RATE_LIMIT_DISABLED=true
+      - GEOCODING_DB_HOST=${DB_HOST:-2a01:4f8:1c19:6b5b::1}
+      - GEOCODING_DB_PORT=5432
+      - GEOCODING_DB_USER=${DB_USER:-landomo}
+      - GEOCODING_DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
+      - GEOCODING_DB_NAME=landomo_geocoding
+      - PELIAS_URL=http://cz-pelias-api:3100
+    depends_on:
+      cz-pgbouncer:
+        condition: service_healthy
+      cz-redis-search:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:4000/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  cz-search-2:
+    <<: *search-base
+    container_name: cz-search-2
+
+  cz-search-3:
+    <<: *search-base
+    container_name: cz-search-3
+
+  cz-search-nginx:
+    image: nginx:alpine
+    container_name: cz-search-nginx
+    volumes:
+      - /opt/landomo/infra/docker/base/nginx/search-upstream.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "${SEARCH_SERVICE_PORT:-4000}:4000"
+    depends_on:
+      - cz-search-1
+      - cz-search-2
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://127.0.0.1:4000/api/v1/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ============================================================
+  # MONITORING STACK
+  # ============================================================
+
+  cz-prometheus:
+    image: prom/prometheus:latest
+    container_name: cz-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - /opt/landomo/infra/docker/base/monitoring/prometheus-cz.yml:/etc/prometheus/prometheus.yml:ro
+      - /opt/landomo/infra/docker/base/monitoring/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+      - cz_prometheus_data:/prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    depends_on:
+      - cz-alertmanager
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  cz-alertmanager:
+    image: prom/alertmanager:latest
+    container_name: cz-alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    volumes:
+      - /opt/landomo/infra/docker/base/monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    ports:
+      - "${ALERTMANAGER_PORT:-9093}:9093"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9093/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  cz-grafana:
+    image: grafana/grafana:latest
+    container_name: cz-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:?GRAFANA_PASSWORD is required}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - cz_grafana_data:/var/lib/grafana
+      - /opt/landomo/infra/docker/base/monitoring/grafana-dashboards:/etc/grafana/provisioning/dashboards
+      - /opt/landomo/infra/docker/base/monitoring/grafana-datasources-cz.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    depends_on:
+      - cz-prometheus
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: cz-postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${DB_USER:-landomo}:${DB_PASSWORD:?DB_PASSWORD is required}@[2a01:4f8:1c19:6b5b::1]:5432/landomo_cz?sslmode=disable"
+      PG_EXPORTER_EXTEND_QUERY_PATH: /etc/postgres-exporter/postgres-queries.yml
+      PG_EXPORTER_AUTO_DISCOVER_DATABASES: "false"
+      PG_EXPORTER_EXCLUDE_DATABASES: "template0,template1"
+    volumes:
+      - /opt/landomo/infra/docker/base/monitoring/postgres-queries.yml:/etc/postgres-exporter/postgres-queries.yml:ro
+    ports:
+      - "${POSTGRES_EXPORTER_PORT:-9187}:9187"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9187/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  cz-redis-exporter:
+    image: oliver006/redis_exporter:alpine
+    container_name: cz-redis-exporter
+    secrets:
+      - redis_password
+    environment:
+      - REDIS_ADDR=redis://cz-redis:6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+    ports:
+      - "${REDIS_EXPORTER_PORT:-9121}:9121"
+    depends_on:
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:9121/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  cz-redis-search-exporter:
+    image: oliver006/redis_exporter:alpine
+    container_name: cz-redis-search-exporter
+    secrets:
+      - redis_password
+    environment:
+      - REDIS_ADDR=redis://cz-redis-search:6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+    ports:
+      - "${REDIS_SEARCH_EXPORTER_PORT:-9122}:9121"
+    depends_on:
+      cz-redis-search:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:9121/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  cz-node-exporter:
+    image: prom/node-exporter:latest
+    container_name: cz-node-exporter
+    command:
+      - '--path.rootfs=/host'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - "${NODE_EXPORTER_PORT:-9100}:9100"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9100/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  cz-cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cz-cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "${CADVISOR_PORT:-8080}:8080"
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ============================================================
+  # PELIAS GEOCODING STACK
+  # Self-hosted geocoding: Elasticsearch + API + Placeholder + PIP + libpostal
+  # API available at http://localhost:4100/v1/
+  # ============================================================
+
+  cz-pelias-elasticsearch:
+    image: pelias/elasticsearch:7.17.27
+    container_name: cz-pelias-elasticsearch
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9200:9200"
+    volumes:
+      - /opt/landomo/geocoding/elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
+      - "cluster.routing.allocation.disk.threshold_enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    networks:
+      - cz-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  cz-pelias-api:
+    image: pelias/api:master
+    container_name: cz-pelias-api
+    restart: unless-stopped
+    ports:
+      - "4100:3100"
+    environment:
+      - PORT=3100
+    volumes:
+      - /opt/landomo/geocoding/pelias.json:/code/pelias.json:ro
+    depends_on:
+      cz-pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - cz-network
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3100/v1/search?text=test', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  cz-pelias-placeholder:
+    image: pelias/placeholder:master
+    container_name: cz-pelias-placeholder
+    restart: unless-stopped
+    ports:
+      - "4101:4100"
+    volumes:
+      - /opt/landomo/geocoding/pelias.json:/code/pelias.json:ro
+      - /opt/landomo/geocoding/data:/data
+    depends_on:
+      cz-pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - cz-network
+
+  cz-pelias-pip:
+    image: pelias/pip-service:master
+    container_name: cz-pelias-pip
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    volumes:
+      - /opt/landomo/geocoding/pelias.json:/code/pelias.json:ro
+      - /opt/landomo/geocoding/data:/data
+    depends_on:
+      cz-pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - cz-network
+
+  cz-pelias-libpostal:
+    image: pelias/libpostal-service:master
+    container_name: cz-pelias-libpostal
+    restart: unless-stopped
+    ports:
+      - "4400:4400"
+    networks:
+      - cz-network
+
+  # ============================================================
+  # SUPABASE STACK — Auth, REST API, API Gateway
+  # ============================================================
+
+  cz-supabase-auth:
+    image: supabase/gotrue:v2.151.0
+    container_name: cz-supabase-auth
+    environment:
+      - GOTRUE_DB_DRIVER=postgres
+      - GOTRUE_DB_DATABASE_URL=postgres://supabase_auth_admin:${DB_PASSWORD:?DB_PASSWORD is required}@[${DB_HOST:-2a01:4f8:1c19:6b5b::1}]:5432/landomo_supabase?sslmode=disable
+      - GOTRUE_SITE_URL=${SUPABASE_SITE_URL:-http://localhost:3000}
+      - GOTRUE_URI_ALLOW_LIST=${SUPABASE_URI_ALLOW_LIST:-}
+      - GOTRUE_JWT_SECRET=${SUPABASE_JWT_SECRET:?SUPABASE_JWT_SECRET is required}
+      - GOTRUE_JWT_EXP=3600
+      - GOTRUE_JWT_DEFAULT_GROUP_NAME=authenticated
+      - GOTRUE_EXTERNAL_EMAIL_ENABLED=true
+      - GOTRUE_MAILER_AUTOCONFIRM=${GOTRUE_MAILER_AUTOCONFIRM:-false}
+      - GOTRUE_DISABLE_SIGNUP=false
+      - GOTRUE_API_HOST=0.0.0.0
+      - GOTRUE_API_PORT=9999
+      - API_EXTERNAL_URL=${SUPABASE_API_EXTERNAL_URL:-http://localhost:8000}
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:9999/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  cz-supabase-rest:
+    image: postgrest/postgrest:v12.2.0
+    container_name: cz-supabase-rest
+    environment:
+      - PGRST_DB_URI=postgres://${DB_USER:-landomo}:${DB_PASSWORD:?DB_PASSWORD is required}@[${DB_HOST:-2a01:4f8:1c19:6b5b::1}]:5432/landomo_supabase
+      - PGRST_DB_SCHEMAS=public
+      - PGRST_DB_ANON_ROLE=anon
+      - PGRST_JWT_SECRET=${SUPABASE_JWT_SECRET:?SUPABASE_JWT_SECRET is required}
+      - PGRST_DB_USE_LEGACY_GUCS=false
+    networks:
+      - cz-network
+    restart: unless-stopped
+  cz-supabase-kong:
+    image: kong:3.4
+    container_name: cz-supabase-kong
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/var/lib/kong/kong.yml
+      - KONG_DNS_ORDER=LAST,A,CNAME
+      - KONG_PLUGINS=request-transformer,cors,key-auth,rate-limiting
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY:?SUPABASE_ANON_KEY is required}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY:?SUPABASE_SERVICE_ROLE_KEY is required}
+    volumes:
+      - /opt/landomo/infra/docker/base/supabase/kong.rendered.yml:/var/lib/kong/kong.yml:ro
+    ports:
+      - "${SUPABASE_KONG_PORT:-8000}:8000"
+    depends_on:
+      cz-supabase-auth:
+        condition: service_healthy
+      cz-supabase-rest:
+        condition: service_started
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "kong health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================================
+  # FACEBOOK AUTOMATION SERVICE
+  # ============================================================
+
+  cz-fb-automation:
+    build:
+      context: /opt/landomo/source
+      dockerfile: fb-automation/Dockerfile
+    container_name: cz-fb-automation
+    secrets:
+      - redis_password
+    environment:
+      - PORT=3300
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - COUNTRY=czech
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+      - FB_PAGE_ACCESS_TOKEN=${FB_PAGE_ACCESS_TOKEN:-}
+      - FB_PAGE_ID=${FB_PAGE_ID:-}
+      - FB_SESSION_DIR=/data/sessions
+      - FB_SCREENSHOT_DIR=/data/screenshots
+      - MAX_PAGE_POSTS_PER_HOUR=25
+      - MAX_GROUP_POSTS_PER_HOUR=5
+      - MAX_GROUP_POSTS_PER_DAY=20
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT:-}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY:-}
+      - AZURE_OPENAI_DEPLOYMENT_NAME=${AZURE_OPENAI_DEPLOYMENT_NAME:-DeepSeek-V3-2}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION:-2024-08-01-preview}
+    volumes:
+      - cz_fb_sessions:/data/sessions
+      - cz_fb_screenshots:/data/screenshots
+    ports:
+      - "127.0.0.1:3300:3300"
+    depends_on:
+      cz-redis:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3300/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ============================================================
+  # NOTIFICATION SERVICE
+  # ============================================================
+
+  cz-notification:
+    build:
+      context: /opt/landomo/source
+      dockerfile: notification-service/Dockerfile
+    container_name: cz-notification
+    secrets:
+      - redis_password
+      - supabase_service_key
+    environment:
+      - PORT=3200
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - COUNTRY=czech
+      - REDIS_HOST=cz-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+      - SUPABASE_URL=http://cz-supabase-kong:8000
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_ROLE_KEY:?SUPABASE_SERVICE_ROLE_KEY is required}
+    ports:
+      - "127.0.0.1:3200:3200"
+    depends_on:
+      cz-redis:
+        condition: service_healthy
+      cz-supabase-kong:
+        condition: service_healthy
+    networks:
+      - cz-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3200/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s

@@ -1,0 +1,36 @@
+{
+  "name": "@landomo/scraper-immobilienscout24-de",
+  "version": "1.0.0",
+  "description": "ImmobilienScout24.de scraper for landomo-world platform",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "landomo",
+    "scraper",
+    "immobilienscout24",
+    "germany",
+    "real-estate"
+  ],
+  "dependencies": {
+    "@landomo/core": "file:../../../shared-components",
+    "axios": "^1.6.0",
+    "bullmq": "^5.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.18.2",
+    "rebrowser-playwright": "^1.52.0",
+    "puppeteer": "^24.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+}

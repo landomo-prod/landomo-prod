@@ -1,0 +1,61 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e7] [cursor=pointer]:
+    - img [ref=e8]
+  - alert [ref=e11]
+  - generic [ref=e12]:
+    - navigation [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15] [cursor=pointer]:
+          - img [ref=e17]
+          - generic [ref=e22]: Landomo
+        - generic [ref=e23]:
+          - link "Buy" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+          - link "Rent" [ref=e25] [cursor=pointer]:
+            - /url: "#"
+          - link "Sell" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+          - link "Home Loans" [ref=e27] [cursor=pointer]:
+            - /url: "#"
+      - button "Log in" [ref=e29]
+    - banner [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - textbox "Search saved properties..." [ref=e36]
+        - button "All Filters" [ref=e38]:
+          - img
+          - generic [ref=e39]: All Filters
+        - button "Sort" [ref=e40]:
+          - text: Sort
+          - img [ref=e41]
+    - generic [ref=e44]:
+      - complementary [ref=e45]:
+        - navigation [ref=e46]:
+          - button "Map Explorer" [ref=e47]:
+            - img [ref=e48]
+            - generic [ref=e50]: Map Explorer
+          - button "Property List" [ref=e51]:
+            - img [ref=e52]
+            - generic [ref=e53]: Property List
+          - button "Saved" [active] [ref=e54]:
+            - img [ref=e55]
+            - generic [ref=e57]: Saved
+          - button "Notifications" [ref=e58]:
+            - img [ref=e59]
+            - generic [ref=e62]: Notifications
+        - navigation [ref=e63]:
+          - button "Collapse" [ref=e64]:
+            - img [ref=e65]
+            - generic [ref=e67]: Collapse
+      - generic [ref=e70]:
+        - img [ref=e72]
+        - heading "No saved properties yet" [level=2] [ref=e74]
+        - paragraph [ref=e75]: Start saving properties you love by clicking the heart icon. They'll appear here for easy access.
+        - button "Browse Properties" [ref=e76]:
+          - text: Browse Properties
+          - img [ref=e77]
+```

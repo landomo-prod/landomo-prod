@@ -1,0 +1,379 @@
+{
+  "title": "Security Monitoring",
+  "tags": ["landomo", "security", "monitoring"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "uid": "landomo-security-monitoring",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Failed Auth Rate (Last 24h)",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  date_trunc('minute', timestamp) as time,\n  COUNT(*) as \"Failed Attempts\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code IN (401, 403)\nGROUP BY time\nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 20,
+            "showPoints": "never"
+          },
+          "color": {"mode": "palette-classic"},
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {"mode": "single"},
+        "legend": {"displayMode": "list", "placement": "bottom"}
+      }
+    },
+    {
+      "id": 2,
+      "title": "Failed Auth by Country",
+      "type": "bargauge",
+      "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  COALESCE(country, 'Unknown') as metric,\n  COUNT(*) as value\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code IN (401, 403)\nGROUP BY country\nORDER BY value DESC\nLIMIT 10",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "palette-classic"},
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Total Failed Auths (24h)",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT COUNT(*) as \"Failed Authentications\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code IN (401, 403)",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 50, "color": "yellow"},
+              {"value": 200, "color": "red"}
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Rate Limit Violations (Last 24h)",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  date_trunc('minute', timestamp) as time,\n  COUNT(*) as \"Rate Limit Violations\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code = 429\nGROUP BY time\nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 20,
+            "showPoints": "never"
+          },
+          "color": {"mode": "fixed", "fixedColor": "orange"},
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {"mode": "single"},
+        "legend": {"displayMode": "list", "placement": "bottom"}
+      }
+    },
+    {
+      "id": 5,
+      "title": "Rate Limit by API Key (Top 10)",
+      "type": "table",
+      "gridPos": {"h": 8, "w": 6, "x": 12, "y": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  api_key_prefix as \"API Key\",\n  client_ip as \"Client IP\",\n  COUNT(*) as \"Violations\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code = 429\nGROUP BY api_key_prefix, client_ip\nORDER BY \"Violations\" DESC\nLIMIT 10",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 6,
+      "title": "Total Violations (24h)",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 18, "y": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT COUNT(*) as \"Rate Limit Violations\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code = 429",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 100, "color": "yellow"},
+              {"value": 500, "color": "red"}
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 7,
+      "title": "API Key Version Distribution",
+      "type": "piechart",
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 16},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  COALESCE(api_key_version, 'Unknown') as metric,\n  COUNT(*) as value\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code = 200\nGROUP BY api_key_version",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"]
+        },
+        "pieType": "donut",
+        "displayLabels": ["name", "percent"]
+      }
+    },
+    {
+      "id": 8,
+      "title": "Expired Key Attempts",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 16},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT COUNT(*) as \"Expired Key Attempts\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND error_message LIKE '%expired%'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 1, "color": "red"}
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 9,
+      "title": "Active API Keys",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 16},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT COUNT(DISTINCT api_key_prefix) as \"Active API Keys\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND status_code = 200",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "blue"}
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Redis Auth Errors",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  date_trunc('minute', timestamp) as time,\n  COUNT(*) as \"Redis Errors\"\nFROM system_errors\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND component = 'redis'\n  AND (error_message LIKE '%auth%' OR error_message LIKE '%connection%')\nGROUP BY time\nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 20,
+            "showPoints": "never"
+          },
+          "color": {"mode": "fixed", "fixedColor": "red"},
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {"mode": "single"},
+        "legend": {"displayMode": "list", "placement": "bottom"}
+      }
+    },
+    {
+      "id": 11,
+      "title": "Database Auth Errors",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  date_trunc('minute', timestamp) as time,\n  COUNT(*) as \"Database Errors\"\nFROM system_errors\nWHERE timestamp > NOW() - INTERVAL '24 hours'\n  AND component = 'postgres'\n  AND (error_message LIKE '%auth%' OR error_message LIKE '%connection%')\nGROUP BY time\nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 20,
+            "showPoints": "never"
+          },
+          "color": {"mode": "fixed", "fixedColor": "red"},
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {"mode": "single"},
+        "legend": {"displayMode": "list", "placement": "bottom"}
+      }
+    },
+    {
+      "id": 12,
+      "title": "Secret Age (Days)",
+      "type": "gauge",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  secret_name as metric,\n  EXTRACT(EPOCH FROM (NOW() - created_at)) / 86400 as value\nFROM secrets_metadata\nWHERE status = 'active'\nORDER BY value DESC\nLIMIT 1",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 60, "color": "yellow"},
+              {"value": 90, "color": "red"}
+            ]
+          },
+          "unit": "days",
+          "min": 0,
+          "max": 120
+        }
+      },
+      "options": {
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 13,
+      "title": "Recent Security Events",
+      "type": "table",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT\n  timestamp as \"Time\",\n  status_code as \"Status\",\n  client_ip as \"IP\",\n  api_key_prefix as \"Key\",\n  endpoint as \"Endpoint\",\n  error_message as \"Error\"\nFROM api_access_log\nWHERE timestamp > NOW() - INTERVAL '1 hour'\n  AND status_code IN (401, 403, 429)\nORDER BY timestamp DESC\nLIMIT 50",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    }
+  ],
+  "time": {"from": "now-24h", "to": "now"},
+  "timepicker": {
+    "refresh_intervals": ["10s", "30s", "1m", "5m", "15m"]
+  }
+}

@@ -1,0 +1,112 @@
+import { Queue, Worker, Job } from 'bullmq';
+import { transformBieniciToStandard } from '../transformers/bieniciTransformer';
+import { IngestAdapter } from '../adapters/ingestAdapter';
+import { BieniciListingRaw } from '../types/bieniciTypes';
+
+const redisConfig = {
+  host: process.env.REDIS_HOST || 'redis',
+  port: parseInt(process.env.REDIS_PORT || '6379'),
+  ...(process.env.REDIS_PASSWORD && { password: process.env.REDIS_PASSWORD }),
+};
+
+export const detailQueue = new Queue('bienici-details', {
+  connection: redisConfig,
+  defaultJobOptions: {
+    attempts: 3,
+    backoff: { type: 'exponential', delay: 2000 },
+    removeOnComplete: { count: 1000, age: 3600 },
+    removeOnFail: { count: 500, age: 7200 },
+  },
+});
+
+export interface DetailJob {
+  portalId: string;
+  category: 'apartment' | 'house' | 'land' | 'commercial';
+  listingData: BieniciListingRaw;
+}
+
+let batch: any[] = [];
+const BATCH_SIZE = 100;
+const adapter = new IngestAdapter('bienici');
+
+async function flushBatch() {
+  if (batch.length === 0) return;
+  const size = batch.length;
+  try {
+    await adapter.sendProperties(batch);
+    batch = [];
+    console.log(JSON.stringify({ level: 'info', service: 'bienici-scraper', msg: 'Sent batch', count: size }));
+  } catch (error) {
+    console.error(JSON.stringify({ level: 'error', service: 'bienici-scraper', msg: 'Failed to send batch', err: (error as any)?.message }));
+  }
+}
+
+export function createDetailWorker(concurrency: number = 40) {
+  const worker = new Worker<DetailJob>(
+    'bienici-details',
+    async (job: Job<DetailJob>) => {
+      const { portalId, category, listingData } = job.data;
+
+      try {
+        // Bienici search results contain full data, no detail fetch needed
+        const standardData = transformBieniciToStandard(listingData, category);
+
+        batch.push({
+          portalId,
+          data: standardData,
+          rawData: { listing: listingData },
+        });
+
+        if (batch.length >= BATCH_SIZE) {
+          await flushBatch();
+        }
+
+        return { success: true, portalId };
+      } catch (error: any) {
+        console.error(JSON.stringify({ level: 'error', service: 'bienici-scraper', msg: 'Detail job failed', portalId, err: error.message }));
+        throw error;
+      }
+    },
+    {
+      connection: redisConfig,
+      concurrency,
+      lockDuration: 300000,
+      lockRenewTime: 150000,
+    }
+  );
+
+  worker.on('failed', (job: any, err: any) => {
+    console.error(JSON.stringify({ level: 'error', service: 'bienici-scraper', msg: 'Job failed', portalId: job?.data.portalId, err: err.message }));
+  });
+
+  worker.on('error', (err: any) => {
+    console.error(JSON.stringify({ level: 'error', service: 'bienici-scraper', msg: 'Worker error', err: err?.message }));
+  });
+
+  worker.on('closing', async () => {
+    await flushBatch();
+  });
+
+  setInterval(async () => {
+    if (batch.length > 0) await flushBatch();
+  }, 5000);
+
+  return worker;
+}
+
+export async function addDetailJobs(jobs: DetailJob[]) {
+  const bulkJobs = jobs.map(job => ({
+    name: `detail-${job.portalId}`,
+    data: job,
+  }));
+  await detailQueue.addBulk(bulkJobs);
+  console.log(JSON.stringify({ level: 'info', service: 'bienici-scraper', msg: 'Queued detail jobs', count: jobs.length }));
+}
+
+export async function getQueueStats() {
+  const waiting = await detailQueue.getWaitingCount();
+  const active = await detailQueue.getActiveCount();
+  const completed = await detailQueue.getCompletedCount();
+  const failed = await detailQueue.getFailedCount();
+  return { waiting, active, completed, failed };
+}

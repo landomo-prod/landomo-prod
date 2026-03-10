@@ -1,0 +1,77 @@
+_format_version: "1.1"
+
+###
+# Kong API Gateway configuration for self-hosted Supabase
+# Routes auth and REST API requests to GoTrue and PostgREST
+###
+
+consumers:
+  - username: anon
+    keyauth_credentials:
+      - key: ${SUPABASE_ANON_KEY}
+  - username: service_role
+    keyauth_credentials:
+      - key: ${SUPABASE_SERVICE_ROLE_KEY}
+
+services:
+  # ---------- Auth (GoTrue) ----------
+  - name: auth-v1
+    url: http://cz-supabase-auth:9999/
+    routes:
+      - name: auth-v1-route
+        strip_path: true
+        paths:
+          - /auth/v1/
+    plugins:
+      - name: cors
+      - name: key-auth
+        config:
+          hide_credentials: true
+      - name: rate-limiting
+        config:
+          minute: 120
+          policy: local
+          fault_tolerant: true
+          hide_client_headers: false
+
+  # ---------- REST (PostgREST) ----------
+  - name: rest-v1
+    url: http://cz-supabase-rest:3000/
+    routes:
+      - name: rest-v1-route
+        strip_path: true
+        paths:
+          - /rest/v1/
+    plugins:
+      - name: cors
+      - name: key-auth
+        config:
+          hide_credentials: true
+      - name: rate-limiting
+        config:
+          minute: 300
+          policy: local
+          fault_tolerant: true
+          hide_client_headers: false
+
+  # ---------- Auth callback (no auth required) ----------
+  - name: auth-v1-callback
+    url: http://cz-supabase-auth:9999/
+    routes:
+      - name: auth-v1-callback-route
+        strip_path: true
+        paths:
+          - /auth/v1/callback
+    plugins:
+      - name: cors
+
+  # ---------- Auth verification (no auth required) ----------
+  - name: auth-v1-verify
+    url: http://cz-supabase-auth:9999/
+    routes:
+      - name: auth-v1-verify-route
+        strip_path: true
+        paths:
+          - /auth/v1/verify
+    plugins:
+      - name: cors

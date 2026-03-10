@@ -1,0 +1,184 @@
+# PostgreSQL Autovacuum Monitoring Queries
+# Used by postgres_exporter to expose vacuum and maintenance metrics
+
+pg_autovacuum_activity:
+  query: |
+    SELECT
+      current_database() AS database,
+      schemaname AS schema,
+      relname AS table,
+      n_live_tup AS live_tuples,
+      n_dead_tup AS dead_tuples,
+      CASE WHEN n_live_tup > 0
+        THEN round(n_dead_tup::numeric / n_live_tup::numeric * 100, 2)
+        ELSE 0
+      END AS dead_tuple_pct,
+      EXTRACT(EPOCH FROM (now() - COALESCE(last_autovacuum, '1970-01-01'::timestamp))) AS seconds_since_last_autovacuum,
+      EXTRACT(EPOCH FROM (now() - COALESCE(last_vacuum, '1970-01-01'::timestamp))) AS seconds_since_last_vacuum,
+      EXTRACT(EPOCH FROM (now() - COALESCE(last_autoanalyze, '1970-01-01'::timestamp))) AS seconds_since_last_autoanalyze,
+      EXTRACT(EPOCH FROM (now() - COALESCE(last_analyze, '1970-01-01'::timestamp))) AS seconds_since_last_analyze,
+      vacuum_count,
+      autovacuum_count,
+      analyze_count,
+      autoanalyze_count
+    FROM pg_stat_user_tables
+    ORDER BY n_dead_tup DESC
+    LIMIT 50
+  metrics:
+    - database:
+        usage: "LABEL"
+        description: "Database name"
+    - schema:
+        usage: "LABEL"
+        description: "Schema name"
+    - table:
+        usage: "LABEL"
+        description: "Table name"
+    - live_tuples:
+        usage: "GAUGE"
+        description: "Estimated number of live rows"
+    - dead_tuples:
+        usage: "GAUGE"
+        description: "Estimated number of dead rows"
+    - dead_tuple_pct:
+        usage: "GAUGE"
+        description: "Dead tuples as percentage of live tuples"
+    - seconds_since_last_autovacuum:
+        usage: "GAUGE"
+        description: "Seconds since last autovacuum ran on this table"
+    - seconds_since_last_vacuum:
+        usage: "GAUGE"
+        description: "Seconds since last manual vacuum on this table"
+    - seconds_since_last_autoanalyze:
+        usage: "GAUGE"
+        description: "Seconds since last autoanalyze ran on this table"
+    - seconds_since_last_analyze:
+        usage: "GAUGE"
+        description: "Seconds since last manual analyze on this table"
+    - vacuum_count:
+        usage: "COUNTER"
+        description: "Number of manual vacuums"
+    - autovacuum_count:
+        usage: "COUNTER"
+        description: "Number of autovacuums"
+    - analyze_count:
+        usage: "COUNTER"
+        description: "Number of manual analyzes"
+    - autoanalyze_count:
+        usage: "COUNTER"
+        description: "Number of autoanalyzes"
+
+pg_autovacuum_workers:
+  query: |
+    SELECT
+      count(*) AS active_workers,
+      current_setting('autovacuum_max_workers')::int AS max_workers
+    FROM pg_stat_activity
+    WHERE backend_type = 'autovacuum worker'
+  metrics:
+    - active_workers:
+        usage: "GAUGE"
+        description: "Number of currently running autovacuum workers"
+    - max_workers:
+        usage: "GAUGE"
+        description: "Maximum configured autovacuum workers"
+
+pg_autovacuum_running:
+  query: |
+    SELECT
+      datname AS database,
+      query AS vacuum_query,
+      EXTRACT(EPOCH FROM (now() - query_start)) AS runtime_seconds
+    FROM pg_stat_activity
+    WHERE backend_type = 'autovacuum worker'
+      AND state = 'active'
+  metrics:
+    - database:
+        usage: "LABEL"
+        description: "Database being vacuumed"
+    - vacuum_query:
+        usage: "LABEL"
+        description: "The vacuum query being executed"
+    - runtime_seconds:
+        usage: "GAUGE"
+        description: "How long the current autovacuum has been running"
+
+pg_tables_needing_vacuum:
+  query: |
+    SELECT
+      current_database() AS database,
+      schemaname AS schema,
+      relname AS table,
+      n_dead_tup AS dead_tuples,
+      n_live_tup AS live_tuples,
+      n_dead_tup - (current_setting('autovacuum_vacuum_threshold')::int +
+        current_setting('autovacuum_vacuum_scale_factor')::float * n_live_tup)
+        AS overdue_tuples
+    FROM pg_stat_user_tables
+    WHERE n_dead_tup > (current_setting('autovacuum_vacuum_threshold')::int +
+      current_setting('autovacuum_vacuum_scale_factor')::float * n_live_tup)
+    ORDER BY overdue_tuples DESC
+    LIMIT 20
+  metrics:
+    - database:
+        usage: "LABEL"
+        description: "Database name"
+    - schema:
+        usage: "LABEL"
+        description: "Schema name"
+    - table:
+        usage: "LABEL"
+        description: "Table name"
+    - dead_tuples:
+        usage: "GAUGE"
+        description: "Dead tuples in the table"
+    - live_tuples:
+        usage: "GAUGE"
+        description: "Live tuples in the table"
+    - overdue_tuples:
+        usage: "GAUGE"
+        description: "Dead tuples above autovacuum threshold (positive = overdue)"
+
+pg_bloat_estimate:
+  query: |
+    SELECT
+      current_database() AS database,
+      schemaname AS schema,
+      relname AS table,
+      pg_total_relation_size(relid) AS total_bytes,
+      pg_relation_size(relid) AS table_bytes,
+      CASE WHEN n_live_tup > 0
+        THEN pg_relation_size(relid)::float / n_live_tup
+        ELSE 0
+      END AS bytes_per_row,
+      n_live_tup AS live_tuples,
+      n_dead_tup AS dead_tuples
+    FROM pg_stat_user_tables
+    WHERE pg_relation_size(relid) > 1048576
+    ORDER BY pg_total_relation_size(relid) DESC
+    LIMIT 20
+  metrics:
+    - database:
+        usage: "LABEL"
+        description: "Database name"
+    - schema:
+        usage: "LABEL"
+        description: "Schema name"
+    - table:
+        usage: "LABEL"
+        description: "Table name"
+    - total_bytes:
+        usage: "GAUGE"
+        description: "Total table size including indexes"
+    - table_bytes:
+        usage: "GAUGE"
+        description: "Table data size"
+    - bytes_per_row:
+        usage: "GAUGE"
+        description: "Average bytes per live row (bloat indicator)"
+    - live_tuples:
+        usage: "GAUGE"
+        description: "Estimated live rows"
+    - dead_tuples:
+        usage: "GAUGE"
+        description: "Estimated dead rows"

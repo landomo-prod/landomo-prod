@@ -1,0 +1,1167 @@
+{
+  "test_timestamp": "2026-02-07T19:25:21.730Z",
+  "total_listings_tested": 10,
+  "successful_transformations": 10,
+  "failed_transformations": 0,
+  "field_extraction_stats": {
+    "water_supply": {
+      "found": 4,
+      "not_found": 6,
+      "example_values": [
+        "Vodovod"
+      ]
+    },
+    "sewage_type": {
+      "found": 0,
+      "not_found": 10,
+      "example_values": []
+    },
+    "gas_supply": {
+      "found_true": 0,
+      "found_false": 3,
+      "not_found": 7
+    },
+    "bathrooms": {
+      "found": 10,
+      "not_found": 0,
+      "default_used": 10,
+      "example_values": [
+        1
+      ]
+    },
+    "recently_renovated": {
+      "found_true": 0,
+      "found_false": 6,
+      "not_found": 4
+    }
+  },
+  "sample_listings": [
+    {
+      "address": "Praha 4 - Újezd u Průhonic",
+      "property_type": "house",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "34 950 000",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za nemovitost"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "01753"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "type": "string",
+          "name": "Stavba",
+          "value": "Cihlová"
+        },
+        {
+          "type": "string",
+          "name": "Stav objektu",
+          "value": "Novostavba"
+        },
+        {
+          "type": "string",
+          "name": "Poloha domu",
+          "value": "Samostatný"
+        },
+        {
+          "type": "string",
+          "name": "Umístění objektu",
+          "value": "Klidná část obce"
+        },
+        {
+          "type": "string",
+          "name": "Typ domu",
+          "value": "Patrový"
+        },
+        {
+          "type": "string",
+          "name": "Podlaží",
+          "value": "2"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Užitná ploch",
+          "value": "218"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "497"
+        },
+        {
+          "type": "count",
+          "name": "Parkování",
+          "value": "2"
+        },
+        {
+          "type": "count",
+          "name": "Garáž",
+          "value": "1"
+        },
+        {
+          "type": "set",
+          "name": "Voda",
+          "value": [
+            {
+              "name": "Voda",
+              "value": "Vodovod"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Plyn",
+          "value": [
+            {
+              "name": "Plyn",
+              "value": "Plynovod"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Odpad",
+          "value": [
+            {
+              "name": "Odpad",
+              "value": "Veřejná kanalizace"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Telekomunikace",
+          "value": [
+            {
+              "name": "Telekomunikace",
+              "value": "Internet"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Elektřina",
+          "value": [
+            {
+              "name": "Elektřina",
+              "value": "230V"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Doprava",
+          "value": [
+            {
+              "name": "Doprava",
+              "value": "Dálnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "Silnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "MHD"
+            },
+            {
+              "name": "Doprava",
+              "value": "Autobus"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Komunikace",
+          "value": [
+            {
+              "name": "Komunikace",
+              "value": "Asfaltová"
+            }
+          ]
+        },
+        {
+          "value_type": "B",
+          "type": "energy_efficiency_rating",
+          "name": "Energetická náročnost budovy",
+          "value": "Třída B - Velmi úsporná č. 264/2020 Sb. podle vyhlášky"
+        },
+        {
+          "unit2": "za rok",
+          "unit": "kWh/m^2",
+          "type": "energy_performance",
+          "name": "Ukazatel energetické náročnosti budovy",
+          "value": "52,4"
+        },
+        {
+          "url": "https://d18-a.sdn.cz/d_18/c_attachment_p7_A/kOzkBkwYBTDq3nMN0KFfInPy/455e.pdf",
+          "type": "energy_performance_attachment",
+          "name": "Průkaz energetické náročnosti budovy",
+          "value": "Zobrazit průkaz energetické náročnosti budovy"
+        },
+        {
+          "type": "string",
+          "name": "Vybavení",
+          "value": "Částečně"
+        },
+        {
+          "type": "boolean",
+          "name": "Výtah",
+          "value": false
+        }
+      ],
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "gas_supply": false,
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Horní, Dobšice",
+      "property_type": "house",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "28 900",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za měsíc"
+        },
+        {
+          "type": "string",
+          "name": "Poznámka k ceně",
+          "value": "+ inkaso 6 860 Kč"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "00847"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "type": "string",
+          "name": "Stavba",
+          "value": "Cihlová"
+        },
+        {
+          "type": "string",
+          "name": "Stav objektu",
+          "value": "Po rekonstrukci"
+        },
+        {
+          "type": "string",
+          "name": "Poloha domu",
+          "value": "Řadový"
+        },
+        {
+          "type": "string",
+          "name": "Umístění objektu",
+          "value": "Klidná část obce"
+        },
+        {
+          "type": "string",
+          "name": "Typ domu",
+          "value": "Patrový"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Užitná ploch",
+          "value": "220"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "203"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha zahrady",
+          "value": "101"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Sklep",
+          "value": "10"
+        },
+        {
+          "type": "count",
+          "name": "Parkování",
+          "value": "1"
+        },
+        {
+          "type": "count",
+          "name": "Garáž",
+          "value": "1"
+        },
+        {
+          "type": "string",
+          "name": "Datum nastěhování",
+          "value": "Ihned"
+        },
+        {
+          "value_type": "B",
+          "type": "energy_efficiency_rating",
+          "name": "Energetická náročnost budovy",
+          "value": "Třída B - Velmi úsporná č. 264/2020 Sb. podle vyhlášky"
+        },
+        {
+          "unit2": "za rok",
+          "unit": "kWh/m^2",
+          "type": "energy_performance",
+          "name": "Ukazatel energetické náročnosti budovy",
+          "value": "46,2"
+        },
+        {
+          "type": "string",
+          "name": "Vybavení",
+          "value": "Částečně"
+        }
+      ],
+      "extracted_fields": {
+        "bathrooms": 1
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Tlumačovská, Praha 5 - Stodůlky",
+      "property_type": "house",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "100 000",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za měsíc"
+        },
+        {
+          "type": "string",
+          "name": "Poznámka k ceně",
+          "value": "+ poplatky 15 000 Kč"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "144431"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "type": "string",
+          "name": "Stavba",
+          "value": "Cihlová"
+        },
+        {
+          "type": "string",
+          "name": "Stav objektu",
+          "value": "Po rekonstrukci"
+        },
+        {
+          "type": "string",
+          "name": "Poloha domu",
+          "value": "Samostatný"
+        },
+        {
+          "type": "string",
+          "name": "Typ domu",
+          "value": "Patrový"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Užitná ploch",
+          "value": "360"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "650"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha zahrady",
+          "value": "330"
+        },
+        {
+          "type": "string",
+          "name": "Datum nastěhování",
+          "value": "Ihned"
+        },
+        {
+          "value_type": "G",
+          "type": "energy_efficiency_rating",
+          "name": "Energetická náročnost budovy",
+          "value": "Třída G - Mimořádně nehospodárná"
+        }
+      ],
+      "extracted_fields": {
+        "bathrooms": 1
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "U Farmy, Srch",
+      "property_type": "house",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "type": "price_info",
+          "name": "Cena",
+          "value": "Informace o ceně na dotaz"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "type": "string",
+          "name": "ID",
+          "value": "526713676"
+        },
+        {
+          "type": "string",
+          "name": "Stavba",
+          "value": "Cihlová"
+        },
+        {
+          "type": "string",
+          "name": "Stav objektu",
+          "value": "Novostavba"
+        },
+        {
+          "type": "string",
+          "name": "Umístění objektu",
+          "value": "Klidná část obce"
+        },
+        {
+          "type": "string",
+          "name": "Typ domu",
+          "value": "Patrový"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Užitná ploch",
+          "value": "128"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "589"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha zahrady",
+          "value": "428"
+        },
+        {
+          "type": "count",
+          "name": "Parkování",
+          "value": "2"
+        },
+        {
+          "type": "string",
+          "name": "Datum nastěhování",
+          "value": "Ihned"
+        },
+        {
+          "type": "integer",
+          "name": "Rok kolaudace",
+          "value": 2025
+        },
+        {
+          "type": "date",
+          "name": "Datum zahájení prodeje",
+          "value": "21.01.2026"
+        },
+        {
+          "type": "set",
+          "name": "Odpad",
+          "value": [
+            {
+              "name": "Odpad",
+              "value": "Veřejná kanalizace"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Doprava",
+          "value": [
+            {
+              "name": "Doprava",
+              "value": "Silnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "MHD"
+            },
+            {
+              "name": "Doprava",
+              "value": "Autobus"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Komunikace",
+          "value": [
+            {
+              "name": "Komunikace",
+              "value": "Betonová"
+            }
+          ]
+        },
+        {
+          "value_type": "B",
+          "type": "energy_efficiency_rating",
+          "name": "Energetická náročnost budovy",
+          "value": "Třída B - Velmi úsporná"
+        },
+        {
+          "type": "boolean",
+          "name": "Vybavení",
+          "value": true
+        }
+      ],
+      "extracted_fields": {
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Ruská, Františkovy Lázně",
+      "property_type": "house",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "13 990 000",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za nemovitost"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "02-01517"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": false
+        },
+        {
+          "type": "string",
+          "name": "Stavba",
+          "value": "Cihlová"
+        },
+        {
+          "type": "string",
+          "name": "Stav objektu",
+          "value": "Ve výstavbě"
+        },
+        {
+          "type": "string",
+          "name": "Poloha domu",
+          "value": "Samostatný"
+        },
+        {
+          "type": "string",
+          "name": "Umístění objektu",
+          "value": "Okraj obce"
+        },
+        {
+          "type": "string",
+          "name": "Typ domu",
+          "value": "Patrový"
+        },
+        {
+          "type": "string",
+          "name": "Podlaží",
+          "value": "2"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha zastavěná",
+          "value": "177"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Užitná ploch",
+          "value": "229"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Celková plocha",
+          "value": "1051"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "1051"
+        },
+        {
+          "type": "boolean",
+          "name": "Parkování",
+          "value": true
+        },
+        {
+          "type": "boolean",
+          "name": "Garáž",
+          "value": true
+        },
+        {
+          "type": "set",
+          "name": "Voda",
+          "value": [
+            {
+              "name": "Voda",
+              "value": "Vodovod"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Plyn",
+          "value": [
+            {
+              "name": "Plyn",
+              "value": "Plynovod"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Odpad",
+          "value": [
+            {
+              "name": "Odpad",
+              "value": "Veřejná kanalizace"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Telekomunikace",
+          "value": [
+            {
+              "name": "Telekomunikace",
+              "value": "Internet"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Elektřina",
+          "value": [
+            {
+              "name": "Elektřina",
+              "value": "230V"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Doprava",
+          "value": [
+            {
+              "name": "Doprava",
+              "value": "Vlak"
+            },
+            {
+              "name": "Doprava",
+              "value": "Dálnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "MHD"
+            },
+            {
+              "name": "Doprava",
+              "value": "Autobus"
+            }
+          ]
+        },
+        {
+          "value_type": "B",
+          "type": "energy_efficiency_rating",
+          "name": "Energetická náročnost budovy",
+          "value": "Třída B - Velmi úsporná"
+        },
+        {
+          "url": "https://d18-a.sdn.cz/d_18/c_attachment_p8_A/kBfrbpoeNCsCVHFVBFtWnjg/98bc.pdf",
+          "type": "energy_performance_attachment",
+          "name": "Průkaz energetické náročnosti budovy",
+          "value": "Zobrazit průkaz energetické náročnosti budovy"
+        },
+        {
+          "type": "boolean",
+          "name": "Bezbariérový",
+          "value": true
+        }
+      ],
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "gas_supply": false,
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Praha 4 - Újezd u Průhonic",
+      "property_type": "land",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "23 500 000",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za nemovitost"
+        },
+        {
+          "currency": "Kč",
+          "type": "price",
+          "name": "Cena za m²",
+          "value": "22 882"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "01578"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "1027"
+        },
+        {
+          "type": "set",
+          "name": "Voda",
+          "value": [
+            {
+              "name": "Voda",
+              "value": "Vodovod"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Plyn",
+          "value": [
+            {
+              "name": "Plyn",
+              "value": "Plynovod"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Odpad",
+          "value": [
+            {
+              "name": "Odpad",
+              "value": "Veřejná kanalizace"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Elektřina",
+          "value": [
+            {
+              "name": "Elektřina",
+              "value": "230V"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Doprava",
+          "value": [
+            {
+              "name": "Doprava",
+              "value": "Dálnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "Silnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "MHD"
+            },
+            {
+              "name": "Doprava",
+              "value": "Autobus"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Komunikace",
+          "value": [
+            {
+              "name": "Komunikace",
+              "value": "Asfaltová"
+            }
+          ]
+        }
+      ],
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "gas_supply": false,
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Princova, Praha 5 - Zbraslav",
+      "property_type": "land",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "14 900 000",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za nemovitost"
+        },
+        {
+          "currency": "Kč",
+          "type": "price",
+          "name": "Cena za m²",
+          "value": "19 761"
+        },
+        {
+          "type": "string",
+          "name": "Poznámka k ceně",
+          "value": "Včetně provize a právního servisu. Prodávající si vyhrazuje právo vybrat kupujícího na základě jím zvolených kritérií."
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "0201-NP03277"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "type": "string",
+          "name": "Umístění objektu",
+          "value": "Okraj obce"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "754"
+        },
+        {
+          "type": "set",
+          "name": "Voda",
+          "value": [
+            {
+              "name": "Voda",
+              "value": "Vodovod"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Odpad",
+          "value": [
+            {
+              "name": "Odpad",
+              "value": "Veřejná kanalizace"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Elektřina",
+          "value": [
+            {
+              "name": "Elektřina",
+              "value": "400V"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Doprava",
+          "value": [
+            {
+              "name": "Doprava",
+              "value": "Vlak"
+            },
+            {
+              "name": "Doprava",
+              "value": "Dálnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "Silnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "MHD"
+            },
+            {
+              "name": "Doprava",
+              "value": "Autobus"
+            }
+          ]
+        }
+      ],
+      "extracted_fields": {
+        "water_supply": "Vodovod",
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Uherčice, okres Břeclav",
+      "property_type": "land",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "110 252",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za nemovitost"
+        },
+        {
+          "currency": "Kč",
+          "type": "price",
+          "name": "Cena za m²",
+          "value": "43"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "6102-8"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "2564"
+        }
+      ],
+      "extracted_fields": {
+        "bathrooms": 1
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Nechvalice - Ředice, okres Příbram",
+      "property_type": "land",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "type": "price_info",
+          "name": "Cena",
+          "value": "Informace o ceně na dotaz"
+        },
+        {
+          "type": "string",
+          "name": "Poznámka k ceně",
+          "value": "cena u makléře"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "27733"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "type": "string",
+          "name": "Umístění objektu",
+          "value": "Klidná část obce"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "4965"
+        }
+      ],
+      "extracted_fields": {
+        "bathrooms": 1
+      },
+      "parsing_errors": []
+    },
+    {
+      "address": "Charvatce, okres Mladá Boleslav",
+      "property_type": "land",
+      "raw_items": [
+        {
+          "negotiation": false,
+          "name": "Celková cena",
+          "notes": [],
+          "value": "3 960 000",
+          "currency": "Kč",
+          "type": "price_czk",
+          "unit": "za nemovitost"
+        },
+        {
+          "currency": "Kč",
+          "type": "price",
+          "name": "Cena za m²",
+          "value": "4 074"
+        },
+        {
+          "type": "string",
+          "name": "ID zakázky",
+          "value": "420240334"
+        },
+        {
+          "type": "edited",
+          "name": "Aktualizace",
+          "value": "Dnes",
+          "topped": true
+        },
+        {
+          "type": "string",
+          "name": "Umístění objektu",
+          "value": "Klidná část obce"
+        },
+        {
+          "unit": "m2",
+          "type": "area",
+          "name": "Plocha pozemku",
+          "value": "972"
+        },
+        {
+          "type": "set",
+          "name": "Odpad",
+          "value": [
+            {
+              "name": "Odpad",
+              "value": "Veřejná kanalizace"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Elektřina",
+          "value": [
+            {
+              "name": "Elektřina",
+              "value": "230V"
+            },
+            {
+              "name": "Elektřina",
+              "value": "400V"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Doprava",
+          "value": [
+            {
+              "name": "Doprava",
+              "value": "Silnice"
+            },
+            {
+              "name": "Doprava",
+              "value": "Autobus"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "name": "Komunikace",
+          "value": [
+            {
+              "name": "Komunikace",
+              "value": "Asfaltová"
+            }
+          ]
+        }
+      ],
+      "extracted_fields": {
+        "bathrooms": 1,
+        "recently_renovated": false
+      },
+      "parsing_errors": []
+    }
+  ],
+  "errors": []
+}

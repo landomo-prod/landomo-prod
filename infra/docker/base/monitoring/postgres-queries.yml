@@ -1,0 +1,304 @@
+# Custom PostgreSQL queries for Landomo monitoring
+# Runs against landomo_cz database
+
+pg_database_size:
+  query: |
+    SELECT
+      current_database() AS datname,
+      pg_database_size(current_database()) AS size_bytes
+  metrics:
+    - datname:
+        usage: "LABEL"
+        description: "Database name"
+    - size_bytes:
+        usage: "GAUGE"
+        description: "Database size in bytes"
+
+pg_active_connections:
+  query: |
+    SELECT count(*) AS active_connections
+    FROM pg_stat_activity
+    WHERE state = 'active'
+  metrics:
+    - active_connections:
+        usage: "GAUGE"
+        description: "Number of active connections"
+
+pg_connection_states:
+  query: |
+    SELECT
+      COALESCE(state, 'idle') AS state,
+      count(*) AS count
+    FROM pg_stat_activity
+    WHERE datname = current_database()
+    GROUP BY state
+  metrics:
+    - state:
+        usage: "LABEL"
+        description: "Connection state"
+    - count:
+        usage: "GAUGE"
+        description: "Number of connections in this state"
+
+pg_transaction_rates:
+  query: |
+    SELECT
+      xact_commit AS commits,
+      xact_rollback AS rollbacks,
+      tup_inserted AS rows_inserted,
+      tup_updated AS rows_updated,
+      tup_deleted AS rows_deleted,
+      deadlocks
+    FROM pg_stat_database
+    WHERE datname = current_database()
+  metrics:
+    - commits:
+        usage: "COUNTER"
+        description: "Transactions committed"
+    - rollbacks:
+        usage: "COUNTER"
+        description: "Transactions rolled back"
+    - rows_inserted:
+        usage: "COUNTER"
+        description: "Rows inserted"
+    - rows_updated:
+        usage: "COUNTER"
+        description: "Rows updated"
+    - rows_deleted:
+        usage: "COUNTER"
+        description: "Rows deleted"
+    - deadlocks:
+        usage: "COUNTER"
+        description: "Deadlocks detected"
+
+pg_cache_hit_ratio:
+  query: |
+    SELECT
+      CASE WHEN (blks_hit + blks_read) = 0 THEN 0
+        ELSE round(100.0 * blks_hit / (blks_hit + blks_read), 2)
+      END AS cache_hit_ratio
+    FROM pg_stat_database
+    WHERE datname = current_database()
+  metrics:
+    - cache_hit_ratio:
+        usage: "GAUGE"
+        description: "Buffer cache hit ratio percent"
+
+pg_dead_tuples:
+  query: |
+    SELECT
+      schemaname,
+      relname AS table_name,
+      n_dead_tup AS dead_tuples,
+      n_live_tup AS live_tuples,
+      CASE WHEN (n_live_tup + n_dead_tup) = 0 THEN 0
+        ELSE round(100.0 * n_dead_tup / (n_live_tup + n_dead_tup), 2)
+      END AS dead_tuple_ratio
+    FROM pg_stat_user_tables
+    WHERE n_live_tup + n_dead_tup > 0
+    ORDER BY n_dead_tup DESC
+    LIMIT 20
+  metrics:
+    - schemaname:
+        usage: "LABEL"
+        description: "Schema name"
+    - table_name:
+        usage: "LABEL"
+        description: "Table name"
+    - dead_tuples:
+        usage: "GAUGE"
+        description: "Number of dead tuples"
+    - live_tuples:
+        usage: "GAUGE"
+        description: "Number of live tuples"
+    - dead_tuple_ratio:
+        usage: "GAUGE"
+        description: "Dead tuple ratio percent"
+
+pg_table_sizes:
+  query: |
+    SELECT
+      schemaname,
+      relname AS table_name,
+      pg_total_relation_size(schemaname || '.' || relname) AS total_size_bytes,
+      pg_relation_size(schemaname || '.' || relname) AS table_size_bytes,
+      pg_indexes_size(schemaname || '.' || relname) AS index_size_bytes
+    FROM pg_stat_user_tables
+    ORDER BY pg_total_relation_size(schemaname || '.' || relname) DESC
+    LIMIT 20
+  metrics:
+    - schemaname:
+        usage: "LABEL"
+        description: "Schema name"
+    - table_name:
+        usage: "LABEL"
+        description: "Table name"
+    - total_size_bytes:
+        usage: "GAUGE"
+        description: "Total table size including indexes"
+    - table_size_bytes:
+        usage: "GAUGE"
+        description: "Table size without indexes"
+    - index_size_bytes:
+        usage: "GAUGE"
+        description: "Total index size"
+
+pg_partition_row_counts:
+  query: |
+    SELECT
+      relname AS partition_name,
+      n_live_tup AS row_count,
+      pg_total_relation_size(schemaname || '.' || relname) AS total_bytes
+    FROM pg_stat_user_tables
+    WHERE relname IN ('properties_apartment', 'properties_house', 'properties_land', 'properties_commercial', 'properties_other')
+  metrics:
+    - partition_name:
+        usage: "LABEL"
+        description: "Partition table name"
+    - row_count:
+        usage: "GAUGE"
+        description: "Approximate row count"
+    - total_bytes:
+        usage: "GAUGE"
+        description: "Total partition size in bytes"
+
+pg_properties_by_status:
+  query: |
+    SELECT status, 'apartment' AS property_category, count(*) AS count FROM properties_apartment GROUP BY status
+    UNION ALL
+    SELECT status, 'house' AS property_category, count(*) AS count FROM properties_house GROUP BY status
+    UNION ALL
+    SELECT status, 'land' AS property_category, count(*) AS count FROM properties_land GROUP BY status
+    UNION ALL
+    SELECT status, 'commercial' AS property_category, count(*) AS count FROM properties_commercial GROUP BY status
+  metrics:
+    - status:
+        usage: "LABEL"
+        description: "Property status"
+    - property_category:
+        usage: "LABEL"
+        description: "Property category"
+    - count:
+        usage: "GAUGE"
+        description: "Number of properties"
+
+pg_properties_new_last_hour:
+  query: |
+    SELECT portal, sum(cnt)::bigint AS count FROM (
+      SELECT portal, count(*) AS cnt FROM properties_apartment WHERE first_seen_at > NOW() - INTERVAL '1 hour' GROUP BY portal
+      UNION ALL
+      SELECT portal, count(*) AS cnt FROM properties_house WHERE first_seen_at > NOW() - INTERVAL '1 hour' GROUP BY portal
+      UNION ALL
+      SELECT portal, count(*) AS cnt FROM properties_land WHERE first_seen_at > NOW() - INTERVAL '1 hour' GROUP BY portal
+      UNION ALL
+      SELECT portal, count(*) AS cnt FROM properties_commercial WHERE first_seen_at > NOW() - INTERVAL '1 hour' GROUP BY portal
+    ) sub GROUP BY portal
+  metrics:
+    - portal:
+        usage: "LABEL"
+        description: "Portal name"
+    - count:
+        usage: "GAUGE"
+        description: "New properties in last hour"
+
+pg_properties_new_today:
+  query: |
+    SELECT 'apartment' AS property_category, count(*) AS count FROM properties_apartment WHERE first_seen_at > NOW() - INTERVAL '24 hours'
+    UNION ALL
+    SELECT 'house' AS property_category, count(*) AS count FROM properties_house WHERE first_seen_at > NOW() - INTERVAL '24 hours'
+    UNION ALL
+    SELECT 'land' AS property_category, count(*) AS count FROM properties_land WHERE first_seen_at > NOW() - INTERVAL '24 hours'
+    UNION ALL
+    SELECT 'commercial' AS property_category, count(*) AS count FROM properties_commercial WHERE first_seen_at > NOW() - INTERVAL '24 hours'
+  metrics:
+    - property_category:
+        usage: "LABEL"
+        description: "Property category"
+    - count:
+        usage: "GAUGE"
+        description: "New properties today"
+
+pg_price_changes_last_hour:
+  query: |
+    SELECT
+      'all' AS property_category,
+      count(*) AS count,
+      avg(CASE WHEN new_values->>'price' IS NOT NULL AND old_values->>'price' IS NOT NULL
+        THEN ((new_values->>'price')::numeric - (old_values->>'price')::numeric)
+             / NULLIF((old_values->>'price')::numeric, 0) * 100
+        ELSE 0 END) AS avg_percent
+    FROM property_changes
+    WHERE changed_at > NOW() - INTERVAL '1 hour'
+      AND change_type = 'price_change'
+  metrics:
+    - property_category:
+        usage: "LABEL"
+        description: "Property category"
+    - count:
+        usage: "GAUGE"
+        description: "Price changes in last hour"
+    - avg_percent:
+        usage: "GAUGE"
+        description: "Average price change percent"
+
+pg_scrape_run_stats:
+  query: |
+    SELECT
+      portal,
+      count(*) FILTER (WHERE status = 'completed') AS completed,
+      count(*) FILTER (WHERE status = 'failed') AS failed,
+      count(*) FILTER (WHERE status = 'running') AS running,
+      COALESCE(max(EXTRACT(EPOCH FROM finished_at)), 0)::float AS last_run_epoch
+    FROM scrape_runs
+    WHERE started_at > NOW() - INTERVAL '24 hours'
+    GROUP BY portal
+  metrics:
+    - portal:
+        usage: "LABEL"
+        description: "Portal name"
+    - completed:
+        usage: "GAUGE"
+        description: "Completed runs in 24h"
+    - failed:
+        usage: "GAUGE"
+        description: "Failed runs in 24h"
+    - running:
+        usage: "GAUGE"
+        description: "Currently running"
+    - last_run_epoch:
+        usage: "GAUGE"
+        description: "Unix timestamp of last completed run"
+
+pg_deactivated_last_hour:
+  query: |
+    SELECT
+      'all' AS property_category,
+      status AS reason,
+      count(*) AS count
+    FROM listing_status_history
+    WHERE started_at > NOW() - INTERVAL '1 hour'
+      AND status IN ('removed', 'sold', 'rented')
+    GROUP BY status
+  metrics:
+    - property_category:
+        usage: "LABEL"
+        description: "Property category"
+    - reason:
+        usage: "LABEL"
+        description: "Deactivation reason"
+    - count:
+        usage: "GAUGE"
+        description: "Deactivations in last hour"
+
+pg_slow_queries:
+  query: |
+    SELECT
+      count(*) AS slow_query_count
+    FROM pg_stat_activity
+    WHERE state = 'active'
+      AND query_start < NOW() - INTERVAL '5 seconds'
+      AND query NOT LIKE '%pg_stat_activity%'
+  metrics:
+    - slow_query_count:
+        usage: "GAUGE"
+        description: "Number of queries running longer than 5 seconds"

@@ -1,0 +1,70 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: landomo-ops-email
+    receivers:
+      - uid: ops-email-1
+        type: email
+        settings:
+          addresses: ops@landomo.com
+          singleEmail: false
+        disableResolveMessage: false
+
+  - orgId: 1
+    name: landomo-ops-slack
+    receivers:
+      - uid: ops-slack-1
+        type: slack
+        settings:
+          url: ${SLACK_WEBHOOK_URL}
+          recipient: "#landomo-alerts"
+          username: Landomo Alerts
+          icon_emoji: ":warning:"
+          title: "{{ .GroupLabels.severity | toUpper }}: {{ .GroupLabels.alertname }}"
+          text: |-
+            {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Summary:* {{ .Annotations.summary }}
+            *Description:* {{ .Annotations.description }}
+            *Severity:* {{ .Labels.severity }}
+            *Component:* {{ .Labels.component }}
+            {{ if .Annotations.runbook_url }}*Runbook:* {{ .Annotations.runbook_url }}{{ end }}
+            {{ end }}
+        disableResolveMessage: false
+
+  - orgId: 1
+    name: landomo-security-slack
+    receivers:
+      - uid: security-slack-1
+        type: slack
+        settings:
+          url: ${SLACK_SECURITY_WEBHOOK_URL}
+          recipient: "#landomo-security"
+          username: Landomo Security Alerts
+          icon_emoji: ":rotating_light:"
+          title: "SECURITY: {{ .GroupLabels.alertname }}"
+          text: |-
+            {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Summary:* {{ .Annotations.summary }}
+            *Description:* {{ .Annotations.description }}
+            *Severity:* {{ .Labels.severity }}
+            {{ if .Annotations.runbook_url }}*Runbook:* {{ .Annotations.runbook_url }}{{ end }}
+            {{ end }}
+        disableResolveMessage: false
+
+  - orgId: 1
+    name: landomo-critical-pagerduty
+    receivers:
+      - uid: pagerduty-1
+        type: pagerduty
+        settings:
+          integrationKey: ${PAGERDUTY_INTEGRATION_KEY}
+          severity: critical
+          class: infrastructure
+          component: "{{ .GroupLabels.component }}"
+          group: "{{ .GroupLabels.team }}"
+        disableResolveMessage: false
+
+deleteContactPoints: []

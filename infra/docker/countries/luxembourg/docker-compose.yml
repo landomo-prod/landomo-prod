@@ -1,0 +1,175 @@
+version: '3.8'
+
+networks:
+  landomo-lu:
+    name: landomo-lu-network
+    driver: bridge
+
+volumes:
+  postgres-lu-data:
+    name: landomo-lu-postgres-data
+  redis-lu-data:
+    name: landomo-lu-redis-data
+
+services:
+  redis-lu:
+    image: redis:7-alpine
+    container_name: landomo-lu-redis
+    restart: unless-stopped
+    networks:
+      - landomo-lu
+    ports:
+      - "6386:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --appendfsync everysec
+    volumes:
+      - redis-lu-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  postgres-lu:
+    image: imresamu/postgis:16-3.4-alpine
+    container_name: landomo-lu-postgres
+    restart: unless-stopped
+    networks:
+      - landomo-lu
+    ports:
+      - "5440:5432"
+    environment:
+      POSTGRES_USER: landomo
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: landomo_lu
+    volumes:
+      - postgres-lu-data:/var/lib/postgresql/data
+    shm_size: 256MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U landomo -d landomo_lu"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  ingest-api-lu:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-lu-ingest-api
+    restart: unless-stopped
+    networks:
+      - landomo-lu
+    ports:
+      - "3018:3000"
+    environment:
+      INSTANCE_COUNTRY: lu
+      DB_HOST: landomo-lu-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_lu
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-lu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      API_KEYS: ${API_KEY_LU}
+      PORT: 3000
+      NODE_ENV: production
+    depends_on:
+      postgres-lu:
+        condition: service_healthy
+      redis-lu:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  batch-worker-lu-1:
+    build:
+      context: ..
+      dockerfile: ingest-service/Dockerfile
+    container_name: landomo-lu-batch-worker-1
+    restart: unless-stopped
+    networks:
+      - landomo-lu
+    environment:
+      INSTANCE_COUNTRY: lu
+      DB_HOST: landomo-lu-postgres
+      DB_PORT: 5432
+      DB_NAME: landomo_lu
+      DB_USER: landomo
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: landomo-lu-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      BATCH_SIZE: 25
+      BATCH_WORKERS: 5
+      BATCH_TIMEOUT: 120000
+      NODE_ENV: production
+    command: node dist/start-worker.js
+    depends_on:
+      postgres-lu:
+        condition: service_healthy
+      redis-lu:
+        condition: service_healthy
+
+  scraper-athome:
+    build:
+      context: ..
+      dockerfile: scrapers/Luxembourg/athome-lu/Dockerfile
+    container_name: landomo-lu-scraper-athome
+    restart: unless-stopped
+    networks:
+      - landomo-lu
+    ports:
+      - "8230:8230"
+    environment:
+      PORT: 8230
+      INGEST_API_URL: http://ingest-api-lu:3000
+      INGEST_API_KEY: ${API_KEY_LU}
+      REDIS_HOST: redis-lu
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      WORKER_CONCURRENCY: 30
+      NODE_ENV: production
+    depends_on:
+      ingest-api-lu:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8230/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  scraper-immotop:
+    build:
+      context: ..
+      dockerfile: scrapers/Luxembourg/immotop-lu/Dockerfile
+    container_name: landomo-lu-scraper-immotop
+    restart: unless-stopped
+    networks:
+      - landomo-lu
+    ports:
+      - "8231:8231"
+    environment:
+      PORT: 8231
+      INGEST_API_URL: http://ingest-api-lu:3000
+      INGEST_API_KEY: ${API_KEY_LU}
+      REDIS_HOST: redis-lu
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      WORKER_CONCURRENCY: 30
+      NODE_ENV: production
+    depends_on:
+      ingest-api-lu:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8231/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

@@ -1,0 +1,74 @@
+🔍 SReality Hash ID Uniqueness Test
+===================================
+
+
+Scanning Apartments (Category 1)...
+  Page 1: 100 estates (100 unique)
+  Page 2: 100 estates (200 unique)
+  Page 3: 100 estates (300 unique)
+  Page 4: 100 estates (400 unique)
+  Page 5: 100 estates (500 unique)
+
+Scanning Houses (Category 2)...
+  Page 1: 100 estates (100 unique)
+  Page 2: 100 estates (200 unique)
+  Page 3: 100 estates (300 unique)
+  Page 4: 100 estates (400 unique)
+  Page 5: 100 estates (500 unique)
+
+Scanning Land (Category 3)...
+  Page 1: 100 estates (100 unique)
+  Page 2: 100 estates (200 unique)
+  Page 3: 100 estates (294 unique)
+  Page 4: 100 estates (394 unique)
+  Page 5: 100 estates (494 unique)
+
+Scanning Commercial (Category 4)...
+  Page 1: 100 estates (100 unique)
+  Page 2: 100 estates (200 unique)
+  Page 3: 100 estates (300 unique)
+  Page 4: 100 estates (400 unique)
+  Page 5: 100 estates (500 unique)
+
+
+📊 Cross-Category Uniqueness Analysis
+=====================================
+
+Hash 4043711052: Found in Land, Land
+Hash 748163916: Found in Land, Land
+Hash 4033413964: Found in Land, Land
+Hash 3250520652: Found in Land, Land
+Hash 3685815116: Found in Land, Land
+... and 1 more
+
+
+📋 Summary
+==========
+
+By Category:
+  Apartments:
+    - Total Fetched: 500
+    - Unique: 500
+    - Duplicates in Category: 0
+  Houses:
+    - Total Fetched: 500
+    - Unique: 500
+    - Duplicates in Category: 0
+  Land:
+    - Total Fetched: 500
+    - Unique: 494
+    - Duplicates in Category: 6
+  Commercial:
+    - Total Fetched: 500
+    - Unique: 500
+    - Duplicates in Category: 0
+
+Total Unique Hash IDs (All Categories): 1994
+Total Unique per Category Sum: 1994
+Cross-Category Duplicates: 6
+Listings in Multiple Categories: 6
+
+Duplicate Percentage: 0.30%
+Uniqueness Score: 99.70%
+
+✅ Uniqueness report saved to UNIQUENESS_TEST_REPORT.json

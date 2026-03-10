@@ -1,0 +1,37 @@
+{
+  "name": "@landomo/scraper-reality-sk",
+  "version": "1.0.0",
+  "description": "Reality.sk scraper for landomo-world platform - uses curl-impersonate for TLS fingerprinting",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "test": "jest"
+  },
+  "keywords": [
+    "landomo",
+    "scraper",
+    "reality-sk",
+    "slovakia",
+    "curl-impersonate"
+  ],
+  "dependencies": {
+    "@landomo/core": "file:../../../shared-components",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cycletls": "^2.0.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.31",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+}

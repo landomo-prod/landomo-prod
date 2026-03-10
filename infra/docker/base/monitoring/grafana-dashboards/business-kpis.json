@@ -1,0 +1,241 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "title": "New Properties / Hour",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(rate(landomo_properties_new_total[1h])) by (category) * 3600",
+          "legendFormat": "{{category}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 20, "lineWidth": 2 } }
+      }
+    },
+    {
+      "title": "New Properties Today",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(pg_properties_new_today_count)",
+          "legendFormat": "Total",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "thresholds": { "steps": [ { "color": "red", "value": 0 }, { "color": "yellow", "value": 10 }, { "color": "green", "value": 100 } ] } } }
+    },
+    {
+      "title": "New Properties by Portal (Last Hour)",
+      "type": "bargauge",
+      "gridPos": { "h": 4, "w": 8, "x": 16, "y": 0 },
+      "targets": [
+        {
+          "expr": "pg_properties_new_last_hour_count",
+          "legendFormat": "{{portal}} ({{category}})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    },
+    {
+      "title": "New Properties by Category (Today)",
+      "type": "piechart",
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 4 },
+      "targets": [
+        {
+          "expr": "pg_properties_new_today_count",
+          "legendFormat": "{{category}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Ingestion Rate (properties/sec)",
+      "type": "timeseries",
+      "gridPos": { "h": 4, "w": 8, "x": 16, "y": 4 },
+      "targets": [
+        {
+          "expr": "sum(rate(landomo_ingest_properties_ingested_total[5m])) by (portal)",
+          "legendFormat": "{{portal}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "ops", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Price Changes / Hour",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "expr": "sum(rate(landomo_properties_price_changed_total[1h])) by (change_type) * 3600",
+          "legendFormat": "{{change_type}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 20 } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "increase" }, "properties": [ { "id": "color", "value": { "fixedColor": "red" } } ] },
+          { "matcher": { "id": "byName", "options": "decrease" }, "properties": [ { "id": "color", "value": { "fixedColor": "green" } } ] }
+        ]
+      }
+    },
+    {
+      "title": "Avg Price Change %",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "expr": "pg_price_changes_last_hour_avg_percent",
+          "legendFormat": "{{category}} ({{change_type}})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 1 } }
+    },
+    {
+      "title": "Price Volatility (>3 changes/30d)",
+      "type": "bargauge",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 8 },
+      "targets": [
+        {
+          "expr": "pg_price_volatility_volatile_count",
+          "legendFormat": "{{portal}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    },
+    {
+      "title": "Price Changes by Category (DB)",
+      "type": "table",
+      "gridPos": { "h": 4, "w": 12, "x": 12, "y": 12 },
+      "targets": [
+        {
+          "expr": "pg_price_changes_last_hour_count",
+          "legendFormat": "",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "title": "Deactivations / Hour",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "targets": [
+        {
+          "expr": "sum(rate(landomo_properties_deactivated_total[1h])) by (reason) * 3600",
+          "legendFormat": "{{reason}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 20 } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "sold" }, "properties": [ { "id": "color", "value": { "fixedColor": "blue" } } ] },
+          { "matcher": { "id": "byName", "options": "rented" }, "properties": [ { "id": "color", "value": { "fixedColor": "purple" } } ] },
+          { "matcher": { "id": "byName", "options": "removed" }, "properties": [ { "id": "color", "value": { "fixedColor": "orange" } } ] }
+        ]
+      }
+    },
+    {
+      "title": "Deactivations by Reason (DB)",
+      "type": "piechart",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 16 },
+      "targets": [
+        {
+          "expr": "pg_deactivated_last_hour_count",
+          "legendFormat": "{{reason}} ({{category}})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Avg Days to Deactivation",
+      "type": "bargauge",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 16 },
+      "targets": [
+        {
+          "expr": "pg_time_to_deactivation_avg_days",
+          "legendFormat": "{{category}} ({{reason}})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "d", "decimals": 1 } }
+    },
+    {
+      "title": "Status Transitions",
+      "type": "timeseries",
+      "gridPos": { "h": 4, "w": 12, "x": 12, "y": 20 },
+      "targets": [
+        {
+          "expr": "sum(rate(landomo_properties_status_changed_total[1h])) by (from_status, to_status) * 3600",
+          "legendFormat": "{{from_status}} -> {{to_status}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Properties by Status",
+      "type": "piechart",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 24 },
+      "targets": [
+        {
+          "expr": "sum(pg_properties_by_status_count) by (status)",
+          "legendFormat": "{{status}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Properties by Category",
+      "type": "piechart",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 24 },
+      "targets": [
+        {
+          "expr": "sum(pg_properties_by_status_count) by (category)",
+          "legendFormat": "{{category}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Partition Row Counts",
+      "type": "bargauge",
+      "gridPos": { "h": 4, "w": 12, "x": 12, "y": 24 },
+      "targets": [
+        {
+          "expr": "pg_partition_row_counts_row_count",
+          "legendFormat": "{{partition_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["landomo", "business", "kpis"],
+  "templating": { "list": [] },
+  "time": { "from": "now-24h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Landomo Business KPIs",
+  "uid": "landomo-business-kpis",
+  "version": 1
+}

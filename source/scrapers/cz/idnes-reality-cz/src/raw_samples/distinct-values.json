@@ -1,0 +1,2720 @@
+{
+  "meta": {
+    "scraper": "idnes-reality-cz",
+    "listings_fetched": 1248,
+    "details_fetched": 1243,
+    "timestamp": "2026-02-27T08:14:19.360Z"
+  },
+  "listing_fields": {
+    "location": {
+      "types": {
+        "string": 1248
+      },
+      "non_null_count": 1248,
+      "null_count": 0,
+      "distinct_count": 972,
+      "sample_values": [
+        "Lhenická, České Budějovice - České Budějovice 2",
+        "Družební, Olomouc - Nové Sady",
+        "Hyacintová, Praha 10 - Záběhlice",
+        "Demänovská Dolina, Slovensko",
+        "Sokolská, Hrádek nad Nisou, okres Liberec",
+        "Za Hládkovem, Praha 6 - Střešovice",
+        "Dvořákova, Mariánské Lázně, okres Cheb",
+        "Jirny - Nové Jirny, okres Praha-východ",
+        "Jiráskova, Soběslav - Soběslav II, okres Tábor",
+        "Svatoslavova, Praha 4 - Nusle"
+      ]
+    },
+    "price": {
+      "types": {
+        "string": 1248
+      },
+      "non_null_count": 1248,
+      "null_count": 0,
+      "distinct_count": 716,
+      "sample_values": [
+        "3 950 000 Kč",
+        "9 980 000 Kč",
+        "17 700 000 Kč",
+        "6 788 215 Kč",
+        "7 900 000 Kč",
+        "2 989 000 Kč",
+        "16 500 000 Kč",
+        "3 900 000 Kč",
+        "7 750 000 Kč",
+        "5 990 000 Kč"
+      ]
+    },
+    "title": {
+      "types": {
+        "string": 1248
+      },
+      "non_null_count": 1248,
+      "null_count": 0,
+      "distinct_count": 979,
+      "sample_values": [
+        "prodej\nbytu 2+kk 43 m²",
+        "prodej\nbytu 3+kk 89 m²",
+        "prodej\nbytu 3+kk 110 m²",
+        "prodej\nbytu 3+kk 60 m²",
+        "prodej\nbytu 2+1 55 m²",
+        "prodej\nbytu 2+kk 47 m²",
+        "prodej\nbytu 1+kk 28 m²",
+        "prodej\nbytu 4+kk 127 m²",
+        "prodej\nbytu 2+kk 49 m²",
+        "prodej\nbytu 1+kk 46 m²"
+      ]
+    },
+    "url": {
+      "types": {
+        "string": 1248
+      },
+      "non_null_count": 1248,
+      "null_count": 0,
+      "distinct_count": 1190,
+      "sample_values": [
+        "https://reality.idnes.cz/detail/prodej/byt/ceske-budejovice-lhenicka/699730e6a80ef6cf6a01e8cd/",
+        "https://reality.idnes.cz/detail/prodej/byt/olomouc-druzebni/6872378bbe5bf6221c08bb77/",
+        "https://reality.idnes.cz/detail/prodej/byt/praha-10-hyacintova/691ed888d7e19aa49a0ddf01/",
+        "https://reality.idnes.cz/detail/prodej/byt/demanovska-dolina/69748ac4a50697ffdd028fda/",
+        "https://reality.idnes.cz/detail/prodej/byt/hradek-nad-nisou-sokolska/697cb25d563f523ea00d9566/",
+        "https://reality.idnes.cz/detail/prodej/byt/praha-6-za-hladkovem/6964f1befb2bba27ff02e456/",
+        "https://reality.idnes.cz/detail/prodej/byt/marianske-lazne-dvorakova/696f55325d56847d1f05dcd4/",
+        "https://reality.idnes.cz/detail/prodej/byt/jirny/68dd555c7e90718c900c716b/",
+        "https://reality.idnes.cz/detail/prodej/byt/sobeslav-jiraskova/69779296585a45037b0c6eb7/",
+        "https://reality.idnes.cz/detail/prodej/byt/praha-4-svatoslavova/696676d908be791e84049aea/"
+      ]
+    }
+  },
+  "detail_fields": {
+    "attributes": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "{}"
+      ],
+      "value_counts": {
+        "{}": 2
+      }
+    },
+    "attributes.Balkon": {
+      "types": {
+        "string": 133
+      },
+      "non_null_count": 133,
+      "null_count": 0,
+      "distinct_count": 21,
+      "all_distinct_values": [
+        "ano",
+        "2 m2",
+        "3 m2",
+        "4 m2",
+        "5 m2",
+        "6 m2",
+        "14 m2",
+        "8 m2",
+        "10 m2",
+        "17 m2",
+        "15 m2",
+        "7 m2",
+        "východ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t12 m2",
+        "16 m2",
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t7 m2",
+        "jihozápad",
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t3 m2",
+        "9 m2",
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t3 m2",
+        "jih",
+        "12 m2"
+      ],
+      "value_counts": {
+        "ano": 56,
+        "2 m2": 14,
+        "3 m2": 13,
+        "4 m2": 12,
+        "5 m2": 11,
+        "6 m2": 7,
+        "14 m2": 3,
+        "8 m2": 3,
+        "10 m2": 2,
+        "17 m2": 1,
+        "15 m2": 1,
+        "7 m2": 1,
+        "východ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t12 m2": 1,
+        "16 m2": 1,
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t7 m2": 1,
+        "jihozápad": 1,
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t3 m2": 1,
+        "9 m2": 1,
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t3 m2": 1,
+        "jih": 1,
+        "12 m2": 1
+      }
+    },
+    "attributes.Bazén": {
+      "types": {
+        "string": 28
+      },
+      "non_null_count": 28,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 28
+      }
+    },
+    "attributes.Bezbariérový přístup": {
+      "types": {
+        "string": 48
+      },
+      "non_null_count": 48,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 48
+      }
+    },
+    "attributes.Celková plocha": {
+      "types": {
+        "string": 38
+      },
+      "non_null_count": 38,
+      "null_count": 0,
+      "distinct_count": 34,
+      "all_distinct_values": [
+        "78 m2",
+        "170 m2",
+        "926 m2",
+        "57 m2",
+        "81 m2",
+        "52 m2",
+        "48 m2",
+        "33.2 m2",
+        "53 m2",
+        "69 m2",
+        "512 m2",
+        "74 m2",
+        "735 m2",
+        "220 m2",
+        "110 m2",
+        "605 m2",
+        "123 m2",
+        "916 m2",
+        "1340 m2",
+        "4000 m2",
+        "2 m2",
+        "110.6 m2",
+        "17 m2",
+        "63 m2",
+        "45 m2",
+        "47 m2",
+        "40 m2",
+        "49 m2",
+        "119 m2",
+        "380 m2",
+        "731 m2",
+        "136 m2",
+        "90 m2",
+        "97 m2"
+      ],
+      "value_counts": {
+        "78 m2": 2,
+        "170 m2": 2,
+        "926 m2": 2,
+        "57 m2": 2,
+        "81 m2": 1,
+        "52 m2": 1,
+        "48 m2": 1,
+        "33.2 m2": 1,
+        "53 m2": 1,
+        "69 m2": 1,
+        "512 m2": 1,
+        "74 m2": 1,
+        "735 m2": 1,
+        "220 m2": 1,
+        "110 m2": 1,
+        "605 m2": 1,
+        "123 m2": 1,
+        "916 m2": 1,
+        "1340 m2": 1,
+        "4000 m2": 1,
+        "2 m2": 1,
+        "110.6 m2": 1,
+        "17 m2": 1,
+        "63 m2": 1,
+        "45 m2": 1,
+        "47 m2": 1,
+        "40 m2": 1,
+        "49 m2": 1,
+        "119 m2": 1,
+        "380 m2": 1,
+        "731 m2": 1,
+        "136 m2": 1,
+        "90 m2": 1,
+        "97 m2": 1
+      }
+    },
+    "attributes.Cena": {
+      "types": {
+        "string": 1241
+      },
+      "non_null_count": 1241,
+      "null_count": 0,
+      "distinct_count": 684,
+      "sample_values": [
+        "3‍ 950‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "9‍ 980‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "17‍ 700‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "6‍ 788‍ 215‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "7‍ 900‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "2‍ 989‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "16‍ 500‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "3‍ 900‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "7‍ 750‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku",
+        "5‍ 990‍ 000‍ Kč\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\tSpočítat hypotéku"
+      ]
+    },
+    "attributes.Datum nastěhování": {
+      "types": {
+        "string": 472
+      },
+      "non_null_count": 472,
+      "null_count": 0,
+      "distinct_count": 152,
+      "sample_values": [
+        "01.12.2024",
+        "30.01.2026",
+        "01.03.2026",
+        "26.06.2025",
+        "22.01.2026",
+        "31.12.2027",
+        "04.12.2025",
+        "08.07.2025",
+        "20.02.2026",
+        "07.02.2026"
+      ]
+    },
+    "attributes.Dopravní dostupnost": {
+      "types": {
+        "string": 58
+      },
+      "non_null_count": 58,
+      "null_count": 0,
+      "distinct_count": 27,
+      "all_distinct_values": [
+        "silnice, autobus",
+        "železnice, silnice, autobus, dálnice",
+        "silnice",
+        "silnice, veřejná doprava, autobus",
+        "silnice, veřejná doprava, autobus, metro, tramvaj",
+        "železnice, dálnice, silnice, veřejná doprava, autobus",
+        "železnice, silnice, autobus",
+        "železnice, dálnice, silnice, veřejná doprava",
+        "železnice, silnice, veřejná doprava, autobus",
+        "železnice, dálnice, silnice, veřejná doprava, autobus, letiště",
+        "dálnice, silnice, autobus",
+        "veřejná doprava, autobus",
+        "železnice, dálnice, silnice, veřejná doprava, autobus, metro, tramvaj",
+        "dálnice, silnice, veřejná doprava, autobus, tramvaj",
+        "silnice, veřejná doprava, metro, tramvaj",
+        "železnice, dálnice, silnice, autobus",
+        "dálnice, silnice, veřejná doprava, autobus, letiště",
+        "železnice, silnice, veřejná doprava",
+        "železnice, dálnice, silnice, veřejná doprava, autobus, letiště, metro, tramvaj",
+        "dálnice, silnice, veřejná doprava, autobus",
+        "železnice, silnice",
+        "dálnice, silnice, veřejná doprava, autobus, letiště, metro",
+        "autobus, tramvaj",
+        "silnice, veřejná doprava, autobus, tramvaj",
+        "veřejná doprava",
+        "silnice, autobus, dálnice",
+        "železnice, autobus"
+      ],
+      "value_counts": {
+        "silnice, autobus": 9,
+        "železnice, silnice, autobus, dálnice": 6,
+        "silnice": 5,
+        "silnice, veřejná doprava, autobus": 4,
+        "silnice, veřejná doprava, autobus, metro, tramvaj": 3,
+        "železnice, dálnice, silnice, veřejná doprava, autobus": 3,
+        "železnice, silnice, autobus": 3,
+        "železnice, dálnice, silnice, veřejná doprava": 2,
+        "železnice, silnice, veřejná doprava, autobus": 2,
+        "železnice, dálnice, silnice, veřejná doprava, autobus, letiště": 2,
+        "dálnice, silnice, autobus": 2,
+        "veřejná doprava, autobus": 2,
+        "železnice, dálnice, silnice, veřejná doprava, autobus, metro, tramvaj": 1,
+        "dálnice, silnice, veřejná doprava, autobus, tramvaj": 1,
+        "silnice, veřejná doprava, metro, tramvaj": 1,
+        "železnice, dálnice, silnice, autobus": 1,
+        "dálnice, silnice, veřejná doprava, autobus, letiště": 1,
+        "železnice, silnice, veřejná doprava": 1,
+        "železnice, dálnice, silnice, veřejná doprava, autobus, letiště, metro, tramvaj": 1,
+        "dálnice, silnice, veřejná doprava, autobus": 1,
+        "železnice, silnice": 1,
+        "dálnice, silnice, veřejná doprava, autobus, letiště, metro": 1,
+        "autobus, tramvaj": 1,
+        "silnice, veřejná doprava, autobus, tramvaj": 1,
+        "veřejná doprava": 1,
+        "silnice, autobus, dálnice": 1,
+        "železnice, autobus": 1
+      }
+    },
+    "attributes.Dvojgaráž": {
+      "types": {
+        "string": 8
+      },
+      "non_null_count": 8,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 8
+      }
+    },
+    "attributes.Elektřina": {
+      "types": {
+        "string": 378
+      },
+      "non_null_count": 378,
+      "null_count": 0,
+      "distinct_count": 7,
+      "all_distinct_values": [
+        "230V",
+        "230V, 230-400V",
+        "230-400V",
+        "230V, zavedena",
+        "zavedena",
+        "230V, 230-400V, zavedena",
+        "nezavedena"
+      ],
+      "value_counts": {
+        "230V": 264,
+        "230V, 230-400V": 50,
+        "230-400V": 27,
+        "230V, zavedena": 20,
+        "zavedena": 11,
+        "230V, 230-400V, zavedena": 5,
+        "nezavedena": 1
+      }
+    },
+    "attributes.Internet": {
+      "types": {
+        "string": 192
+      },
+      "non_null_count": 192,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 192
+      }
+    },
+    "attributes.Kanalizace": {
+      "types": {
+        "string": 44
+      },
+      "non_null_count": 44,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "veřejná kanalizace",
+        "septik / jímka",
+        "žádný",
+        "vlastní čistička"
+      ],
+      "value_counts": {
+        "veřejná kanalizace": 30,
+        "septik / jímka": 6,
+        "žádný": 5,
+        "vlastní čistička": 3
+      }
+    },
+    "attributes.Kolaudace": {
+      "types": {
+        "string": 87
+      },
+      "non_null_count": 87,
+      "null_count": 0,
+      "distinct_count": 39,
+      "all_distinct_values": [
+        "2025",
+        "1945",
+        "2000",
+        "2022",
+        "2004",
+        "1980",
+        "2019",
+        "2003",
+        "1919",
+        "1999",
+        "1975",
+        "2023",
+        "2012",
+        "2021",
+        "2016",
+        "2015",
+        "2008",
+        "1990",
+        "2005",
+        "2006",
+        "2024",
+        "2018",
+        "2001",
+        "1970",
+        "2027",
+        "1971",
+        "1987",
+        "2013",
+        "2010",
+        "2007",
+        "1973",
+        "1989",
+        "1993",
+        "1982",
+        "2002",
+        "2009",
+        "1981",
+        "2014",
+        "2017"
+      ],
+      "value_counts": {
+        "1919": 3,
+        "1945": 5,
+        "1970": 2,
+        "1971": 1,
+        "1973": 1,
+        "1975": 3,
+        "1980": 4,
+        "1981": 1,
+        "1982": 1,
+        "1987": 1,
+        "1989": 1,
+        "1990": 2,
+        "1993": 1,
+        "1999": 3,
+        "2000": 5,
+        "2001": 2,
+        "2002": 1,
+        "2003": 3,
+        "2004": 4,
+        "2005": 2,
+        "2006": 2,
+        "2007": 1,
+        "2008": 2,
+        "2009": 1,
+        "2010": 1,
+        "2012": 2,
+        "2013": 1,
+        "2014": 1,
+        "2015": 2,
+        "2016": 2,
+        "2017": 1,
+        "2018": 2,
+        "2019": 4,
+        "2021": 2,
+        "2022": 5,
+        "2023": 2,
+        "2024": 2,
+        "2025": 7,
+        "2027": 1
+      }
+    },
+    "attributes.Konstrukce budovy": {
+      "types": {
+        "string": 966
+      },
+      "non_null_count": 966,
+      "null_count": 0,
+      "distinct_count": 7,
+      "all_distinct_values": [
+        "cihlová",
+        "smíšená",
+        "panelová",
+        "dřevěná",
+        "skeletová",
+        "montovaná",
+        "kamenná"
+      ],
+      "value_counts": {
+        "cihlová": 717,
+        "smíšená": 124,
+        "panelová": 82,
+        "dřevěná": 27,
+        "skeletová": 11,
+        "montovaná": 3,
+        "kamenná": 2
+      }
+    },
+    "attributes.Lodžie": {
+      "types": {
+        "string": 51
+      },
+      "non_null_count": 51,
+      "null_count": 0,
+      "distinct_count": 5,
+      "all_distinct_values": [
+        "ano",
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t6 m2",
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t2 m2",
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t4 m2",
+        "6 m2"
+      ],
+      "value_counts": {
+        "ano": 47,
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t6 m2": 1,
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t2 m2": 1,
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t4 m2": 1,
+        "6 m2": 1
+      }
+    },
+    "attributes.Lokalita objektu": {
+      "types": {
+        "string": 167
+      },
+      "non_null_count": 167,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "klidná část",
+        "centrum",
+        "rušná část",
+        "předměstí"
+      ],
+      "value_counts": {
+        "klidná část": 93,
+        "centrum": 43,
+        "rušná část": 22,
+        "předměstí": 9
+      }
+    },
+    "attributes.Lokalita projektu": {
+      "types": {
+        "string": 331
+      },
+      "non_null_count": 331,
+      "null_count": 0,
+      "distinct_count": 5,
+      "all_distinct_values": [
+        "klidná část",
+        "předměstí",
+        "centrum",
+        "samota",
+        "rušná část"
+      ],
+      "value_counts": {
+        "klidná část": 226,
+        "předměstí": 54,
+        "centrum": 39,
+        "samota": 11,
+        "rušná část": 1
+      }
+    },
+    "attributes.Měsíční cena energií": {
+      "types": {
+        "string": 4
+      },
+      "non_null_count": 4,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "1 000 Kč",
+        "6 750 Kč",
+        "890 Kč",
+        "3 500 Kč"
+      ],
+      "value_counts": {
+        "1 000 Kč": 1,
+        "6 750 Kč": 1,
+        "890 Kč": 1,
+        "3 500 Kč": 1
+      }
+    },
+    "attributes.Měsíční cena parkování": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "4 000 Kč",
+        "1 500 Kč"
+      ],
+      "value_counts": {
+        "4 000 Kč": 1,
+        "1 500 Kč": 1
+      }
+    },
+    "attributes.Měsíční poplatky za parkování": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "4 000 Kč",
+        "1 500 Kč"
+      ],
+      "value_counts": {
+        "4 000 Kč": 1,
+        "1 500 Kč": 1
+      }
+    },
+    "attributes.Občanská vybavenost": {
+      "types": {
+        "string": 34
+      },
+      "non_null_count": 34,
+      "null_count": 0,
+      "distinct_count": 25,
+      "all_distinct_values": [
+        "škola, školka, zdravotnická zařízení, pošta, supermarket, kompletní síť obchodů a služeb",
+        "Kompletní",
+        "Škola, Školka, Zdravotnická zařízení, Pošta, Supermarket, Kompletní síť obchodů a služeb, Restaurace",
+        "kompletní síť obchodů a služeb",
+        "škola, školka, zdravotnické zařízení, pošta, supermarket, kompletní síť obchodů a služeb",
+        "pošta, supermarket, kompletní síť obchodů a služeb",
+        "velmi dobrá",
+        "úplná",
+        "Veškerá občanská vybavenost.",
+        "Kompletní.",
+        "kompletní",
+        "úplná občasnká vybavenost",
+        "škola, školka, zdravotní středisko, obchody, restaurace, sportoviště, dětská hřiště",
+        "komplexní",
+        "Úplná občanská vybavenost, školka, škola, lékaři, obchody, restaurace, provozovny, vlakové a autobusové dopravní spojení",
+        "Částečná",
+        "částečná",
+        "Školka, Restaurace, Místní úřad",
+        "ANO",
+        "Plná občanská vybavenost",
+        "ano",
+        "Obchod, Škola, Restaurace",
+        "veškerá občanská vybavenost",
+        "v dosahu 1 km",
+        "škola, školka, kompletní síť obchodů a služeb"
+      ],
+      "value_counts": {
+        "škola, školka, zdravotnická zařízení, pošta, supermarket, kompletní síť obchodů a služeb": 6,
+        "Kompletní": 2,
+        "Škola, Školka, Zdravotnická zařízení, Pošta, Supermarket, Kompletní síť obchodů a služeb, Restaurace": 2,
+        "kompletní síť obchodů a služeb": 2,
+        "škola, školka, zdravotnické zařízení, pošta, supermarket, kompletní síť obchodů a služeb": 2,
+        "pošta, supermarket, kompletní síť obchodů a služeb": 1,
+        "velmi dobrá": 1,
+        "úplná": 1,
+        "Veškerá občanská vybavenost.": 1,
+        "Kompletní.": 1,
+        "kompletní": 1,
+        "úplná občasnká vybavenost": 1,
+        "škola, školka, zdravotní středisko, obchody, restaurace, sportoviště, dětská hřiště": 1,
+        "komplexní": 1,
+        "Úplná občanská vybavenost, školka, škola, lékaři, obchody, restaurace, provozovny, vlakové a autobusové dopravní spojení": 1,
+        "Částečná": 1,
+        "částečná": 1,
+        "Školka, Restaurace, Místní úřad": 1,
+        "ANO": 1,
+        "Plná občanská vybavenost": 1,
+        "ano": 1,
+        "Obchod, Škola, Restaurace": 1,
+        "veškerá občanská vybavenost": 1,
+        "v dosahu 1 km": 1,
+        "škola, školka, kompletní síť obchodů a služeb": 1
+      }
+    },
+    "attributes.Odpad": {
+      "types": {
+        "string": 232
+      },
+      "non_null_count": 232,
+      "null_count": 0,
+      "distinct_count": 5,
+      "all_distinct_values": [
+        "veřejná kanalizace",
+        "septik / jímka",
+        "vlastní čistička",
+        "žádný",
+        "septik / jímka, veřejná kanalizace"
+      ],
+      "value_counts": {
+        "veřejná kanalizace": 173,
+        "septik / jímka": 46,
+        "vlastní čistička": 8,
+        "žádný": 3,
+        "septik / jímka, veřejná kanalizace": 2
+      }
+    },
+    "attributes.PENB": {
+      "types": {
+        "string": 981
+      },
+      "non_null_count": 981,
+      "null_count": 0,
+      "distinct_count": 23,
+      "all_distinct_values": [
+        "G (vyhl. č. 264/2020 Sb.)",
+        "G (vyhl. č. 78/2013 Sb.)",
+        "B (vyhl. č. 264/2020 Sb.)",
+        "G (vyhl. č. 148/2007 Sb.)",
+        "C (vyhl. č. 264/2020 Sb.)",
+        "B (vyhl. č. 78/2013 Sb.)",
+        "D (vyhl. č. 264/2020 Sb.)",
+        "A (vyhl. č. 264/2020 Sb.)",
+        "C (vyhl. č. 78/2013 Sb.)",
+        "B (vyhl. č. 148/2007 Sb.)",
+        "E (vyhl. č. 264/2020 Sb.)",
+        "D (vyhl. č. 78/2013 Sb.)",
+        "C (vyhl. č. 148/2007 Sb.)",
+        "E (vyhl. č. 78/2013 Sb.)",
+        "D (vyhl. č. 148/2007 Sb.)",
+        "A (vyhl. č. 148/2007 Sb.)",
+        "A (vyhl. č. 78/2013 Sb.)",
+        "G",
+        "F (vyhl. č. 78/2013 Sb.)",
+        "F (vyhl. č. 264/2020 Sb.)",
+        "B",
+        "E (vyhl. č. 148/2007 Sb.)",
+        "C"
+      ],
+      "value_counts": {
+        "G (vyhl. č. 264/2020 Sb.)": 360,
+        "G (vyhl. č. 78/2013 Sb.)": 173,
+        "B (vyhl. č. 264/2020 Sb.)": 144,
+        "G (vyhl. č. 148/2007 Sb.)": 73,
+        "C (vyhl. č. 264/2020 Sb.)": 52,
+        "B (vyhl. č. 78/2013 Sb.)": 35,
+        "D (vyhl. č. 264/2020 Sb.)": 28,
+        "A (vyhl. č. 264/2020 Sb.)": 23,
+        "C (vyhl. č. 78/2013 Sb.)": 17,
+        "B (vyhl. č. 148/2007 Sb.)": 16,
+        "E (vyhl. č. 264/2020 Sb.)": 14,
+        "D (vyhl. č. 78/2013 Sb.)": 11,
+        "C (vyhl. č. 148/2007 Sb.)": 8,
+        "E (vyhl. č. 78/2013 Sb.)": 7,
+        "D (vyhl. č. 148/2007 Sb.)": 4,
+        "A (vyhl. č. 148/2007 Sb.)": 4,
+        "A (vyhl. č. 78/2013 Sb.)": 4,
+        "G": 2,
+        "F (vyhl. č. 78/2013 Sb.)": 2,
+        "F (vyhl. č. 264/2020 Sb.)": 1,
+        "B": 1,
+        "E (vyhl. č. 148/2007 Sb.)": 1,
+        "C": 1
+      }
+    },
+    "attributes.Parkování": {
+      "types": {
+        "string": 289
+      },
+      "non_null_count": 289,
+      "null_count": 0,
+      "distinct_count": 19,
+      "all_distinct_values": [
+        "garáž",
+        "parkovací místo",
+        "parkování na ulici",
+        "parkování na pozemku",
+        "garáž, parkování na pozemku",
+        "garáž, parkování na ulici",
+        "parkování na pozemku, parkování na ulici",
+        "garáž, parkování na pozemku, parkování na ulici",
+        "parkování na ulici, parkovací místo",
+        "garáž, parkovací místo",
+        "garáž, parkování na ulici, parkovací místo",
+        "parkování ve dvoře",
+        "garáž, parkování ve dvoře, parkování na ulici",
+        "garáž, parkování na pozemku, parkování na ulici, parkovací místo",
+        "parkování na pozemku, parkovací místo",
+        "parkování ve dvoře, parkování na pozemku",
+        "parkování ve dvoře, parkování na pozemku, parkování na ulici, parkovací místo",
+        "garáž, parkování ve dvoře, parkování na pozemku",
+        "parkování na pozemku, parkování na ulici, parkovací místo"
+      ],
+      "value_counts": {
+        "garáž": 120,
+        "parkovací místo": 55,
+        "parkování na ulici": 40,
+        "parkování na pozemku": 38,
+        "garáž, parkování na pozemku": 10,
+        "garáž, parkování na ulici": 9,
+        "parkování na pozemku, parkování na ulici": 3,
+        "garáž, parkování na pozemku, parkování na ulici": 2,
+        "parkování na ulici, parkovací místo": 2,
+        "garáž, parkovací místo": 1,
+        "garáž, parkování na ulici, parkovací místo": 1,
+        "parkování ve dvoře": 1,
+        "garáž, parkování ve dvoře, parkování na ulici": 1,
+        "garáž, parkování na pozemku, parkování na ulici, parkovací místo": 1,
+        "parkování na pozemku, parkovací místo": 1,
+        "parkování ve dvoře, parkování na pozemku": 1,
+        "parkování ve dvoře, parkování na pozemku, parkování na ulici, parkovací místo": 1,
+        "garáž, parkování ve dvoře, parkování na pozemku": 1,
+        "parkování na pozemku, parkování na ulici, parkovací místo": 1
+      }
+    },
+    "attributes.Plocha pozemku": {
+      "types": {
+        "string": 766
+      },
+      "non_null_count": 766,
+      "null_count": 0,
+      "distinct_count": 568,
+      "sample_values": [
+        "527 m2",
+        "271 m2",
+        "923 m2",
+        "834 m2",
+        "540 m2",
+        "530 m2",
+        "350 m2",
+        "220 m2",
+        "274 m2",
+        "405 m2"
+      ]
+    },
+    "attributes.Plocha zahrady": {
+      "types": {
+        "string": 244
+      },
+      "non_null_count": 244,
+      "null_count": 0,
+      "distinct_count": 199,
+      "sample_values": [
+        "315 m2",
+        "67 m2",
+        "96 m2",
+        "151 m2",
+        "152 m2",
+        "88 m2",
+        "137 m2",
+        "439 m2",
+        "45 m2",
+        "72 m2"
+      ]
+    },
+    "attributes.Plyn": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "zaveden",
+        "nezaveden",
+        "veřejný přívod",
+        "nádrž"
+      ],
+      "value_counts": {
+        "zaveden": 113,
+        "nezaveden": 64,
+        "veřejný přívod": 19,
+        "nádrž": 4
+      }
+    },
+    "attributes.Podlaží": {
+      "types": {
+        "string": 446
+      },
+      "non_null_count": 446,
+      "null_count": 0,
+      "distinct_count": 16,
+      "all_distinct_values": [
+        "1. patro (2. NP)",
+        "2. patro (3. NP)",
+        "přízemí (1. NP = nadzemní podlaží)",
+        "3. patro (4. NP)",
+        "4. patro (5. NP)",
+        "5. patro (6. NP)",
+        "6. patro (7. NP)",
+        "7. patro (8. NP)",
+        "9. patro (10. NP)",
+        "8. patro (9. NP)",
+        "zvýšené přízemí (1. NP)",
+        "10. patro (11. NP)",
+        "11. patro (12. NP)",
+        "16. patro (17. NP)",
+        "snížené přízemí (1. PP = podzemní podlaží)",
+        "17. patro (18. NP)"
+      ],
+      "value_counts": {
+        "1. patro (2. NP)": 113,
+        "2. patro (3. NP)": 107,
+        "přízemí (1. NP = nadzemní podlaží)": 60,
+        "3. patro (4. NP)": 57,
+        "4. patro (5. NP)": 38,
+        "5. patro (6. NP)": 33,
+        "6. patro (7. NP)": 14,
+        "7. patro (8. NP)": 7,
+        "9. patro (10. NP)": 4,
+        "8. patro (9. NP)": 3,
+        "zvýšené přízemí (1. NP)": 3,
+        "10. patro (11. NP)": 3,
+        "11. patro (12. NP)": 1,
+        "16. patro (17. NP)": 1,
+        "snížené přízemí (1. PP = podzemní podlaží)": 1,
+        "17. patro (18. NP)": 1
+      }
+    },
+    "attributes.Poloha domu": {
+      "types": {
+        "string": 514
+      },
+      "non_null_count": 514,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "samostatný",
+        "řadový",
+        "v bloku",
+        "rohový"
+      ],
+      "value_counts": {
+        "samostatný": 364,
+        "řadový": 118,
+        "v bloku": 19,
+        "rohový": 13
+      }
+    },
+    "attributes.Počet místností": {
+      "types": {
+        "string": 303
+      },
+      "non_null_count": 303,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "5",
+        "4",
+        "3",
+        "2",
+        "6",
+        "8",
+        "1",
+        "7",
+        "9",
+        "12",
+        "17",
+        "42",
+        "10"
+      ],
+      "value_counts": {
+        "1": 8,
+        "2": 23,
+        "3": 36,
+        "4": 69,
+        "5": 122,
+        "6": 22,
+        "7": 7,
+        "8": 9,
+        "9": 3,
+        "10": 1,
+        "12": 1,
+        "17": 1,
+        "42": 1
+      }
+    },
+    "attributes.Počet parkovacích míst": {
+      "types": {
+        "string": 164
+      },
+      "non_null_count": 164,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "2",
+        "1",
+        "3",
+        "4",
+        "5",
+        "6",
+        "10",
+        "50",
+        "30",
+        "9",
+        "7",
+        "20",
+        "15"
+      ],
+      "value_counts": {
+        "1": 49,
+        "2": 60,
+        "3": 20,
+        "4": 12,
+        "5": 8,
+        "6": 6,
+        "7": 1,
+        "9": 1,
+        "10": 3,
+        "15": 1,
+        "20": 1,
+        "30": 1,
+        "50": 1
+      }
+    },
+    "attributes.Počet podlaží": {
+      "types": {
+        "string": 396
+      },
+      "non_null_count": 396,
+      "null_count": 0,
+      "distinct_count": 5,
+      "all_distinct_values": [
+        "2 podlaží",
+        "1 podlaží",
+        "3 podlaží",
+        "4 podlaží",
+        "22 podlaží"
+      ],
+      "value_counts": {
+        "2 podlaží": 222,
+        "1 podlaží": 113,
+        "3 podlaží": 53,
+        "4 podlaží": 7,
+        "22 podlaží": 1
+      }
+    },
+    "attributes.Počet podlaží budovy": {
+      "types": {
+        "string": 307
+      },
+      "non_null_count": 307,
+      "null_count": 0,
+      "distinct_count": 17,
+      "all_distinct_values": [
+        "5 podlaží",
+        "4 podlaží",
+        "3 podlaží",
+        "2 podlaží",
+        "6 podlaží",
+        "8 podlaží",
+        "7 podlaží",
+        "9 podlaží",
+        "12 podlaží",
+        "1 podlaží",
+        "13 podlaží",
+        "10 podlaží",
+        "11 podlaží",
+        "14 podlaží",
+        "17 podlaží",
+        "18 podlaží",
+        "16 podlaží"
+      ],
+      "value_counts": {
+        "5 podlaží": 54,
+        "4 podlaží": 52,
+        "3 podlaží": 52,
+        "2 podlaží": 36,
+        "6 podlaží": 32,
+        "8 podlaží": 31,
+        "7 podlaží": 18,
+        "9 podlaží": 8,
+        "12 podlaží": 6,
+        "1 podlaží": 5,
+        "13 podlaží": 4,
+        "10 podlaží": 3,
+        "11 podlaží": 2,
+        "14 podlaží": 1,
+        "17 podlaží": 1,
+        "18 podlaží": 1,
+        "16 podlaží": 1
+      }
+    },
+    "attributes.Počet podzemních podlaží": {
+      "types": {
+        "string": 101
+      },
+      "non_null_count": 101,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "1 podlaží",
+        "2 podlaží"
+      ],
+      "value_counts": {
+        "1 podlaží": 95,
+        "2 podlaží": 6
+      }
+    },
+    "attributes.Provize": {
+      "types": {
+        "string": 23
+      },
+      "non_null_count": 23,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "nájemce neplatí provizi",
+        "10 000 Kč",
+        "18 000 Kč",
+        "50 000 Kč",
+        "35 000 Kč",
+        "25 000 Kč",
+        "25 800 Kč",
+        "13 900 Kč",
+        "23 000 Kč",
+        "19 000 Kč",
+        "19 038 Kč",
+        "20 500 Kč",
+        "3 000 Kč"
+      ],
+      "value_counts": {
+        "nájemce neplatí provizi": 10,
+        "10 000 Kč": 2,
+        "18 000 Kč": 1,
+        "50 000 Kč": 1,
+        "35 000 Kč": 1,
+        "25 000 Kč": 1,
+        "25 800 Kč": 1,
+        "13 900 Kč": 1,
+        "23 000 Kč": 1,
+        "19 000 Kč": 1,
+        "19 038 Kč": 1,
+        "20 500 Kč": 1,
+        "3 000 Kč": 1
+      }
+    },
+    "attributes.Převod do OV": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 2
+      }
+    },
+    "attributes.Přístupová komunikace": {
+      "types": {
+        "string": 126
+      },
+      "non_null_count": 126,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "asfalt",
+        "dlažba",
+        "žádné úpravy",
+        "beton"
+      ],
+      "value_counts": {
+        "asfalt": 108,
+        "dlažba": 8,
+        "žádné úpravy": 5,
+        "beton": 5
+      }
+    },
+    "attributes.Půdní vestavba": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 1
+      }
+    },
+    "attributes.Rekonstrukce": {
+      "types": {
+        "string": 44
+      },
+      "non_null_count": 44,
+      "null_count": 0,
+      "distinct_count": 17,
+      "all_distinct_values": [
+        "2025",
+        "2022",
+        "2010",
+        "2016",
+        "2015",
+        "2018",
+        "2020",
+        "2026",
+        "2024",
+        "2023",
+        "2014",
+        "2017",
+        "2003",
+        "2005",
+        "1970",
+        "2013",
+        "2021"
+      ],
+      "value_counts": {
+        "1970": 1,
+        "2003": 1,
+        "2005": 1,
+        "2010": 4,
+        "2013": 1,
+        "2014": 2,
+        "2015": 3,
+        "2016": 3,
+        "2017": 2,
+        "2018": 3,
+        "2020": 3,
+        "2021": 1,
+        "2022": 4,
+        "2023": 2,
+        "2024": 3,
+        "2025": 7,
+        "2026": 3
+      }
+    },
+    "attributes.Roční spotřeba energie": {
+      "types": {
+        "string": 112
+      },
+      "non_null_count": 112,
+      "null_count": 0,
+      "distinct_count": 72,
+      "all_distinct_values": [
+        "97 kWh",
+        "66 kWh",
+        "68 kWh",
+        "70 kWh",
+        "71 kWh",
+        "115 kWh",
+        "117 kWh",
+        "72 kWh",
+        "56 kWh",
+        "50 kWh",
+        "55 kWh",
+        "51 kWh",
+        "77 kWh",
+        "82 kWh",
+        "48 kWh",
+        "111 kWh",
+        "92 kWh",
+        "102 kWh",
+        "106 kWh",
+        "152 kWh",
+        "43 kWh",
+        "80 kWh",
+        "174 kWh",
+        "105 kWh",
+        "208 kWh",
+        "112 kWh",
+        "75 kWh",
+        "131 kWh",
+        "203 kWh",
+        "69 kWh",
+        "166 kWh",
+        "126 kWh",
+        "15 kWh",
+        "84 kWh",
+        "107 kWh",
+        "78 kWh",
+        "16 kWh",
+        "53299 kWh",
+        "128 kWh",
+        "340 kWh",
+        "65 kWh",
+        "86 kWh",
+        "116 kWh",
+        "124 kWh",
+        "296 kWh",
+        "67 kWh",
+        "103 kWh",
+        "143 kWh",
+        "123 kWh",
+        "113 kWh",
+        "207 kWh",
+        "170 kWh",
+        "137 kWh",
+        "195 kWh",
+        "125 kWh",
+        "344 kWh",
+        "200 kWh",
+        "139 kWh",
+        "160 kWh",
+        "194 kWh",
+        "162 kWh",
+        "36 kWh",
+        "119 kWh",
+        "100 kWh",
+        "1 kWh",
+        "47 kWh",
+        "74 kWh",
+        "99 kWh",
+        "154 kWh",
+        "60 kWh",
+        "45 kWh",
+        "73 kWh"
+      ],
+      "value_counts": {
+        "97 kWh": 6,
+        "66 kWh": 4,
+        "68 kWh": 4,
+        "70 kWh": 3,
+        "71 kWh": 3,
+        "115 kWh": 3,
+        "117 kWh": 3,
+        "72 kWh": 3,
+        "56 kWh": 3,
+        "50 kWh": 3,
+        "55 kWh": 3,
+        "51 kWh": 2,
+        "77 kWh": 2,
+        "82 kWh": 2,
+        "48 kWh": 2,
+        "111 kWh": 2,
+        "92 kWh": 2,
+        "102 kWh": 2,
+        "106 kWh": 2,
+        "152 kWh": 2,
+        "43 kWh": 2,
+        "80 kWh": 2,
+        "174 kWh": 2,
+        "105 kWh": 2,
+        "208 kWh": 1,
+        "112 kWh": 1,
+        "75 kWh": 1,
+        "131 kWh": 1,
+        "203 kWh": 1,
+        "69 kWh": 1,
+        "166 kWh": 1,
+        "126 kWh": 1,
+        "15 kWh": 1,
+        "84 kWh": 1,
+        "107 kWh": 1,
+        "78 kWh": 1,
+        "16 kWh": 1,
+        "53299 kWh": 1,
+        "128 kWh": 1,
+        "340 kWh": 1,
+        "65 kWh": 1,
+        "86 kWh": 1,
+        "116 kWh": 1,
+        "124 kWh": 1,
+        "296 kWh": 1,
+        "67 kWh": 1,
+        "103 kWh": 1,
+        "143 kWh": 1,
+        "123 kWh": 1,
+        "113 kWh": 1,
+        "207 kWh": 1,
+        "170 kWh": 1,
+        "137 kWh": 1,
+        "195 kWh": 1,
+        "125 kWh": 1,
+        "344 kWh": 1,
+        "200 kWh": 1,
+        "139 kWh": 1,
+        "160 kWh": 1,
+        "194 kWh": 1,
+        "162 kWh": 1,
+        "36 kWh": 1,
+        "119 kWh": 1,
+        "100 kWh": 1,
+        "1 kWh": 1,
+        "47 kWh": 1,
+        "74 kWh": 1,
+        "99 kWh": 1,
+        "154 kWh": 1,
+        "60 kWh": 1,
+        "45 kWh": 1,
+        "73 kWh": 1
+      }
+    },
+    "attributes.Sklep": {
+      "types": {
+        "string": 243
+      },
+      "non_null_count": 243,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 243
+      }
+    },
+    "attributes.Stav budovy": {
+      "types": {
+        "string": 708
+      },
+      "non_null_count": 708,
+      "null_count": 0,
+      "distinct_count": 9,
+      "all_distinct_values": [
+        "velmi dobrý stav",
+        "novostavba",
+        "po rekonstrukci",
+        "před rekonstrukcí",
+        "dobrý stav",
+        "projekt",
+        "ve výstavbě",
+        "v rekonstrukci",
+        "k demolici"
+      ],
+      "value_counts": {
+        "velmi dobrý stav": 326,
+        "novostavba": 195,
+        "po rekonstrukci": 60,
+        "před rekonstrukcí": 42,
+        "dobrý stav": 37,
+        "projekt": 34,
+        "ve výstavbě": 11,
+        "v rekonstrukci": 2,
+        "k demolici": 1
+      }
+    },
+    "attributes.Stav bytu": {
+      "types": {
+        "string": 454
+      },
+      "non_null_count": 454,
+      "null_count": 0,
+      "distinct_count": 8,
+      "all_distinct_values": [
+        "velmi dobrý stav",
+        "novostavba",
+        "po rekonstrukci",
+        "dobrý stav",
+        "ve výstavbě",
+        "projekt",
+        "před rekonstrukcí",
+        "špatný stav"
+      ],
+      "value_counts": {
+        "velmi dobrý stav": 192,
+        "novostavba": 163,
+        "po rekonstrukci": 61,
+        "dobrý stav": 23,
+        "ve výstavbě": 9,
+        "projekt": 3,
+        "před rekonstrukcí": 2,
+        "špatný stav": 1
+      }
+    },
+    "attributes.Svažitý pozemek": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 1
+      }
+    },
+    "attributes.Telefon": {
+      "types": {
+        "string": 77
+      },
+      "non_null_count": 77,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 77
+      }
+    },
+    "attributes.Televize": {
+      "types": {
+        "string": 40
+      },
+      "non_null_count": 40,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 40
+      }
+    },
+    "attributes.Terasa": {
+      "types": {
+        "string": 228
+      },
+      "non_null_count": 228,
+      "null_count": 0,
+      "distinct_count": 54,
+      "all_distinct_values": [
+        "ano",
+        "10 m2",
+        "5 m2",
+        "6 m2",
+        "20 m2",
+        "4 m2",
+        "3 m2",
+        "25 m2",
+        "22 m2",
+        "21 m2",
+        "16 m2",
+        "15 m2",
+        "9 m2",
+        "8 m2",
+        "7 m2",
+        "50 m2",
+        "12 m2",
+        "17 m2",
+        "40 m2",
+        "45 m2",
+        "32 m2",
+        "jih",
+        "100 m2",
+        "30 m2",
+        "82 m2",
+        "14 m2",
+        "90 m2",
+        "72 m2",
+        "39 m2",
+        "19 m2",
+        "120 m2",
+        "96 m2",
+        "18 m2",
+        "88 m2",
+        "80 m2",
+        "68 m2",
+        "71 m2",
+        "250 m2",
+        "53 m2",
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t20 m2",
+        "123 m2",
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t25 m2",
+        "2500 m2",
+        "35 m2",
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t27 m2",
+        "11 m2",
+        "103 m2",
+        "13 m2",
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t15 m2",
+        "44 m2",
+        "23 m2",
+        "48 m2",
+        "37 m2",
+        "36 m2"
+      ],
+      "value_counts": {
+        "ano": 92,
+        "10 m2": 14,
+        "5 m2": 9,
+        "6 m2": 7,
+        "20 m2": 7,
+        "4 m2": 6,
+        "3 m2": 6,
+        "25 m2": 5,
+        "22 m2": 5,
+        "21 m2": 5,
+        "16 m2": 4,
+        "15 m2": 4,
+        "9 m2": 4,
+        "8 m2": 4,
+        "7 m2": 4,
+        "50 m2": 3,
+        "12 m2": 3,
+        "17 m2": 3,
+        "40 m2": 3,
+        "45 m2": 2,
+        "32 m2": 2,
+        "jih": 2,
+        "100 m2": 2,
+        "30 m2": 2,
+        "82 m2": 1,
+        "14 m2": 1,
+        "90 m2": 1,
+        "72 m2": 1,
+        "39 m2": 1,
+        "19 m2": 1,
+        "120 m2": 1,
+        "96 m2": 1,
+        "18 m2": 1,
+        "88 m2": 1,
+        "80 m2": 1,
+        "68 m2": 1,
+        "71 m2": 1,
+        "250 m2": 1,
+        "53 m2": 1,
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t20 m2": 1,
+        "123 m2": 1,
+        "západ\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t25 m2": 1,
+        "2500 m2": 1,
+        "35 m2": 1,
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t27 m2": 1,
+        "11 m2": 1,
+        "103 m2": 1,
+        "13 m2": 1,
+        "jih\n\t\t\t\t\t\t\t, \n\t\t\t\t\t\t\t15 m2": 1,
+        "44 m2": 1,
+        "23 m2": 1,
+        "48 m2": 1,
+        "37 m2": 1,
+        "36 m2": 1
+      }
+    },
+    "attributes.Topení": {
+      "types": {
+        "string": 255
+      },
+      "non_null_count": 255,
+      "null_count": 0,
+      "distinct_count": 16,
+      "all_distinct_values": [
+        "ústřední - plynové",
+        "ústřední - dálkové",
+        "jiné",
+        "ústřední - elektrické",
+        "lokální - elektrické",
+        "lokální - tuhá paliva",
+        "lokální - plyn",
+        "ústřední - tuhá paliva",
+        "lokální - tuhá paliva, lokální - elektrické",
+        "lokální - tuhá paliva, ústřední - plynové",
+        "ústřední - plynové, ústřední - tuhá paliva",
+        "lokální - tuhá paliva, lokální - elektrické, jiné",
+        "lokální - plyn, lokální - tuhá paliva, ústřední - plynové",
+        "ústřední - dálkové, jiné",
+        "lokální - elektrické, ústřední - elektrické",
+        "lokální - tuhá paliva, ústřední - elektrické"
+      ],
+      "value_counts": {
+        "ústřední - plynové": 69,
+        "ústřední - dálkové": 51,
+        "jiné": 38,
+        "ústřední - elektrické": 27,
+        "lokální - elektrické": 20,
+        "lokální - tuhá paliva": 19,
+        "lokální - plyn": 14,
+        "ústřední - tuhá paliva": 5,
+        "lokální - tuhá paliva, lokální - elektrické": 3,
+        "lokální - tuhá paliva, ústřední - plynové": 2,
+        "ústřední - plynové, ústřední - tuhá paliva": 2,
+        "lokální - tuhá paliva, lokální - elektrické, jiné": 1,
+        "lokální - plyn, lokální - tuhá paliva, ústřední - plynové": 1,
+        "ústřední - dálkové, jiné": 1,
+        "lokální - elektrické, ústřední - elektrické": 1,
+        "lokální - tuhá paliva, ústřední - elektrické": 1
+      }
+    },
+    "attributes.Topné těleso": {
+      "types": {
+        "string": 58
+      },
+      "non_null_count": 58,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "radiátory",
+        "podlahové vytápění",
+        "podlahové vytápění, radiátory",
+        "přímotop",
+        "radiátory, krb",
+        "klimatizace",
+        "kamna",
+        "přímotop, kamna",
+        "podlahové vytápění, krb",
+        "radiátory, krbová kamna",
+        "radiátory, přímotop",
+        "kamna, klimatizace",
+        "radiátory, krb, kamna"
+      ],
+      "value_counts": {
+        "radiátory": 31,
+        "podlahové vytápění": 10,
+        "podlahové vytápění, radiátory": 3,
+        "přímotop": 3,
+        "radiátory, krb": 2,
+        "klimatizace": 2,
+        "kamna": 1,
+        "přímotop, kamna": 1,
+        "podlahové vytápění, krb": 1,
+        "radiátory, krbová kamna": 1,
+        "radiátory, přímotop": 1,
+        "kamna, klimatizace": 1,
+        "radiátory, krb, kamna": 1
+      }
+    },
+    "attributes.Typ pronájmu": {
+      "types": {
+        "string": 36
+      },
+      "non_null_count": 36,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "nájem"
+      ],
+      "value_counts": {
+        "nájem": 36
+      }
+    },
+    "attributes.Užitná plocha": {
+      "types": {
+        "string": 981
+      },
+      "non_null_count": 981,
+      "null_count": 0,
+      "distinct_count": 265,
+      "sample_values": [
+        "43 m2",
+        "89 m2",
+        "110 m2",
+        "60 m2",
+        "55 m2",
+        "47 m2",
+        "28 m2",
+        "127 m2",
+        "49 m2",
+        "46 m2"
+      ]
+    },
+    "attributes.Vlastnictví": {
+      "types": {
+        "string": 796
+      },
+      "non_null_count": 796,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "osobní",
+        "jiné",
+        "družstevní",
+        "s.r.o."
+      ],
+      "value_counts": {
+        "osobní": 744,
+        "jiné": 30,
+        "družstevní": 19,
+        "s.r.o.": 3
+      }
+    },
+    "attributes.Voda": {
+      "types": {
+        "string": 224
+      },
+      "non_null_count": 224,
+      "null_count": 0,
+      "distinct_count": 8,
+      "all_distinct_values": [
+        "veřejný",
+        "vlastní zdroj",
+        "jiný zdroj",
+        "veřejný, vlastní zdroj, jiný zdroj",
+        "veřejný, vlastní zdroj",
+        "na hranici pozemku",
+        "veřejný, na hranici pozemku",
+        "veřejný, jiný zdroj"
+      ],
+      "value_counts": {
+        "veřejný": 180,
+        "vlastní zdroj": 27,
+        "jiný zdroj": 7,
+        "veřejný, vlastní zdroj, jiný zdroj": 4,
+        "veřejný, vlastní zdroj": 2,
+        "na hranici pozemku": 2,
+        "veřejný, na hranici pozemku": 1,
+        "veřejný, jiný zdroj": 1
+      }
+    },
+    "attributes.Vratná kauce": {
+      "types": {
+        "string": 27
+      },
+      "non_null_count": 27,
+      "null_count": 0,
+      "distinct_count": 15,
+      "all_distinct_values": [
+        "20 000 Kč",
+        "30 000 Kč",
+        "10 000 Kč",
+        "15 000 Kč",
+        "25 000 Kč",
+        "11 500 Kč",
+        "30 964 Kč",
+        "25 800 Kč",
+        "13 000 Kč",
+        "38 076 Kč",
+        "24 000 Kč",
+        "50 000 Kč",
+        "99 000 Kč",
+        "70 000 Kč",
+        "45 000 Kč"
+      ],
+      "value_counts": {
+        "20 000 Kč": 4,
+        "30 000 Kč": 4,
+        "10 000 Kč": 3,
+        "15 000 Kč": 3,
+        "25 000 Kč": 3,
+        "11 500 Kč": 1,
+        "30 964 Kč": 1,
+        "25 800 Kč": 1,
+        "13 000 Kč": 1,
+        "38 076 Kč": 1,
+        "24 000 Kč": 1,
+        "50 000 Kč": 1,
+        "99 000 Kč": 1,
+        "70 000 Kč": 1,
+        "45 000 Kč": 1
+      }
+    },
+    "attributes.Vybavení": {
+      "types": {
+        "string": 372
+      },
+      "non_null_count": 372,
+      "null_count": 0,
+      "distinct_count": 3,
+      "all_distinct_values": [
+        "nezařízený",
+        "částečně zařízený",
+        "zařízený"
+      ],
+      "value_counts": {
+        "nezařízený": 189,
+        "částečně zařízený": 99,
+        "zařízený": 84
+      }
+    },
+    "attributes.Vybavení domu": {
+      "types": {
+        "string": 387
+      },
+      "non_null_count": 387,
+      "null_count": 0,
+      "distinct_count": 3,
+      "all_distinct_values": [
+        "nezařízený",
+        "částečně zařízený",
+        "zařízený"
+      ],
+      "value_counts": {
+        "nezařízený": 194,
+        "částečně zařízený": 109,
+        "zařízený": 84
+      }
+    },
+    "attributes.Výstavba": {
+      "types": {
+        "string": 125
+      },
+      "non_null_count": 125,
+      "null_count": 0,
+      "distinct_count": 49,
+      "all_distinct_values": [
+        "2025",
+        "2024",
+        "2016",
+        "1980",
+        "2022",
+        "2019",
+        "2021",
+        "2023",
+        "1970",
+        "2026",
+        "1955",
+        "2020",
+        "2014",
+        "1919",
+        "2012",
+        "2007",
+        "2001",
+        "1927",
+        "1945",
+        "2009",
+        "2008",
+        "1913",
+        "2002",
+        "2010",
+        "2015",
+        "1902",
+        "2000",
+        "1951",
+        "1940",
+        "1971",
+        "1981",
+        "1934",
+        "1958",
+        "1975",
+        "1964",
+        "1920",
+        "1950",
+        "1960",
+        "1935",
+        "1931",
+        "1957",
+        "1985",
+        "2018",
+        "2004",
+        "1932",
+        "1992",
+        "1998",
+        "1989",
+        "2005"
+      ],
+      "value_counts": {
+        "1902": 2,
+        "1913": 2,
+        "1919": 3,
+        "1920": 1,
+        "1927": 2,
+        "1931": 1,
+        "1932": 1,
+        "1934": 1,
+        "1935": 1,
+        "1940": 1,
+        "1945": 2,
+        "1950": 1,
+        "1951": 1,
+        "1955": 3,
+        "1957": 1,
+        "1958": 1,
+        "1960": 1,
+        "1964": 1,
+        "1970": 4,
+        "1971": 1,
+        "1975": 1,
+        "1980": 6,
+        "1981": 1,
+        "1985": 1,
+        "1989": 1,
+        "1992": 1,
+        "1998": 1,
+        "2000": 2,
+        "2001": 3,
+        "2002": 2,
+        "2004": 1,
+        "2005": 1,
+        "2007": 3,
+        "2008": 2,
+        "2009": 2,
+        "2010": 2,
+        "2012": 3,
+        "2014": 3,
+        "2015": 2,
+        "2016": 6,
+        "2018": 1,
+        "2019": 4,
+        "2020": 3,
+        "2021": 4,
+        "2022": 6,
+        "2023": 4,
+        "2024": 7,
+        "2025": 18,
+        "2026": 3
+      }
+    },
+    "attributes.Výtah": {
+      "types": {
+        "string": 267
+      },
+      "non_null_count": 267,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 267
+      }
+    },
+    "attributes.Zastavitelná plocha": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "ano"
+      ],
+      "value_counts": {
+        "ano": 2
+      }
+    },
+    "attributes.Zastavěná plocha": {
+      "types": {
+        "string": 273
+      },
+      "non_null_count": 273,
+      "null_count": 0,
+      "distinct_count": 163,
+      "sample_values": [
+        "141 m2",
+        "180 m2",
+        "159 m2",
+        "25 m2",
+        "109 m2",
+        "117 m2",
+        "148 m2",
+        "120 m2",
+        "129 m2",
+        "94 m2"
+      ]
+    },
+    "attributes.Zdroj ohřevu vody": {
+      "types": {
+        "string": 42
+      },
+      "non_null_count": 42,
+      "null_count": 0,
+      "distinct_count": 8,
+      "all_distinct_values": [
+        "centrální dálkový ohřev",
+        "tepelné čerpadlo",
+        "bojler - elektro",
+        "plynový kondenzační kotel",
+        "elektrokotel",
+        "plynový kotel",
+        "kotel na tuhá paliva",
+        "kotel na tuhá paliva, centrální dálkový ohřev"
+      ],
+      "value_counts": {
+        "centrální dálkový ohřev": 9,
+        "tepelné čerpadlo": 7,
+        "bojler - elektro": 7,
+        "plynový kondenzační kotel": 6,
+        "elektrokotel": 5,
+        "plynový kotel": 4,
+        "kotel na tuhá paliva": 2,
+        "kotel na tuhá paliva, centrální dálkový ohřev": 2
+      }
+    },
+    "attributes.Zdroj vytápění": {
+      "types": {
+        "string": 53
+      },
+      "non_null_count": 53,
+      "null_count": 0,
+      "distinct_count": 15,
+      "all_distinct_values": [
+        "ústřední dálkové",
+        "plynový kotel",
+        "tepelné čerpadlo",
+        "plynový kondenzační kotel",
+        "centrální dálkové",
+        "elektrokotel, krbová kamna",
+        "kotel na tuhá paliva",
+        "přímotop",
+        "elektrokotel, krb",
+        "kamna",
+        "krbová kamna, kamna",
+        "elektrokotel",
+        "tepelné čerpadlo, krb, ústřední dálkové",
+        "plynový kondenzační kotel, kotel na tuhá paliva",
+        "plynový kotel, krb, kamna"
+      ],
+      "value_counts": {
+        "ústřední dálkové": 13,
+        "plynový kotel": 9,
+        "tepelné čerpadlo": 7,
+        "plynový kondenzační kotel": 6,
+        "centrální dálkové": 5,
+        "elektrokotel, krbová kamna": 2,
+        "kotel na tuhá paliva": 2,
+        "přímotop": 2,
+        "elektrokotel, krb": 1,
+        "kamna": 1,
+        "krbová kamna, kamna": 1,
+        "elektrokotel": 1,
+        "tepelné čerpadlo, krb, ústřední dálkové": 1,
+        "plynový kondenzační kotel, kotel na tuhá paliva": 1,
+        "plynový kotel, krb, kamna": 1
+      }
+    },
+    "attributes.Číslo zakázky": {
+      "types": {
+        "string": 1235
+      },
+      "non_null_count": 1235,
+      "null_count": 0,
+      "distinct_count": 1171,
+      "sample_values": [
+        "IDNES-27",
+        "IDNES-N112536",
+        "IDNES-77",
+        "IDNES-N108467",
+        "IDNES-00295",
+        "IDNES-N00056",
+        "IDNES-2",
+        "IDNES-RNJ4 - P-2",
+        "IDNES-00208",
+        "IDNES-N115487"
+      ]
+    },
+    "dataLayer": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "{}"
+      ],
+      "value_counts": {
+        "{}": 2
+      }
+    },
+    "dataLayer.listing_area": {
+      "types": {
+        "number": 981
+      },
+      "non_null_count": 981,
+      "null_count": 0,
+      "distinct_count": 265,
+      "min": 9,
+      "max": 2226,
+      "sample_values": [
+        43,
+        89,
+        110,
+        60,
+        55,
+        47,
+        28,
+        127,
+        49,
+        46
+      ]
+    },
+    "dataLayer.listing_lat": {
+      "types": {
+        "number": 1240
+      },
+      "non_null_count": 1240,
+      "null_count": 0,
+      "distinct_count": 1020,
+      "min": 0,
+      "max": 51.0038196103,
+      "sample_values": [
+        48.9868899928,
+        49.5746058333,
+        50.05509686,
+        48.97577,
+        50.8530099872,
+        50.088772956380225,
+        49.96402984,
+        50.1031921508,
+        49.2513603732,
+        50.0619847222
+      ]
+    },
+    "dataLayer.listing_localityCity": {
+      "types": {
+        "string": 1241
+      },
+      "non_null_count": 1241,
+      "null_count": 0,
+      "distinct_count": 562,
+      "sample_values": [
+        "České Budějovice",
+        "Olomouc",
+        "Praha",
+        "Demänovská Dolina",
+        "Hrádek nad Nisou",
+        "Mariánské Lázně",
+        "Jirny",
+        "Soběslav",
+        "Přeštice",
+        "Benidorm"
+      ]
+    },
+    "dataLayer.listing_localityCityArea": {
+      "types": {
+        "string": 1005
+      },
+      "non_null_count": 1005,
+      "null_count": 0,
+      "distinct_count": 586,
+      "sample_values": [
+        "České Budějovice 2",
+        "Nové Sady",
+        "Záběhlice",
+        "Hrádek nad Nisou",
+        "Střešovice",
+        "Mariánské Lázně",
+        "Nové Jirny",
+        "Soběslav II",
+        "Nusle",
+        "Přeštice"
+      ]
+    },
+    "dataLayer.listing_localityDistrict": {
+      "types": {
+        "string": 1183
+      },
+      "non_null_count": 1183,
+      "null_count": 0,
+      "distinct_count": 97,
+      "all_distinct_values": [
+        "Praha 5",
+        "Praha 6",
+        "Praha-západ",
+        "Praha-východ",
+        "Brno-město",
+        "České Budějovice",
+        "Olomouc",
+        "Praha 10",
+        "Břeclav",
+        "Beroun",
+        "Brno-venkov",
+        "Praha 3",
+        "Hradec Králové",
+        "Ostrava-město",
+        "Šumperk",
+        "Kladno",
+        "Uherské Hradiště",
+        "Benešov",
+        "Pardubice",
+        "Frýdek-Místek",
+        "Praha 4",
+        "Karlovy Vary",
+        "Plzeň-město",
+        "Hodonín",
+        "Vyškov",
+        "Kroměříž",
+        "Česká Lípa",
+        "Trutnov",
+        "Liberec",
+        "Strakonice",
+        "Příbram",
+        "Kutná Hora",
+        "Louny",
+        "Klatovy",
+        "Český Krumlov",
+        "Rokycany",
+        "Mělník",
+        "Praha 2",
+        "Jablonec nad Nisou",
+        "Praha 9",
+        "Karviná",
+        "Nymburk",
+        "Cheb",
+        "Plzeň-jih",
+        "Chomutov",
+        "Mladá Boleslav",
+        "Teplice",
+        "Jindřichův Hradec",
+        "Písek",
+        "Plzeň-sever",
+        "Ústí nad Labem",
+        "Zlín",
+        "Tábor",
+        "Blansko",
+        "Praha 8",
+        "Vsetín",
+        "Ústí nad Orlicí",
+        "Nový Jičín",
+        "Kolín",
+        "Praha 14",
+        "Znojmo",
+        "Semily",
+        "Děčín",
+        "Třebíč",
+        "Sokolov",
+        "Praha 1",
+        "Praha 15",
+        "Domažlice",
+        "Most",
+        "Praha 11",
+        "Přerov",
+        "Havlíčkův Brod",
+        "Opava",
+        "Rychnov nad Kněžnou",
+        "Tachov",
+        "Pelhřimov",
+        "Praha 19",
+        "Chrudim",
+        "Jihlava",
+        "Praha 13",
+        "Praha 12",
+        "Svitavy",
+        "Praha 16",
+        "Bruntál",
+        "Žďár nad Sázavou",
+        "Prachatice",
+        "Praha 22",
+        "Prostějov",
+        "Rakovník",
+        "Jičín",
+        "Praha 21",
+        "Jeseník",
+        "Náchod",
+        "Praha 7",
+        "Litoměřice",
+        "Praha 17",
+        "Praha 18"
+      ],
+      "value_counts": {
+        "Praha 5": 87,
+        "Praha 6": 61,
+        "Praha-západ": 51,
+        "Praha-východ": 45,
+        "Brno-město": 43,
+        "České Budějovice": 32,
+        "Olomouc": 29,
+        "Praha 10": 26,
+        "Břeclav": 24,
+        "Beroun": 24,
+        "Brno-venkov": 21,
+        "Praha 3": 20,
+        "Hradec Králové": 17,
+        "Ostrava-město": 17,
+        "Šumperk": 16,
+        "Kladno": 16,
+        "Uherské Hradiště": 16,
+        "Benešov": 16,
+        "Pardubice": 15,
+        "Frýdek-Místek": 15,
+        "Praha 4": 14,
+        "Karlovy Vary": 14,
+        "Plzeň-město": 14,
+        "Hodonín": 14,
+        "Vyškov": 14,
+        "Kroměříž": 14,
+        "Česká Lípa": 13,
+        "Trutnov": 13,
+        "Liberec": 12,
+        "Strakonice": 12,
+        "Příbram": 12,
+        "Kutná Hora": 12,
+        "Louny": 12,
+        "Klatovy": 11,
+        "Český Krumlov": 11,
+        "Rokycany": 11,
+        "Mělník": 11,
+        "Praha 2": 11,
+        "Jablonec nad Nisou": 10,
+        "Praha 9": 10,
+        "Karviná": 10,
+        "Nymburk": 10,
+        "Cheb": 9,
+        "Plzeň-jih": 9,
+        "Chomutov": 9,
+        "Mladá Boleslav": 9,
+        "Teplice": 9,
+        "Jindřichův Hradec": 9,
+        "Písek": 9,
+        "Plzeň-sever": 9,
+        "Ústí nad Labem": 9,
+        "Zlín": 9,
+        "Tábor": 8,
+        "Blansko": 8,
+        "Praha 8": 8,
+        "Vsetín": 8,
+        "Ústí nad Orlicí": 8,
+        "Nový Jičín": 8,
+        "Kolín": 8,
+        "Praha 14": 8,
+        "Znojmo": 8,
+        "Semily": 8,
+        "Děčín": 7,
+        "Třebíč": 7,
+        "Sokolov": 7,
+        "Praha 1": 7,
+        "Praha 15": 6,
+        "Domažlice": 6,
+        "Most": 6,
+        "Praha 11": 6,
+        "Přerov": 6,
+        "Havlíčkův Brod": 6,
+        "Opava": 6,
+        "Rychnov nad Kněžnou": 6,
+        "Tachov": 6,
+        "Pelhřimov": 5,
+        "Praha 19": 5,
+        "Chrudim": 5,
+        "Jihlava": 5,
+        "Praha 13": 4,
+        "Praha 12": 4,
+        "Svitavy": 4,
+        "Praha 16": 4,
+        "Bruntál": 4,
+        "Žďár nad Sázavou": 4,
+        "Prachatice": 4,
+        "Praha 22": 3,
+        "Prostějov": 3,
+        "Rakovník": 3,
+        "Jičín": 3,
+        "Praha 21": 3,
+        "Jeseník": 3,
+        "Náchod": 3,
+        "Praha 7": 2,
+        "Litoměřice": 2,
+        "Praha 17": 1,
+        "Praha 18": 1
+      }
+    },
+    "dataLayer.listing_localityRegion": {
+      "types": {
+        "string": 1198
+      },
+      "non_null_count": 1198,
+      "null_count": 0,
+      "distinct_count": 14,
+      "all_distinct_values": [
+        "Hlavní město Praha",
+        "Středočeský kraj",
+        "Jihomoravský kraj",
+        "Jihočeský kraj",
+        "Plzeňský kraj",
+        "Moravskoslezský kraj",
+        "Olomoucký kraj",
+        "Ústecký kraj",
+        "Zlínský kraj",
+        "Liberecký kraj",
+        "Královéhradecký kraj",
+        "Pardubický kraj",
+        "Karlovarský kraj",
+        "Kraj Vysočina"
+      ],
+      "value_counts": {
+        "Hlavní město Praha": 306,
+        "Středočeský kraj": 217,
+        "Jihomoravský kraj": 132,
+        "Jihočeský kraj": 85,
+        "Plzeňský kraj": 66,
+        "Moravskoslezský kraj": 60,
+        "Olomoucký kraj": 57,
+        "Ústecký kraj": 54,
+        "Zlínský kraj": 47,
+        "Liberecký kraj": 43,
+        "Královéhradecký kraj": 42,
+        "Pardubický kraj": 32,
+        "Karlovarský kraj": 30,
+        "Kraj Vysočina": 27
+      }
+    },
+    "dataLayer.listing_lon": {
+      "types": {
+        "number": 1240
+      },
+      "non_null_count": 1240,
+      "null_count": 0,
+      "distinct_count": 1020,
+      "min": -5.2273201,
+      "max": 99.039606,
+      "sample_values": [
+        14.4408290951,
+        17.2495838889,
+        14.49482827,
+        19.5962669,
+        14.8469070264,
+        14.383476506910975,
+        12.69947477,
+        14.709844261,
+        14.7138764036,
+        14.4405186111
+      ]
+    },
+    "dataLayer.listing_price": {
+      "types": {
+        "number": 1182
+      },
+      "non_null_count": 1182,
+      "null_count": 0,
+      "distinct_count": 674,
+      "min": 3000,
+      "max": 39900000,
+      "sample_values": [
+        3950000,
+        9980000,
+        17700000,
+        6788215,
+        7900000,
+        2989000,
+        16500000,
+        3900000,
+        7750000,
+        5990000
+      ]
+    },
+    "imageCount": {
+      "types": {
+        "number": 1243
+      },
+      "non_null_count": 1243,
+      "null_count": 0,
+      "distinct_count": 55,
+      "min": 0,
+      "max": 78,
+      "all_distinct_values": [
+        "5",
+        "12",
+        "15",
+        "6",
+        "13",
+        "10",
+        "16",
+        "14",
+        "17",
+        "3",
+        "7",
+        "11",
+        "9",
+        "30",
+        "18",
+        "26",
+        "8",
+        "20",
+        "19",
+        "23",
+        "28",
+        "4",
+        "24",
+        "21",
+        "22",
+        "25",
+        "27",
+        "29",
+        "31",
+        "32",
+        "35",
+        "34",
+        "36",
+        "2",
+        "42",
+        "33",
+        "41",
+        "37",
+        "40",
+        "45",
+        "38",
+        "0",
+        "53",
+        "44",
+        "1",
+        "65",
+        "78",
+        "43",
+        "56",
+        "73",
+        "47",
+        "52",
+        "54",
+        "51",
+        "48"
+      ],
+      "value_counts": {
+        "0": 2,
+        "1": 2,
+        "2": 7,
+        "3": 47,
+        "4": 26,
+        "5": 109,
+        "6": 59,
+        "7": 44,
+        "8": 32,
+        "9": 42,
+        "10": 55,
+        "11": 43,
+        "12": 69,
+        "13": 57,
+        "14": 48,
+        "15": 60,
+        "16": 53,
+        "17": 47,
+        "18": 37,
+        "19": 31,
+        "20": 32,
+        "21": 24,
+        "22": 19,
+        "23": 28,
+        "24": 25,
+        "25": 19,
+        "26": 32,
+        "27": 18,
+        "28": 27,
+        "29": 16,
+        "30": 37,
+        "31": 14,
+        "32": 10,
+        "33": 5,
+        "34": 8,
+        "35": 10,
+        "36": 8,
+        "37": 4,
+        "38": 3,
+        "40": 4,
+        "41": 5,
+        "42": 6,
+        "43": 1,
+        "44": 2,
+        "45": 4,
+        "47": 1,
+        "48": 1,
+        "51": 1,
+        "52": 1,
+        "53": 2,
+        "54": 1,
+        "56": 1,
+        "65": 2,
+        "73": 1,
+        "78": 1
+      }
+    },
+    "priceText": {
+      "types": {
+        "string": 1243
+      },
+      "non_null_count": 1243,
+      "null_count": 0,
+      "distinct_count": 682,
+      "sample_values": [
+        "3‍ 950‍ 000‍ Kč",
+        "9‍ 980‍ 000‍ Kč",
+        "17‍ 700‍ 000‍ Kč",
+        "6‍ 788‍ 215‍ Kč",
+        "7‍ 900‍ 000‍ Kč",
+        "2‍ 989‍ 000‍ Kč",
+        "16‍ 500‍ 000‍ Kč",
+        "3‍ 900‍ 000‍ Kč",
+        "7‍ 750‍ 000‍ Kč",
+        "5‍ 990‍ 000‍ Kč"
+      ]
+    },
+    "title": {
+      "types": {
+        "string": 1243
+      },
+      "non_null_count": 1243,
+      "null_count": 0,
+      "distinct_count": 976,
+      "sample_values": [
+        "Prodej bytu 2+kk 43 m²",
+        "Prodej bytu 3+kk 89 m²",
+        "Prodej bytu 3+kk 110 m²",
+        "Prodej bytu 3+kk 60 m²",
+        "Prodej bytu 2+1 55 m²",
+        "Prodej bytu 2+kk 47 m²",
+        "Prodej bytu 1+kk 28 m²",
+        "Prodej bytu 4+kk 127 m²",
+        "Prodej bytu 2+kk 49 m²",
+        "Prodej bytu 1+kk 46 m²"
+      ]
+    }
+  }
+}

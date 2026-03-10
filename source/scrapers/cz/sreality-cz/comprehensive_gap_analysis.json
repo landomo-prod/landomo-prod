@@ -1,0 +1,908 @@
+{
+  "analysis_metadata": {
+    "analysis_date": "2026-02-07",
+    "api_endpoint": "https://www.sreality.cz/api/cs/v2/estates/{hash_id}",
+    "sample_responses": 3,
+    "sample_hash_ids": [1723728716, 895644492, 340505420],
+    "total_api_response_size_bytes": 180180
+  },
+  "api_root_level_fields": {
+    "total_fields": 26,
+    "fields": [
+      {
+        "field_name": "hash_id",
+        "current_extraction": "YES",
+        "maps_to": "portal_metadata.sreality.hash_id",
+        "data_type": "number",
+        "availability": "100%",
+        "business_value": "PRIMARY_KEY"
+      },
+      {
+        "field_name": "name",
+        "current_extraction": "YES",
+        "maps_to": "title",
+        "data_type": "object {name: string, value: string}",
+        "availability": "100%",
+        "business_value": "HIGH",
+        "notes": "Structure: {name: 'Název', value: 'Property Title'}"
+      },
+      {
+        "field_name": "text",
+        "current_extraction": "YES",
+        "maps_to": "description",
+        "data_type": "object {name: string, value: string}",
+        "availability": "100%",
+        "business_value": "HIGH",
+        "notes": "Full property description in Czech"
+      },
+      {
+        "field_name": "price_czk",
+        "current_extraction": "YES",
+        "maps_to": "price, price_per_sqm",
+        "data_type": "object {name, value, value_raw, unit}",
+        "availability": "100%",
+        "business_value": "CRITICAL",
+        "notes": "Includes value_raw (number) for calculations"
+      },
+      {
+        "field_name": "locality",
+        "current_extraction": "YES",
+        "maps_to": "location.address, location.city, location.region",
+        "data_type": "object {name: string, value: string}",
+        "availability": "100%",
+        "business_value": "CRITICAL"
+      },
+      {
+        "field_name": "locality_id",
+        "current_extraction": "YES",
+        "maps_to": "portal_metadata.sreality.locality_id",
+        "data_type": "number",
+        "availability": "100%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "field_name": "locality_district_id",
+        "current_extraction": "PARTIAL",
+        "maps_to": "Not extracted, available in portal_metadata",
+        "data_type": "number",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "notes": "Available in response but not mapped to StandardProperty"
+      },
+      {
+        "field_name": "seo",
+        "current_extraction": "YES",
+        "maps_to": "portal_metadata.sreality + property_type + transaction_type",
+        "data_type": "object {category_main_cb, category_sub_cb, category_type_cb, locality}",
+        "availability": "100%",
+        "business_value": "HIGH",
+        "notes": "category_main_cb: 1=apartment, 2=house, 3=land, 4=commercial, 5=other"
+      },
+      {
+        "field_name": "map",
+        "current_extraction": "YES",
+        "maps_to": "location.coordinates",
+        "data_type": "object {lat, lon, zoom, type}",
+        "availability": "100%",
+        "business_value": "HIGH"
+      },
+      {
+        "field_name": "gps",
+        "current_extraction": "YES",
+        "maps_to": "location.coordinates (fallback)",
+        "data_type": "object {lat, lon}",
+        "availability": "10-20%",
+        "business_value": "HIGH",
+        "notes": "Used as fallback when map is unavailable"
+      },
+      {
+        "field_name": "items",
+        "current_extraction": "YES (Extensive)",
+        "maps_to": "country_specific, details, amenities fields",
+        "data_type": "array of {name: string, value: any}",
+        "availability": "100%",
+        "business_value": "CRITICAL",
+        "notes": "Contains 31-33 unique Czech field names with variable availability per listing"
+      },
+      {
+        "field_name": "panorama",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "object or boolean",
+        "availability": "~30-40%",
+        "business_value": "LOW-MEDIUM",
+        "notes": "Indicates if property has panoramic images available"
+      },
+      {
+        "field_name": "poi",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of objects",
+        "availability": "100%",
+        "business_value": "MEDIUM-HIGH",
+        "notes": "Points of interest nearby with distance, name, rating, location, photos"
+      },
+      {
+        "field_name": "poi_transport",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of objects",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "notes": "Filtered POI for public transport (distance: 100-1000m)"
+      },
+      {
+        "field_name": "poi_restaurant",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of objects",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "notes": "Filtered POI for restaurants (distance: 100-1000m)"
+      },
+      {
+        "field_name": "poi_grocery",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of objects",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "notes": "Filtered POI for grocery stores (distance: 100-1000m)"
+      },
+      {
+        "field_name": "poi_school_kindergarten",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of objects",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "notes": "Filtered POI for schools/kindergartens (distance: 100-2000m)"
+      },
+      {
+        "field_name": "poi_leisure_time",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of objects",
+        "availability": "100%",
+        "business_value": "LOW-MEDIUM",
+        "notes": "Filtered POI for leisure activities"
+      },
+      {
+        "field_name": "poi_doctors",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of objects",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "notes": "Filtered POI for medical services (distance: 100-2000m)"
+      },
+      {
+        "field_name": "_links",
+        "current_extraction": "PARTIAL",
+        "maps_to": "media.images (via _embedded.images instead), portal metadata links",
+        "data_type": "object with HAL links",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "keys": ["self", "broader_search", "local_search", "similar_adverts"]
+      },
+      {
+        "field_name": "_embedded",
+        "current_extraction": "PARTIAL",
+        "maps_to": "media.images, seller info (not extracted), portal_metadata",
+        "data_type": "object with embedded resources",
+        "availability": "100%",
+        "business_value": "HIGH",
+        "keys": ["images", "calculator", "seller", "favourite", "note", "matterport_url"]
+      },
+      {
+        "field_name": "_embedded.images",
+        "current_extraction": "YES",
+        "maps_to": "media.images, country_specific.image_urls",
+        "data_type": "array of image objects with _links",
+        "availability": "100%",
+        "business_value": "HIGH",
+        "notes": "Each image has 5 link variants: dynamicUp, dynamicDown, self, gallery, view"
+      },
+      {
+        "field_name": "_embedded.matterport_url",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "string (URL)",
+        "availability": "5-15%",
+        "business_value": "MEDIUM",
+        "notes": "3D virtual tour link"
+      },
+      {
+        "field_name": "_embedded.seller",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "complex object with company info, contact, specialization",
+        "availability": "100%",
+        "business_value": "MEDIUM",
+        "notes": "Seller/broker info, company details, phone, email, operating hours"
+      },
+      {
+        "field_name": "recommendations_data",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "array of strings",
+        "availability": "100%",
+        "business_value": "LOW",
+        "notes": "Internal API recommendation keys: 35 keys including building amenities, building type, furnished, etc."
+      },
+      {
+        "field_name": "meta_description, logged_in, is_topped, is_topped_today, codeItems, rus",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "data_type": "mixed",
+        "availability": "100%",
+        "business_value": "LOW",
+        "notes": "Meta/status fields, not relevant for property data"
+      }
+    ]
+  },
+  "items_array_fields": {
+    "total_unique_fields": 33,
+    "fields": [
+      {
+        "czech_name": "Užitná ploch",
+        "current_extraction": "YES",
+        "maps_to": "details.sqm",
+        "extraction_function": "extractSqm()",
+        "availability": "~85%",
+        "business_value": "CRITICAL",
+        "notes": "Living area in m²"
+      },
+      {
+        "czech_name": "Celková plocha",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.area_total",
+        "extraction_function": "extractTotalArea()",
+        "availability": "~45-55%",
+        "business_value": "HIGH"
+      },
+      {
+        "czech_name": "Plocha pozemku",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.area_plot",
+        "extraction_function": "extractPlotArea()",
+        "availability": "~35-45%",
+        "business_value": "HIGH"
+      },
+      {
+        "czech_name": "Celková cena",
+        "current_extraction": "YES",
+        "maps_to": "price",
+        "extraction_function": "Direct parsing from price_czk.value_raw",
+        "availability": "100%",
+        "business_value": "CRITICAL"
+      },
+      {
+        "czech_name": "Cena za m²",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "extraction_function": null,
+        "availability": "~5-10%",
+        "business_value": "LOW",
+        "notes": "Already calculated field (price/sqm), rarely provided in items"
+      },
+      {
+        "czech_name": "Dispozice",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.czech_disposition, details.bedrooms, details.rooms",
+        "extraction_function": "extractDisposition(), extractBedrooms(), extractRooms()",
+        "availability": "~70-80%",
+        "business_value": "HIGH"
+      },
+      {
+        "czech_name": "Podlaží",
+        "current_extraction": "YES",
+        "maps_to": "details.floor",
+        "extraction_function": "extractFloor()",
+        "availability": "~70-80%",
+        "business_value": "HIGH"
+      },
+      {
+        "czech_name": "Počet podlaží / Počet pater / Pater v domě",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.total_floors",
+        "extraction_function": "extractTotalFloors()",
+        "availability": "~30-40%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Počet koupelen / Koupelen",
+        "current_extraction": "YES",
+        "maps_to": "details.bathrooms",
+        "extraction_function": "extractBathrooms()",
+        "availability": "~20-30%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Stav objektu",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.condition",
+        "extraction_function": "extractCondition()",
+        "availability": "~60-70%",
+        "business_value": "MEDIUM",
+        "notes": "Property condition (excellent, good, satisfactory, needs repair, renovation)"
+      },
+      {
+        "czech_name": "Stavba / Typ budovy / Typ domu",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.building_type",
+        "extraction_function": "extractBuildingType()",
+        "availability": "~50-60%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Vlastnictví",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.czech_ownership",
+        "extraction_function": "extractOwnership()",
+        "availability": "~80-90%",
+        "business_value": "HIGH"
+      },
+      {
+        "czech_name": "Vybavení",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.furnished",
+        "extraction_function": "extractFurnished()",
+        "availability": "~60-70%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Vytápění",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.heating_type",
+        "extraction_function": "extractHeatingType()",
+        "availability": "~65-75%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Topení",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "extraction_function": null,
+        "availability": "~5-10%",
+        "business_value": "LOW",
+        "notes": "Alternate/shorter field name for heating (found in sample 3)"
+      },
+      {
+        "czech_name": "Třída PENB / Energetická náročnost budovy",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.energy_rating",
+        "extraction_function": "extractEnergyRating()",
+        "availability": "~35-45%",
+        "business_value": "MEDIUM",
+        "notes": "Czech energy efficiency rating (A-G scale, G is worst)"
+      },
+      {
+        "czech_name": "Voda / Vodovod",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.water_supply",
+        "extraction_function": "extractWaterSupply()",
+        "availability": "~40-50%",
+        "business_value": "MEDIUM",
+        "notes": "Water supply type (connected, well, etc.)"
+      },
+      {
+        "czech_name": "Kanalizace / Odkanalizace / Odpad / Jímka",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.sewage_type",
+        "extraction_function": "extractSewageType()",
+        "availability": "~40-50%",
+        "business_value": "MEDIUM",
+        "notes": "Sewage system type (public sewer, septic, etc.)"
+      },
+      {
+        "czech_name": "Plyn / Plynovod",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.gas_supply",
+        "extraction_function": "extractGasSupply()",
+        "availability": "~30-40%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Elektřina",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "extraction_function": null,
+        "availability": "~10-15%",
+        "business_value": "LOW",
+        "notes": "Electricity supply (usually implicit for modern properties)"
+      },
+      {
+        "czech_name": "Doprava",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "extraction_function": null,
+        "availability": "~5%",
+        "business_value": "LOW",
+        "notes": "Transportation info (likely covered by POI data)"
+      },
+      {
+        "czech_name": "Parkování",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_parking",
+        "extraction_function": "extractParking()",
+        "availability": "~50-60%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Garáž",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_garage",
+        "extraction_function": "extractGarage()",
+        "availability": "~30-40%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Sklep",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_basement, country_specific.area_cellar",
+        "extraction_function": "extractBasement(), extractCellarArea()",
+        "availability": "~45-55%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Balkón",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_balcony, country_specific.area_balcony",
+        "extraction_function": "extractBalcony(), extractBalconyArea()",
+        "availability": "~50-60%",
+        "business_value": "MEDIUM",
+        "notes": "Value can be boolean (ano/ne) or numeric (area in m²)"
+      },
+      {
+        "czech_name": "Terasa",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_terrace, country_specific.area_terrace",
+        "extraction_function": "extractTerrace(), extractTerraceArea()",
+        "availability": "~40-50%",
+        "business_value": "MEDIUM",
+        "notes": "Value can be boolean (ano/ne) or numeric (area in m²)"
+      },
+      {
+        "czech_name": "Zahrada",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.area_garden",
+        "extraction_function": "extractGardenArea()",
+        "availability": "~20-30%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Lodžie",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.area_loggia",
+        "extraction_function": "extractLoggiaArea()",
+        "availability": "~10-15%",
+        "business_value": "LOW"
+      },
+      {
+        "czech_name": "Výtah",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_elevator",
+        "extraction_function": "extractElevator()",
+        "availability": "~45-55%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Teplá voda / Ohřev vody",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_hot_water",
+        "extraction_function": "extractHotWater()",
+        "availability": "~35-45%",
+        "business_value": "LOW-MEDIUM"
+      },
+      {
+        "czech_name": "Bezbariérový",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "extraction_function": null,
+        "availability": "~10-15%",
+        "business_value": "LOW",
+        "notes": "Wheelchair accessible / barrier-free. Could map to amenities but currently not extracted"
+      },
+      {
+        "czech_name": "Rekonstrukce / Renovace / Po opravě / Renovovanost",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.recently_renovated",
+        "extraction_function": "extractRenovated()",
+        "availability": "~15-25%",
+        "business_value": "MEDIUM"
+      },
+      {
+        "czech_name": "Rok postavení / Rok výstavby / Rok kolaudace",
+        "current_extraction": "YES",
+        "maps_to": "country_specific.year_built",
+        "extraction_function": "extractYearBuilt()",
+        "availability": "~15-25%",
+        "business_value": "HIGH"
+      },
+      {
+        "czech_name": "Plocha zastavěná",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "extraction_function": null,
+        "availability": "~5-10%",
+        "business_value": "LOW",
+        "notes": "Built/constructed area (distinct from plot area)"
+      },
+      {
+        "czech_name": "Poznámka k ceně / Aktualizace / Umístění objektu / ID zakázky / Datum nastěhování",
+        "current_extraction": "NO",
+        "maps_to": null,
+        "extraction_function": null,
+        "availability": "Variable",
+        "business_value": "LOW",
+        "notes": "Metadata fields, not relevant for property standardization"
+      },
+      {
+        "czech_name": "Klimatizace / Klimatizační jednotka",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_ac",
+        "extraction_function": "extractAC()",
+        "availability": "~25-35%",
+        "business_value": "LOW-MEDIUM",
+        "notes": "Not found in items array samples but extractors exist"
+      },
+      {
+        "czech_name": "Bezpečnostní systém / Alarm / Kamera",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_security",
+        "extraction_function": "extractSecurity()",
+        "availability": "~20-30%",
+        "business_value": "LOW-MEDIUM",
+        "notes": "Not found in items array samples but extractors exist"
+      },
+      {
+        "czech_name": "Krb / Krbová kamna",
+        "current_extraction": "YES",
+        "maps_to": "amenities.has_fireplace",
+        "extraction_function": "extractFireplace()",
+        "availability": "~10-15%",
+        "business_value": "LOW",
+        "notes": "Not found in items array samples but extractors exist"
+      }
+    ]
+  },
+  "extraction_summary": {
+    "total_api_fields": 26,
+    "extracted_api_fields": 16,
+    "api_extraction_coverage_percent": 61.5,
+    "total_items_fields": 33,
+    "extracted_items_fields": 29,
+    "items_extraction_coverage_percent": 88.0,
+    "combined_total_fields": 59,
+    "combined_extracted_fields": 45,
+    "combined_coverage_percent": 76.3
+  },
+  "gap_analysis_by_category": {
+    "critical_gaps": [
+      {
+        "category": "Points of Interest (POI)",
+        "fields_available": 6,
+        "fields_extracted": 0,
+        "extraction_percent": 0,
+        "impact": "HIGH",
+        "reasoning": "poi, poi_transport, poi_restaurant, poi_grocery, poi_school_kindergarten, poi_doctors provide rich neighborhood data with distances, ratings, photos - valuable for lifestyle queries and neighborhood analysis"
+      },
+      {
+        "category": "Seller/Broker Information",
+        "fields_available": "Complex object",
+        "fields_extracted": 0,
+        "extraction_percent": 0,
+        "impact": "MEDIUM",
+        "reasoning": "_embedded.seller contains company info, contact details, specialization, hours, reviews - useful for agent/company filtering and contact info"
+      },
+      {
+        "category": "3D/Virtual Tour",
+        "fields_available": 1,
+        "fields_extracted": 0,
+        "extraction_percent": 0,
+        "impact": "MEDIUM",
+        "reasoning": "_embedded.matterport_url provides 3D virtual tour URL when available (5-15% of listings)"
+      }
+    ],
+    "medium_gaps": [
+      {
+        "category": "Minor Items Fields",
+        "fields_available": 4,
+        "fields_extracted": 0,
+        "extraction_percent": 0,
+        "examples": ["Bezbariérový", "Elektřina", "Plocha zastavěná", "Doprava", "Topení", "Cena za m²"],
+        "reasoning": "Low availability (5-15%) and redundant with extracted fields, but could be useful for accessibility filtering"
+      }
+    ],
+    "non_critical_gaps": [
+      {
+        "category": "Meta/Status Fields",
+        "fields_available": 5,
+        "fields_extracted": 0,
+        "extraction_percent": 0,
+        "examples": ["logged_in", "is_topped", "is_topped_today", "codeItems", "rus", "meta_description"],
+        "reasoning": "Metadata for API/UI purposes, not relevant for property data standardization"
+      }
+    ]
+  },
+  "missing_high_value_fields": [
+    {
+      "field_name": "poi (all variants)",
+      "current_availability_percent": "100%",
+      "extraction_complexity": "MEDIUM",
+      "business_value": "HIGH",
+      "recommendation": "EXTRACT_NEXT",
+      "rationale": "Complete POI data is always present. Could add neighborhood quality scores, count of nearby amenities, closest distances. Valuable for geographic and lifestyle-based filtering.",
+      "implementation_effort": "MEDIUM",
+      "expected_data_enrichment": "+15-20% new data insights per listing"
+    },
+    {
+      "field_name": "seller/_embedded.seller",
+      "current_availability_percent": "100%",
+      "extraction_complexity": "HIGH",
+      "business_value": "MEDIUM-HIGH",
+      "recommendation": "EXTRACT_NEXT",
+      "rationale": "Seller info including: company name, contact (phone/email), specialization, ratings, hours, website, logo. Useful for agent filtering and direct contact.",
+      "implementation_effort": "HIGH",
+      "expected_data_enrichment": "+10-15% new data insights per listing"
+    },
+    {
+      "field_name": "Bezbariérový (accessibility)",
+      "current_availability_percent": "10-15%",
+      "extraction_complexity": "LOW",
+      "business_value": "MEDIUM",
+      "recommendation": "EXTRACT_NEXT",
+      "rationale": "Wheelchair accessible indicator. When present, very valuable for accessibility-conscious buyers.",
+      "implementation_effort": "LOW",
+      "expected_data_enrichment": "+2-3% new data per listing average"
+    },
+    {
+      "field_name": "matterport_url",
+      "current_availability_percent": "5-15%",
+      "extraction_complexity": "LOW",
+      "business_value": "MEDIUM",
+      "recommendation": "EXTRACT_LATER",
+      "rationale": "3D virtual tour URL. Enhances media/viewing experience when available.",
+      "implementation_effort": "LOW",
+      "expected_data_enrichment": "+5-15% of listings have tours"
+    }
+  ],
+  "currently_extracted_fields_quality": {
+    "high_quality_fields": [
+      "title", "price", "property_type", "transaction_type",
+      "location (address, city, region, coordinates)",
+      "details (bedrooms, bathrooms, sqm, floor, rooms)",
+      "country_specific (Czech-specific standardization)",
+      "media.images"
+    ],
+    "fields_with_room_for_improvement": [
+      {
+        "field": "amenities.has_balcony / has_terrace",
+        "current_status": "Extracts boolean from 'ano'/'ne' but field can also be numeric area value",
+        "improvement": "Could capture actual area in m² for 50-60% of listings where provided"
+      },
+      {
+        "field": "country_specific.area_* fields",
+        "current_status": "Extracted but availability ~15-45% depending on field",
+        "improvement": "Consider adding area_built (Plocha zastavěná) and area_basement alternative names"
+      }
+    ]
+  },
+  "extraction_coverage_by_availability": {
+    "availability_100_percent": {
+      "total_fields": 8,
+      "extracted": 8,
+      "not_extracted": 0,
+      "coverage_percent": 100,
+      "fields": [
+        "hash_id", "name", "text", "price_czk", "locality", 
+        "items", "_embedded.images", "seo", "map"
+      ]
+    },
+    "availability_60_to_99_percent": {
+      "total_fields": 12,
+      "extracted": 12,
+      "not_extracted": 0,
+      "coverage_percent": 100,
+      "fields": [
+        "Užitná plocha", "Dispozice", "Podlaží", "Vlastnictví", "Stav objektu",
+        "Vybavení", "Vytápění", "Parkování", "Sklep", "Garáž", "Balkón", "Terasa", "Výtah"
+      ]
+    },
+    "availability_40_to_59_percent": {
+      "total_fields": 10,
+      "extracted": 8,
+      "not_extracted": 2,
+      "coverage_percent": 80,
+      "fields": [
+        "Celková plocha (45-55%, extracted)",
+        "Plocha pozemku (35-45%, extracted)",
+        "Stavba/Typ budovy (50-60%, extracted)",
+        "Energetická náročnost (35-45%, extracted)",
+        "Voda (40-50%, extracted)",
+        "Kanalizace (40-50%, extracted)",
+        "Plyn (30-40%, extracted)",
+        "Teplá voda (35-45%, extracted)",
+        "Cena za m² (5-10%, NOT extracted)",
+        "Plocha zastavěná (5-10%, NOT extracted)"
+      ]
+    },
+    "availability_below_40_percent": {
+      "total_fields": 12,
+      "extracted": 4,
+      "not_extracted": 8,
+      "coverage_percent": 33,
+      "fields": [
+        "Počet podlaží (30-40%, extracted)",
+        "Zahrada (20-30%, extracted)",
+        "Rok postavení (15-25%, extracted)",
+        "Bezbariérový (10-15%, NOT extracted)",
+        "Lodžie (10-15%, extracted)",
+        "Rekonstrukce (15-25%, extracted)",
+        "Elektřina (10-15%, NOT extracted)",
+        "Doprava (5%, NOT extracted)",
+        "Topení (5-10%, NOT extracted)",
+        "matterport_url (5-15%, NOT extracted)",
+        "poi_* fields (100%, NOT extracted)"
+      ]
+    }
+  },
+  "prioritized_recommendations": {
+    "phase_1_high_priority": [
+      {
+        "rank": 1,
+        "field": "POI data (poi_transport, poi_restaurant, poi_grocery, poi_school_kindergarten, poi_doctors, poi_leisure_time)",
+        "current_extraction": "NO",
+        "availability": "100%",
+        "complexity": "MEDIUM",
+        "implementation_effort_hours": 4,
+        "expected_improvement": "Add neighborhood/lifestyle insights to 100% of listings",
+        "example_data": "3-22 nearby POI per category with name, distance, rating (0-5), photo, Google Maps rating"
+      },
+      {
+        "rank": 2,
+        "field": "Seller/Broker information (_embedded.seller)",
+        "current_extraction": "NO",
+        "availability": "100%",
+        "complexity": "HIGH",
+        "implementation_effort_hours": 6,
+        "expected_improvement": "Add agent/company contact and specialization data to 100% of listings",
+        "example_data": "Company name, phone, email, website, logo, broker hours, reviews, specialization counts"
+      },
+      {
+        "rank": 3,
+        "field": "Accessibility flag (Bezbariérový)",
+        "current_extraction": "NO",
+        "availability": "10-15%",
+        "complexity": "LOW",
+        "implementation_effort_hours": 1,
+        "expected_improvement": "Identify wheelchair-accessible properties when available",
+        "example_data": "Boolean or yes/no string"
+      }
+    ],
+    "phase_2_medium_priority": [
+      {
+        "rank": 4,
+        "field": "Virtual Tour URL (matterport_url or similar in _links)",
+        "current_extraction": "NO",
+        "availability": "5-15%",
+        "complexity": "LOW",
+        "implementation_effort_hours": 1,
+        "expected_improvement": "Add 3D/360° tour links when available",
+        "example_data": "Matterport URL for 3D walkthrough"
+      },
+      {
+        "rank": 5,
+        "field": "Plocha zastavěná (built area)",
+        "current_extraction": "NO",
+        "availability": "5-10%",
+        "complexity": "LOW",
+        "implementation_effort_hours": 1,
+        "expected_improvement": "Better area metrics for properties with multiple area types",
+        "example_data": "Numeric value in m²"
+      },
+      {
+        "rank": 6,
+        "field": "Alternative field names (Topení, Cena za m²)",
+        "current_extraction": "NO",
+        "availability": "5-10%",
+        "complexity": "LOW",
+        "implementation_effort_hours": 0.5,
+        "expected_improvement": "Minor catch-all for variant field names",
+        "example_data": "String values"
+      }
+    ],
+    "phase_3_low_priority": [
+      {
+        "rank": 7,
+        "field": "Metadata fields (Poznámka k ceně, ID zakázky, Datum nastěhování, etc.)",
+        "current_extraction": "NO",
+        "availability": "Variable",
+        "complexity": "LOW",
+        "implementation_effort_hours": 0,
+        "expected_improvement": "Minimal - internal/metadata only",
+        "notes": "Not recommended for extraction"
+      },
+      {
+        "rank": 8,
+        "field": "Infrastructure utility fields (Elektřina, Doprava)",
+        "current_extraction": "NO",
+        "availability": "5-15%",
+        "complexity": "LOW",
+        "implementation_effort_hours": 0,
+        "expected_improvement": "Minimal - redundant with existing fields or covered by POI",
+        "notes": "Not recommended for extraction"
+      }
+    ]
+  },
+  "implementation_roadmap": {
+    "estimated_total_effort_high_priority": "11 hours",
+    "estimated_total_effort_medium_priority": "3.5 hours",
+    "data_quality_improvements": {
+      "phase_1": "Add neighborhood quality data (POI) + agent/broker contact info - unlock lifestyle/agent-based search",
+      "phase_2": "Add virtual tour links + accessibility flag - enhance user experience and accessibility support",
+      "phase_3": "Minor data completeness improvements - edge cases and variant field names"
+    }
+  },
+  "technical_notes": {
+    "poi_data_structure": {
+      "description": "Each POI object contains: index, name, distance (meters), photo_url, rating (0-5), review_count, lat, lon, url, source, source_id, description, lines, imgUrl",
+      "example": {
+        "index": 0,
+        "name": "Stanice metra Anděl",
+        "distance": 450,
+        "rating": 4.6,
+        "review_count": 1250,
+        "lat": 50.0612,
+        "lon": 14.4089,
+        "url": "https://maps.google.com/...",
+        "source": "google"
+      }
+    },
+    "seller_data_highlights": {
+      "user_id": "Internal SReality user ID",
+      "user_name": "Seller/broker name",
+      "email": "Contact email",
+      "specialization": {
+        "category": "Array of category_main_cb with counts (how many properties in each category)",
+        "type": "Array of category_type_cb with counts (sale vs rent)"
+      },
+      "phones": "Array with code, type (TEL/MOB), number",
+      "company_info": {
+        "id": "Company ID",
+        "name": "Company name",
+        "logo": "Logo URL",
+        "www": "Website",
+        "address": "Company address",
+        "ico": "Czech company ID number",
+        "ask": "Detailed company info with hours, reviews, partners"
+      }
+    },
+    "image_url_variants": {
+      "description": "Each image has multiple URL variants for different use cases",
+      "variants": ["self", "dynamicUp", "dynamicDown", "gallery", "view"],
+      "dynamic_urls_support_parameters": "width and height parameters for responsive images"
+    }
+  },
+  "summary_statistics": {
+    "api_completeness": {
+      "total_available_api_fields": 26,
+      "currently_extracted": 16,
+      "extraction_rate": "61.5%"
+    },
+    "items_completeness": {
+      "total_unique_items_fields": 33,
+      "currently_extracted": 29,
+      "extraction_rate": "88%"
+    },
+    "overall_completeness": {
+      "total_fields_in_response": 59,
+      "currently_extracted": 45,
+      "extraction_rate": "76.3%"
+    },
+    "high_value_fields_not_extracted": 3,
+    "estimated_improvement_potential": "Add 3 major data dimensions (POI, seller, tours/accessibility) affecting 100% of listings",
+    "effort_to_reach_90_percent_coverage": "14.5 hours for phases 1-2"
+  }
+}

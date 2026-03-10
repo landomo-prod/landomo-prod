@@ -1,0 +1,152 @@
+SREALITY PHASE 1 IMPLEMENTATION VERIFICATION
+=============================================
+
+TASK 1: Read files ✓
+- srealityTransformer.ts: Read
+- srealityTypes.ts: Read
+
+TASK 2: Create 5 extractor functions ✓
+
+Extractor 1: extractParking(items)
+  if (!items) return undefined;
+
+  for (const item of items) {
+    const name = item.name?.toLowerCase() || '';
+    const value = item.value?.toLowerCase() || '';
+
+    // Check item name for parking-related keywords
+    if (name.includes('parkování') || name.includes('parking')) {
+      // Check value for positive indicators
+      if (isPositiveValue(value)) {
+        return true;
+      }
+
+Extractor 2: extractGarage(items)
+  if (!items) return undefined;
+
+  for (const item of items) {
+    const value = item.value?.toLowerCase() || '';
+
+    // Check value for garage-related keywords
+    if (value.includes('garáž') || value.includes('garage')) {
+      return true;
+    }
+  }
+
+  return undefined;
+
+Extractor 3: extractTotalArea(items)
+ * Extract total area (Celková plocha)
+ * Phase 1: Parses numeric value from items like "150 m²", "150m²", "150,5 m²"
+ * Handles both dot and comma as decimal separators
+ * Availability target: 40-50%
+ */
+function extractTotalArea(items?: Array<{ name: string; value: string }>): number | undefined {
+  if (!items) return undefined;
+
+  const areaItem = items.find(i =>
+    i.name === 'Celková plocha' ||
+    i.name === 'Plocha' ||
+    i.name === 'Celková area' ||
+    i.name === 'Total area'
+  );
+
+  if (!areaItem?.value) return undefined;
+
+  // Remove spaces and normalize: "150 m²" or "150,5 m²" → "150" or "150,5"
+  const normalized = areaItem.value
+    .replace(/\s+/g, '')
+    .replace(/m²|m2/gi, '')
+    .trim();
+
+  // Handle both dot and comma as decimal separator
+  const number = normalized.replace(',', '.');
+
+
+Extractor 4: extractPlotArea(items)
+ * Extract plot area (Plocha pozemku)
+ * Phase 1: Parses numeric value from items like "500 m²", "500,5 m²"
+ * Handles both dot and comma as decimal separators
+ * Availability target: 30-40%
+ */
+function extractPlotArea(items?: Array<{ name: string; value: string }>): number | undefined {
+  if (!items) return undefined;
+
+  const plotItem = items.find(i =>
+    i.name === 'Plocha pozemku' ||
+    i.name === 'Parcela' ||
+    i.name === 'Plot area' ||
+    i.name === 'Pozemek' ||
+    i.name === 'Land area'
+  );
+
+  if (!plotItem?.value) return undefined;
+
+  // Remove spaces and normalize: "500 m²" or "500,5 m²" → "500" or "500,5"
+  const normalized = plotItem.value
+    .replace(/\s+/g, '')
+    .replace(/m²|m2/gi, '')
+    .trim();
+
+  // Handle both dot and comma as decimal separator
+  const number = normalized.replace(',', '.');
+
+Extractor 5: extractYearBuilt(items)
+ * Extract year built (Rok postavení/Rok výstavby)
+ * Phase 1: Extracts 4-digit year from items
+ * Validates year is within reasonable range (1800-2100)
+ * Availability target: 15-25%
+ */
+function extractYearBuilt(items?: Array<{ name: string; value: string }>): number | undefined {
+  if (!items) return undefined;
+
+  const yearItem = items.find(i =>
+    i.name === 'Rok postavení' ||
+    i.name === 'Rok výstavby' ||
+    i.name === 'Rok výstavby domu' ||
+    i.name === 'Year built' ||
+    i.name === 'Construction year'
+  );
+
+  if (!yearItem?.value) return undefined;
+
+  // Extract 4-digit year (1800-2100)
+  const match = yearItem.value.match(/\b(1[8-9]\d{2}|20\d{2})\b/);
+  const year = match ? parseInt(match[0]) : undefined;
+
+TASK 3: Update transformSRealityToStandard function ✓
+Fields added to country_specific:
+      // Phase 1: Area and Year fields (40-50% availability for areas, 15-25% for year)
+      area_total: extractTotalArea(listing.items),
+      area_plot: extractPlotArea(listing.items),
+      year_built: extractYearBuilt(listing.items),
+--
+ * Phase 1: Parses numeric value from items like "150 m²", "150m²", "150,5 m²"
+ * Handles both dot and comma as decimal separators
+ * Availability target: 40-50%
+ */
+--
+ * Phase 1: Parses numeric value from items like "500 m²", "500,5 m²"
+ * Handles both dot and comma as decimal separators
+ * Availability target: 30-40%
+ */
+--
+ * Phase 1: Extracts 4-digit year from items
+ * Validates year is within reasonable range (1800-2100)
+ * Availability target: 15-25%
+ */
+
+Fields added to amenities (via extractAmenitiesFromItems):
+- has_parking (via extractParking)
+- has_garage (via extractGarage)
+
+TASK 4: Verify StandardProperty type has fields ✓
+- has_parking: PropertyAmenities (line 168)
+- has_garage: PropertyAmenities (line 169)
+- area_total: CzechSpecificFields (line 257)
+- area_plot: CzechSpecificFields (line 258)
+- year_built: CzechSpecificFields (line 288)
+
+TASK 5: Verify TypeScript compilation ✓
+Command: npm run build
+Result: SUCCESS - No errors

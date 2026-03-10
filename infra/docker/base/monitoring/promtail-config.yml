@@ -1,0 +1,53 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://cz-loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: name
+            values: ["cz-"]
+    relabel_configs:
+      # Use container name as job label
+      - source_labels: [__meta_docker_container_name]
+        regex: /(.*)
+        target_label: container
+      # Add service label (strip cz- prefix)
+      - source_labels: [__meta_docker_container_name]
+        regex: /cz-(.*)
+        target_label: service
+      # Add image label
+      - source_labels: [__meta_docker_container_image]
+        target_label: image
+      # Set log labels
+      - source_labels: [__meta_docker_container_label_com_docker_compose_service]
+        target_label: compose_service
+    pipeline_stages:
+      # Parse JSON logs (all our services log JSON)
+      - json:
+          expressions:
+            level: level
+            msg: msg
+            portal: portal
+            country: country
+            module: module
+      - labels:
+          level:
+          portal:
+          country:
+          module:
+      # Drop debug logs to reduce volume
+      - drop:
+          expression: '.*"level":"debug".*'
+      # Drop oversized lines (postgres query logs can exceed Loki's 256KB limit)
+      - drop:
+          longer_than: 200KB

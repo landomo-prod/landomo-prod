@@ -1,0 +1,64 @@
+
+=== Reality.sk DOM Structure Analysis ===
+URL: https://www.reality.sk/byty/predaj
+HTML Size: 445625 characters
+Date: 2026-02-07T19:30:52.456Z
+
+Potential Container Selectors:
+article: 0 elements
+div[class*="listing"]: 0 elements
+div[class*="property"]: 0 elements
+div[class*="item"]: 31 elements
+div[class*="card"]: 0 elements
+div[class*="inzerat"]: 0 elements
+li[class*="listing"]: 0 elements
+div[data-listing]: 0 elements
+div[data-id]: 0 elements
+.advertisement: 0 elements
+.ad-item: 0 elements
+
+Potential Link Patterns:
+a[href*="/detail/"]: 0 links
+a[href*="/nehnutelnost/"]: 0 links
+a[href*="/inzerat/"]: 0 links
+a[href*="/property/"]: 0 links
+a[href*="/byt/"]: 0 links
+a[href*="/dom/"]: 0 links
+
+Relevant Classes Found:
+alert-heading
+align-items-baseline
+align-items-center
+align-items-end
+breadcrumb
+breadcrumb--truncated
+breadcrumb-item
+breadcrumb-link
+cards_grid_svg
+d-md-list-item
+filter-locality-fading
+footer-advice-forum
+footer-link-list
+header
+js-footer-advice-forum
+js-page-header
+labels-minified-list
+list
+list-border-left-lg
+list-columns-1
+list-columns-lg-1
+list-header
+list-type_list
+logo-item
+modal-header
+nav-item
+offer-item-in
+offer-list
+offer-list-header-wrapper
+offer-list-projects
+offer-list-wrapper
+offer-list-wrapper-right-side
+offer_list
+pushy-item
+search-item
+switch-list

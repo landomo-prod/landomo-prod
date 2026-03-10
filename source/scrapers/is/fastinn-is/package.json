@@ -1,0 +1,24 @@
+{
+  "name": "fastinn-is-scraper",
+  "version": "1.0.0",
+  "description": "Scraper for fastinn.is - Iceland real estate portal",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@landomo/core": "file:../../../shared-components",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0",
+    "express": "^4.18.2",
+    "p-limit": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.0"
+  }
+}

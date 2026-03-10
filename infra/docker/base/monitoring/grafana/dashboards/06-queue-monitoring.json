@@ -1,0 +1,261 @@
+{
+  "title": "Queue Monitoring (BullMQ)",
+  "tags": ["landomo", "queues", "bullmq", "redis"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "uid": "landomo-queue-monitoring",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Queue Processing Rate",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "rate(redis_commands_processed_total{job=\"redis\"}[5m])",
+          "legendFormat": "Commands/sec"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "palette-classic"},
+          "custom": {"lineWidth": 2, "fillOpacity": 10}
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Redis Memory Usage",
+      "type": "gauge",
+      "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "redis_memory_used_bytes{job=\"redis\"} / 1024 / 1024",
+          "legendFormat": "Used MB"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "decmbytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 512, "color": "yellow"},
+              {"value": 1024, "color": "red"}
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Queue Keys Count",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "redis_db_keys{job=\"redis\",db=\"db0\"}",
+          "legendFormat": "Keys in DB0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 10000, "color": "yellow"},
+              {"value": 50000, "color": "red"}
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Connected Clients",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "redis_connected_clients{job=\"redis\"}",
+          "legendFormat": "Clients"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Commands Processed (Total)",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "redis_commands_processed_total{job=\"redis\"}",
+          "legendFormat": "Total Commands"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{"value": null, "color": "blue"}]
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Redis Uptime",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "redis_uptime_in_seconds{job=\"redis\"}",
+          "legendFormat": "Uptime"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{"value": null, "color": "green"}]
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "BullMQ Queue Status",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "landomo_ingest_queue_waiting_jobs",
+          "legendFormat": "Waiting - {{country}}"
+        },
+        {
+          "refId": "B",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "landomo_ingest_queue_active_jobs",
+          "legendFormat": "Active - {{country}}"
+        },
+        {
+          "refId": "C",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "landomo_ingest_queue_delayed_jobs",
+          "legendFormat": "Delayed - {{country}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "palette-classic"},
+          "custom": {"lineWidth": 2, "fillOpacity": 10, "axisPlacement": "auto"}
+        },
+        "overrides": [
+          {
+            "matcher": {"id": "byName", "options": "Waiting"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "orange"}}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "Active"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "green"}}]
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "title": "Queue Job Statistics",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "landomo_ingest_queue_completed_jobs",
+          "legendFormat": "Completed"
+        },
+        {
+          "refId": "B",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "landomo_ingest_queue_failed_jobs",
+          "legendFormat": "Failed"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 10, "color": "yellow"},
+              {"value": 50, "color": "red"}
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Queue Processing Rate",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "rate(landomo_ingest_properties_ingested_total[5m])",
+          "legendFormat": "Inserts/sec - {{country}}"
+        },
+        {
+          "refId": "B",
+          "datasource": {"type": "prometheus", "uid": "Prometheus"},
+          "expr": "rate(landomo_ingest_properties_updated_total[5m])",
+          "legendFormat": "Updates/sec - {{country}}"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Portal Activity (from Database)",
+      "type": "table",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24},
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {"type": "postgres", "uid": "PostgreSQL-Czech"},
+          "rawSql": "SELECT \n  portal_source,\n  COUNT(*) FILTER (WHERE listing_status = 'active') as active_listings,\n  COUNT(*) FILTER (WHERE listing_status = 'removed') as removed_listings,\n  MAX(last_seen_at) as last_scrape,\n  EXTRACT(EPOCH FROM (NOW() - MAX(last_seen_at)))/3600 as hours_since_last_scrape\nFROM properties \nGROUP BY portal_source\nORDER BY last_scrape DESC",
+          "format": "table"
+        }
+      ]
+    }
+  ],
+  "templating": {
+    "list": []
+  },
+  "annotations": {
+    "list": []
+  }
+}

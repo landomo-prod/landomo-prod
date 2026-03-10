@@ -1,0 +1,132 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'landomo-world'
+    environment: 'development'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
+rule_files:
+  - /etc/prometheus/backup-alert.yml
+  - /etc/prometheus/alert-rules.yml
+
+scrape_configs:
+  # PostgreSQL metrics via postgres_exporter
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    metrics_path: /metrics
+    scrape_interval: 30s
+
+  # Redis metrics via redis_exporter
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    metrics_path: /metrics
+
+  # Ingest services (if they expose /metrics endpoint)
+  - job_name: 'ingest-services'
+    static_configs:
+      - targets:
+        - 'ingest-australia:3000'
+        - 'ingest-uk:3000'
+        - 'ingest-usa:3000'
+        - 'ingest-czech:3006'
+        - 'ingest-france:3000'
+        - 'ingest-spain:3000'
+        - 'ingest-italy:3000'
+        - 'ingest-slovakia:3008'
+        - 'ingest-hungary:3000'
+        - 'ingest-germany:3000'
+        - 'ingest-austria:3000'
+    metrics_path: /metrics
+
+  # German scrapers
+  - job_name: 'scrapers-germany'
+    static_configs:
+      - targets:
+        - 'scraper-immobilienscout24-de:8092'
+        - 'scraper-immonet-de:8093'
+        - 'scraper-immowelt-de:8094'
+        - 'scraper-kleinanzeigen-de:8095'
+        - 'scraper-wg-gesucht-de:8096'
+    metrics_path: /metrics
+
+  # Slovak scrapers
+  - job_name: 'scrapers-slovakia'
+    static_configs:
+      - targets:
+        - 'scraper-nehnutelnosti-sk:8082'
+        - 'scraper-reality-sk:8084'
+        - 'scraper-topreality-sk:8085'
+        - 'scraper-byty-sk:8086'
+    metrics_path: /metrics
+
+  # Austrian scrapers
+  - job_name: 'scrapers-austria'
+    static_configs:
+      - targets:
+        - 'scraper-willhaben-at:8097'
+        - 'scraper-immobilienscout24-at:8098'
+        - 'scraper-wohnnet-at:8099'
+        - 'scraper-immowelt-at:8100'
+        - 'scraper-immodirekt-at:8101'
+    metrics_path: /metrics
+
+  # Czech scrapers
+  - job_name: 'scrapers-czech'
+    static_configs:
+      - targets:
+        - 'scraper-sreality:8102'
+        - 'scraper-bezrealitky:8103'
+        - 'scraper-reality:8104'
+        - 'scraper-idnes-reality:8105'
+        - 'scraper-realingo:8106'
+        - 'scraper-ulovdomov:8107'
+        - 'scraper-bazos:8108'
+    metrics_path: /metrics
+
+  # Hungarian scrapers
+  - job_name: 'scrapers-hungary'
+    static_configs:
+      - targets:
+        - 'scraper-ingatlan-com:8087'
+        - 'scraper-oc-hu:8088'
+        - 'scraper-dh-hu:8089'
+        - 'scraper-zenga-hu:8090'
+        - 'scraper-ingatlannet-hu:8091'
+    metrics_path: /metrics
+
+  # PgBouncer metrics via pgbouncer_exporter
+  - job_name: 'pgbouncer'
+    static_configs:
+      - targets: ['pgbouncer-exporter:9127']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # Search service
+  - job_name: 'search-service'
+    static_configs:
+      - targets: ['search-service:4000']
+    metrics_path: /metrics
+
+  # Node exporter - host CPU, RAM, disk metrics
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s
+
+  # cAdvisor - per-container CPU, RAM, network metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 15s
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "ImmobilienScout24 Data Extractor",
+  "version": "1.0.0",
+  "description": "Extract property listings from ImmobilienScout24",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.immobilienscout24.de/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.immobilienscout24.de/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,223 @@
+# PostgreSQL Replication Monitoring Queries
+# Used by postgres_exporter to expose replication-specific metrics
+# Covers: lag (bytes/seconds), replica status, WAL generation, archiving
+
+pg_replication_lag_bytes:
+  query: |
+    SELECT
+      client_addr,
+      usename AS replica_user,
+      application_name,
+      state,
+      sent_lsn - write_lsn AS write_lag_bytes,
+      sent_lsn - flush_lsn AS flush_lag_bytes,
+      sent_lsn - replay_lsn AS replay_lag_bytes
+    FROM pg_stat_replication
+  master: true
+  metrics:
+    - client_addr:
+        usage: "LABEL"
+        description: "IP address of the replica"
+    - replica_user:
+        usage: "LABEL"
+        description: "Replication user name"
+    - application_name:
+        usage: "LABEL"
+        description: "Application name of the replica"
+    - state:
+        usage: "LABEL"
+        description: "Replication state (streaming, catchup, startup, backup)"
+    - write_lag_bytes:
+        usage: "GAUGE"
+        description: "Replication write lag in bytes"
+    - flush_lag_bytes:
+        usage: "GAUGE"
+        description: "Replication flush lag in bytes"
+    - replay_lag_bytes:
+        usage: "GAUGE"
+        description: "Replication replay lag in bytes"
+
+pg_replication_lag_seconds:
+  query: |
+    SELECT
+      client_addr,
+      application_name,
+      EXTRACT(EPOCH FROM write_lag) AS write_lag_seconds,
+      EXTRACT(EPOCH FROM flush_lag) AS flush_lag_seconds,
+      EXTRACT(EPOCH FROM replay_lag) AS replay_lag_seconds
+    FROM pg_stat_replication
+  master: true
+  metrics:
+    - client_addr:
+        usage: "LABEL"
+        description: "IP address of the replica"
+    - application_name:
+        usage: "LABEL"
+        description: "Application name of the replica"
+    - write_lag_seconds:
+        usage: "GAUGE"
+        description: "Replication write lag in seconds"
+    - flush_lag_seconds:
+        usage: "GAUGE"
+        description: "Replication flush lag in seconds"
+    - replay_lag_seconds:
+        usage: "GAUGE"
+        description: "Replication replay lag in seconds"
+
+pg_replica_connection_status:
+  query: |
+    SELECT
+      client_addr,
+      application_name,
+      state,
+      sync_state,
+      EXTRACT(EPOCH FROM (now() - backend_start)) AS connection_age_seconds,
+      CASE WHEN state = 'streaming' THEN 1 ELSE 0 END AS is_streaming
+    FROM pg_stat_replication
+  master: true
+  metrics:
+    - client_addr:
+        usage: "LABEL"
+        description: "IP address of the replica"
+    - application_name:
+        usage: "LABEL"
+        description: "Application name of the replica"
+    - state:
+        usage: "LABEL"
+        description: "Replication state"
+    - sync_state:
+        usage: "LABEL"
+        description: "Synchronization state (async, sync, potential, quorum)"
+    - connection_age_seconds:
+        usage: "GAUGE"
+        description: "Age of the replication connection in seconds"
+    - is_streaming:
+        usage: "GAUGE"
+        description: "Whether the replica is actively streaming (1=yes, 0=no)"
+
+pg_replication_slot_status:
+  query: |
+    SELECT
+      slot_name,
+      slot_type,
+      active::int AS active,
+      CASE WHEN NOT active
+        THEN pg_wal_lsn_diff(pg_current_wal_lsn(), restart_lsn)
+        ELSE 0
+      END AS retained_wal_bytes
+    FROM pg_replication_slots
+  master: true
+  metrics:
+    - slot_name:
+        usage: "LABEL"
+        description: "Name of the replication slot"
+    - slot_type:
+        usage: "LABEL"
+        description: "Slot type (physical or logical)"
+    - active:
+        usage: "GAUGE"
+        description: "Whether the slot is active (1=yes, 0=no)"
+    - retained_wal_bytes:
+        usage: "GAUGE"
+        description: "Bytes of WAL retained by inactive slot"
+
+pg_wal_generation_rate:
+  query: |
+    SELECT
+      pg_wal_lsn_diff(pg_current_wal_lsn(), '0/0') AS current_wal_lsn_bytes,
+      count(*) AS wal_file_count
+    FROM pg_ls_waldir()
+  master: true
+  metrics:
+    - current_wal_lsn_bytes:
+        usage: "COUNTER"
+        description: "Current WAL LSN position in bytes (monotonically increasing)"
+    - wal_file_count:
+        usage: "GAUGE"
+        description: "Number of WAL files in pg_wal directory"
+
+pg_wal_activity:
+  query: |
+    SELECT
+      stats_reset,
+      wal_records,
+      wal_fpi,
+      wal_bytes,
+      wal_buffers_full,
+      wal_write,
+      wal_sync
+    FROM pg_stat_wal
+  master: true
+  metrics:
+    - wal_records:
+        usage: "COUNTER"
+        description: "Total number of WAL records generated"
+    - wal_fpi:
+        usage: "COUNTER"
+        description: "Total number of WAL full page images generated"
+    - wal_bytes:
+        usage: "COUNTER"
+        description: "Total amount of WAL generated in bytes"
+    - wal_buffers_full:
+        usage: "COUNTER"
+        description: "Number of times WAL buffers became full"
+    - wal_write:
+        usage: "COUNTER"
+        description: "Number of times WAL buffers were written to disk"
+    - wal_sync:
+        usage: "COUNTER"
+        description: "Number of times WAL files were synced to disk"
+
+pg_archiver_status:
+  query: |
+    SELECT
+      archived_count,
+      failed_count,
+      EXTRACT(EPOCH FROM (now() - last_archived_time)) AS last_archive_age_seconds,
+      EXTRACT(EPOCH FROM (now() - last_failed_time)) AS last_failure_age_seconds,
+      last_archived_wal,
+      last_failed_wal
+    FROM pg_stat_archiver
+  master: true
+  metrics:
+    - archived_count:
+        usage: "COUNTER"
+        description: "Number of WAL files successfully archived"
+    - failed_count:
+        usage: "COUNTER"
+        description: "Number of failed WAL file archivals"
+    - last_archive_age_seconds:
+        usage: "GAUGE"
+        description: "Seconds since last successful archive"
+    - last_failure_age_seconds:
+        usage: "GAUGE"
+        description: "Seconds since last failed archive attempt"
+    - last_archived_wal:
+        usage: "LABEL"
+        description: "Name of the last successfully archived WAL file"
+    - last_failed_wal:
+        usage: "LABEL"
+        description: "Name of the last WAL file that failed archiving"
+
+pg_replica_self_check:
+  query: |
+    SELECT
+      CASE WHEN pg_is_in_recovery()
+        THEN EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp()))
+        ELSE 0
+      END AS replay_lag_seconds,
+      CASE WHEN pg_is_in_recovery() THEN 1 ELSE 0 END AS is_replica,
+      CASE WHEN pg_is_in_recovery()
+        THEN pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn())
+        ELSE 0
+      END AS local_replay_lag_bytes
+  metrics:
+    - replay_lag_seconds:
+        usage: "GAUGE"
+        description: "Replay lag in seconds (0 if primary)"
+    - is_replica:
+        usage: "GAUGE"
+        description: "Whether this instance is a replica (1) or primary (0)"
+    - local_replay_lag_bytes:
+        usage: "GAUGE"
+        description: "Bytes between last received and last replayed WAL on replica"

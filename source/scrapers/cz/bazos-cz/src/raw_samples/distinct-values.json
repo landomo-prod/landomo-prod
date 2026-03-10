@@ -1,0 +1,1626 @@
+{
+  "meta": {
+    "scraper": "bazos-cz",
+    "listings_fetched": 200,
+    "details_fetched": 200,
+    "timestamp": "2026-02-27T08:05:19.970Z"
+  },
+  "listing_fields": {
+    "currency": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "CZK"
+      ],
+      "value_counts": {
+        "CZK": 200
+      }
+    },
+    "favourite": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 200
+      }
+    },
+    "from": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 4,
+      "all_distinct_values": [
+        "2026-02-27 09:05:08",
+        "2026-02-27 09:05:09",
+        "2026-02-27 09:05:10",
+        "2026-02-27 09:05:07"
+      ],
+      "value_counts": {
+        "2026-02-27 09:05:08": 60,
+        "2026-02-27 09:05:09": 60,
+        "2026-02-27 09:05:10": 60,
+        "2026-02-27 09:05:07": 20
+      }
+    },
+    "id": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 200,
+      "sample_values": [
+        "215430604",
+        "215427211",
+        "215426668",
+        "215349850",
+        "215381747",
+        "214960327",
+        "215120099",
+        "215118750",
+        "215500152",
+        "215506090"
+      ]
+    },
+    "image_thumbnail": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 195,
+      "sample_values": [
+        "https://www.bazos.cz/img/1m/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/1m/211/215427211.jpg?t=1771953489",
+        "https://www.bazos.cz/img/1m/668/215426668.jpg?t=1771953200",
+        "https://www.bazos.cz/img/1m/850/215349850.jpg?t=1771870655",
+        "https://www.bazos.cz/img/1m/747/215381747.jpg?t=1771864368",
+        "https://www.bazos.cz/img/1m/327/214960327.jpg?t=1771526489",
+        "https://www.bazos.cz/img/1m/099/215120099.jpg?t=1771347544",
+        "https://www.bazos.cz/img/1m/750/215118750.jpg?t=1771345352",
+        "https://www.bazos.cz/img/1m/152/215500152.jpg?t=1772104957",
+        "https://www.bazos.cz/img/1m/090/215506090.jpg?t=1772115593"
+      ]
+    },
+    "image_thumbnail_height": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 28,
+      "all_distinct_values": [
+        "263",
+        "233",
+        "350",
+        "197",
+        "393",
+        "279",
+        "236",
+        "196",
+        "270",
+        "255",
+        "346",
+        "256",
+        "261",
+        "243",
+        "175",
+        "316",
+        "150",
+        "242",
+        "195",
+        "221",
+        "244",
+        "207",
+        "223",
+        "229",
+        "234",
+        "177",
+        "262",
+        "257"
+      ],
+      "value_counts": {
+        "150": 1,
+        "175": 1,
+        "177": 1,
+        "195": 1,
+        "196": 1,
+        "197": 12,
+        "207": 1,
+        "221": 1,
+        "223": 1,
+        "229": 1,
+        "233": 54,
+        "234": 1,
+        "236": 1,
+        "242": 1,
+        "243": 1,
+        "244": 1,
+        "255": 1,
+        "256": 1,
+        "257": 1,
+        "261": 1,
+        "262": 1,
+        "263": 58,
+        "270": 1,
+        "279": 1,
+        "316": 1,
+        "346": 1,
+        "350": 47,
+        "393": 6
+      }
+    },
+    "image_thumbnail_width": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "350",
+        "263",
+        "525",
+        "197",
+        "158",
+        "237",
+        "187",
+        "171",
+        "200",
+        "347",
+        "162",
+        "161",
+        "312"
+      ],
+      "value_counts": {
+        "158": 2,
+        "161": 1,
+        "162": 1,
+        "171": 1,
+        "187": 1,
+        "197": 3,
+        "200": 1,
+        "237": 1,
+        "263": 30,
+        "312": 1,
+        "347": 1,
+        "350": 151,
+        "525": 6
+      }
+    },
+    "locality": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 64,
+      "all_distinct_values": [
+        "Ostrava",
+        "Příbram",
+        "Kladno",
+        "Brno",
+        "Praha 10",
+        "Opava",
+        "Břeclav",
+        "Frýdek - Místek",
+        "Svitavy",
+        "Blansko",
+        "Brno venkov",
+        "Olomouc",
+        "Jičín",
+        "Kolín",
+        "Nový Jičín",
+        "Praha 1",
+        "Chomutov",
+        "Karviná",
+        "Praha - východ",
+        "Hodonín",
+        "Teplice",
+        "Zlín",
+        "Český Krumlov",
+        "Prostějov",
+        "Ústí nad Orlicí",
+        "Karlovy Vary",
+        "Plzeň",
+        "Hradec Králové",
+        "Třebíč",
+        "Zahraničí",
+        "Most",
+        "Rychnov nad Kněžnou",
+        "Praha 5",
+        "Praha - západ",
+        "Žďár nad Sázavou",
+        "Praha 9",
+        "Vsetín",
+        "Uherské Hradiště",
+        "Jablonec nad Nisou",
+        "Přerov",
+        "Bruntál",
+        "Havlíčkův Brod",
+        "Jeseník",
+        "Ústí nad Labem",
+        "Náchod",
+        "České Budějovice",
+        "Mladá Boleslav",
+        "Pardubice",
+        "Šumperk",
+        "Slovensko",
+        "Chrudim",
+        "Praha 6",
+        "Znojmo",
+        "Mělník",
+        "Litoměřice",
+        "Jihlava",
+        "Louny",
+        "Děčín",
+        "Písek",
+        "Semily",
+        "Pelhřimov",
+        "Kroměříž",
+        "Rokycany",
+        "Liberec"
+      ],
+      "value_counts": {
+        "Ostrava": 13,
+        "Příbram": 8,
+        "Kladno": 8,
+        "Brno": 7,
+        "Praha 10": 6,
+        "Opava": 6,
+        "Břeclav": 6,
+        "Frýdek - Místek": 6,
+        "Svitavy": 5,
+        "Blansko": 5,
+        "Brno venkov": 5,
+        "Olomouc": 5,
+        "Jičín": 5,
+        "Kolín": 4,
+        "Nový Jičín": 4,
+        "Praha 1": 4,
+        "Chomutov": 4,
+        "Karviná": 4,
+        "Praha - východ": 4,
+        "Hodonín": 4,
+        "Teplice": 4,
+        "Zlín": 4,
+        "Český Krumlov": 4,
+        "Prostějov": 4,
+        "Ústí nad Orlicí": 3,
+        "Karlovy Vary": 3,
+        "Plzeň": 3,
+        "Hradec Králové": 3,
+        "Třebíč": 3,
+        "Zahraničí": 3,
+        "Most": 2,
+        "Rychnov nad Kněžnou": 2,
+        "Praha 5": 2,
+        "Praha - západ": 2,
+        "Žďár nad Sázavou": 2,
+        "Praha 9": 2,
+        "Vsetín": 2,
+        "Uherské Hradiště": 2,
+        "Jablonec nad Nisou": 2,
+        "Přerov": 2,
+        "Bruntál": 2,
+        "Havlíčkův Brod": 2,
+        "Jeseník": 2,
+        "Ústí nad Labem": 2,
+        "Náchod": 2,
+        "České Budějovice": 2,
+        "Mladá Boleslav": 2,
+        "Pardubice": 2,
+        "Šumperk": 2,
+        "Slovensko": 1,
+        "Chrudim": 1,
+        "Praha 6": 1,
+        "Znojmo": 1,
+        "Mělník": 1,
+        "Litoměřice": 1,
+        "Jihlava": 1,
+        "Louny": 1,
+        "Děčín": 1,
+        "Písek": 1,
+        "Semily": 1,
+        "Pelhřimov": 1,
+        "Kroměříž": 1,
+        "Rokycany": 1,
+        "Liberec": 1
+      }
+    },
+    "price_formatted": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 152,
+      "sample_values": [
+        "340 000 Kč",
+        "690 000 Kč",
+        "1 000 000 Kč",
+        "2 499 000 Kč",
+        "590 000 Kč",
+        "5 250 000 Kč",
+        "10 000 000 Kč",
+        "14 900 000 Kč",
+        "V textu",
+        "11 000 Kč"
+      ]
+    },
+    "title": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 200,
+      "sample_values": [
+        "Domek pro kempy, ubytovaní",
+        "Dům 2ķk, 40m2, nový",
+        "Dům 2kk, nový, 60 měsíců záruka",
+        "České Libchavy, 874 m2 Komplet zasíťovány",
+        "Prodám Tiny House před dokončením",
+        "BYT-TOP-EXLUZIVNÍ 2+KK+ZAHRADA 82,85m2 věž A",
+        "--RD Beskydy Trojanovice + pozemek 28000m2 2x rybník --",
+        "---- Bytový dům 6 bytu 3 garáže Ostrava ----",
+        "Pronajímám byty na Meziboří",
+        "poslední volný 1+kk s terasou k pronájmu, Ostrava-Poruba"
+      ]
+    },
+    "topped": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "true"
+      ],
+      "value_counts": {
+        "true": 200
+      }
+    },
+    "url": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 200,
+      "sample_values": [
+        "https://reality.bazos.cz/inzerat/215430604/domek-pro-kempy-ubytovani.php",
+        "https://reality.bazos.cz/inzerat/215427211/dum-2k-40m2-novy.php",
+        "https://reality.bazos.cz/inzerat/215426668/dum-2kk-novy-60-mesicu-zaruka.php",
+        "https://reality.bazos.cz/inzerat/215349850/ceske-libchavy-1136-m2komplet-zasitovane.php",
+        "https://reality.bazos.cz/inzerat/215381747/prodam-tiny-house-pred-dokoncenim.php",
+        "https://reality.bazos.cz/inzerat/214960327/byt-top-exluzivni-2kkzahrada-8285m2.php",
+        "https://reality.bazos.cz/inzerat/215120099/rd-beskydy-trojanovice-pozemek-28000m2-2x-rybnik.php",
+        "https://reality.bazos.cz/inzerat/215118750/bytovy-dum-6-bytu-3-garaze-ostrava.php",
+        "https://reality.bazos.cz/inzerat/215500152/pronajimam-byty-na-mezibori.php",
+        "https://reality.bazos.cz/inzerat/215506090/posledni-volny-1kk-s-terasou-k-pronajmu-ostrava-poruba.php"
+      ]
+    },
+    "views": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 187,
+      "sample_values": [
+        "1254",
+        "1332",
+        "2055",
+        "6016",
+        "1450",
+        "1841",
+        "1922",
+        "1464",
+        "79",
+        "119"
+      ]
+    }
+  },
+  "detail_fields": {
+    "action_possible": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 200
+      }
+    },
+    "category.id": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "65",
+        "68",
+        "71",
+        "70",
+        "76",
+        "73",
+        "75",
+        "79",
+        "78",
+        "74",
+        "69",
+        "72",
+        "77"
+      ],
+      "value_counts": {
+        "65": 66,
+        "68": 60,
+        "69": 2,
+        "70": 12,
+        "71": 17,
+        "72": 2,
+        "73": 8,
+        "74": 4,
+        "75": 7,
+        "76": 9,
+        "77": 1,
+        "78": 6,
+        "79": 6
+      }
+    },
+    "category.title": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "Byty",
+        "Domy",
+        "Pozemky",
+        "Chalupy, Chaty",
+        "Ostatní",
+        "Garáže",
+        "Sklady",
+        "Obchodní prostory",
+        "Hotely, penziony, restaurace",
+        "Kanceláře",
+        "Podnájem, spolubydlící",
+        "Zahrady",
+        "Nové projekty"
+      ],
+      "value_counts": {
+        "Byty": 66,
+        "Domy": 60,
+        "Pozemky": 17,
+        "Chalupy, Chaty": 12,
+        "Ostatní": 9,
+        "Garáže": 8,
+        "Sklady": 7,
+        "Obchodní prostory": 6,
+        "Hotely, penziony, restaurace": 6,
+        "Kanceláře": 4,
+        "Podnájem, spolubydlící": 2,
+        "Zahrady": 2,
+        "Nové projekty": 1
+      }
+    },
+    "category.url": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 13,
+      "all_distinct_values": [
+        "byt",
+        "dum",
+        "pozemek",
+        "chata",
+        "ostatni",
+        "garaz",
+        "sklad",
+        "prostory",
+        "restaurace",
+        "kancelar",
+        "podnajem",
+        "zahrada",
+        "projekty"
+      ],
+      "value_counts": {
+        "byt": 66,
+        "dum": 60,
+        "pozemek": 17,
+        "chata": 12,
+        "ostatni": 9,
+        "garaz": 8,
+        "sklad": 7,
+        "prostory": 6,
+        "restaurace": 6,
+        "kancelar": 4,
+        "podnajem": 2,
+        "zahrada": 2,
+        "projekty": 1
+      }
+    },
+    "currency": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "CZK"
+      ],
+      "value_counts": {
+        "CZK": 200
+      }
+    },
+    "description": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 199,
+      "sample_values": [
+        "Nabízím domek pro kemp a nebo jako ubytování. Velikost je 6x4m, sedlová střecha, okna 3 sklo, izolační příčka o síle 20cm, elektřina 240V o 400V, přívod vody - umyvadlo se zrcadlem, vestavná skříň, 8 x lůžko 90x200cm, osvětlení, linoleum. Lze dodat i s WC nebo celou koupelnou a kuchyňkou. Domek je kvalitně postaven se zárukou 60 měsíců. Jedná se o českou výrobu. Lze přidat i topení. Cena je konečná včetně dopravy po ČR.",
+        "Nabízím novou dřevostavbu o rozměru 10x4. Dům má plastová okna - trojsklo. Venkovní ostění je palubka 20mm s lazurou. Střecha sedlová - plechová - probarvený malý trapez. Izolace v domě je 20cm a vnitřní ostění jsou lazurované palubky. V koupelně je vana 150x100cm, umyvadlo se skříňkou, zrcadlo, topný žebřík, bojler, WC, pákové baterie, sprchový set. Dále v obýváku spojeným s kuchyní je rohová kuchyňská linka včetně sporáku, dřezu, digestoře s odsáváním ven. Na podlahách je linoleum ve vyšší kvalitě včetně lišt. Obložky a dveře jsou součástí. Venkovní parapety jsou v barvě oken. Rozvod elektřiny, rozvod vody, rozvod odpadů, zásuvky, vypínače, světla jsou také v ceně domu.\r\nDomek je opravdu kvalitně zpracovaný a je pro celoroční bydlení a je určen do -25 stupňů. Do domu lze osadit i komín. Doprava po celé ČR je 10.000Kč\r\nDům je komplet hotový včetně podbití, okapů a svodů.\r\nVideo : https://m.youtube.com/shorts/DIK7oIBQsBI\r\n\r\nMáme i domek 8x4 2kk za nižší cenu.",
+        "Nabízím dům 40m2 10x4m - 2kk. Dům má zvenku srubové palubky, okna 3 sklo, na oknech vnitřní žaluzie, podlahové vytápění + elektrický krb, rohová kuchyňská linka 360cm - granitový dřez, varná deska, horkovzdušná trouba, odsavač s vývodem ven, bar + barové židle, TV, vysoká kombinovaná lednice s mrazákem, v chodbě je věšák na ošacení, elektřina 400V, koupelna v mramorovém provedení, sprchový kout, černé baterie + sprchový set, umyvadlo se skříňkou + osvětlené zrcadlo, velký topný žebřík, WC + bidetová sprška, bojler eco, pračka. Všude v domě je linoleum + olištování. Venku je kohout na vodu - hadici, 2 x zásuvka 240V a 1 x 400V. Domek je opravdu TOP a cena je za komplet včetně dopravy po celé ČR. Záruka na dům je 60 měsíců.\r\nO ceně jde malinko ještě jednat.\r\nDomek je celoroční s izolační příčkou o síle 20cm, izolace je komplet i v podlahách i na stropě. Domek má tlakovou zkoušku na vodu a kontrolu všech elektrických obvodů a jištění.\r\nJe to úplně nové bydlení a ne vybydlený mobilheim.\r\nInfo na tel.",
+        "Stavební pozemek v Českých Libchavách 874m2,pozemek je komplet zasíťovány na hranici pozemku,vodovod,elektŕina,plyn,Kanalizace,asfaltová cesta obecní možno ihned stavět.\r\n500 metru od pozemku je škola,mateřská škola,konzum,3 krát hřístě,restaurace,tenisové hřiště,klidná a krásna lokalita.\r\nCena 2 499 000 kč",
+        "Zateplená dřevostavba z 12cm EUROPANELŮ + obklad velikosti 3m x 7,5m s terasou. Kuchyňská linka, postel, koupelna medokončena. K celoročnímu užívání. Částeční el rozvod, Vyrobeno s láskou bohužel nepovoleno užívat ve vlastním lese. Velké okno. Nyní zaparkované na zahradě nedaleko Kamýka nad Vltavou.Cena od 590 000,- Kč bez dopravy a nejsem plátce DPH a bez rozebrání a instalace.",
+        "Nabízím k PRODEJI úplně nový moderní byt 2+kk+BALKON o celkové výměře 65,6 m² s velkým balkónem a nádherným výhledem, přímo do nového parku Zdeňka Kopala. Byt je umístěn v pátém patře novostavby šestipodlažního bytového domu s bezbariérovým přístupem, v podzemním podlaží je k dispozici jedno parkovací místo pro osobní automobil za příplatek ke budoucí kupní smlouvě-není podmínkou.Dům se nachází ve velmi pěkné a klidné části města Litomyšle, po pravé straně výjezdu na Poličku. Tento byt je ideální pro pár hledající pohodlné bydlení v novém a klidném prostředí v těsné blízkosti přírody a zároveň v dosahu plné občanské vybavenosti.\r\nCena 5 250 000 bez 21%DPH kč\r\nCena 6 352 500 s DPH 21%DPH kč\r\n\r\n\r\nByt je jednopodlažní o celkové ploše 55,05m² (obývací pokoj 18,26 m², kuchyňský kout 8,25 m², koupelna s WC a sprchovým koutem 3,46 m², chodba 3,20 m², komora 1,46 m², pokoj 13,37,sklep 3.55, ZAHRADA přes celou šíři čelní stěny 27,80 m²). Je vybaven podlahovým vytápěním a nadstandartní koupelnou za příplatek, také topným žebříkem s elektrickou tyčí. Přímo do bytu je zavedeno internetové optické připojení od poskytovatele Nordic s.r.o.\r\n\r\nNový bytový dům je v docházkové vzdálenosti cca 50 m od nového parku Zdeňka Kopala, 300 m od nemocnice, 350 m od nejbližší zastávky MHD, 600 m od autobusového nádraží, 700 m od obchodního domu Billa a 1100 m od centrálního náměstí.\r\n\r\nByt je zařazen v energetické třídě A a splňuje tedy ty nejvyšší energetické standardy. Tím se stává velmi energeticky úsporným řešením pro moderní bydlení. Provozní náklady budou upraveny dle skutečné spotřeby teprve během užívání bytu, předběžně budou stanoveny na 2000-3000 Kč/měsíc.\r\n\r\nREALITNÍ kanceláře NEVOLAT!!!!!děkuji!!!!!!!!",
+        "V této úžasné beskydské krajině je k prodeji rodinný dům se zahradou a stavební parcelou o rozloze 1461 m2 se dvěma rybníky a loukou . Zastavěná plocha rodinného domu 200m2 zahradního domku a nádvoří je 675 m2. Celkové plocha celé nemovitosti tvoří 28.000 m2.\r\nJedná se o samostatný dům s obyvatelným přízemím o velikosti 3+1.V podkroví je možnost vybudovat další obytné prostory. Konstrukce budovy je smíšená a její stavebně-technický stav je odpovídající, byla znát dobrá údržba. Budova prošla částečnou rekonstrukcí a je celá zabezpečena alarmem. Střecha je opatřena komínem a vikýřem. Střecha je plechová a opatřena žlaby se svody. Vchodové dveře jsou dřevěné plné. Vnitřní dveře jsou dřevěné plné i dřevěné prosklené. Okna domu jsou plastová se žaluziemi a parapety. Koupelna je vybavena vanou, WC je součásti koupelny, obklady jsou keramické. Podlahy jsou pokryty plovoucími podlahami a částečně i dřevěnými podlahami. V kuchyni se zachovala stará keramická pec, která může sloužit i k vytápění. Celý dům je jinak kompletně vytápěn plynovým kotlem. Radiátory jsou ve všech místnostech. V obývacím pokoji jsou krbová kamna pro chladnější večery,pokud nechceme topit plynem v rámci úspor. Pitná voda je zajištěná vlastní studnou. Nemovitost je celá podsklepená a ve sklepě se nachází domácí vodárna.\r\nNemovitost se nachází v klidném místě s velmi dobrým celoročním přístupem. Výborná poloha ve velmi žádané beskydské lokalitě uprostřed přírody. V blízkém dosahu jsou obce Frenštát, Pustevny či Radhošť, Javorník, Ondřejník, možnost výletů do okolí Čeladné, Frýdlantu nad Ostravicí, Ostravice, Smrk a na Lysou horu.\r\nTrojanovice jsou obec v Moravskoslezském kraji. Rozprostírají se při úpatí Moravskoslezských Beskyd pod masívy Noříčí hory (1047 m n. m.), Radhoště (1129 m n. m.) a Velkého Javorníku (918 m n. m.)\r\ncena : 10.000.000,- Kč\r\nTel. 777147777",
+        "Bytový dům na ulici Závodní souběžná s ulici Rudná v Ostravě. Velmi strategické místo, jak k bydlení, tak ke komerčnímu využití. Jedná se o trojpodlažní celo podsklepený dům se šesti bytovými jednotkami a třemi garážemi. Dům je po kompletní revitalizaci, nová střecha s krytinou SATJAM Rapid. Nová plastová okna se sníženou hlučností. Dále jsou zde nové kročející polystyren Anhybridové podlahy s podlahovým vytápěním. Nové sádrové omítky, nová elektřina. V každé bytové jednotce jsou připravená čidla k Alarmu, ke kouři a k okenním venkovním žaluziím. V domě se nachází jedna z garáží s vlastním zázemím o velikosti 35 m2 s přípravou pro WC.\r\nDům má zastavěnou plochu 218 m2 se zahradou o velikosti 831 m2 a dalšími dvěma garážemi o velikosti 52m2.\r\nV prvním podlaží se nacházejí dvě bytové jednotky o velikosti 2+KK o výměře 54 m2 a druhá 3+KK o výměře 65 m2 s rohovými okny.\r\n\r\nVe druhém podlaží se nacházejí dvě bytové jednotky o velikosti 2+KK o výměře 54 m2 a druhá 3+KK o výměře 65 m2 s rohovými okny.\r\n\r\nVe třetím podlaží vznikly krásné dva podkrovní byty o velikosti 42 m2 a 48 m2 s vikýřovými okny.\r\nVe všech bytových jednotkách schází dodělat koupelny dle vlastních představ.\r\nZahrada je celo oplocená a na plotě i domě jsou vytvořeny reklamní plochy, které měsíčně přinesou majiteli -----,- Kč výnos s pronájmu bytů a garáží ------,- Kč. Tato zahrada má dva vjezdy.\r\nV blízkosti jsou různá sportoviště fotbalový stadion Vítkovice, ČEZ Aréna. Veškerá občanská vybavenosti je dostupná Pro více informací volejte 77714777",
+        "Pronajímám byty 1+kk na Meziboří v krásném a čistém prostředí od 9500 včetně poplatků.Součást bytového komplexu je centrání prádelna,společná obrovská terasa s pergolou,tělocvična,herna(kulečník,ping pong,stolní fotbálek,šipky.",
+        "Poslední volný 1+kk v tomto domě na pronájem, prosím přečíst inzerát, nevolat. \r\n\r\nFotky v pondělí 02.03., avšak prohlídky možné již od 26.02., neváhejte ! \r\n\r\nOd 01.03.2026 nabízíme ve výhradním zastoupení dlouhodobý pronájem skutečně prostorného 2+kk o velikosti 31m2 - s terasou další 3m2 navíc - v moderní výstavbě Ostrava-Poruba, 2. patro. V domě je kompletně bezbariérový přístup. Vše bude nově vymalováno na bílo. Dům je pravidelně uklízen a monitorován špičkovým kamerovým systémem pro Vaše bezpečí (32 kamer kolem celého domu a v domě). Cena nájmu: 11 tis. měs. + služby. Jedná se o atraktivní bydlení, pronájem zajištěn dlouhodobě.\r\n\r\nProsím prvotně e-mail se základními informacemi o zájemci, děkuji za pochopení."
+      ]
+    },
+    "email_id": {
+      "types": {
+        "string": 195
+      },
+      "non_null_count": 195,
+      "null_count": 0,
+      "distinct_count": 136,
+      "sample_values": [
+        "8329740",
+        "3961236",
+        "8897657",
+        "188844",
+        "8834345",
+        "5494771",
+        "9324715",
+        "9324631",
+        "9227547",
+        "6760101"
+      ]
+    },
+    "favourite": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 200
+      }
+    },
+    "from": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 9,
+      "all_distinct_values": [
+        "Fri, 27 Feb 2026 09:05:12 +0100",
+        "Fri, 27 Feb 2026 09:05:14 +0100",
+        "Fri, 27 Feb 2026 09:05:16 +0100",
+        "Fri, 27 Feb 2026 09:05:18 +0100",
+        "Fri, 27 Feb 2026 09:05:11 +0100",
+        "Fri, 27 Feb 2026 09:05:13 +0100",
+        "Fri, 27 Feb 2026 09:05:15 +0100",
+        "Fri, 27 Feb 2026 09:05:17 +0100",
+        "Fri, 27 Feb 2026 09:05:19 +0100"
+      ],
+      "value_counts": {
+        "Fri, 27 Feb 2026 09:05:12 +0100": 25,
+        "Fri, 27 Feb 2026 09:05:14 +0100": 25,
+        "Fri, 27 Feb 2026 09:05:16 +0100": 25,
+        "Fri, 27 Feb 2026 09:05:18 +0100": 25,
+        "Fri, 27 Feb 2026 09:05:11 +0100": 20,
+        "Fri, 27 Feb 2026 09:05:13 +0100": 20,
+        "Fri, 27 Feb 2026 09:05:15 +0100": 20,
+        "Fri, 27 Feb 2026 09:05:17 +0100": 20,
+        "Fri, 27 Feb 2026 09:05:19 +0100": 20
+      }
+    },
+    "id": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 200,
+      "sample_values": [
+        "215430604",
+        "215427211",
+        "215426668",
+        "215349850",
+        "215381747",
+        "214960327",
+        "215120099",
+        "215118750",
+        "215500152",
+        "215506090"
+      ]
+    },
+    "image_thumbnail": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 195,
+      "sample_values": [
+        "https://www.bazos.cz/img/1/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/1/211/215427211.jpg?t=1771953489",
+        "https://www.bazos.cz/img/1/668/215426668.jpg?t=1771953200",
+        "https://www.bazos.cz/img/1/850/215349850.jpg?t=1771870655",
+        "https://www.bazos.cz/img/1/747/215381747.jpg?t=1771864368",
+        "https://www.bazos.cz/img/1/327/214960327.jpg?t=1771526489",
+        "https://www.bazos.cz/img/1/099/215120099.jpg?t=1771347544",
+        "https://www.bazos.cz/img/1/750/215118750.jpg?t=1771345352",
+        "https://www.bazos.cz/img/1/152/215500152.jpg?t=1772104957",
+        "https://www.bazos.cz/img/1/090/215506090.jpg?t=1772115593"
+      ]
+    },
+    "image_thumbnail_height": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 39,
+      "all_distinct_values": [
+        "800",
+        "900",
+        "1200",
+        "675",
+        "393",
+        "677",
+        "600",
+        "612",
+        "1000",
+        "562",
+        "958",
+        "810",
+        "403",
+        "780",
+        "864",
+        "1012",
+        "799",
+        "616",
+        "830",
+        "533",
+        "790",
+        "896",
+        "833",
+        "706",
+        "150",
+        "480",
+        "903",
+        "828",
+        "670",
+        "757",
+        "838",
+        "314",
+        "763",
+        "784",
+        "798",
+        "527",
+        "897",
+        "882",
+        "1024"
+      ],
+      "value_counts": {
+        "150": 1,
+        "314": 1,
+        "393": 6,
+        "403": 1,
+        "480": 1,
+        "527": 1,
+        "533": 1,
+        "562": 1,
+        "600": 3,
+        "612": 2,
+        "616": 1,
+        "670": 1,
+        "675": 8,
+        "677": 3,
+        "706": 1,
+        "757": 1,
+        "763": 1,
+        "780": 1,
+        "784": 1,
+        "790": 1,
+        "798": 1,
+        "799": 1,
+        "800": 52,
+        "810": 1,
+        "828": 1,
+        "830": 1,
+        "833": 1,
+        "838": 1,
+        "864": 1,
+        "882": 1,
+        "896": 1,
+        "897": 1,
+        "900": 50,
+        "903": 1,
+        "958": 1,
+        "1000": 2,
+        "1012": 1,
+        "1024": 1,
+        "1200": 44
+      }
+    },
+    "image_thumbnail_width": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 29,
+      "all_distinct_values": [
+        "1200",
+        "900",
+        "525",
+        "800",
+        "675",
+        "1000",
+        "816",
+        "1024",
+        "718",
+        "1011",
+        "1184",
+        "813",
+        "820",
+        "1106",
+        "1080",
+        "642",
+        "782",
+        "586",
+        "200",
+        "1190",
+        "640",
+        "554",
+        "451",
+        "553",
+        "1071",
+        "531",
+        "540",
+        "1199",
+        "1042"
+      ],
+      "value_counts": {
+        "200": 1,
+        "451": 1,
+        "525": 6,
+        "531": 1,
+        "540": 1,
+        "553": 1,
+        "554": 1,
+        "586": 1,
+        "640": 1,
+        "642": 1,
+        "675": 3,
+        "718": 1,
+        "782": 1,
+        "800": 3,
+        "813": 1,
+        "816": 2,
+        "820": 1,
+        "900": 30,
+        "1000": 2,
+        "1011": 1,
+        "1024": 2,
+        "1042": 1,
+        "1071": 1,
+        "1080": 1,
+        "1106": 1,
+        "1184": 1,
+        "1190": 1,
+        "1199": 1,
+        "1200": 131
+      }
+    },
+    "images": {
+      "types": {
+        "string": 6
+      },
+      "non_null_count": 6,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "[]"
+      ],
+      "value_counts": {
+        "[]": 6
+      }
+    },
+    "images[]": {
+      "types": {
+        "string": 2315
+      },
+      "non_null_count": 2315,
+      "null_count": 0,
+      "distinct_count": 2315,
+      "sample_values": [
+        "https://www.bazos.cz/img/1/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/2/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/3/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/4/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/5/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/6/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/7/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/8/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/9/604/215430604.jpg?t=1771959177",
+        "https://www.bazos.cz/img/10/604/215430604.jpg?t=1771959177"
+      ]
+    },
+    "latitude": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 152,
+      "sample_values": [
+        "50.037738",
+        "49.980150",
+        "49.600253",
+        "49.863882",
+        "49.539246",
+        "49.812179",
+        "50.624529",
+        "49.831118",
+        "49.904807",
+        "50.031894"
+      ]
+    },
+    "locality": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 64,
+      "all_distinct_values": [
+        "Ostrava",
+        "Příbram",
+        "Kladno",
+        "Brno",
+        "Praha 10",
+        "Opava",
+        "Břeclav",
+        "Frýdek - Místek",
+        "Svitavy",
+        "Blansko",
+        "Brno venkov",
+        "Olomouc",
+        "Jičín",
+        "Kolín",
+        "Nový Jičín",
+        "Praha 1",
+        "Chomutov",
+        "Karviná",
+        "Praha - východ",
+        "Hodonín",
+        "Teplice",
+        "Zlín",
+        "Český Krumlov",
+        "Prostějov",
+        "Ústí nad Orlicí",
+        "Karlovy Vary",
+        "Plzeň",
+        "Hradec Králové",
+        "Třebíč",
+        "Zahraničí",
+        "Most",
+        "Rychnov nad Kněžnou",
+        "Praha 5",
+        "Praha - západ",
+        "Žďár nad Sázavou",
+        "Praha 9",
+        "Vsetín",
+        "Uherské Hradiště",
+        "Jablonec nad Nisou",
+        "Přerov",
+        "Bruntál",
+        "Havlíčkův Brod",
+        "Jeseník",
+        "Ústí nad Labem",
+        "Náchod",
+        "České Budějovice",
+        "Mladá Boleslav",
+        "Pardubice",
+        "Šumperk",
+        "Slovensko",
+        "Chrudim",
+        "Praha 6",
+        "Znojmo",
+        "Mělník",
+        "Litoměřice",
+        "Jihlava",
+        "Louny",
+        "Děčín",
+        "Písek",
+        "Semily",
+        "Pelhřimov",
+        "Kroměříž",
+        "Rokycany",
+        "Liberec"
+      ],
+      "value_counts": {
+        "Ostrava": 13,
+        "Příbram": 8,
+        "Kladno": 8,
+        "Brno": 7,
+        "Praha 10": 6,
+        "Opava": 6,
+        "Břeclav": 6,
+        "Frýdek - Místek": 6,
+        "Svitavy": 5,
+        "Blansko": 5,
+        "Brno venkov": 5,
+        "Olomouc": 5,
+        "Jičín": 5,
+        "Kolín": 4,
+        "Nový Jičín": 4,
+        "Praha 1": 4,
+        "Chomutov": 4,
+        "Karviná": 4,
+        "Praha - východ": 4,
+        "Hodonín": 4,
+        "Teplice": 4,
+        "Zlín": 4,
+        "Český Krumlov": 4,
+        "Prostějov": 4,
+        "Ústí nad Orlicí": 3,
+        "Karlovy Vary": 3,
+        "Plzeň": 3,
+        "Hradec Králové": 3,
+        "Třebíč": 3,
+        "Zahraničí": 3,
+        "Most": 2,
+        "Rychnov nad Kněžnou": 2,
+        "Praha 5": 2,
+        "Praha - západ": 2,
+        "Žďár nad Sázavou": 2,
+        "Praha 9": 2,
+        "Vsetín": 2,
+        "Uherské Hradiště": 2,
+        "Jablonec nad Nisou": 2,
+        "Přerov": 2,
+        "Bruntál": 2,
+        "Havlíčkův Brod": 2,
+        "Jeseník": 2,
+        "Ústí nad Labem": 2,
+        "Náchod": 2,
+        "České Budějovice": 2,
+        "Mladá Boleslav": 2,
+        "Pardubice": 2,
+        "Šumperk": 2,
+        "Slovensko": 1,
+        "Chrudim": 1,
+        "Praha 6": 1,
+        "Znojmo": 1,
+        "Mělník": 1,
+        "Litoměřice": 1,
+        "Jihlava": 1,
+        "Louny": 1,
+        "Děčín": 1,
+        "Písek": 1,
+        "Semily": 1,
+        "Pelhřimov": 1,
+        "Kroměříž": 1,
+        "Rokycany": 1,
+        "Liberec": 1
+      }
+    },
+    "longitude": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 154,
+      "sample_values": [
+        "15.170059",
+        "16.427994",
+        "14.249954",
+        "16.333580",
+        "18.210526",
+        "18.267517",
+        "13.599873",
+        "18.168983",
+        "16.638107",
+        "14.597740"
+      ]
+    },
+    "name": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 127,
+      "sample_values": [
+        "Domy",
+        "VŠ",
+        "Václav Kabát",
+        "SV",
+        "Pavel",
+        "René Dostál",
+        "Eva Hofmanová",
+        "Honzo",
+        "Bohumil Krajčovič",
+        "Tomáš Kos"
+      ]
+    },
+    "phone": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 33,
+      "all_distinct_values": [
+        "+42",
+        "800",
+        "777",
+        "608",
+        "602",
+        "603",
+        "725",
+        "773",
+        "606",
+        "721",
+        "604",
+        "720",
+        "724",
+        "774",
+        "775",
+        "732",
+        "735",
+        "736",
+        "734",
+        "607",
+        "776",
+        "723",
+        "739",
+        "605",
+        "728",
+        "601",
+        "703",
+        "722",
+        "737",
+        "731",
+        "797",
+        "004",
+        "778"
+      ],
+      "value_counts": {
+        "601": 2,
+        "602": 13,
+        "603": 8,
+        "604": 5,
+        "605": 2,
+        "606": 6,
+        "607": 3,
+        "608": 13,
+        "703": 1,
+        "720": 4,
+        "721": 6,
+        "722": 1,
+        "723": 2,
+        "724": 4,
+        "725": 7,
+        "728": 2,
+        "731": 1,
+        "732": 4,
+        "734": 3,
+        "735": 3,
+        "736": 3,
+        "737": 1,
+        "739": 2,
+        "773": 7,
+        "774": 4,
+        "775": 4,
+        "776": 3,
+        "777": 19,
+        "778": 1,
+        "797": 1,
+        "800": 27,
+        "+42": 37,
+        "004": 1
+      }
+    },
+    "phone_id": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 140,
+      "sample_values": [
+        "6335774",
+        "519214",
+        "6925476",
+        "54711",
+        "6852876",
+        "7460971",
+        "7454050",
+        "6937670",
+        "4478184",
+        "6570544"
+      ]
+    },
+    "price": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 152,
+      "sample_values": [
+        "340000",
+        "690000",
+        "1000000",
+        "2499000",
+        "590000",
+        "5250000",
+        "10000000",
+        "14900000",
+        "V textu",
+        "11000"
+      ]
+    },
+    "price_formatted": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 152,
+      "sample_values": [
+        "340 000 Kč",
+        "690 000 Kč",
+        "1 000 000 Kč",
+        "2 499 000 Kč",
+        "590 000 Kč",
+        "5 250 000 Kč",
+        "10 000 000 Kč",
+        "14 900 000 Kč",
+        "V textu",
+        "11 000 Kč"
+      ]
+    },
+    "price_type": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 5,
+      "all_distinct_values": [
+        "EXACT",
+        "IN_TEXT",
+        "NEGOTIATED",
+        "OFFERED",
+        "FREE"
+      ],
+      "value_counts": {
+        "EXACT": 174,
+        "IN_TEXT": 12,
+        "NEGOTIATED": 11,
+        "OFFERED": 2,
+        "FREE": 1
+      }
+    },
+    "section.id": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "RE"
+      ],
+      "value_counts": {
+        "RE": 200
+      }
+    },
+    "section.image": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "https://www.bazos.cz/obrazky/api/reality.png"
+      ],
+      "value_counts": {
+        "https://www.bazos.cz/obrazky/api/reality.png": 200
+      }
+    },
+    "section.title": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "Reality"
+      ],
+      "value_counts": {
+        "Reality": 200
+      }
+    },
+    "section.url": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "reality"
+      ],
+      "value_counts": {
+        "reality": 200
+      }
+    },
+    "status": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "active"
+      ],
+      "value_counts": {
+        "active": 200
+      }
+    },
+    "title": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 200,
+      "sample_values": [
+        "Domek pro kempy, ubytovaní",
+        "Dům 2ķk, 40m2, nový",
+        "Dům 2kk, nový, 60 měsíců záruka",
+        "České Libchavy, 874 m2 Komplet zasíťovány",
+        "Prodám Tiny House před dokončením",
+        "BYT-TOP-EXLUZIVNÍ 2+KK+ZAHRADA 82,85m2 věž A",
+        "--RD Beskydy Trojanovice + pozemek 28000m2 2x rybník --",
+        "---- Bytový dům 6 bytu 3 garáže Ostrava ----",
+        "Pronajímám byty na Meziboří",
+        "poslední volný 1+kk s terasou k pronájmu, Ostrava-Poruba"
+      ]
+    },
+    "top_limit": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "21"
+      ],
+      "value_counts": {
+        "21": 200
+      }
+    },
+    "top_possible": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "true",
+        "false"
+      ],
+      "value_counts": {
+        "true": 168,
+        "false": 32
+      }
+    },
+    "top_total": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 12,
+      "all_distinct_values": [
+        "5",
+        "10",
+        "21",
+        "3",
+        "4",
+        "2",
+        "7",
+        "8",
+        "6",
+        "20",
+        "9",
+        "11"
+      ],
+      "value_counts": {
+        "2": 19,
+        "3": 24,
+        "4": 22,
+        "5": 42,
+        "6": 7,
+        "7": 12,
+        "8": 9,
+        "9": 2,
+        "10": 30,
+        "11": 2,
+        "20": 2,
+        "21": 29
+      }
+    },
+    "topped": {
+      "types": {
+        "boolean": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "true"
+      ],
+      "value_counts": {
+        "true": 200
+      }
+    },
+    "topped_for_days": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 12,
+      "all_distinct_values": [
+        "25",
+        "31",
+        "42",
+        "18",
+        "22",
+        "13",
+        "28",
+        "29",
+        "27",
+        "41",
+        "30",
+        "32"
+      ],
+      "value_counts": {
+        "13": 19,
+        "18": 24,
+        "22": 22,
+        "25": 42,
+        "27": 7,
+        "28": 12,
+        "29": 9,
+        "30": 2,
+        "31": 30,
+        "32": 2,
+        "41": 2,
+        "42": 29
+      }
+    },
+    "type": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "sell",
+        "rent"
+      ],
+      "value_counts": {
+        "sell": 150,
+        "rent": 50
+      }
+    },
+    "url": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 200,
+      "sample_values": [
+        "https://reality.bazos.cz/inzerat/215430604/domek-pro-kempy-ubytovani.php",
+        "https://reality.bazos.cz/inzerat/215427211/dum-2k-40m2-novy.php",
+        "https://reality.bazos.cz/inzerat/215426668/dum-2kk-novy-60-mesicu-zaruka.php",
+        "https://reality.bazos.cz/inzerat/215349850/ceske-libchavy-1136-m2komplet-zasitovane.php",
+        "https://reality.bazos.cz/inzerat/215381747/prodam-tiny-house-pred-dokoncenim.php",
+        "https://reality.bazos.cz/inzerat/214960327/byt-top-exluzivni-2kkzahrada-8285m2.php",
+        "https://reality.bazos.cz/inzerat/215120099/rd-beskydy-trojanovice-pozemek-28000m2-2x-rybnik.php",
+        "https://reality.bazos.cz/inzerat/215118750/bytovy-dum-6-bytu-3-garaze-ostrava.php",
+        "https://reality.bazos.cz/inzerat/215500152/pronajimam-byty-na-mezibori.php",
+        "https://reality.bazos.cz/inzerat/215506090/posledni-volny-1kk-s-terasou-k-pronajmu-ostrava-poruba.php"
+      ]
+    },
+    "user_ads_count": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 24,
+      "all_distinct_values": [
+        "1",
+        "2",
+        "1028",
+        "3",
+        "7",
+        "6",
+        "5",
+        "4",
+        "24",
+        "10",
+        "11",
+        "8",
+        "9",
+        "585",
+        "37",
+        "47",
+        "15",
+        "52",
+        "18",
+        "30",
+        "1305",
+        "41",
+        "190",
+        "19"
+      ],
+      "value_counts": {
+        "1": 61,
+        "2": 27,
+        "3": 14,
+        "4": 7,
+        "5": 8,
+        "6": 9,
+        "7": 13,
+        "8": 4,
+        "9": 2,
+        "10": 6,
+        "11": 5,
+        "15": 1,
+        "18": 1,
+        "19": 1,
+        "24": 6,
+        "30": 1,
+        "37": 2,
+        "41": 1,
+        "47": 1,
+        "52": 1,
+        "190": 1,
+        "585": 2,
+        "1028": 25,
+        "1305": 1
+      }
+    },
+    "user_reviews_count": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 6,
+      "all_distinct_values": [
+        "0",
+        "6",
+        "16",
+        "3",
+        "1",
+        "29"
+      ],
+      "value_counts": {
+        "0": 165,
+        "1": 2,
+        "3": 3,
+        "6": 25,
+        "16": 4,
+        "29": 1
+      }
+    },
+    "views": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 187,
+      "sample_values": [
+        "1254",
+        "1332",
+        "2055",
+        "6016",
+        "1450",
+        "1841",
+        "1922",
+        "1464",
+        "79",
+        "119"
+      ]
+    },
+    "zip_code": {
+      "types": {
+        "string": 200
+      },
+      "non_null_count": 200,
+      "null_count": 0,
+      "distinct_count": 154,
+      "sample_values": [
+        "280 02",
+        "562 01",
+        "262 56",
+        "570 01",
+        "744 01",
+        "703 00",
+        "435 13",
+        "708 00",
+        "563 01",
+        "104 00"
+      ]
+    }
+  }
+}

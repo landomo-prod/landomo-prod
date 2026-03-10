@@ -1,0 +1,77 @@
+# =============================================================================
+# Landomo-World Alertmanager Configuration
+# =============================================================================
+# Configures alert routing and notification channels.
+# Customize receiver URLs/credentials for your environment.
+# =============================================================================
+
+global:
+  resolve_timeout: 5m
+  # Uncomment and configure for email notifications:
+  # smtp_smarthost: 'smtp.example.com:587'
+  # smtp_from: 'alerts@landomo.com'
+  # smtp_auth_username: 'alerts@landomo.com'
+  # smtp_auth_password: '<password>'
+  # smtp_require_tls: true
+
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+
+route:
+  receiver: 'default-webhook'
+  group_by: ['alertname', 'severity', 'team']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+
+  routes:
+    # Critical alerts: short repeat interval, notify immediately
+    - match:
+        severity: critical
+      receiver: 'critical-webhook'
+      group_wait: 10s
+      repeat_interval: 1h
+      continue: true
+
+    # Warning alerts: standard timing
+    - match:
+        severity: warning
+      receiver: 'default-webhook'
+      repeat_interval: 4h
+
+    # Info alerts: long repeat, low noise
+    - match:
+        severity: info
+      receiver: 'info-webhook'
+      repeat_interval: 24h
+
+receivers:
+  # Default webhook receiver (configure your notification service URL)
+  - name: 'default-webhook'
+    webhook_configs:
+      - url: 'http://localhost:9095/webhook'
+        send_resolved: true
+
+  # Critical alerts webhook (can be a PagerDuty/Opsgenie integration)
+  - name: 'critical-webhook'
+    webhook_configs:
+      - url: 'http://localhost:9095/webhook'
+        send_resolved: true
+    # Uncomment for email notifications:
+    # email_configs:
+    #   - to: 'oncall@landomo.com'
+    #     send_resolved: true
+
+  # Info alerts - lower priority channel
+  - name: 'info-webhook'
+    webhook_configs:
+      - url: 'http://localhost:9095/webhook'
+        send_resolved: false
+
+inhibit_rules:
+  # If a service is completely down, suppress warning-level alerts for it
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'instance']

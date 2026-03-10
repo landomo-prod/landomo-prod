@@ -1,0 +1,84 @@
+[
+  {
+    "method": "GET",
+    "url": "https://www.nehnutelnosti.sk/api/v2/notification/center/notification?section=SEARCH_RESULTS",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.nehnutelnosti.sk/vysledky/byty/bratislavsky-kraj/predaj",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"HeadlessChrome\";v=\"145\", \"Chromium\";v=\"145\"",
+      "accept-language": "sk-SK",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "body": null
+  },
+  {
+    "method": "GET",
+    "url": "https://www.nehnutelnosti.sk/api/v2/notification/center/notification?section=SEARCH_RESULTS",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.nehnutelnosti.sk/vysledky/byty/bratislavsky-kraj/predaj",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"HeadlessChrome\";v=\"145\", \"Chromium\";v=\"145\"",
+      "accept-language": "sk-SK",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "body": null
+  },
+  {
+    "method": "POST",
+    "url": "https://www.nehnutelnosti.sk/api/v2/advertisement/listing/count",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.nehnutelnosti.sk/vysledky/byty/bratislavsky-kraj/predaj",
+      "accept-language": "sk-SK",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"HeadlessChrome\";v=\"145\", \"Chromium\";v=\"145\"",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "content-type": "application/json"
+    },
+    "body": {
+      "locations": [
+        "100000101"
+      ],
+      "transaction": "SALE",
+      "categories": [
+        "APARTMENTS"
+      ]
+    },
+    "response": 4205,
+    "status": 201
+  },
+  {
+    "method": "POST",
+    "url": "https://www.nehnutelnosti.sk/api/v2/advertisement/listing/url/internal-filter",
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://www.nehnutelnosti.sk/vysledky/byty/bratislavsky-kraj/predaj",
+      "accept-language": "sk-SK",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"HeadlessChrome\";v=\"145\", \"Chromium\";v=\"145\"",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "content-type": "application/json"
+    },
+    "body": {
+      "locations": [
+        "100000101"
+      ],
+      "order": "DEFAULT",
+      "transaction": "SALE",
+      "categories": [
+        "APARTMENTS"
+      ]
+    },
+    "response": {
+      "url": "https://www.nehnutelnosti.sk/vysledky/byty/bratislavsky-kraj/predaj",
+      "title": "Byty na predaj v Bratislavskom kraji"
+    },
+    "status": 201
+  }
+]

@@ -1,0 +1,81 @@
+# =============================================================================
+# Landomo-World Backup Monitoring Alerts (Prometheus Alertmanager)
+# =============================================================================
+# Import these rules into your Prometheus configuration:
+#   rule_files:
+#     - /etc/prometheus/backup-alert.yml
+#
+# These alerts rely on the backup service writing metrics. Since backups run
+# as shell scripts, we use a file-based approach: the backup script writes
+# latest_backup_summary.json, and a textfile collector (node_exporter or
+# custom) exposes the metrics.
+#
+# Alternatively, use the cron log + external checker pattern below.
+# =============================================================================
+
+groups:
+  - name: landomo_backup_alerts
+    rules:
+      # Alert if no successful backup has completed in the last 25 hours.
+      # The backup runs daily at 2 AM UTC, so 25h gives 1h grace period.
+      - alert: BackupMissing
+        expr: |
+          (time() - landomo_backup_last_success_timestamp_seconds) > 90000
+        for: 5m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "No successful database backup in over 25 hours"
+          description: >-
+            The last successful Landomo database backup was
+            {{ $value | humanizeDuration }} ago. Expected daily backup at 02:00 UTC.
+            Check the backup container logs: docker logs landomo-backup
+          runbook: "Check backup container health, PostgreSQL connectivity, and disk space."
+
+      # Alert if backup size drops more than 50% compared to previous backup.
+      # Sudden size drop may indicate corruption, missing tables, or empty database.
+      - alert: BackupSizeDrop
+        expr: |
+          (landomo_backup_size_bytes / landomo_backup_previous_size_bytes) < 0.5
+        for: 5m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "Database backup size dropped by more than 50%"
+          description: >-
+            Backup for {{ $labels.database }} is {{ $value | humanizePercentage }}
+            of the previous backup size. This may indicate data loss, corruption,
+            or a schema change that dropped tables.
+          runbook: "Compare backup contents with pg_restore --list. Check for recent DROP TABLE or TRUNCATE operations."
+
+      # Alert if any individual database backup failed.
+      - alert: BackupFailed
+        expr: |
+          landomo_backup_failed_count > 0
+        for: 1m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "One or more database backups failed"
+          description: >-
+            {{ $value }} database backup(s) failed in the latest backup run.
+            Failed databases: check latest_backup_summary.json in the backup volume.
+          runbook: "Check backup logs at /backups/backup_*.log and cron_backup.log."
+
+      # Alert if backup volume disk usage exceeds 85%.
+      - alert: BackupDiskSpaceLow
+        expr: |
+          (node_filesystem_avail_bytes{mountpoint="/backups"} / node_filesystem_size_bytes{mountpoint="/backups"}) < 0.15
+        for: 10m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "Backup volume disk space is below 15%"
+          description: >-
+            The /backups volume has only {{ $value | humanizePercentage }} free space.
+            Old backups may not be cleaned up, or the retention policy needs adjustment.
+          runbook: "Check retention settings (RETENTION_DAILY, RETENTION_MONTHLY). Manually clean old backups if needed."

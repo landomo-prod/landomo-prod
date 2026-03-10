@@ -1,0 +1,187 @@
+# =============================================================================
+# Pelias Geocoding Stack
+# Self-hosted geocoding: Elasticsearch + Pelias API + Placeholder + PIP + libpostal
+#
+# Usage (one-time import):
+#   docker compose -f docker-compose.pelias.yml --profile setup run --rm schema
+#   docker compose -f docker-compose.pelias.yml --profile setup run --rm whosonfirst
+#   docker compose -f docker-compose.pelias.yml --profile setup run --rm geonames
+#   docker compose -f docker-compose.pelias.yml --profile setup run --rm openstreetmap
+#   docker compose -f docker-compose.pelias.yml run --rm placeholder ./cmd/extract.sh
+#   docker compose -f docker-compose.pelias.yml run --rm placeholder ./cmd/build.sh
+#
+# Usage (persistent services):
+#   docker compose -f docker-compose.pelias.yml up -d elasticsearch api placeholder pip libpostal
+# =============================================================================
+
+networks:
+  pelias-net:
+    driver: bridge
+
+volumes:
+  pelias-elasticsearch-data:
+
+services:
+
+  # ============================================================
+  # ELASTICSEARCH — search backend for Pelias
+  # ============================================================
+  pelias-elasticsearch:
+    image: pelias/elasticsearch:7.17.27
+    container_name: pelias-elasticsearch
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9200:9200"
+    volumes:
+      - pelias-elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
+      - "cluster.routing.allocation.disk.threshold_enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    networks:
+      - pelias-net
+
+  # ============================================================
+  # PELIAS API — geocoding HTTP API on port 4100
+  # ============================================================
+  pelias-api:
+    image: pelias/api:master
+    container_name: pelias-api
+    restart: unless-stopped
+    ports:
+      - "4100:3100"
+    environment:
+      - PORT=3100
+    volumes:
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/pelias.json:/code/pelias.json:ro
+    depends_on:
+      pelias-elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3100/v1/search?text=test', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - pelias-net
+
+  # ============================================================
+  # PLACEHOLDER — admin area / coarse geocoding
+  # ============================================================
+  pelias-placeholder:
+    image: pelias/placeholder:master
+    container_name: pelias-placeholder
+    restart: unless-stopped
+    ports:
+      - "4101:4100"
+    volumes:
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/pelias.json:/code/pelias.json:ro
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/data:/data
+    depends_on:
+      pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - pelias-net
+
+  # ============================================================
+  # PIP — point-in-polygon / reverse geocoding
+  # ============================================================
+  pelias-pip:
+    image: pelias/pip-service:master
+    container_name: pelias-pip
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    volumes:
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/pelias.json:/code/pelias.json:ro
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/data:/data
+    depends_on:
+      pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - pelias-net
+
+  # ============================================================
+  # LIBPOSTAL — address parsing
+  # ============================================================
+  pelias-libpostal:
+    image: pelias/libpostal-service:master
+    container_name: pelias-libpostal
+    restart: unless-stopped
+    ports:
+      - "4400:4400"
+    networks:
+      - pelias-net
+
+  # ============================================================
+  # ONE-SHOT IMPORT CONTAINERS (--profile setup)
+  # ============================================================
+
+  pelias-schema:
+    image: pelias/schema:master
+    container_name: pelias-schema
+    volumes:
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/pelias.json:/code/pelias.json:ro
+    depends_on:
+      pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - pelias-net
+    profiles:
+      - setup
+
+  pelias-whosonfirst:
+    image: pelias/whosonfirst:master
+    container_name: pelias-whosonfirst
+    volumes:
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/pelias.json:/code/pelias.json:ro
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/data:/data
+    depends_on:
+      pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - pelias-net
+    profiles:
+      - setup
+
+  pelias-geonames:
+    image: pelias/geonames:master
+    container_name: pelias-geonames
+    volumes:
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/pelias.json:/code/pelias.json:ro
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/data:/data
+    depends_on:
+      pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - pelias-net
+    profiles:
+      - setup
+
+  pelias-openstreetmap:
+    image: pelias/openstreetmap:master
+    container_name: pelias-openstreetmap
+    volumes:
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/pelias.json:/code/pelias.json:ro
+      - ${PELIAS_DATA_DIR:-/opt/landomo/geocoding}/data:/data
+    depends_on:
+      pelias-elasticsearch:
+        condition: service_healthy
+    networks:
+      - pelias-net
+    profiles:
+      - setup

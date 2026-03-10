@@ -1,0 +1,528 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: Infrastructure Alerts
+    folder: Alerts
+    interval: 1m
+    rules:
+      # Critical: Database Connection Failures
+      - uid: db-connection-failure
+        title: Database Connection Failure
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT COUNT(*) as connections
+                FROM pg_stat_activity
+                WHERE state = 'active'
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                      - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params: []
+                  reducer:
+                    params: []
+                    type: avg
+                  type: query
+              datasource:
+                name: Expression
+                type: __expr__
+                uid: __expr__
+              expression: A
+              refId: B
+              type: threshold
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                name: Expression
+                type: __expr__
+                uid: __expr__
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: Alerting
+        execErrState: Alerting
+        for: 5m
+        annotations:
+          description: Database has no active connections for 5 minutes
+          summary: Critical - Database connection failure detected
+        labels:
+          severity: critical
+          component: database
+          team: infrastructure
+
+      # Critical: No Properties Ingested >1 Hour
+      - uid: no-ingestion-1h
+        title: No Property Ingestion for 1 Hour
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT COUNT(*) as recent_ingestions
+                FROM ingestion_log
+                WHERE ingested_at > NOW() - INTERVAL '1 hour'
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [1]
+                    type: lt
+          - refId: C
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: Alerting
+        execErrState: Error
+        for: 5m
+        annotations:
+          description: No properties have been ingested in the last hour. Check scrapers and workers.
+          summary: Warning - Property ingestion stopped
+          runbook_url: https://docs.landomo.com/runbooks/no-ingestion
+        labels:
+          severity: warning
+          component: ingestion
+          team: operations
+
+      # Critical: Scraper Down >15 Minutes
+      - uid: scraper-down-15m
+        title: Scraper Down for 15+ Minutes
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  portal,
+                  MAX(started_at) as last_run,
+                  EXTRACT(EPOCH FROM (NOW() - MAX(started_at))) as seconds_since_last_run
+                FROM scrape_runs
+                GROUP BY portal
+                HAVING EXTRACT(EPOCH FROM (NOW() - MAX(started_at))) > 900
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [1]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          description: "Scraper {{ $labels.portal }} has not run in 15+ minutes"
+          summary: Warning - Scraper appears to be down
+          runbook_url: https://docs.landomo.com/runbooks/scraper-down
+        labels:
+          severity: warning
+          component: scraper
+          team: operations
+
+      # Warning: High Scraper Failure Rate
+      - uid: high-scraper-failures
+        title: High Scraper Failure Rate
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  portal,
+                  ROUND(100.0 * COUNT(*) FILTER (WHERE status = 'failed') / NULLIF(COUNT(*), 0), 1) as failure_rate
+                FROM scrape_runs
+                WHERE started_at > NOW() - INTERVAL '1 hour'
+                GROUP BY portal
+                HAVING COUNT(*) FILTER (WHERE status = 'failed') > 3
+                  AND ROUND(100.0 * COUNT(*) FILTER (WHERE status = 'failed') / NULLIF(COUNT(*), 0), 1) > 30
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [30]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 10m
+        annotations:
+          description: "Scraper {{ $labels.portal }} failure rate is {{ $values.A.Value }}%"
+          summary: Warning - High scraper failure rate detected
+          runbook_url: https://docs.landomo.com/runbooks/scraper-failures
+        labels:
+          severity: warning
+          component: scraper
+          team: operations
+
+      # Warning: Data Quality Degradation
+      - uid: data-quality-low
+        title: Data Quality Below Threshold
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  ROUND(100.0 * COUNT(*) FILTER (WHERE
+                    title IS NOT NULL AND
+                    price IS NOT NULL AND
+                    property_type IS NOT NULL AND
+                    city IS NOT NULL
+                  ) / NULLIF(COUNT(*), 0), 1) as completeness_score
+                FROM properties
+                WHERE created_at > NOW() - INTERVAL '1 hour'
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [85]
+                    type: lt
+          - refId: C
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 30m
+        annotations:
+          description: Data completeness score is {{ $values.A.Value }}% (threshold: 85%)
+          summary: Warning - Data quality below acceptable threshold
+          runbook_url: https://docs.landomo.com/runbooks/data-quality
+        labels:
+          severity: warning
+          component: data-quality
+          team: operations
+
+      # Warning: Excessive Stale Listings
+      - uid: excessive-stale-listings
+        title: Excessive Stale Listings
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  COUNT(*) FILTER (WHERE last_seen_at < NOW() - INTERVAL '72 hours' AND status = 'active') as stale_count,
+                  COUNT(*) FILTER (WHERE status = 'active') as active_count,
+                  ROUND(100.0 * COUNT(*) FILTER (WHERE last_seen_at < NOW() - INTERVAL '72 hours' AND status = 'active') / NULLIF(COUNT(*) FILTER (WHERE status = 'active'), 0), 1) as stale_percentage
+                FROM properties
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [15]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 15m
+        annotations:
+          description: "{{ $values.stale_percentage.Value }}% of active listings are stale (>72h)"
+          summary: Warning - High percentage of stale listings
+          runbook_url: https://docs.landomo.com/runbooks/stale-listings
+        labels:
+          severity: warning
+          component: data-quality
+          team: operations
+
+      # Critical: Database Storage Critical
+      - uid: database-storage-critical
+        title: Database Storage Critical
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  pg_database_size(current_database()) as size_bytes,
+                  ROUND(100.0 * pg_database_size(current_database()) / (50 * 1024 * 1024 * 1024), 1) as usage_percentage
+                FROM pg_database_size(current_database())
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [85]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          description: Database storage is at {{ $values.usage_percentage.Value }}% (threshold: 85%)
+          summary: Critical - Database storage reaching capacity
+          runbook_url: https://docs.landomo.com/runbooks/storage-critical
+        labels:
+          severity: critical
+          component: database
+          team: infrastructure
+
+      # Warning: High Database Connection Usage
+      - uid: high-db-connections
+        title: High Database Connection Usage
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT
+                  COUNT(*) as active_connections,
+                  ROUND(100.0 * COUNT(*) / 100, 1) as connection_percentage
+                FROM pg_stat_activity
+                WHERE state = 'active'
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [80]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 10m
+        annotations:
+          description: Database connections at {{ $values.connection_percentage.Value }}% ({{ $values.active_connections.Value }}/100)
+          summary: Warning - High database connection usage
+          runbook_url: https://docs.landomo.com/runbooks/high-connections
+        labels:
+          severity: warning
+          component: database
+          team: infrastructure
+
+      # Warning: Slow Queries Detected
+      - uid: slow-queries-detected
+        title: Slow Queries Detected
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: PF74DBDC7D7111C44
+            model:
+              editorMode: code
+              format: table
+              rawSql: |
+                SELECT COUNT(*) as slow_query_count
+                FROM pg_stat_activity
+                WHERE state != 'idle'
+                  AND query NOT LIKE '%pg_stat_activity%'
+                  AND query_start < NOW() - INTERVAL '30 seconds'
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: A
+              refId: B
+              type: threshold
+              conditions:
+                - evaluator:
+                    params: [5]
+                    type: gt
+          - refId: C
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              expression: B
+              refId: C
+              type: classic_conditions
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          description: "{{ $values.slow_query_count.Value }} queries running >30 seconds"
+          summary: Warning - Slow queries detected
+          runbook_url: https://docs.landomo.com/runbooks/slow-queries
+        labels:
+          severity: warning
+          component: database
+          team: infrastructure

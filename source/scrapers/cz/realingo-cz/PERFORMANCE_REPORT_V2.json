@@ -1,0 +1,371 @@
+{
+  "timestamp": "2026-02-07T20:21:18.648Z",
+  "testDuration": 45.319,
+  "capacity": {
+    "totalListingsAvailable": 67597,
+    "byPurpose": {
+      "SELL": 46466,
+      "RENT": 21131
+    },
+    "byProperty": {
+      "FLAT": 67597,
+      "HOUSE": 67597,
+      "LAND": 67597,
+      "COMMERCIAL": 67597,
+      "OTHERS": 67597
+    },
+    "byPurposeAndProperty": {
+      "SELL": {
+        "FLAT": 10559,
+        "HOUSE": 12698,
+        "LAND": 15260,
+        "COMMERCIAL": 2930,
+        "OTHERS": 5019
+      },
+      "RENT": {
+        "FLAT": 9388,
+        "HOUSE": 601,
+        "LAND": 623,
+        "COMMERCIAL": 8688,
+        "OTHERS": 1831
+      }
+    },
+    "maxItemsPerQuery": 1000,
+    "queryTimestamps": [
+      1770495633321,
+      1770495662450,
+      1770495662862,
+      1770495663237,
+      1770495663663,
+      1770495664144,
+      1770495664557,
+      1770495665026,
+      1770495665447,
+      1770495665973,
+      1770495666446,
+      1770495666897,
+      1770495667124,
+      1770495667380,
+      1770495667852,
+      1770495668006,
+      1770495668154,
+      1770495668450,
+      1770495668635,
+      1770495669022,
+      1770495669451
+    ]
+  },
+  "speed": {
+    "queryCount": 5,
+    "totalDuration": 1552,
+    "averageQueryDuration": 310.4,
+    "totalItemsFetched": 1660,
+    "overallItemsPerSecond": 1069.5876288659795,
+    "fastestQuery": 267,
+    "slowestQuery": 357
+  },
+  "rateLimits": {
+    "rateLimited": false,
+    "queueDelayMs": 0,
+    "maxConcurrentQueries": 0,
+    "observed429Errors": 0,
+    "observed503Errors": 0
+  },
+  "queryMetrics": [
+    {
+      "testName": "total_all",
+      "first": 1,
+      "timestamp": 1770495633321,
+      "duration": 29129,
+      "itemsReturned": 1,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 0.0343300490919702,
+      "success": true
+    },
+    {
+      "testName": "by_purpose_SELL",
+      "purpose": "SELL",
+      "first": 1,
+      "timestamp": 1770495662450,
+      "duration": 311,
+      "itemsReturned": 1,
+      "totalAvailable": 46466,
+      "itemsPerSecond": 3.215434083601286,
+      "success": true
+    },
+    {
+      "testName": "by_purpose_RENT",
+      "purpose": "RENT",
+      "first": 1,
+      "timestamp": 1770495662862,
+      "duration": 273,
+      "itemsReturned": 1,
+      "totalAvailable": 21131,
+      "itemsPerSecond": 3.663003663003663,
+      "success": true
+    },
+    {
+      "testName": "by_property_FLAT",
+      "property": "FLAT",
+      "first": 1,
+      "timestamp": 1770495663237,
+      "duration": 325,
+      "itemsReturned": 1,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 3.076923076923077,
+      "success": true
+    },
+    {
+      "testName": "by_property_HOUSE",
+      "property": "HOUSE",
+      "first": 1,
+      "timestamp": 1770495663663,
+      "duration": 379,
+      "itemsReturned": 1,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 2.638522427440633,
+      "success": true
+    },
+    {
+      "testName": "by_property_LAND",
+      "property": "LAND",
+      "first": 1,
+      "timestamp": 1770495664144,
+      "duration": 311,
+      "itemsReturned": 1,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 3.215434083601286,
+      "success": true
+    },
+    {
+      "testName": "by_property_COMMERCIAL",
+      "property": "COMMERCIAL",
+      "first": 1,
+      "timestamp": 1770495664557,
+      "duration": 367,
+      "itemsReturned": 1,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 2.7247956403269753,
+      "success": true
+    },
+    {
+      "testName": "by_property_OTHERS",
+      "property": "OTHERS",
+      "first": 1,
+      "timestamp": 1770495665026,
+      "duration": 320,
+      "itemsReturned": 1,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 3.125,
+      "success": true
+    },
+    {
+      "testName": "SELL_FLAT",
+      "purpose": "SELL",
+      "property": "FLAT",
+      "first": 1,
+      "timestamp": 1770495665447,
+      "duration": 425,
+      "itemsReturned": 1,
+      "totalAvailable": 10559,
+      "itemsPerSecond": 2.352941176470588,
+      "success": true
+    },
+    {
+      "testName": "SELL_HOUSE",
+      "purpose": "SELL",
+      "property": "HOUSE",
+      "first": 1,
+      "timestamp": 1770495665973,
+      "duration": 372,
+      "itemsReturned": 1,
+      "totalAvailable": 12698,
+      "itemsPerSecond": 2.688172043010753,
+      "success": true
+    },
+    {
+      "testName": "SELL_LAND",
+      "purpose": "SELL",
+      "property": "LAND",
+      "first": 1,
+      "timestamp": 1770495666446,
+      "duration": 350,
+      "itemsReturned": 1,
+      "totalAvailable": 15260,
+      "itemsPerSecond": 2.857142857142857,
+      "success": true
+    },
+    {
+      "testName": "SELL_COMMERCIAL",
+      "purpose": "SELL",
+      "property": "COMMERCIAL",
+      "first": 1,
+      "timestamp": 1770495666897,
+      "duration": 126,
+      "itemsReturned": 1,
+      "totalAvailable": 2930,
+      "itemsPerSecond": 7.936507936507936,
+      "success": true
+    },
+    {
+      "testName": "SELL_OTHERS",
+      "purpose": "SELL",
+      "property": "OTHERS",
+      "first": 1,
+      "timestamp": 1770495667124,
+      "duration": 155,
+      "itemsReturned": 1,
+      "totalAvailable": 5019,
+      "itemsPerSecond": 6.451612903225806,
+      "success": true
+    },
+    {
+      "testName": "RENT_FLAT",
+      "purpose": "RENT",
+      "property": "FLAT",
+      "first": 1,
+      "timestamp": 1770495667380,
+      "duration": 371,
+      "itemsReturned": 1,
+      "totalAvailable": 9388,
+      "itemsPerSecond": 2.6954177897574128,
+      "success": true
+    },
+    {
+      "testName": "RENT_HOUSE",
+      "purpose": "RENT",
+      "property": "HOUSE",
+      "first": 1,
+      "timestamp": 1770495667852,
+      "duration": 52,
+      "itemsReturned": 1,
+      "totalAvailable": 601,
+      "itemsPerSecond": 19.230769230769234,
+      "success": true
+    },
+    {
+      "testName": "RENT_LAND",
+      "purpose": "RENT",
+      "property": "LAND",
+      "first": 1,
+      "timestamp": 1770495668006,
+      "duration": 47,
+      "itemsReturned": 1,
+      "totalAvailable": 623,
+      "itemsPerSecond": 21.27659574468085,
+      "success": true
+    },
+    {
+      "testName": "RENT_COMMERCIAL",
+      "purpose": "RENT",
+      "property": "COMMERCIAL",
+      "first": 1,
+      "timestamp": 1770495668154,
+      "duration": 195,
+      "itemsReturned": 1,
+      "totalAvailable": 8688,
+      "itemsPerSecond": 5.128205128205129,
+      "success": true
+    },
+    {
+      "testName": "RENT_OTHERS",
+      "purpose": "RENT",
+      "property": "OTHERS",
+      "first": 1,
+      "timestamp": 1770495668450,
+      "duration": 84,
+      "itemsReturned": 1,
+      "totalAvailable": 1831,
+      "itemsPerSecond": 11.904761904761903,
+      "success": true
+    },
+    {
+      "testName": "max_items_100",
+      "first": 100,
+      "timestamp": 1770495668635,
+      "duration": 285,
+      "itemsReturned": 100,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 350.8771929824561,
+      "success": true
+    },
+    {
+      "testName": "max_items_500",
+      "first": 500,
+      "timestamp": 1770495669022,
+      "duration": 328,
+      "itemsReturned": 500,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 1524.3902439024391,
+      "success": true
+    },
+    {
+      "testName": "max_items_1000",
+      "first": 1000,
+      "timestamp": 1770495669451,
+      "duration": 450,
+      "itemsReturned": 1000,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 2222.222222222222,
+      "success": true
+    },
+    {
+      "testName": "speed_test_10",
+      "first": 10,
+      "timestamp": 1770495670002,
+      "duration": 267,
+      "itemsReturned": 10,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 37.453183520599254,
+      "success": true
+    },
+    {
+      "testName": "speed_test_50",
+      "first": 50,
+      "timestamp": 1770495670471,
+      "duration": 293,
+      "itemsReturned": 50,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 170.64846416382255,
+      "success": true
+    },
+    {
+      "testName": "speed_test_100",
+      "first": 100,
+      "timestamp": 1770495670966,
+      "duration": 318,
+      "itemsReturned": 100,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 314.4654088050314,
+      "success": true
+    },
+    {
+      "testName": "speed_test_500",
+      "first": 500,
+      "timestamp": 1770495671485,
+      "duration": 357,
+      "itemsReturned": 500,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 1400.5602240896358,
+      "success": true
+    },
+    {
+      "testName": "speed_test_1000",
+      "first": 1000,
+      "timestamp": 1770495672043,
+      "duration": 317,
+      "itemsReturned": 1000,
+      "totalAvailable": 67597,
+      "itemsPerSecond": 3154.5741324921137,
+      "success": true
+    }
+  ],
+  "recommendations": [
+    "✓ API supports batch size of 1000+. Can fetch up to 1000 items per query efficiently.",
+    "✓ API is very fast (>20 items/s). Can reduce delays between requests to 100ms.",
+    "✓ No rate limiting detected. API is generous with rate limits.",
+    "✓ Use cursor-based pagination with first=1000 to minimize query count (~68 queries total)."
+  ],
+  "estimatedScrapeTime": "~0h 6m 41s",
+  "summary": "\n═══════════════════════════════════════════════════════════\nREALINGO PERFORMANCE TEST RESULTS\n═══════════════════════════════════════════════════════════\n\n📊 CAPACITY:\n  • Total listings: 67,597\n  • By purpose: SELL=46466, RENT=21131\n  • Max items per query: 1000\n  • Estimated number of queries needed: ~68\n\n⚡ SPEED:\n  • Queries executed: 5\n  • Average query time: 310ms\n  • Overall throughput: 1069.6 items/second\n  • Fastest query: 267ms\n  • Slowest query: 357ms\n\n🔒 RATE LIMITS:\n  • Rate limited: No\n  • 429 errors: 0\n  • 503 errors: 0\n\n⏱️  SCRAPING ESTIMATES:\n  • Estimated time (with 500ms delay): ~0h 6m 41s\n  • Recommended batch size: 1000\n\n═══════════════════════════════════════════════════════════\n"
+}

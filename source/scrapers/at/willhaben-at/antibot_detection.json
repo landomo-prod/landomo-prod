@@ -1,0 +1,11 @@
+{
+  "url": "https://www.willhaben.at",
+  "cloudflare": false,
+  "akamai": false,
+  "aws_waf": false,
+  "imperva": false,
+  "generic_waf": false,
+  "details": [],
+  "status_code": 404,
+  "error": null
+}

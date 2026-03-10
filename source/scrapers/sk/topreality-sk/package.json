@@ -1,0 +1,37 @@
+{
+  "name": "@landomo/scraper-topreality-sk",
+  "version": "1.0.0",
+  "description": "TopReality.sk scraper for landomo-world platform - uses REST APIs",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node --stack-size=8192 dist/index.js",
+    "clean": "rm -rf dist",
+    "test": "jest"
+  },
+  "keywords": [
+    "landomo",
+    "scraper",
+    "topreality-sk",
+    "slovakia",
+    "api"
+  ],
+  "dependencies": {
+    "@landomo/core": "file:../../../shared-components",
+    "@types/cheerio": "^0.22.35",
+    "axios": "^1.6.0",
+    "bullmq": "^5.0.0",
+    "cheerio": "^1.2.0",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+}

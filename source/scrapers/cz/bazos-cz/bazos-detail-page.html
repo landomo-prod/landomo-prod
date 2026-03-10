@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<title>Moderní apartmány 2KK v Sea Paradise Apartments - Zahraničí | Bazoš.cz</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Inzerát č. 214464437: Moderní apartmány 2KK v Sea Paradise Apartments, Cena: 2 457 000 Kč, Lokalita: Zahraničí. Popis: Nabízíme k prodeji moderní."><meta property="og:image" content="https://www.bazos.cz/img/1/437/214464437.jpg?t=1770325226"><meta property="og:title" content="Moderní apartmány 2KK v Sea Paradise Apartments - Zahraničí">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bazos.cz">
+<meta property="og:description" content="Inzerát č. 214464437: Moderní apartmány 2KK v Sea Paradise Apartments, Cena: 2 457 000 Kč, Lokalita: Zahraničí. Popis: Nabízíme k prodeji moderní.">
+<link rel="canonical" href="https://reality.bazos.cz/inzerat/214464437/moderni-apartman-s-dispozici-2kk-v-sea-paradise-apartments.php"><meta property="fb:admins" content="1055875657">
+<meta name="ROBOTS" content="max-image-preview:large">
+<link rel="preload" as="image" href="https://www.bazos.cz/img/1/437/214464437.jpg?t=1770325226"><link rel="stylesheet" href="https://www.bazos.cz/bazos66s.css" type="text/css"><link rel="preload" as="image" href="https://www.bazos.cz/obrazky/bazos.svg">
+<link rel="stylesheet" href="https://www.bazos.cz/bazosprint.css" type="text/css" media="print">
+<link rel="icon" href="https://www.bazos.cz/favicon.svg" type="image/svg+xml">
+<link rel="icon" HREF="https://www.bazos.cz/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="https://www.bazos.cz/apple-touch-icon.png">
+<script async="async" src="https://www.google.com/adsense/search/ads.js"></script>
+<script type="text/javascript" charset="utf-8">
+(function(g,o){g[o]=g[o]||function(){(g[o]['q']=g[o]['q']||[]).push(
+  arguments)},g[o]['t']=1*new Date})(window,'_googCsa');
+</script><script>
+var xhr = new XMLHttpRequest();
+var naseptavac_value = '';
+function naseptavac(value) {
+  if (value=='')  {
+  	naseptavac_value = '';
+  	document.getElementById('vysledek').innerHTML='';
+  	}
+else {
+	if (naseptavac_value == value) {
+		return false;
+	}
+	naseptavac_value = value;
+	setTimeout(function () {
+		if (naseptavac_value != value) {
+			return false;
+		}
+		xhr.onreadystatechange = function() {
+ 		 if (this.readyState == 4 && naseptavac_value == value){
+				document.getElementById('vysledek').innerHTML = this.responseText;
+			}
+ 		 };
+		xhr.open("POST", '/suggest.php');
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send('rubnas=RE&catnas=65&qnas='+encodeURIComponent(naseptavac_value));
+	}, 250);
+}
+}
+
+var naseptavacpsc_value = '';
+function naseptavacpsc(value) {
+  if (value=='')  {
+  	naseptavacpsc_value = '';
+  	document.getElementById('vysledekpsc').innerHTML='<table cellpadding=\"3\" cellspacing=\"0\" class=\"tablenaspsc\"><tr><td class=\"act\" onclick=\"getLocation();\"><b>Inzeráty v okolí</b></td></tr></table>';
+  	}
+else {
+	if (naseptavacpsc_value == value) {
+		return false;
+	}
+	naseptavacpsc_value = value;
+	setTimeout(function () {
+		if (naseptavacpsc_value != value) {
+			return false;
+		}
+		xhr.onreadystatechange = function() {
+ 		 if (this.readyState == 4 && naseptavacpsc_value == value){
+				document.getElementById('vysledekpsc').innerHTML = this.responseText;
+			}
+ 		 };
+		xhr.open("POST", '/suggestpsc.php');
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send('qnaspsc='+encodeURIComponent(naseptavacpsc_value));
+	}, 250);
+}
+}
+
+function getLocation() {
+if (navigator.geolocation) {navigator.geolocation.getCurrentPosition(showPosition);}
+else {document.getElementById('hlokalita').value = '';}
+}
+function showPosition(position) {
+		xhr.onreadystatechange = function() {
+ 		 if (this.readyState == 4){
+				document.getElementById('hlokalita').value = this.responseText;
+				document.forms['formt'].submit();
+			}
+ 		 };
+		xhr.open("POST", '/zip.php');
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send('latitude='+encodeURIComponent(position.coords.latitude)+'&longitude='+encodeURIComponent(position.coords.longitude));
+}
+
+function favouriteadd(value,params,obradresa) {
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200){
+				document.getElementById('favour').innerHTML = this.responseText;
+				document.getElementById('obrfavour').src = obradresa;
+			}
+  };
+xhr.open("POST", value);
+xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+xhr.send(params);
+}
+
+function odeslatrequest(value,params,overvalue) {
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4){
+				document.getElementById(overvalue).innerHTML = this.responseText;
+			}
+  };
+xhr.open("POST", value);
+xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+xhr.send(params);
+}
+function odeslatakci(postaction,value1,value2,value3) {
+document.getElementById('postaction').value = postaction;
+document.getElementById("postv1").value = value1;
+document.getElementById("postv2").value = value2;
+document.getElementById("postv3").value = value3;
+document.formaction.submit();
+}
+</script>
+<script src="https://www.bazos.cz/flickity2.js"></script></head>
+
+<body>
+
+
+<div class="sirka">
+<div class="listalogor">
+<div class="listalogol"><a href="https://www.bazos.cz/" title="Bazos.cz - Inzerce, bazar"><img src="https://www.bazos.cz/obrazky/bazos.svg" width="199" height="34" alt="Bazos.cz - Inzerce, inzeráty"></a></div>
+<div class="listalogom"><b>... inzerce pro každého</b></div>
+<div class="listalogop"><a href="https://www.bazos.cz/oblibene.php"><b>Oblíbené inzeráty</b></a> <a href="https://www.bazos.cz/moje-inzeraty.php"><b>Moje inzeráty</b></a> <a href="/pridat-inzerat.php"><b><span class=pridati>Přidat inzerát</span></b></a></div>
+</div>
+<form name="formt" id="formt" method=get action=/>
+<div class="listah">
+<div class="rubriky">
+<b>
+Co: <span class=vysokoli><span id="vysledek"></span><input type="search" onkeyup="naseptavac(this.value);" id=hledat name=hledat size="17" maxlength="256" value="" autocomplete="off" title="Co? Vyhledávaný výraz"></span>
+
+<select name="rubriky" onchange='this.form.submit();' title="Vyber rubriku">
+<option value="www">Všechny rubriky</option>
+<option value="auto">Auto</option><option value="deti">Děti</option><option value="dum">Dům a zahrada</option><option value="elektro">Elektro</option><option value="foto">Foto</option><option value="hudba">Hudba</option><option value="knihy">Knihy</option><option value="mobil">Mobily</option><option value="motorky">Motorky</option><option value="nabytek">Nábytek</option><option value="obleceni">Oblečení</option><option value="pc">PC</option><option value="prace">Práce</option><option value="reality" selected>Reality</option><option value="sluzby">Služby</option><option value="sport">Sport</option><option value="stroje">Stroje</option><option value="vstupenky">Vstupenky</option><option value="zvirata">Zvířata</option><option value="ostatni">Ostatní</option></select>
+
+Lokalita: <span class=vysokolipsc><span id="vysledekpsc"></span><input type="search" name="hlokalita" id="hlokalita" onkeyup="naseptavacpsc(this.value);" onclick="naseptavacpsc(this.value);" value="" size="4" maxlength="25" autocomplete="off" title="Kde? PSČ (místo)" style="-webkit-appearance: none;"></span>
+Okolí: <input name="humkreis" title="Okolí v km" value="10" size="3" style="width: 25px;"> km
+Cena od: <input name=cenaod title="Cena od Kč" maxlength="12" size="5" value=""> - do: <input name=cenado title="Cena do Kč" maxlength="12" size="5" value=""> Kč <input type="submit" name="Submit" value="Hledat">
+<input type="hidden" name="order" id="order"><input type="hidden" name="crp" id="crp"><input type="hidden" id="kitx" name="kitx" value="ano"></b>
+</div>
+</div>
+</form>
+<div class="drobky"><a href="https://www.bazos.cz/" title="Inzerce Bazoš">Hlavní stránka</a>  > <a href="https://reality.bazos.cz/">Reality</a> > <a href="https://reality.bazos.cz/prodam/">Prodej</a> > <a href="https://reality.bazos.cz/prodam/byt/">Byty</a> > <b>Inzerát č. 214464437</b></div>
+<br>
+
+
+<div class="flexmain"><div class="menuleft"><div class="nadpismenu"><a href="/prodam/" >Prodej</a></div>
+<div class="barvalmenu">
+<div class="barvaleva">
+<a href="/prodam/byt/"  id=zvyraznenikat>Byty</a>
+<a href="/prodam/dum/" >Domy</a>
+<a href="/prodam/projekty/" >Nové projekty</a>
+<a href="/prodam/garaz/" >Garáže</a>
+<a href="/prodam/restaurace/" >Hotely, penziony, restaurace</a>
+<a href="/prodam/chata/" >Chalupy, Chaty</a>
+<a href="/prodam/kancelar/" >Kanceláře</a>
+<a href="/prodam/prostory/" >Obchodní prostory</a>
+<a href="/prodam/pozemek/" >Pozemky</a>
+<a href="/prodam/sklad/" >Sklady</a>
+<a href="/prodam/zahrada/" >Zahrady</a>
+<a href="/prodam/ostatni/" >Ostatní</a>
+</div></div>
+
+<br>
+<div class="nadpismenu"><a href="/pronajmu/" >Pronájem</a></div>
+<div class="barvalmenu">
+<div class="barvaleva">
+<a href="/pronajmu/byt/" >Byty</a>
+<a href="/pronajmu/dum/" >Domy</a>
+<a href="/pronajmu/projekty/" >Nové projekty</a>
+<a href="/pronajmu/podnajem/" >Podnájem, spolubydlící</a>
+<a href="/pronajmu/garaz/" >Garáže</a>
+<a href="/pronajmu/restaurace/" >Hotely, penziony, restaurace</a>
+<a href="https://sluzby.bazos.cz/ubytovani/">Ubytování</a>
+<a href="/pronajmu/kancelar/" >Kanceláře</a>
+<a href="/pronajmu/prostory/" >Obchodní prostory</a>
+<a href="/pronajmu/pozemek/" >Pozemky</a>
+<a href="/pronajmu/sklad/" >Sklady</a>
+<a href="/pronajmu/zahrada/" >Zahrady</a>
+<a href="/pronajmu/ostatni/" >Ostatní</a>
+</div></div>
+
+
+<br><div class="mobilskryt" style="text-align: center;">
+<a style="font-size: 13px;text-decoration: none;color:#000000;" href="https://www.jasminka.cz/kniha/clemens-kuby-na-ceste-do-sousedni-dimenze.html" target="_blank" rel=”nofollow”><b>Knihkupectví Jasmínka</b><br>
+<span style="font-size: 13px;text-decoration: none;color:#ff6600;">
+<span style="color:#000000;">Clemens Kuby:</span> Na cestě do sousední dimenze<br><img src="https://www.jasminka.cz/images/v/dimenzev.jpg" width="100" alt="Knihkupectví Jasmínka" title="Knihkupectví Jasmínka" style="border: 1px solid Black;margin: 4px;">
+<br>
+<img src="https://www.bazos.cz/kosik.svg" alt="Jasminka" height="22" style="border: 0px;"> koupit</span></a></div>
+
+</div><div class="maincontent">
+
+
+<div class="listainzerat inzeratyflex">
+<div class="inzeratydetnadpis"><H1 class=nadpisdetail>Moderní apartmány 2KK v Sea Paradise Apartments</H1><span class=velikost10> - <span title="TOP 21x Platí do 17.3. 2026" class="ztop">TOP</span> - [9.2. 2026]</span></div>
+<div class="inzeratydetdel"><span onclick="odeslatakci('edit','214464437');return false;" class="paction">Smazat/ Upravit/ Topovat</span></div>
+</div><br><div class="fliobal"><div class="carousel"><div class="carousel-cell"><img class="carousel-cell-image" data-flickity-lazyload="https://www.bazos.cz/img/1/437/214464437.jpg?t=1770325226" src="https://www.bazos.cz/img/1/437/214464437.jpg?t=1770325226" width="595" height="600" alt="Moderní apartmány 2KK v Sea Paradise Apartments"></div><div class="carousel-cell"><img class="carousel-cell-image" data-flickity-lazyload="https://www.bazos.cz/img/2/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 2"></div><div class="carousel-cell"><img class="carousel-cell-image" data-flickity-lazyload="https://www.bazos.cz/img/3/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 3"></div><div class="carousel-cell"><img class="carousel-cell-image" data-flickity-lazyload="https://www.bazos.cz/img/4/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 4"></div><div class="carousel-cell"><img class="carousel-cell-image" data-flickity-lazyload="https://www.bazos.cz/img/5/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 5"></div></div><div class="flinavigace" id="nahledy1"><img onmouseover="flkty.select(0, false, true );" src="https://www.bazos.cz/img/1t/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 1" class="obrazekflithumb"><br><img onmouseover="flkty.select(1, false, true );" src="https://www.bazos.cz/img/2t/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 2" class="obrazekflithumb"><br><img onmouseover="flkty.select(2, false, true );" src="https://www.bazos.cz/img/3t/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 3" class="obrazekflithumb"><br><img onmouseover="flkty.select(3, false, true );" src="https://www.bazos.cz/img/4t/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 4" class="obrazekflithumb"><br><img onmouseover="flkty.select(4, false, true );" src="https://www.bazos.cz/img/5t/437/214464437.jpg?t=1770325226" alt="Moderní apartmány 2KK v Sea Paradise Apartments - 5" class="obrazekflithumb"><br></div></div><script>var flkty = new Flickity( '.carousel', {fullscreen: true,lazyLoad: 1,wrapAround: true,adaptiveHeight: true});</script>
+<div class=popisdetail>Nabízíme k prodeji moderní apartmány s dispozicí 2+KK, od 57m2 v Sea Paradise Apartments v obci Kraněvo u pobřeží Černého moře, 30km od letiště Varna. 250m od krásné pláže. S výborným investičním potenciálem. Apartmány jsou nyní ve výstavbě. Kolaudace 2027. Nyní časově omezená sleva o DPH. Roční výnos v případě pronájmu (sezóna ca 75 dní) od 180.000,-/rok. Více o nabídce apartmánů na https://www.seaparadise.apartments/cs</div><br>
+<table width="100%" cellpadding="5" cellspacing="0">
+<tr><td width="35%" valign=top class=listadvlevo>
+<table width="*" cellpadding="0" cellspacing="1">
+<tr><td height="22px" width="25%">Jméno:<br><br></td><td colspan=2><b><span onclick="odeslatakci('rating','9271014','7018598','Michal+Toman');return false;" class="paction">Michal Toman</span></b><br><br></td></tr>
+<tr id="overlaytel"><td height="22px" width="25%">Telefon:<br><br></td><td colspan=2><span class=teldetail onclick="odeslatrequest('/ad-phone.php','idi=214464437&idphone=7018598','overlaytel');"><span style="white-space: nowrap;">775... zobraz číslo</span></span><br><br></td></tr>
+<tr><td height="22px" width="25%">Lokalita:</td><td width="9%"><img src="https://www.bazos.cz/obrazky/map.svg" alt="Mapa" height="17"></td><td><a href="https://www.google.com/maps/place/58.889000,9.040000/@58.889000,9.040000,12z/data=!4m2!3m1!1s0x0:0x0" title="Přibližná lokalita" rel="nofollow">987 66</a> <a href="https://reality.bazos.cz/inzeraty/zahrani%C4%8D%C3%AD/98766/">Zahraničí</a></td></tr>
+<tr><td height="22px" width="25%"><br>Vidělo:</td><td colspan=2><br>2261 lidí</td></tr>
+<tr><td height="22px" width="25%"><br>Cena:</td><td colspan=2><br><b><span translate="no"> 2 457 000 Kč</span></b></td></tr>
+</table>
+</td>
+
+<td width="*" valign=top class=listadvpravo>
+
+<table cellpadding="0" cellspacing="1">
+<tr><td height="22px"><img src="https://www.bazos.cz/obrazky/user.svg" alt="Uživatel" height="17"></td><td><form name="formaction" method="post" style="display: inline;"><input type="hidden" id="postaction" name="postaction" value=""><input type="hidden" id="postv1" name="postv1" value=""><input type="hidden" id="postv2" name="postv2" value=""><input type="hidden" id="postv3" name="postv3" value=""></form>
+<span onclick="odeslatakci('rating','9271014','7018598','Michal+Toman');return false;" class="paction">Všechny inzeráty a hodnocení uživatele</span></td></tr>
+<tr><td height="22px"><img id="obrfavour" src="https://www.bazos.cz/obrazky/favourite.svg" alt="Oblíbené" height="18"></td><td><span id="favour"><a href="https://www.bazos.cz/oblibene.php" rel="nofollow">Přidat do oblíbených</a></span></td></tr>
+<tr><td height="22px"><img src="https://www.bazos.cz/obrazky/spam.svg" alt="Spam" height="17"></td><td><span onclick="odeslatakci('spam','214464437');return false;" class="paction">Označit špatný inzerát</span></td></tr>
+<tr><td height="22px"><img src="https://www.bazos.cz/obrazky/miscat.svg" alt="Chybná kategorie" height="17"></td><td><span onclick="odeslatakci('category','214464437');return false;" class="paction">Označit chybnou kategorii inzerátu</span></td></tr>
+<tr><td height="22px"><img src="https://www.bazos.cz/obrazky/print.svg" alt="Tisk" height="17"></td><td><a href="#" onclick="window.print()">Vytisknout inzerát</a></td></tr>
+<tr><td height="22px"><a href="https://www.facebook.com/sharer/sharer.php?u=https://reality.bazos.cz/inzerat/214464437/moderni-apartman-s-dispozici-2kk-v-sea-paradise-apartments.php" target="_blank" rel="nofollow"><img src="https://www.bazos.cz/obrazky/facebook.svg" alt="Facebook" height="22"></a></td><td><a href="https://www.facebook.com/sharer/sharer.php?u=https://reality.bazos.cz/inzerat/214464437/moderni-apartman-s-dispozici-2kk-v-sea-paradise-apartments.php" target="_blank" rel="nofollow">Sdílejte na Facebooku</a></td></tr>
+<tr><td height="22px"><img src="https://www.bazos.cz/obrazky/mail.svg" alt="Mail" height="17"></td><td><span onclick="odeslatakci('recommend','214464437');return false;" class="paction">Doporučit kamarádovi</span></td></tr>
+<tr><td height="22px"><img src="https://www.bazos.cz/obrazky/similar.svg" alt="Podobné" height="17"></td><td><a href="https://reality.bazos.cz/inzeraty/modern%C3%AD-apartm%C3%A1ny/">Vyhledat podobné inzeráty</a></td></tr>
+</table>
+
+</td></tr>
+</table>
+<br>
+
+<script>
+function nahledy() {
+  var na1 = document.getElementById("nahledy1");
+  var na2 = document.getElementById("nahledy2");
+  var na3 = document.getElementById("nahledy3");
+  var na4 = document.getElementById("nahledy4");
+  if (na1.style.display === "none") {
+    na1.style.display = "block";
+    na2.style.display = "block";
+    na3.style.display = "none";
+    na4.style.display = "none";
+  } else {
+    na1.style.display = "none";
+    na2.style.display = "none";
+    na3.style.display = "block";
+    na4.style.display = "block";
+  }
+}
+</script>
+
+
+<div class="kontaktniformular"><div class="oranzovy" id="overlaymail"><b>Kontaktovat inzerenta emailem</b><br><br>
+Kontaktovat emailem může pouze ověřený uživatel.<br>
+Ověření je zdarma.<br>
+<br>
+Vaše telefonní číslo <span class="ztop">*</span><br>
+<input type="text" name="teloverit2" id="teloverit2" maxlength="30" autocomplete="off" onkeydown="if (event.keyCode == 13) odeslatrequest('/ad-mail.php','idi=214464437&teloverit='+encodeURIComponent(document.getElementById('teloverit2').value),'overlaymail');">
+<br><br>
+<button type="button" id="mailbutton" onclick="odeslatrequest('/ad-mail.php','idi=214464437&teloverit='+encodeURIComponent(document.getElementById('teloverit2').value),'overlaymail');">Odeslat</button>
+</div></div>
+
+
+<br>
+
+<div class="podobne">
+<br><br>
+<div class="listainzerat">Podobné inzeráty</div><div id="container_one"></div>
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214752153/prodej-bytu-2kk-46-m-durres-albanie-evc-00084.php"><img src="https://www.bazos.cz/img/1t/153/214752153.jpg?t=1770638348" class="obrazek" alt="Prodej bytu 2+kk 46 m², durres, Albánie, ev.č. 00084" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214752153/prodej-bytu-2kk-46-m-durres-albanie-evc-00084.php">Prodej bytu 2+kk 46 m², durres, Albánie, ev.č. 00084</a></span><span class=velikost10> - [9.2. 2026]</span><br>
+<div class=popis>Ev.č. 00084
+Prodej bytu 2+kk – Golem, Durrës, Albánie
+
+Cena: 62 000 €
+Dispozice: 2+kk (obývací pokoj s kuchyní + 1 ložnice)
+Plocha: 45 m² užitná / 51 m² celková
+Patro: 2. z 7
+Výtah: ano
+Typ nemovitosti: byt v obytném domě
+Lokalita: Golem – po ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 1 502 880 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">44 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214752153');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214752153');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','9203721','7286696','Apartm%C3%A1ny+Alb%C3%A1nie+%28JRS+real+s.r.o.%29');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214752153');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214751514/prodej-bytu-2kk-51-m-durres-albanie-evc-00083.php"><img src="https://www.bazos.cz/img/1t/514/214751514.jpg" class="obrazek" alt="Prodej bytu 2+kk 51 m², durres, Albánie, ev.č. 00083" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214751514/prodej-bytu-2kk-51-m-durres-albanie-evc-00083.php">Prodej bytu 2+kk 51 m², durres, Albánie, ev.č. 00083</a></span><span class=velikost10> - [9.2. 2026]</span><br>
+<div class=popis>Ev.č. 00083
+️ Prodej bytu 2+kk – Pláž Hekurudha, Durrës, Albánie
+
+Cena: 98 000 €
+Dispozice: 2+kk (obývací pokoj s kuchyní + 1 ložnice)
+Podlahová plocha: 51 m² (užitná) / 57 m² (celková)
+Podlaží: 6. patro
+Status: použitý / k dispozici
+Výtah: an ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 2 375 520 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">43 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214751514');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214751514');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','9203721','7286696','Apartm%C3%A1ny+Alb%C3%A1nie+%28JRS+real+s.r.o.%29');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214751514');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214743511/nova-moderni-adresa-u-laguny-mestsky-zivotni-styl-s-vyso.php"><img src="https://www.bazos.cz/img/1t/511/214743511.jpg" class="obrazek" alt="🌟 Nová moderní adresa u laguny: Městský životní styl s vyso" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214743511/nova-moderni-adresa-u-laguny-mestsky-zivotni-styl-s-vyso.php">🌟 Nová moderní adresa u laguny: Městský životní styl s vyso</a></span><span class=velikost10> - [9.2. 2026]</span><br>
+<div class=popis>Rove Home Meydan Horizon přichází jako jeden z nejzajímavějších nových projektů v oblasti nemovitostí v Dubaji – spojuje kreativní městský design, kompletně vybavené apartmány a strategickou polohu v rozvíjející se čtvrti Meydan Horizon. Projekt půso ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 1 616 667 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">45 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214743511');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214743511');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','8639430','6675789','Ing.+David+Lehotsky');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214743511');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214731090/hurghada-studio-s-vyhledem-na-more.php"><img src="https://www.bazos.cz/img/1t/090/214731090.jpg" class="obrazek" alt="Hurghada studio s výhledem na moře" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214731090/hurghada-studio-s-vyhledem-na-more.php">Hurghada studio s výhledem na moře</a></span><span class=velikost10> - [9.2. 2026]</span><br>
+<div class=popis>Nabízím k prodeji studio v udržovaném resortu s bazény, vlastní pláží, zahradou a plážovou restaurací. 
+Studio se nachází ve 4. NP s výhledem na moře a celý resort. Byt je kompletně vybavený a připravený k nastěhování. V případě zájmu je možné i spr ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 1 550 000 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">74 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214731090');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214731090');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','8793018','6805745','Aneta+Abdelkader');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214731090');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214675799/spanelsko-prodej-zarizeneho-3-pokojoveho-bytu.php"><img src="https://www.bazos.cz/img/1t/799/214675799.jpg" class="obrazek" alt="Španělsko, Prodej zařízeného 3 pokojového bytu" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214675799/spanelsko-prodej-zarizeneho-3-pokojoveho-bytu.php">Španělsko, Prodej zařízeného 3 pokojového bytu</a></span><span class=velikost10> - [8.2. 2026]</span><br>
+<div class=popis>Španělsko, Prodej zařízeného 3 pokojového bytu o rozměrech 50m2, ve dvoupodlažním domě s verandou. Byt se nachází v obytném komplexu se společným venkovním bazénem, tenisovým kurtem, a menším fotbalovým hřištěm.
+
+Moře je vzdálené od domu přibližně  ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 3 912 044 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">270 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214675799');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214675799');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','8770687','6780127','Martin+Nesvarba');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214675799');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214619715/apartman-2kk-v-royal-palm-svaty-vlas-bulharsko-68m2.php"><img src="https://www.bazos.cz/img/1t/715/214619715.jpg" class="obrazek" alt="Apartmán 2+kk v Royal Palm, Svatý Vlas, Bulharsko, 68m2" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214619715/apartman-2kk-v-royal-palm-svaty-vlas-bulharsko-68m2.php">Apartmán 2+kk v Royal Palm, Svatý Vlas, Bulharsko, 68m2</a></span><span class=velikost10> - [6.2. 2026]</span><br>
+<div class=popis>BD11660
+Cena - 102 000 Euro
+
+Prostorný apartmán 2+kk v Royal Palm, Svatý Vlas – Investice s výhledem na moře jen 200 m od pláže!
+Máte jedinečnou šanci získat skvělou nemovitost! Představujeme vám dvoupokojový apartmán o rozloze 68 m² s výhledem n ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 2 505 000 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">170 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214619715');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214619715');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','7610021','2795131','AlenaReality');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214619715');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214619023/investicny-apartman-dom-byt-albania.php"><img src="https://www.bazos.cz/img/1t/023/214619023.jpg" class="obrazek" alt="Investicný apartmán dom byt ALBANIA" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214619023/investicny-apartman-dom-byt-albania.php">Investicný apartmán dom byt ALBANIA</a></span><span class=velikost10> - [6.2. 2026]</span><br>
+<div class=popis>Hľadáte apartmán, byt, dom či inú nehnuteľnosť pri mori za ešte stále priaznivú cenu za účelom bývania, dovolenkovania alebo investovania?
+Rád Vám sprostredkujem predaj nehnuteľnosti v Albánsku. Spolupracujem s dôveryhodnou realitnou kanceláriou, kt ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 1 334 000 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">148 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214619023');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214619023');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','8566319','6545699','Martin');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214619023');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214601515/prodej-byty2kk-68-m2-zdislavy-z-lemberka-317-47125-jab.php"><img src="https://www.bazos.cz/img/1t/515/214601515.jpg" class="obrazek" alt="Prodej, byty/2+kk, 68 m2, Zdislavy z Lemberka 317, 47125 Jab" width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214601515/prodej-byty2kk-68-m2-zdislavy-z-lemberka-317-47125-jab.php">Prodej, byty/2+kk, 68 m2, Zdislavy z Lemberka 317, 47125 Jab</a></span><span class=velikost10> - [6.2. 2026]</span><br>
+<div class=popis>Prostorný podkrovní byt 2+kk včetně vybavení v centru Jablonného v PodještědíZajímavá nabídka ke koupi vkusně zařízeného bytu v Jablonném v Podještědí s parkováním, sklepem a komorou na patře.
+
+Bytové jednotky v celém domě byly před pěti lety rekonst ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 3 690 000 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">98 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214601515');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214601515');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','917013','8546','REALITYSPOLU');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214601515');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214546215/apartman-v-chorvatsku-400-m-od-mora.php"><img src="https://www.bazos.cz/img/1t/215/214546215.jpg" class="obrazek" alt="Apartmán v Chorvátsku 400 m od mora." width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214546215/apartman-v-chorvatsku-400-m-od-mora.php">Apartmán v Chorvátsku 400 m od mora.</a></span><span class=velikost10> - [5.2. 2026]</span><br>
+<div class=popis>DADOT ponúka exkluzívne na predaj 2-izbový apartmán v obľúbenej dovolenkovej oblasti ostrov VIR, iba 400 metrov od mora. Apartmán sa nachádza na prízemí moderného bytového domu so štzrmi bytovými jednotkami a ideálnou polohou pre letný oddych aj turi ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 3 102 000 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">137 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214546215');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214546215');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','8583791','6565789','Patrik');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214546215');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div class="inzeraty inzeratyflex">
+<div class="inzeratynadpis"><a href="/inzerat/214546200/chorvatsko-apartman-100-m-od-mora.php"><img src="https://www.bazos.cz/img/1t/200/214546200.jpg" class="obrazek" alt="Chorvátsko apartmán 100 m od mora." width="170" height="128"></a>
+<span class=nadpis><a href="/inzerat/214546200/chorvatsko-apartman-100-m-od-mora.php">Chorvátsko apartmán 100 m od mora.</a></span><span class=velikost10> - [5.2. 2026]</span><br>
+<div class=popis>DADOT ponúka exkluzívne na predaj 2-izbový apartmán v obľúbenej dovolenkovej oblasti ostrov VIR, iba 100 metrov od mora. Apartmán sa nachádza na prízemí moderného bytového domu a ideálnou polohou pre letný oddych aj turistický prenájom.
+
+Dispozícia ...</div><br><br>
+</div>
+<div class="inzeratycena"><b><span translate="no"> 3 200 000 Kč</span></b></div>
+<div class="inzeratylok">Zahraničí<br>987 66</div>
+<div class="inzeratyview">215 x</div>
+<div class="inzeratyakce">
+<span onclick="odeslatakci('spam','214546200');return false;" class="akce paction">Označit špatný inzerát</span> <span onclick="odeslatakci('category','214546200');return false;" class="akce paction">Chybnou kategorii</span> <span onclick="odeslatakci('rating','8583791','6565789','Patrik');return false;" class="akce paction">Ohodnotit uživatele</span> <span onclick="odeslatakci('edit','214546200');return false;" class="akce paction">Smazat/Upravit/Topovat</span>
+</div>
+</div>
+
+<div id="container_two"></div>
+<script type="text/javascript" charset="utf-8">
+var pageOptions = {
+  'pubId': 'pub-3645948300403337',
+  'query' : 'moderní apartmány 2kk v sea',
+  'channel': '4133833399',
+  'linkTarget' : '_blank',
+  'personalizedAds' : 'false',
+  'ivt': false,
+'styleId' : '6171314811',  'hl': 'cs'
+};
+
+var adblock1 = {
+  'container': 'container_one',
+  'width': 'auto',
+  'number' : 1
+};
+
+var adblock2 = {
+  'container': 'container_two',
+  'width': 'auto',
+  'number' : 2
+};
+
+_googCsa('ads', pageOptions, adblock1, adblock2);
+
+</script>
+<br>
+
+</div>
+
+
+</div></div><br>
+
+&copy;2026 Bazoš -  <b>Inzerce, Bazar Byty</b><br>
+<a href="https://www.bazos.cz/napoveda.php">Nápověda</a>, <a href="https://www.bazos.cz/dotazy.php">Dotazy</a>, <a href="https://www.bazos.cz/hodnoceni.php">Hodnocení</a>, <a href="https://www.bazos.cz/kontakt.php">Kontakt</a>, <a href="https://www.bazos.cz/reklama.php">Reklama</a>, <a href="https://www.bazos.cz/podminky.php">Podmínky</a>, <a href="https://www.bazos.cz/ochrana-udaju.php">Ochrana údajů</a>, <a href="https://www.bazos.cz/rss.php?rub=re&cat=65&typ=1">RSS</a>, <form name="formvkm" id="formvkm" method="post" style="display: inline;"><input type="hidden" name="vkm" value="m"><input type="submit" class="vkm" value="Mobilní verze"></form><br>
+
+Inzeráty Reality celkem: <b>41685</b>, za 24 hodin: <b>2359</b><br><br>
+<a href="https://www.bazos.cz/mapa-kategorie.php">Mapa kategorií</a>, <a href="https://reality.bazos.cz/mapa-search.php">Nejvyhledávanější výrazy</a>
+<br>
+Země: <a href="https://reality.bazos.cz">Česká republika</a>, <a href="https://reality.bazos.sk">Slovensko</a>, <a href="https://nieruchomosci.bazos.pl">Polsko</a>, <a href="https://immobilien.bazos.at">Rakousko</a>
+<br>
+<br>
+</div>
+
+<script src="https://www.bazos.cz/cookie-consent.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palette":"light","language":"cs","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"cookie_domain": "bazos.cz"});
+});
+</script>
+<a href="#" id="open_preferences_center"> </a>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZW1QTHKBB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NZW1QTHKBB');
+</script>
+
+</body>
+</html>

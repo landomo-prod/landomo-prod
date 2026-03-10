@@ -1,0 +1,56 @@
+
+=== PERFORMANCE TEST REPORT ===
+
+Test Duration: 7914ms (7.91s)
+Test Completed: 2026-02-07T20:18:12.839Z
+
+--- CAPACITY METRICS ---
+
+Total Estates Available: 0
+
+By Offer Type:
+  SALE: 0 (NaN%)
+  RENT: 0 (NaN%)
+
+By Property Type:
+  FLAT: 0 (NaN%)
+  HOUSE: 0 (NaN%)
+  LAND: 0 (NaN%)
+  COMMERCIAL: 0 (NaN%)
+  ROOM: 0 (NaN%)
+
+By Property Type & Offer Type:
+  SALE:
+    FLAT: 0
+    HOUSE: 0
+    LAND: 0
+    COMMERCIAL: 0
+    ROOM: 0
+  RENT:
+    FLAT: 0
+    HOUSE: 0
+    LAND: 0
+    COMMERCIAL: 0
+    ROOM: 0
+
+--- SPEED METRICS ---
+
+Total API Requests Made: 0
+Total Request Time: 0ms
+Average Response Time: 0.00ms
+Min Response Time: Infinityms
+Max Response Time: 0.00ms
+
+--- SCRAPING CAPACITY ---
+
+Listings Per Second (test): NaN
+Estimated Full Scrape Time: 0.00s (0.00m)
+Estimated Listings/Second (full): NaN
+
+--- PAGINATION INFO ---
+
+API Page Size: 100 listings
+Total Pages Needed: 0
+Recommended Batch Size: 100
+Recommended Delay Between Requests: 500ms
+

@@ -1,0 +1,677 @@
+{
+  "title": "Landomo Platform Overview",
+  "tags": [
+    "landomo",
+    "platform",
+    "overview"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "uid": "landomo-platform-overview",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Total Properties",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Total\" FROM properties",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 100,
+                "color": "yellow"
+              },
+              {
+                "value": 1000,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Active Listings",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Active\" FROM properties WHERE status = 'active'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 50,
+                "color": "yellow"
+              },
+              {
+                "value": 500,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 3,
+      "title": "New Today",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"New Today\" FROM properties WHERE created_at >= CURRENT_DATE",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              },
+              {
+                "value": 10,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Active Portals",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(DISTINCT portal) as \"Portals\" FROM scrape_runs WHERE started_at > NOW() - INTERVAL '24 hours'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 1,
+                "color": "yellow"
+              },
+              {
+                "value": 5,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Ingestion Rate (Last Hour)",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Rate\" FROM ingestion_log WHERE ingested_at > NOW() - INTERVAL '1 hour'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 10,
+                "color": "yellow"
+              },
+              {
+                "value": 100,
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "short",
+          "decimals": 0
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Stale Listings",
+      "type": "stat",
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT COUNT(*) as \"Stale\" FROM properties WHERE status = 'removed' AND last_seen_at < NOW() - INTERVAL '72 hours'",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 50,
+                "color": "yellow"
+              },
+              {
+                "value": 200,
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 7,
+      "title": "Ingestion Rate (Properties/Minute)",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  date_trunc('minute', ingested_at) as time,\n  COUNT(*) as \"Properties Ingested\"\nFROM ingestion_log \nWHERE ingested_at > NOW() - INTERVAL '6 hours'\nGROUP BY time \nORDER BY time",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 20,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Properties by Status",
+      "type": "piechart",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  COALESCE(status, 'unknown') as metric,\n  COUNT(*) as value \nFROM properties \nGROUP BY status",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "pieType": "donut",
+        "displayLabels": [
+          "name",
+          "percent"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "title": "Properties by Type",
+      "type": "piechart",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  COALESCE(property_type, 'unknown') as metric,\n  COUNT(*) as value \nFROM properties \nGROUP BY property_type \nORDER BY value DESC \nLIMIT 10",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "pieType": "pie",
+        "displayLabels": [
+          "name",
+          "percent"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "title": "Properties by Portal",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal as metric,\n  COUNT(*) as value \nFROM properties \nGROUP BY portal \nORDER BY value DESC \nLIMIT 15",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Properties by Country",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  country as metric,\n  COUNT(*) as value \nFROM properties \nGROUP BY country \nORDER BY value DESC",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "lcd",
+        "showUnfilled": false
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              },
+              {
+                "value": 100,
+                "color": "green"
+              },
+              {
+                "value": 1000,
+                "color": "yellow"
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "title": "Price Distribution",
+      "type": "histogram",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT price FROM properties WHERE price > 0 AND price < 5000000 AND currency = 'EUR'",
+          "format": "table"
+        }
+      ],
+      "options": {
+        "bucketOffset": 0,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "title": "Recent Scrape Activity",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal,\n  status,\n  started_at,\n  finished_at,\n  listings_found,\n  listings_new,\n  listings_updated,\n  EXTRACT(EPOCH FROM (COALESCE(finished_at, NOW()) - started_at)) as duration_seconds\nFROM scrape_runs \nORDER BY started_at DESC \nLIMIT 20",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "portal": 0,
+              "status": 1,
+              "started_at": 2,
+              "finished_at": 3,
+              "duration_seconds": 4,
+              "listings_found": 5,
+              "listings_new": 6,
+              "listings_updated": 7
+            },
+            "renameByName": {
+              "portal": "Portal",
+              "status": "Status",
+              "started_at": "Started",
+              "finished_at": "Finished",
+              "duration_seconds": "Duration (s)",
+              "listings_found": "Found",
+              "listings_new": "New",
+              "listings_updated": "Updated"
+            }
+          }
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      }
+    },
+    {
+      "id": 14,
+      "title": "Latest Properties",
+      "type": "table",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PostgreSQL-Czech"
+          },
+          "rawSql": "SELECT \n  portal,\n  title,\n  price,\n  currency,\n  property_type,\n  city,\n  status,\n  created_at\nFROM properties \nORDER BY created_at DESC \nLIMIT 20",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "portal": 0,
+              "title": 1,
+              "price": 2,
+              "currency": 3,
+              "property_type": 4,
+              "city": 5,
+              "status": 6,
+              "created_at": 7
+            },
+            "renameByName": {
+              "portal": "Portal",
+              "title": "Title",
+              "price": "Price",
+              "currency": "Currency",
+              "property_type": "Type",
+              "city": "City",
+              "status": "Status",
+              "created_at": "Created"
+            }
+          }
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    }
+  ],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m"
+    ]
+  }
+}

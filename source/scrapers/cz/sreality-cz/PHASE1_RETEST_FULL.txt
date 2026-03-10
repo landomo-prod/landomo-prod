@@ -1,0 +1,229 @@
+Starting Phase 1 Field Extraction Test with Real SReality API Data
+===================================================================
+
+Step 1: Fetching listings from multiple property categories...
+
+  [Category 1] Fetched 10 listings
+  [Category 2] Fetched 10 listings
+  [Category 3] Fetched 10 listings
+
+Step 2: Fetching full details for 8 listings...
+
+[1/8] hash_id 1723728716... OK (1/5)
+[2/8] hash_id 895644492... OK (1/5)
+[3/8] hash_id 815600460... OK (1/5)
+[4/8] hash_id 2405020492... OK (2/5)
+[5/8] hash_id 1764401996... OK (2/5)
+[6/8] hash_id 2397373260... OK (1/5)
+[7/8] hash_id 1649832780... OK (1/5)
+[8/8] hash_id 328008268... OK (1/5)
+
+
+========== PHASE 1 FIELD EXTRACTION TEST REPORT ==========
+
+Timestamp: 2026-02-07T19:35:21.336Z
+Data Source: Real SReality API (Apartments, Houses, Land)
+Total Listings Tested: 8
+
+Property Types Tested:
+  - apartment: 3
+  - house: 3
+  - land: 2
+
+
+Field Extraction Success Rates:
+================================
+Phase 1 fields to track:
+  has_parking: 0% (0/8)
+  has_garage: 0% (0/8)
+  area_total: 63% (5/8)
+  area_plot: 63% (5/8)
+  year_built: 0% (0/8)
+
+Overall Enrichment: 25% of Phase 1 fields successfully extracted
+
+
+Example Extracted Values:
+==========================
+has_parking: (not found in test data)
+has_garage: (not found in test data)
+area_total: 107
+area_plot: 2445
+year_built: (not found in test data)
+
+
+Detailed Results by Listing:
+=============================
+
+Hash ID: 1723728716 (apartment)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: 107 m²
+  area_plot: undefined
+  year_built: undefined
+  Fields extracted: 1/5
+
+Hash ID: 895644492 (apartment)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: 55 m²
+  area_plot: undefined
+  year_built: undefined
+  Fields extracted: 1/5
+
+Hash ID: 815600460 (apartment)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: 88 m²
+  area_plot: undefined
+  year_built: undefined
+  Fields extracted: 1/5
+
+Hash ID: 2405020492 (house)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: 444 m²
+  area_plot: 2445 m²
+  year_built: undefined
+  Fields extracted: 2/5
+
+Hash ID: 1764401996 (house)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: 46 m²
+  area_plot: 464 m²
+  year_built: undefined
+  Fields extracted: 2/5
+
+Hash ID: 2397373260 (house)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: undefined
+  area_plot: 412 m²
+  year_built: undefined
+  Fields extracted: 1/5
+
+Hash ID: 1649832780 (land)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: undefined
+  area_plot: 5220 m²
+  year_built: undefined
+  Fields extracted: 1/5
+
+Hash ID: 328008268 (land)
+  has_parking: undefined
+  has_garage: undefined
+  area_total: undefined
+  area_plot: 1074 m²
+  year_built: undefined
+  Fields extracted: 1/5
+
+
+========== JSON TEST RESULTS ==========
+
+{
+  "timestamp": "2026-02-07T19:35:21.336Z",
+  "data_source": "real_api",
+  "total_listings_tested": 8,
+  "property_types": {
+    "apartment": 3,
+    "house": 3,
+    "land": 2
+  },
+  "field_extraction_success": {
+    "has_parking": {
+      "rate": 0,
+      "count": 0,
+      "total": 8
+    },
+    "has_garage": {
+      "rate": 0,
+      "count": 0,
+      "total": 8
+    },
+    "area_total": {
+      "rate": 63,
+      "count": 5,
+      "total": 8
+    },
+    "area_plot": {
+      "rate": 63,
+      "count": 5,
+      "total": 8
+    },
+    "year_built": {
+      "rate": 0,
+      "count": 0,
+      "total": 8
+    }
+  },
+  "results": [
+    {
+      "hash_id": 1723728716,
+      "property_type": "apartment",
+      "area_total": 107,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 895644492,
+      "property_type": "apartment",
+      "area_total": 55,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 815600460,
+      "property_type": "apartment",
+      "area_total": 88,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 2405020492,
+      "property_type": "house",
+      "area_total": 444,
+      "area_plot": 2445,
+      "success": 2,
+      "total": 5
+    },
+    {
+      "hash_id": 1764401996,
+      "property_type": "house",
+      "area_total": 46,
+      "area_plot": 464,
+      "success": 2,
+      "total": 5
+    },
+    {
+      "hash_id": 2397373260,
+      "property_type": "house",
+      "area_plot": 412,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 1649832780,
+      "property_type": "land",
+      "area_plot": 5220,
+      "success": 1,
+      "total": 5
+    },
+    {
+      "hash_id": 328008268,
+      "property_type": "land",
+      "area_plot": 1074,
+      "success": 1,
+      "total": 5
+    }
+  ],
+  "example_values": {
+    "area_total": 107,
+    "area_plot": 2445
+  },
+  "errors": []
+}
+
+
+Results saved to: test_results_phase1.json

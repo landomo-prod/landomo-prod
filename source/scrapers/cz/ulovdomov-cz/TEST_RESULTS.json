@@ -1,0 +1,202 @@
+JSON TEST RESULTS
+================================================================================
+{
+  "timestamp": "2026-02-07T20:09:45.226Z",
+  "scraper": "ulovdomov",
+  "compilation_status": "success",
+  "compilation_errors": 0,
+  "code_structure": {
+    "files_present": [
+      "index.ts",
+      "ulovdomovTypes.ts",
+      "listingsScraper.ts",
+      "ulovdomovTransformer.ts",
+      "ingestAdapter.ts"
+    ],
+    "missing_files": [],
+    "all_files_valid": true
+  },
+  "transformer_tests": {
+    "total_listings_tested": 5,
+    "successful_transformations": 5,
+    "failed_transformations": 0,
+    "transformation_errors": [],
+    "sample_transformed": [
+      {
+        "original_id": "UD-001-SALE",
+        "original_title": "2+1 flat in Prague city center",
+        "transformed_type": "apartment",
+        "transaction_type": "sale",
+        "portal_metadata_fields": 30,
+        "country_specific_fields": 21
+      },
+      {
+        "original_id": "UD-002-RENT",
+        "original_title": "Studio apartment in Vinohrady",
+        "transformed_type": "apartment",
+        "transaction_type": "rent",
+        "portal_metadata_fields": 30,
+        "country_specific_fields": 21
+      },
+      {
+        "original_id": "UD-003-HOUSE",
+        "original_title": "Family house in Kunratice",
+        "transformed_type": "house",
+        "transaction_type": "sale",
+        "portal_metadata_fields": 30,
+        "country_specific_fields": 21
+      }
+    ]
+  },
+  "field_coverage": {
+    "tier_1_fields": {
+      "required_fields": [
+        "title",
+        "price",
+        "currency",
+        "property_type",
+        "transaction_type",
+        "location",
+        "source_url",
+        "source_platform"
+      ],
+      "found_fields": [
+        "title",
+        "price",
+        "currency",
+        "property_type",
+        "transaction_type",
+        "location",
+        "source_url",
+        "source_platform"
+      ],
+      "coverage_percent": 100,
+      "missing_fields": []
+    },
+    "tier_2_czech_fields": {
+      "available_fields": [
+        "czech_disposition",
+        "czech_ownership",
+        "condition",
+        "furnished",
+        "energy_rating",
+        "heating_type",
+        "construction_type",
+        "building_type",
+        "ownership_type",
+        "area_living",
+        "total_floors",
+        "floor_location",
+        "floor_number",
+        "city",
+        "district",
+        "street",
+        "coordinates",
+        "image_urls",
+        "image_count",
+        "published_date",
+        "updated_date"
+      ],
+      "found_fields": [
+        "czech_disposition",
+        "czech_ownership",
+        "condition",
+        "furnished",
+        "energy_rating",
+        "heating_type",
+        "construction_type",
+        "building_type",
+        "ownership_type",
+        "area_living",
+        "total_floors",
+        "floor_location",
+        "floor_number",
+        "city",
+        "district",
+        "street",
+        "coordinates",
+        "image_urls",
+        "image_count",
+        "published_date",
+        "updated_date"
+      ],
+      "coverage_percent": 100,
+      "missing_fields": []
+    },
+    "tier_3_portal_fields": {
+      "available_fields": [
+        "id",
+        "url",
+        "property_type",
+        "offer_type",
+        "dispozice",
+        "total_floors",
+        "floor",
+        "ownership",
+        "construction",
+        "condition",
+        "furnished",
+        "energy_efficiency",
+        "location",
+        "parking",
+        "balcony",
+        "terrace",
+        "cellar",
+        "elevator",
+        "barrier_free",
+        "images",
+        "images_count",
+        "features",
+        "description",
+        "price_note",
+        "published",
+        "updated",
+        "contact_phone",
+        "contact_email",
+        "agent_name",
+        "agent_company"
+      ],
+      "found_fields": [
+        "id",
+        "url",
+        "property_type",
+        "offer_type",
+        "dispozice",
+        "total_floors",
+        "floor",
+        "ownership",
+        "construction",
+        "condition",
+        "furnished",
+        "energy_efficiency",
+        "location",
+        "parking",
+        "balcony",
+        "terrace",
+        "cellar",
+        "elevator",
+        "barrier_free",
+        "images",
+        "features",
+        "description",
+        "price_note",
+        "published",
+        "updated",
+        "contact_phone",
+        "contact_email",
+        "agent_name",
+        "agent_company"
+      ],
+      "coverage_percent": 97,
+      "field_count": 30,
+      "missing_fields": [
+        "images_count"
+      ]
+    }
+  },
+  "summary": {
+    "overall_status": "PASS",
+    "total_issues": 0,
+    "issues": []
+  }
+}

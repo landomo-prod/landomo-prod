@@ -1,0 +1,2951 @@
+{
+  "meta": {
+    "scraper": "bezrealitky-cz",
+    "listings_fetched": 1599,
+    "details_fetched": 0,
+    "note": "GraphQL returns full data in listing response",
+    "timestamp": "2026-02-27T08:06:37.433Z"
+  },
+  "listing_fields": {
+    "activationPending": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "active": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "true"
+      ],
+      "value_counts": {
+        "true": 1599
+      }
+    },
+    "address": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1357,
+      "sample_values": [
+        "T\u0159ebenick\u00e1, Praha - Kobylisy",
+        "Na Neklance, Praha - Sm\u00edchov",
+        "Hurbanova, Praha - Kr\u010d",
+        "Petrsk\u00e1, Praha - Nov\u00e9 M\u011bsto",
+        "Horsk\u00e1, Vrchlab\u00ed - Ho\u0159ej\u0161\u00ed Vrchlab\u00ed, Kr\u00e1lov\u00e9hradeck\u00fd kraj",
+        "U P\u016fj\u010dovny, Praha - Nov\u00e9 M\u011bsto",
+        "Honz\u00edkova, Praha - Doln\u00ed M\u011bcholupy",
+        "Opavsk\u00e1, Ostrava - Poruba-sever, Moravskoslezsk\u00fd kraj",
+        "Sokolovsk\u00e1, Praha - Libe\u0148",
+        "Pernerova, Praha - Karl\u00edn"
+      ]
+    },
+    "addressInput": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1446,
+      "sample_values": [
+        "T\u0159ebenick\u00e1 1290/16, Kobylisy, Praha, obvod Praha 8, Hlavn\u00ed m\u011bsto Praha, Praha, 182 00, \u010cesko",
+        "21, Na Neklance, Sm\u00edchov, Praha, okres Hlavn\u00ed m\u011bsto Praha, Hlavn\u00ed m\u011bsto Praha, Praha, \u010cesko",
+        "Hurbanova 1305/11, Kr\u010d, Praha, obvod Praha 4, Hlavn\u00ed m\u011bsto Praha, Praha, 142 00, \u010cesko",
+        "Petrsk\u00e1 1170/25, Nov\u00e9 M\u011bsto, Praha 1, Praha, obvod Praha 1, Hlavn\u00ed m\u011bsto Praha, Praha, 110 00, \u010cesko",
+        "Horsk\u00e1 547, Ho\u0159ej\u0161\u00ed Vrchlab\u00ed, Vrchlab\u00ed, okres Trutnov, Kr\u00e1lov\u00e9hradeck\u00fd kraj, Severov\u00fdchod, 543 02, \u010cesko",
+        "U P\u016fj\u010dovny 953/4, Nov\u00e9 M\u011bsto, Praha 1, Praha, obvod Praha 1, Hlavn\u00ed m\u011bsto Praha, Praha, 110 00, \u010cesko",
+        "Honz\u00edkova 711/19, Praha-Doln\u00ed M\u011bcholupy, Doln\u00ed M\u011bcholupy, obvod Praha 10, Praha, 111 01, \u010cesko",
+        "Opavsk\u00e1 1128/60, Poruba, Ostrava, okres Ostrava-m\u011bsto, Moravskoslezsk\u00fd kraj, Moravskoslezsko, 708 00, \u010cesko",
+        "Sokolovsk\u00e1 1406/184a, Palmovka, Libe\u0148, Praha, obvod Praha 8, Hlavn\u00ed m\u011bsto Praha, Praha, 180 00, \u010cesko",
+        "Pernerova 317/5, Florenc, Karl\u00edn, Praha, obvod Praha 8, Hlavn\u00ed m\u011bsto Praha, Praha, 186 00, \u010cesko"
+      ]
+    },
+    "addressPointId": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "age": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "archived": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 1599
+      }
+    },
+    "availableFrom": {
+      "types": {
+        "number": 1109
+      },
+      "non_null_count": 1109,
+      "null_count": 490,
+      "distinct_count": 270,
+      "min": 1568066400,
+      "max": 1861830000,
+      "sample_values": [
+        1771196400,
+        1682805600,
+        1767913200,
+        1772146800,
+        1774994400,
+        1771714800,
+        1772060400,
+        1773615600,
+        1772038800,
+        1769382000
+      ]
+    },
+    "balcony": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1546,
+        "true": 53
+      }
+    },
+    "balconySurface": {
+      "types": {
+        "number": 246
+      },
+      "non_null_count": 246,
+      "null_count": 1353,
+      "distinct_count": 57,
+      "min": 0.1,
+      "max": 52,
+      "all_distinct_values": [
+        "2",
+        "5",
+        "6",
+        "4",
+        "3",
+        "10",
+        "8",
+        "9",
+        "15",
+        "12",
+        "7",
+        "2.5",
+        "5.4",
+        "4.4",
+        "3.5",
+        "2.4",
+        "14",
+        "1.5",
+        "1.8",
+        "7.2",
+        "3.6",
+        "4.8",
+        "1.6",
+        "1.2",
+        "4.2",
+        "9.5",
+        "9.7",
+        "4.1",
+        "1.84",
+        "5.55",
+        "13",
+        "3.7",
+        "11.5",
+        "2.8",
+        "17",
+        "42",
+        "22",
+        "25",
+        "6.6",
+        "3.75",
+        "13.66",
+        "5.7",
+        "9.4",
+        "2.6",
+        "1.47",
+        "10.5",
+        "52",
+        "30",
+        "5.5",
+        "2.2",
+        "6.5",
+        "6.1",
+        "3.2",
+        "5.6",
+        "35",
+        "0.1",
+        "20"
+      ],
+      "value_counts": {
+        "2": 42,
+        "3": 19,
+        "4": 23,
+        "5": 35,
+        "6": 24,
+        "7": 5,
+        "8": 10,
+        "9": 8,
+        "10": 11,
+        "12": 7,
+        "13": 1,
+        "14": 2,
+        "15": 8,
+        "17": 1,
+        "20": 1,
+        "22": 1,
+        "25": 1,
+        "30": 1,
+        "35": 1,
+        "42": 1,
+        "52": 1,
+        "2.5": 2,
+        "5.4": 2,
+        "4.4": 2,
+        "3.5": 2,
+        "2.4": 2,
+        "1.5": 2,
+        "1.8": 2,
+        "7.2": 1,
+        "3.6": 1,
+        "4.8": 1,
+        "1.6": 1,
+        "1.2": 1,
+        "4.2": 1,
+        "9.5": 1,
+        "9.7": 1,
+        "4.1": 1,
+        "1.84": 1,
+        "5.55": 1,
+        "3.7": 1,
+        "11.5": 1,
+        "2.8": 1,
+        "6.6": 1,
+        "3.75": 1,
+        "13.66": 1,
+        "5.7": 1,
+        "9.4": 1,
+        "2.6": 1,
+        "1.47": 1,
+        "10.5": 1,
+        "5.5": 1,
+        "2.2": 1,
+        "6.5": 1,
+        "6.1": 1,
+        "3.2": 1,
+        "5.6": 1,
+        "0.1": 1
+      }
+    },
+    "barrierFree": {
+      "types": {
+        "boolean": 560
+      },
+      "non_null_count": 560,
+      "null_count": 1039,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 427,
+        "true": 133
+      }
+    },
+    "brizCount": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 27,
+      "min": 0,
+      "max": 144,
+      "all_distinct_values": [
+        "9",
+        "0",
+        "18",
+        "27",
+        "36",
+        "6",
+        "45",
+        "15",
+        "3",
+        "54",
+        "12",
+        "72",
+        "90",
+        "24",
+        "33",
+        "21",
+        "81",
+        "63",
+        "99",
+        "117",
+        "7",
+        "42",
+        "102",
+        "60",
+        "108",
+        "126",
+        "144"
+      ],
+      "value_counts": {
+        "0": 578,
+        "3": 8,
+        "6": 24,
+        "7": 1,
+        "9": 647,
+        "12": 7,
+        "15": 12,
+        "18": 174,
+        "21": 2,
+        "24": 4,
+        "27": 58,
+        "33": 3,
+        "36": 36,
+        "42": 1,
+        "45": 15,
+        "54": 8,
+        "60": 1,
+        "63": 2,
+        "72": 5,
+        "81": 2,
+        "90": 4,
+        "99": 2,
+        "102": 1,
+        "108": 1,
+        "117": 1,
+        "126": 1,
+        "144": 1
+      }
+    },
+    "cellar": {
+      "types": {
+        "boolean": 1578
+      },
+      "non_null_count": 1578,
+      "null_count": 21,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1501,
+        "true": 77
+      }
+    },
+    "cellarSurface": {
+      "types": {
+        "number": 501
+      },
+      "non_null_count": 501,
+      "null_count": 1098,
+      "distinct_count": 101,
+      "min": 0.1,
+      "max": 212,
+      "sample_values": [
+        3,
+        2,
+        1.5,
+        4,
+        15,
+        1.4,
+        10,
+        26,
+        11,
+        3.78
+      ]
+    },
+    "charges": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 153,
+      "min": 0,
+      "max": 29080,
+      "sample_values": [
+        0,
+        5589,
+        4000,
+        4300,
+        3100,
+        2500,
+        4120,
+        6580,
+        5900,
+        6917
+      ]
+    },
+    "charity": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 1599
+      }
+    },
+    "city": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 633,
+      "sample_values": [
+        "Praha",
+        "Vrchlab\u00ed",
+        "Ostrava",
+        "Olomouc",
+        "Dr\u017ekov",
+        "J\u00e1chymov",
+        "\u0160umperk",
+        "P\u0159\u00edbram",
+        "Stran\u010dice",
+        "Karlovy Vary"
+      ]
+    },
+    "cityDistrict": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 862,
+      "sample_values": [
+        "Praha - Kobylisy",
+        "Praha - Sm\u00edchov",
+        "Praha - Kr\u010d",
+        "Praha - Nov\u00e9 M\u011bsto",
+        "Ho\u0159ej\u0161\u00ed Vrchlab\u00ed",
+        "Praha - Doln\u00ed M\u011bcholupy",
+        "Poruba-sever",
+        "Praha - Libe\u0148",
+        "Praha - Karl\u00edn",
+        "Praha - Vyso\u010dany"
+      ]
+    },
+    "code": {
+      "types": {
+        "string": 358
+      },
+      "non_null_count": 358,
+      "null_count": 1241,
+      "distinct_count": 358,
+      "sample_values": [
+        "00101-5",
+        "BO-B",
+        "BO-C",
+        "byt_6_OV",
+        "00028",
+        "ateli\u00e9r 17_DV",
+        "2.08 OV",
+        "2.08 DV",
+        "ateli\u00e9r 17_OV",
+        "byt_15_DV"
+      ]
+    },
+    "condition": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 12,
+      "all_distinct_values": [
+        "VERY_GOOD",
+        "UNDEFINED",
+        "NEW",
+        "GOOD",
+        "AFTER_RECONSTRUCTION",
+        "BEFORE_RECONSTRUCTION",
+        "BAD",
+        "AFTER_PARTIAL_RECONSTRUCTION",
+        "CONSTRUCTION",
+        "IN_RECONSTRUCTION",
+        "PROJECT",
+        "DEMOLITION"
+      ],
+      "value_counts": {
+        "VERY_GOOD": 496,
+        "UNDEFINED": 436,
+        "NEW": 249,
+        "GOOD": 232,
+        "AFTER_RECONSTRUCTION": 93,
+        "BEFORE_RECONSTRUCTION": 43,
+        "BAD": 24,
+        "AFTER_PARTIAL_RECONSTRUCTION": 9,
+        "CONSTRUCTION": 7,
+        "IN_RECONSTRUCTION": 5,
+        "PROJECT": 4,
+        "DEMOLITION": 1
+      }
+    },
+    "construction": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 8,
+      "all_distinct_values": [
+        "BRICK",
+        "UNDEFINED",
+        "PANEL",
+        "MIXED",
+        "WOOD",
+        "SKELET",
+        "STONE",
+        "PREFAB"
+      ],
+      "value_counts": {
+        "BRICK": 793,
+        "UNDEFINED": 432,
+        "PANEL": 183,
+        "MIXED": 136,
+        "WOOD": 25,
+        "SKELET": 21,
+        "STONE": 6,
+        "PREFAB": 3
+      }
+    },
+    "conversationCount": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 72,
+      "min": 0,
+      "max": 209,
+      "all_distinct_values": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "8",
+        "9",
+        "7",
+        "10",
+        "11",
+        "13",
+        "12",
+        "15",
+        "14",
+        "17",
+        "23",
+        "16",
+        "18",
+        "20",
+        "26",
+        "19",
+        "21",
+        "27",
+        "22",
+        "30",
+        "33",
+        "28",
+        "31",
+        "29",
+        "38",
+        "36",
+        "52",
+        "48",
+        "42",
+        "41",
+        "46",
+        "55",
+        "44",
+        "32",
+        "24",
+        "37",
+        "35",
+        "116",
+        "45",
+        "54",
+        "69",
+        "164",
+        "132",
+        "56",
+        "118",
+        "64",
+        "59",
+        "58",
+        "81",
+        "108",
+        "49",
+        "76",
+        "71",
+        "209",
+        "50",
+        "124",
+        "95",
+        "62",
+        "43",
+        "99",
+        "61",
+        "34",
+        "174",
+        "77",
+        "178"
+      ],
+      "value_counts": {
+        "0": 596,
+        "1": 192,
+        "2": 128,
+        "3": 84,
+        "4": 71,
+        "5": 55,
+        "6": 46,
+        "7": 34,
+        "8": 37,
+        "9": 35,
+        "10": 32,
+        "11": 24,
+        "12": 22,
+        "13": 24,
+        "14": 20,
+        "15": 21,
+        "16": 10,
+        "17": 19,
+        "18": 8,
+        "19": 7,
+        "20": 8,
+        "21": 7,
+        "22": 6,
+        "23": 11,
+        "24": 2,
+        "26": 8,
+        "27": 6,
+        "28": 5,
+        "29": 5,
+        "30": 6,
+        "31": 5,
+        "32": 2,
+        "33": 5,
+        "34": 1,
+        "35": 2,
+        "36": 3,
+        "37": 2,
+        "38": 4,
+        "41": 3,
+        "42": 3,
+        "43": 1,
+        "44": 2,
+        "45": 1,
+        "46": 2,
+        "48": 3,
+        "49": 1,
+        "50": 1,
+        "52": 3,
+        "54": 1,
+        "55": 2,
+        "56": 1,
+        "58": 1,
+        "59": 1,
+        "61": 1,
+        "62": 1,
+        "64": 1,
+        "69": 1,
+        "71": 1,
+        "76": 1,
+        "77": 1,
+        "81": 1,
+        "95": 1,
+        "99": 1,
+        "108": 1,
+        "116": 2,
+        "118": 1,
+        "124": 1,
+        "132": 1,
+        "164": 1,
+        "174": 1,
+        "178": 1,
+        "209": 1
+      }
+    },
+    "currency": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "CZK",
+        "EUR"
+      ],
+      "value_counts": {
+        "CZK": 1594,
+        "EUR": 5
+      }
+    },
+    "daysActive": {
+      "types": {
+        "string": 986
+      },
+      "non_null_count": 986,
+      "null_count": 613,
+      "distinct_count": 110,
+      "sample_values": [
+        "21 dn\u00ed",
+        "14 dn\u00ed",
+        "10 dn\u00ed",
+        "12 dn\u00ed",
+        "5 dn\u00ed",
+        "31 dn\u00ed",
+        "15 dn\u00ed",
+        "1 den",
+        "40 dn\u00ed",
+        "17 dn\u00ed"
+      ]
+    },
+    "deposit": {
+      "types": {
+        "number": 1078
+      },
+      "non_null_count": 1078,
+      "null_count": 521,
+      "distinct_count": 136,
+      "min": 0,
+      "max": 500000,
+      "sample_values": [
+        0,
+        30000,
+        27000,
+        40000,
+        49000,
+        17000,
+        61600,
+        50000,
+        21945,
+        20000
+      ]
+    },
+    "description": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1596,
+      "sample_values": [
+        "DO\u010cASN\u00c9 SN\u00cd\u017dEN\u00cd CENY!  \u2013  \u2013  \u2013  \nByt 3+kk 67 m2 bl\u00edzko metra L\u00e1dv\u00ed.  \u2013  \u2013  \u2013  \nT\u0159ebenick\u00e1 ul. Praha 8 \u2013 Kobylisy.   \u2013  \u2013  \u2013  \nDru\u017estevn\u00ed vlastnictv\u00ed s mo\u017enost\u00ed okam\u017eit\u00e9ho bezplatn\u00e9ho p\u0159evodu do osobn\u00edho vlastnictv\u00ed = lze financovat hypot\u00e9kou.  \u2013  \u2013  \u2013  \nNav\u00edc komora a sklep mimo byt (celkem cca 3 m2).  \u2013  \u2013  \u2013  \n1. NP (zv\u00fd\u0161en\u00e9 p\u0159\u00edzem\u00ed) panelov\u00e9ho domu v zelen\u00e9m a kr\u00e1sn\u00e9m \u201es\u00eddli\u0161ti \u010e\u00e1blice\u201c.  \u2013  \u2013  \u2013  \nByt i d\u016fm skv\u011ble udr\u017eovan\u00fd, zmodernizovan\u00fd, zateplen\u00fd, s nov\u00fdmi vstupy a v\u00fdtahy. Samospr\u00e1va kvalitn\u00ed, bez dluh\u016f. Poplatky n\u00edzk\u00e9 (cca 2,5 tis.).  \u2013  \u2013  \u2013  \nByt byl v n\u011bkolika vln\u00e1ch rekonstruov\u00e1n (naposledy 2025) a z\u00edskal zcela jedine\u010dnou dispozici. Je ide\u00e1ln\u00ed pro rodinu, studenty, sportovce, aktivn\u00ed lidi. Velmi prakticky a kvalitn\u011b za\u0159\u00edzen \u2013 \u00fasporn\u00e1 sv\u00edtidla, mnoho el. z\u00e1suvek, hrazda, \u017eeb\u0159iny, z\u00e1v\u011bsy na kola, odoln\u00fd n\u00e1bytek...  \u2013  \u2013  \u2013  \nVe\u0161ker\u00e9 vybaven\u00ed na fotk\u00e1ch je k dispozici nov\u00fdm majitel\u016fm.  \u2013  \u2013  \u2013  \nOb\u00fdv\u00e1k je obrovsk\u00fd, krom\u011b kuchyn\u011b s j\u00eddelnou obsahuje i kout ve stylu lo\u017enice s velk\u00fdm kr\u00e1sn\u00fdm akv\u00e1riem a d\u00e1le kout ve stylu pracovny;  \u2013  \u2013  \u2013  \nDva \u201ed\u011btsk\u00e9 pokoje\u201c jsou zrcadlov\u011b zcela identick\u00e9, ka\u017ed\u00fd poslou\u017e\u00ed velkoryse pro 1 nebo skromn\u011b pro 2 osoby;  \u2013  \u2013  \u2013  \nKoupelna s velkou vanou v\u010d. z\u00e1st\u011bn, s velk\u00fdm umyvadlem, n\u00e1bytkem a pra\u010dkou.  \u2013  \u2013  \u2013  \nSamostatn\u00e9 WC;  \u2013  \u2013  \u2013  \nTechnick\u00e1 m\u00edstnost s \u00falo\u017en\u00fdmi kontejnery a dr\u017e\u00e1ky pro 3 j\u00edzdn\u00ed kola;  \u2013  \u2013  \u2013  \nProstorn\u00e1 p\u0159eds\u00ed\u0148 s mno\u017estv\u00edm \u00falo\u017en\u00e9ho prostoru;  \u2013  \u2013  \u2013  \nExtern\u00ed komora a sklep s vestav\u011bn\u00fdmi byteln\u00fdmi policemi;  \u2013  \u2013  \u2013  \n\nLokalita je velmi hezk\u00e1 a skv\u011ble vybaven\u00e1 pro \u017eivot v\u0161ech generac\u00ed:\n\u2013 metro L\u00e1dv\u00ed 7 minut p\u011b\u0161ky nebo 1 zast. bus / tram;\n\u2013 bl\u00edzko domu \u0161kolky, \u0161koly, obchody, l\u00e9ka\u0159i a mnoh\u00e9 dal\u0161\u00ed slu\u017eby; \n\u2013 kr\u00e1sn\u00e9 prostorn\u00e9 klidn\u00e9 zelen\u00e9 s\u00eddli\u0161t\u011b, v\u00fdhled do zelen\u011b, klid; \n\u2013 parkov\u00e1n\u00ed t\u011bsn\u011b u domu, velkoryse dimenzovan\u00e9;\n\ndodate\u010dn\u00e9 info:\n\u2013 sou\u010d\u00e1st\u00ed prodeje NEN\u00cd ledni\u010dka a postelov\u00e9 matrace (= pouze dekorace); \n\u2013 vyt\u00e1p\u011bn\u00ed i oh\u0159ev vody jsou d\u00e1lkov\u00e9; samoz\u0159ejmost\u00ed je plyn (va\u0159i\u010d); \n\u2013 optick\u00e1 s\u00ed\u0165 pro internet + kabelov\u00fd rozvod do v\u0161ech pokoj\u016f!",
+        "Nab\u00edz\u00edme k prodeji zcela nov\u00e9 byty na Sm\u00edchov\u011b.Jedn\u00e1 se o reziden\u010dn\u00ed bydlen\u00ed, bytov\u00e9 domy jsou celkem t\u0159i a maj\u00ed spole\u010dn\u00fd vnitroblok, kde jsou parkovac\u00ed m\u00edsta.Domy jsou na dvou adres\u00e1ch Na Neklance a Nad Koulkou. Domy maj\u00ed max 5 pater s v\u00fdtahem,parkov\u00e1n\u00ed v gar\u00e1\u017ei, kter\u00e9 je \u0159e\u0161eno zaklada\u010di. Ke ka\u017ed\u00e9mu bytu je p\u0159i\u0159azen\u00fd sklep.Projekt je proveden ve vy\u0161\u0161\u00edm standardu ...eurookna s treojsklem s p\u0159\u00edpravou na p\u0159edokenn\u00ed rolety,obytn\u00e9 m\u00edstnosti vinyl click,koupelna+wc velkoform\u00e1tov\u00e1 dla\u017eba,vchodov\u00e9 dve\u0159e do bytu d\u00fdha ru\u010dn\u011b st\u0159\u00edkan\u00e9,interi\u00e9rov\u00e9 dve\u0159e hladk\u00e9 b\u00edl\u00e9 s grafitov\u00fdm kov\u00e1n\u00edm,v koupeln\u011b umyvadlo v\u010d. spodn\u00ed sk\u0159\u00ed\u0148ky, vana, z\u00e1v\u011bsn\u00e9 WC zn.Willeroy&Boch,standardy jsou ke sta\u017een\u00ed na na\u0161ich str\u00e1nk\u00e1ch kde najdete i v\u00edce informac\u00ed.Do gar\u00e1\u017e\u00ed nen\u00ed povolen vjezd vozidl\u016fm na LPG a CNG\n\nV nab\u00eddce je v\u00edce byt\u016f 2+kk, 3+kk a 3+1\n\nk bytu je nutn\u00e9 dokoupit parkovan\u00ed v gar\u00e1\u017ei nebo venku ve vnitrobloku.\n\nbyt 2+KK , budova A, 2NP, \u010d. 104- ozna\u010den\u00ed na str\u00e1nk\u00e1ch 104",
+        "Dovolujeme si V\u00e1m nab\u00eddnout k prodeji prostorn\u00fd mezonetov\u00fd byt 4+1 o celkov\u00e9 v\u00fdm\u011b\u0159e 78 m\u00b2, kter\u00fd se nach\u00e1z\u00ed ve velmi \u017e\u00e1dan\u00e9 lokalit\u011b Prahy 4 - Kr\u010d. Byt je um\u00edst\u011bn v 9. a 10. pat\u0159e panelov\u00e9ho domu, d\u00edky \u010demu\u017e nab\u00edz\u00ed kr\u00e1sn\u00e9 v\u00fdhledy, dostatek denn\u00edho sv\u011btla a p\u0159\u00edjemnou atmosf\u00e9ru.\n\nDispozice bytu je \u0159e\u0161ena prakticky a funk\u010dn\u011b. Ve vstupn\u00edm podla\u017e\u00ed se nach\u00e1z\u00ed samostatn\u00e1 m\u00edstnost, schodi\u0161t\u011b do horn\u00ed \u010d\u00e1sti bytu a \u00falo\u017en\u00fd prostor v podob\u011b vestav\u011bn\u00e9 sk\u0159\u00edn\u011b / botn\u00edku. Byt je v p\u016fvodn\u00edm stavu, co\u017e p\u0159edstavuje ide\u00e1ln\u00ed p\u0159\u00edle\u017eitost pro rekonstrukci a vytvo\u0159en\u00ed bydlen\u00ed p\u0159esn\u011b podle Va\u0161ich p\u0159edstav.\n\nVelkou p\u0159ednost\u00ed bytu je prostorn\u00e1 lod\u017eie o velikosti 7 m\u00b2, kter\u00e1 nab\u00edz\u00ed dostatek prostoru pro posezen\u00ed, relaxaci \u010di p\u011bstov\u00e1n\u00ed zelen\u011b. K bytu n\u00e1le\u017e\u00ed tak\u00e9 sklep o velikosti 2 m\u00b2, poskytuj\u00edc\u00ed dal\u0161\u00ed praktick\u00fd \u00falo\u017en\u00fd prostor.\n\nD\u016fm je udr\u017eovan\u00fd, vybaven\u00fd kamerov\u00fdm syst\u00e9mem a \u010dty\u0159mi v\u00fdtahy, co\u017e zaji\u0161\u0165uje vysok\u00fd komfort i bezpe\u010dnost bydlen\u00ed. Lokalita se vyzna\u010duje v\u00fdbornou dopravn\u00ed dostupnost\u00ed \u2013 v doch\u00e1zkov\u00e9 vzd\u00e1lenosti se nach\u00e1z\u00ed metro C - Ka\u010derov a z\u00e1rove\u0148 prob\u00edh\u00e1 v\u00fdstavba budouc\u00ed stanice metra D - Nemocnice Kr\u010d, kter\u00e1 do budoucna je\u0161t\u011b zv\u00fd\u0161\u00ed atraktivitu cel\u00e9 oblasti.\n\nV okol\u00ed je kompletn\u00ed ob\u010dansk\u00e1 vybavenost \u2013 \u0161koly, \u0161kolky, obchody, slu\u017eby i zdravotnick\u00e1 za\u0159\u00edzen\u00ed. P\u0159\u00edmo v bl\u00edzkosti se nach\u00e1z\u00ed presti\u017en\u00ed gymn\u00e1zium PORG, co\u017e ocen\u00ed zejm\u00e9na rodiny s d\u011btmi. Milovn\u00edky gastronomie jist\u011b pot\u011b\u0161\u00ed \u0161irok\u00e1 nab\u00eddka restaurac\u00ed a kav\u00e1ren v okol\u00ed, a\u0165 u\u017e v bl\u00edzk\u00e9 z\u00e1stavb\u011b, nebo v Kunratick\u00e9m lese, kter\u00fd je vyhled\u00e1van\u00fdm m\u00edstem pro proch\u00e1zky, sport i p\u0159\u00edjemn\u00e9 posezen\u00ed v lesn\u00edch restaurac\u00edch.\n\nByt je v osobn\u00edm vlastnictv\u00ed a p\u0159edstavuje ide\u00e1ln\u00ed volbu jak pro rodinn\u00e9 bydlen\u00ed, tak i jako investi\u010dn\u00ed p\u0159\u00edle\u017eitost.\n\nPokud V\u00e1s tato nab\u00eddka zaujala, nev\u00e1hejte n\u00e1s kontaktovat. Prohl\u00eddky jsou mo\u017en\u00e9 po p\u0159edchoz\u00ed domluv\u011b.\n\nRK pros\u00edm nevolat.",
+        "Prod\u00e1v\u00e1m perfektn\u011b \u0159e\u0161en\u00fd byt 3+kk o plo\u0161e 77 m\u00b2 v osobn\u00edm vlastnictv\u00ed, um\u00edst\u011bn\u00fd ve 3. nadzemn\u00edm podla\u017e\u00ed s v\u00fdtahem, v klidn\u00e9 \u010d\u00e1sti Petrsk\u00e9 ulice na jedn\u00e9 z nej\u017e\u00e1dan\u011bj\u0161\u00edch adres Prahy 1.\nVe\u0161kerou ob\u010danskou vybavenost, historick\u00e9 centrum i dopravn\u00ed spojen\u00ed m\u00e1te doslova p\u00e1r minut ch\u016fze \u2013 metro, tramvaje i Masarykovo n\u00e1dra\u017e\u00ed \u2013 p\u0159esto v\u00e1s doma neru\u0161\u00ed ruch velkom\u011bsta.\n\nDv\u011b plnohodnotn\u00e9 lo\u017enice dopl\u0148uje velkorys\u00fd ob\u00fdvac\u00ed prostor s kuchyn\u00ed na m\u00edru o velikosti 34 m\u00b2, ze kter\u00e9ho se otev\u00edr\u00e1 p\u0159\u00edm\u00fd v\u00fdhled na kostel sv. Petra. V\u0161echna okna jsou orientov\u00e1na do tich\u00e9 ulice, co\u017e zaji\u0161\u0165uje v\u00fdjime\u010dn\u00fd klid po cel\u00fd den. Interi\u00e9r je ve \u0161pi\u010dkov\u00e9m stavu a p\u0159ipraven\u00fd k okam\u017eit\u00e9mu nast\u011bhov\u00e1n\u00ed. Byt nab\u00edz\u00ed tak\u00e9 dv\u011b koupelny, jednu s vanou, druhou se sprchov\u00fdm koutem, dv\u011b toalety. Praktick\u00e1 komora poskytuje prostor pro pra\u010dku i su\u0161i\u010dku.\n\nHistorick\u00fd d\u016fm pro\u0161el rozs\u00e1hlou rekonstrukc\u00ed v roce 2010 a spl\u0148uje modern\u00ed standardy bydlen\u00ed \u2013 je pln\u011b bezbari\u00e9rov\u00fd a vybaven v\u00fdtahem p\u0159\u00edmo do patra.\n\nDispozice bytu 3+kk a orienta\u010dn\u00ed podlahov\u00e1 plocha:\n- lo\u017enice 16 m\u00b2\n- lo\u017enice 11 m\u00b2\n- ob\u00fdvac\u00ed pokoj s kuchyn\u00ed 34 m\u00b2\n- vstupn\u00ed chodba v\u010detn\u011b komory 6,4 m\u00b2\n- koupelna s vanou 6,3 m\u00b2\n- koupelna se sprchov\u00fdm koutem 3,3 m\u00b2\n\nBudu se t\u011b\u0161it na osobn\u00ed setk\u00e1n\u00ed p\u0159i prohl\u00eddce tohoto v\u00fdjime\u010dn\u00e9ho bytu.",
+        "JEDIN\u00dd VOLN\u00dd HORSK\u00dd 1KK APARTM\u00c1N V NOVOSTAB\u011a \nModern\u00ed garsonka 31,4 m\u00b2 s balkonem, sklepem a parkovac\u00edm st\u00e1n\u00edm, ide\u00e1ln\u00ed pro pron\u00e1jem nebo vlastn\u00ed vyu\u017eit\u00ed.\n\nApartm\u00e1n v novostavb\u011b s praktick\u00fdm designov\u00fdm vybaven\u00edm na m\u00edru. P\u0159ed domem spole\u010dn\u00e9 ohni\u0161t\u011b a d\u011btsk\u00e9 prol\u00e9za\u010dky.\nSjezdovka Herl\u00edkovice hned za domem, 10 minut autem od \u0160pindlerova Ml\u00fdna, zast\u00e1vka autobusu 100m od domu, s dopravou do \u0160pindlerova Ml\u00fdna, Prahy, Pece pod Sn\u011b\u017ekou, atd.... celkem asi 10 linek.\nModern\u00ed novostavba z roku 2023 s wellness z\u00f3nou, sauna, v\u00ed\u0159ivka.\nKvalitn\u00ed vybaven\u00ed, designov\u00e1 kuchy\u0148sk\u00e1 linka pro mal\u00e9 prostory, kter\u00e1 poskytne komfort pro va\u0159en\u00ed na mal\u00e9m prostoru, otev\u0159en\u00e1 sk\u0159\u00ed\u0148, Queen Size postel i kvalitn\u00ed rozkl\u00e1dac\u00ed seda\u010dka (160x200 cm) pro pohodl\u00ed a\u017e 4 osob v apartm\u00e1nu.\nPraktick\u00e9 z\u00e1zem\u00ed: Sklep s profesion\u00e1ln\u00edm su\u0161\u00e1kem Tantum Set 4 Premium (rychl\u00e9 a energeticky \u00fasporn\u00e9 su\u0161en\u00ed a\u017e 4 sad oble\u010den\u00ed a ly\u017e\u00e1k\u016f) a prostorem na ly\u017ee.\nBezstarostn\u00fd pron\u00e1jem: V apartm\u00e1nov\u00e9m dom\u011b skv\u011ble funguje slu\u017eba, kter\u00e1 se star\u00e1 o pron\u00e1jmy, prezentaci na webu, p\u0159ed\u00e1n\u00ed kl\u00ed\u010d\u016f i \u00faklid, tak\u017ee o nic nemus\u00edte m\u00edt starost.\nParkov\u00e1n\u00ed: Priv\u00e1tn\u00ed st\u00e1n\u00ed v prvn\u00ed \u0159ad\u011b p\u0159\u00edmo p\u0159ed domem.\nSta\u0148te se majitelem je\u0161t\u011b dnes a u\u017eijte si maxim\u00e1ln\u00ed pohodl\u00ed a jedine\u010dnou atmosf\u00e9ru Krkono\u0161!",
+        "Nab\u00edz\u00edm tich\u00fd, sv\u011btl\u00fd, p\u0159\u00edjemn\u00fd b\u00fdt v centru Prahy p\u00e1r minut od mnoha stanic MHD. Byt je v posledn\u00edm p\u00e1t\u00e9m podla\u017e\u00ed domu s v\u00fdtahem s mo\u017enost\u00ed parkovac\u00edho st\u00e1n\u00ed ve vnitrobloku. Jsou zde nutn\u00e9 investice ke zv\u00fd\u0161en\u00ed komfortu bydlen\u00ed. V p\u0159\u00edpad\u011b z\u00e1jmu prohl\u00eddka a dal\u0161\u00ed info. Realitn\u00ed makl\u00e9\u0159i, pros\u00edm, ne!",
+        "Kr\u00e1sn\u00fd byt 2+kk, 47,6m2 s balkonem. Pr\u00e1v\u011b p\u0159ijat\u00fd byt od developera Finep se z\u00e1rukou na 3 roky.\nOrientace na jih, 3.patro, balkon 4,3m2 . Jedn\u00e1 se o cihlov\u00fd d\u016fm v reziden\u010dn\u00edm projektu Mal\u00fd H\u00e1j.\nK bytu je mo\u017en\u00e9 dokoupit gar\u00e1\u017eov\u00e9 st\u00e1n\u00ed a komoru.\n\nV\u00fdhody dru\u017estevn\u00edho vlastnictv\u00ed:\nBez nutnosti dokl\u00e1dat p\u0159\u00edjem \nNen\u00ed t\u0159eba hypote\u010dn\u00ed \u00fav\u011br \nCena bytu je spl\u00e1cena formou m\u011bs\u00ed\u010dn\u00edch spl\u00e1tek(anuita)\n\nProjekt Mal\u00fd H\u00e1j XV, budova G4 \u2013 Praha 10 \u2013 Doln\u00ed M\u011bcholupy, Honz\u00edkova 711/19. K nast\u011bhov\u00e1n\u00ed ihned.\nOdstupn\u00e9  za byt 3 200 000K\u010d, odstupn\u00e9 za gar\u00e1\u017e 150 000K\u010d \nodstupn\u00e9 za komoru 130 000K\u010d, Zb\u00fdvaj\u00edc\u00ed anuita za byt 4 100 000K\u010d anuita za gar\u00e1\u017e  330 000K\u010d, anuita za komoru 60 000K\u010d.\nCelkov\u00e1 cena tedy 7 970 000K\u010d\n\nDo osobn\u00edho vlastnictv\u00ed bude byt mo\u017eno p\u0159ev\u00e9st nejd\u0159\u00edve na podzim 2026 (dle stanov dru\u017estva mo\u017en\u00e9 2x ro\u010dn\u011b).\nM\u011bs\u00ed\u010dn\u00ed spl\u00e1tka dru\u017estvu za byt (anuita )23 181K\u010d. plus slu\u017eby. M\u011bs\u00ed\u010dn\u00ed spl\u00e1tka za gar\u00e1\u017eov\u00e9 st\u00e1n\u00ed (anuita) 1 865,- komora 351 (anuita).",
+        "PRODEJ BYTU 2+1 V OSTRAV\u011a- PORUB\u011a U VOZOVNY!\n\nNab\u00edz\u00edm k prodeji dru\u017estevn\u00ed byt 2+1 (52 m\u00b2), kter\u00fd v sob\u011b skr\u00fdv\u00e1 obrovsk\u00fd potenci\u00e1l. Byt je v p\u016fvodn\u00edm stavu, p\u0159ed rekonstrukc\u00ed, p\u0159ipraven na kompletn\u00ed prom\u011bnu dle Va\u0161eho vkusu. Mo\u017eno vyu\u017e\u00edt i jako investici. Sou\u010d\u00e1st\u00ed bytu je tak\u00e9 lod\u017eie o rozloze 3,85 m\u00b2, ide\u00e1ln\u00ed pro odpo\u010dinek, zimn\u00ed zahradu a pozorov\u00e1n\u00ed okol\u00ed. Byt se nach\u00e1z\u00ed ve 3. pat\u0159e.\nD\u016fm pro\u0161el celkovou revitalizac\u00ed (v ned\u00e1vn\u00e9 dob\u011b nov\u00e1 fas\u00e1da, zateplen\u00ed, okna, lod\u017eie)  s v\u00fdtahem a kamerov\u00fdm syst\u00e9mem, kde bezpe\u010d\u00ed a klid jsou standardem. Energetick\u00fd \u0161t\u00edtek s ozna\u010den\u00edm B sv\u011bd\u010d\u00ed o dobr\u00e9 energetick\u00e9 n\u00e1ro\u010dnosti budovy, co\u017e ocen\u00ed i ti, kte\u0159\u00ed dbaj\u00ed na \u00fasporu energie a komfort bydlen\u00ed.  K dispozici je bl\u00edzk\u00e9 parkov\u00e1n\u00ed i maxim\u00e1ln\u00ed dostupnost obch. center, slu\u017eeb aj.\n\nHlavn\u00ed benefity:\n\u00b7 Atraktivn\u00ed lokalita\n\u00b7 Velkorys\u00e1 prosklen\u00e1 lod\u017eie\n\u00b7 Nepr\u016fchoz\u00ed pokoje\n\u00b7 V\u0161e na dosah: \u0161koly, h\u0159i\u0161t\u011b, obchodn\u00ed i l\u00e9ka\u0159sk\u00e1 centra aj.\n\u00b7 MHD (Vozovna) hned u domu.\n\nBydlete v srdci Poruby a investujte do nemovitosti v m\u00edst\u011b, kter\u00e9 neztr\u00e1c\u00ed na hodnot\u011b!\n\nTerm\u00edn uvoln\u011bn\u00ed: b\u0159ezen-duben 2026, platba jednor\u00e1zov\u011b Kontakt: prost\u0159ednictv\u00edm zpr\u00e1v nebo komunika\u010dn\u00ed \n              platformy",
+        "Nab\u00edz\u00edm k prodeji sv\u011btl\u00fd, tepl\u00fd, klidn\u00fd byt o dispozici 2+kk, kter\u00fd se nach\u00e1z\u00ed v cihlov\u00e9 budov\u011b ve 4. pat\u0159e s v\u00fdtahem. \nUlice Sokolovsk\u00e1, oblast Palmovka, okna do klidn\u00e9ho introbloku s v\u00fdhledem do zelen\u011b. Byt je orientovan\u00fd na jih a prostor je d\u00edky tomu p\u0159\u00edjemn\u011b proslun\u011bn\u00fd.\nByt je ve velmi dobr\u00e9m stavu po \u010d\u00e1ste\u010dn\u00e9 rekonstrukci, sadrokartovov\u00e9 sn\u00ed\u017een\u00e9 stropy, nov\u00e9 podlahy, nov\u00e1 kuchy\u0148sk\u00e1 linka, .......   Celkov\u00e1 plocha 47,73 m2 + such\u00fd sklep 4m2. Byt je v dru\u017estevn\u00edm vlastnictv\u00ed, kter\u00fd bude v tomto roce bezplatn\u011b p\u0159eveden do osobn\u00edho vlastnictv\u00ed. D\u016fm v minul\u00fdch letech pro\u0161el rekonstrukc\u00ed st\u0159echy a fas\u00e1dy tak\u017ee nejsou pl\u00e1novan\u00e9 \u017e\u00e1dn\u00e9 vy\u0161\u0161\u00ed n\u00e1klady na opravy domu. V p\u0159\u00edzem\u00ed domu jsou pronajat\u00e9 prostory pro tich\u00e9 slu\u017eby (kade\u0159nictv\u00ed, .. ) kter\u00e9 ekonomicky p\u0159isp\u00edvaj\u00ed na provoz domu, tak\u017ee v dom\u011b jsou velmi n\u00edzk\u00e9 poplatky na \u00fadr\u017ebu - 1.813 K\u010d + energie. Velmi vhodn\u00fd i jako investi\u010dn\u00ed byt.\nByt \u010d\u00e1ste\u010dn\u011b za\u0159\u00edzen (kuch. linka, spor\u00e1k, pra\u010dka). Vyt\u00e1p\u011bn\u00ed 2x waw. \nPod\u00edvejte se na video: https://www.youtube.com/shorts/ulwtXaoQupc?feature=share\n\nSkv\u011bl\u00e1 dopravn\u00ed dostupnost - dopravn\u00ed uzel Palmova 2 min ch\u016fze - metro, tramvaj, bus. V okol\u00ed domu se nach\u00e1z\u00ed ve\u0161ker\u00e1 ob\u010dansk\u00e1 vybavenost, Z\u0160 2 min, M\u0160 vedlej\u0161\u00ed d\u016fm, Albert, Billa, restaurace, l\u00e9k\u00e1rna, obchody. 5 minut ch\u016fze se nach\u00e1z\u00ed Park U Rokytky, 8 minut ch\u016fze Ps\u00ed louka Libe\u0148, 8 minut ch\u016fze Libe\u0148sk\u00fd z\u00e1mek a Thomayerovy sady, park Kotlaska \u010di cyklostezka kolem Vltavy.\n\nV p\u0159\u00edpad\u011b z\u00e1jmu o bli\u017e\u0161\u00ed informace \u010di sjedn\u00e1n\u00ed term\u00ednu prohl\u00eddky m\u011b nev\u00e1hejte kontaktovat prost\u0159ednictv\u00edm zpr\u00e1v na komunika\u010dn\u00ed platform\u011b.",
+        "Rezidence Pernerova je v\u00fdjime\u010dn\u00e1 adresa pro exkluzivn\u00ed ubytov\u00e1n\u00ed 2+1 o plo\u0161e 69 m\u00b2 v Karl\u00edn\u011b. Soukrom\u00e9 boutique apartm\u00e1 s vysok\u00fdmi stropy, precizn\u00edm designem a klidnou atmosf\u00e9rou, kter\u00e1 se v Praze objevuje jen z\u0159\u00eddka. Pro n\u00e1ro\u010dn\u00e9, kte\u0159\u00ed cht\u011bj\u00ed m\u00edt kvalitu i m\u011bsto na dosah.\n\nDesign, prostor a vysok\u00e9 stropy\nInteri\u00e9ru o plo\u0161e 69 m\u00b2 dominuj\u00ed vysok\u00e9 stropy, kter\u00e9 bytu dod\u00e1vaj\u00ed v\u00fdjime\u010dnou vzdu\u0161nost. Byt pro\u0161el kompletn\u00ed rekonstrukc\u00ed pod veden\u00edm architekta \u2013 od t\u0159\u00edf\u00e1zov\u00fdch elektrick\u00fdch rozvod\u016f (25A), p\u0159es podlahy, a\u017e po \u0161tuky a precizn\u011b dota\u017een\u00e9 povrchy. D\u016fraz na kvalitu a detail podtrhuj\u00ed designov\u00e9 radi\u00e1tory, kter\u00e9 jsou pohledov\u011b v\u00fdrazn\u00fdm prvkem a p\u0159irozenou sou\u010d\u00e1st\u00ed celkov\u00e9ho konceptu.\n\nSoukrom\u00ed a klid\nByt se nach\u00e1z\u00ed ve zv\u00fd\u0161en\u00e9m p\u0159\u00edzem\u00ed s okny 2,5\u20133 metry nad \u00farovn\u00ed chodn\u00edku. To zaji\u0161\u0165uje absolutn\u00ed soukrom\u00ed bez pohled\u016f z ulice i dostatek sv\u011btla. K bytu n\u00e1le\u017e\u00ed sklep (2 m\u00b2).\n\nKarl\u00edn: Adresa, kter\u00e1 ur\u010duje trendy\nBydlet v Pernerov\u011b ulici znamen\u00e1 m\u00edt to nejlep\u0161\u00ed z Prahy p\u0159\u00edmo na dosah. Karl\u00edn je centrem \u0161pi\u010dkov\u00e9 gastronomie a centrum kultury:\n- Gastro: P\u00e1r krok\u016f od kultovn\u00ed Esky, Spojky nebo Lok\u00e1lu.\n- Aktivn\u00ed \u017eivot: Rann\u00ed b\u011bh na V\u00edtkov\u011b nebo cyklostezka pod\u00e9l Vltavy jsou hned za rohem.\n- Spojen\u00ed: Perfektn\u00ed dostupnost metrem B (bl\u00edzkost zast\u00e1vky Florenc a K\u0159i\u017e\u00edkova) i tramvajemi p\u0159\u00edmo do centra.\n\nNemovitost je \u010d\u00e1ste\u010dn\u011b vybavena, v\u010detn\u011b kuchyn\u011b. V ob\u00fdvac\u00edm pokoji a lo\u017enici jsou v prezentaci pou\u017eity vizualizace, kter\u00e9 ukazuj\u00ed mo\u017en\u00e9 za\u0159\u00edzen\u00ed a atmosf\u00e9ru prostoru. Koncept je z\u00e1m\u011brn\u011b postaven\u00fd na vzdu\u0161nosti a \u010dist\u00fdch lini\u00edch \u2013 s d\u016frazem na prostor a flexibilitu, aby si jej nov\u00fd majitel mohl snadno uzp\u016fsobit podle vlastn\u00edho stylu a pot\u0159eb.\n\nRezidence Pernerova je v\u00fdjime\u010dn\u00e1 p\u0159\u00edle\u017eitost pro n\u00e1ro\u010dn\u00e9 majitele i jako presti\u017en\u00ed investice. P\u0159ij\u010fte se o jej\u00ed atmosf\u00e9\u0159e p\u0159esv\u011bd\u010dit osobn\u011b. Inzerovan\u00e1 nab\u00eddka je p\u0159\u00edmo od majitele."
+      ]
+    },
+    "descriptionEnglish": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 361,
+      "sample_values": [
+        "",
+        "Looking for a home with soul?\nRezidence Pernerova combines the historic character of the district with the precise signature of a Czech-Vietnamese architect. This space is an expression of lifestyle for those who appreciate design, tradition, and the vibrant pulse of the city.\n\nDesign, Space & High Ceilings\n\nThe 69 m\u00b2 interior is defined by generous high ceilings that give the apartment exceptional airiness. A complete renovation led by an architect seamlessly blends Czech aesthetics with an Asian sense of detail. The standards include new three-phase electrical wiring (25A) and designer radiators that enhance the property\u2019s luxurious character.\n\nPrivacy & Tranquility\n\nThe apartment is located on a high elevated ground floor, with windows positioned 2.5\u20133 meters above street level. This ensures complete privacy from passers-by while maintaining an abundance of natural light. A private storage cellar (2 m\u00b2) is included.\n\nKarl\u00edn: An Address That Sets Trends\n\nLiving on Pernerova Street means having the very best of Prague at your doorstep. Karl\u00edn is a hub of top-tier gastronomy and culture:\n\nGastronomy: Just steps away from iconic spots such as Eska, Nejen Bistro, and Lok\u00e1l.\n\nActive lifestyle: Morning runs on V\u00edtkov Hill or cycling along the Vltava riverfront are right around the corner.\n\nConnectivity: Excellent transport links via Metro Line B and trams, with direct access to the city center.\n\nRezidence Pernerova is a unique opportunity for discerning homeowners as well as a prestigious investment. Come and experience its atmosphere in person.",
+        "As the direct owner, I am offering for sale a beautiful and sunny 2-room apartment (2+kk) with an area of 52 m\u00b2 (including a 7.2 m\u00b2 balcony) located on the 4th floor of the modern Rube\u0161ka Residence in Vyso\u010dany. It is situated in a highly sought-after neighborhood. The apartment faces south, and from its spacious semicircular balcony, it offers a magnificent view of the greenery of Podvinn\u00ed Park and the stunning valley of the Rokytka stream (with its bike path, sports and recreational facilities, and the Sparta hall, among others). The \"Vyso\u010dansk\u00e1\" metro station is just a 3-minute walk away. In the vicinity, there are schools, a kindergarten, a polyclinic (3 minutes away), the Fenix shopping center, banks, and various municipal offices. \n\nInside the apartment, you will find a fully equipped, custom-built kitchen with appliances. Included is also a large walk-in closet featuring built-in storage and additional space. The separate WC is isolated from the spacious bathroom. The apartment is very bright and quiet, and being positioned in the middle of the building\u2019s apartments, it also requires less effort to heat. The floors are made of solid wood. The bathroom is fitted with a bathtub and a washing machine. The windows of both rooms, as well as the spacious balcony, face south towards well-maintained greenery, cared for by a professional company. \n\nThe building offers continuous day and night reception service, which also monitors the parking area in front of the building and within the courtyard. Additionally, the gated parking area is equipped with security cameras. Parking in the area around the building is not a problem, and it is even possible to apply to the municipal office for a permit for permanent parking in a designated spot.",
+        "I am offering for sale a beautiful, privately owned, renovated 3-room apartment. The property is located on the 2nd floor of a revitalized panel building with an elevator. The apartment is being sold directly by the owner, so there is no commission for interested parties.\n\nThe apartment has an area of 56 m2 and includes a loggia and a cellar.\n\nThe apartment has two separate bedrooms, a spacious living room connected to the kitchen, a spacious bathroom with a shower, and a separate toilet.\n\nThe apartment has district heating.\n\nAll civic amenities can be found in the vicinity of the apartment.",
+        "I am offering for sale a beautiful, privately owned, renovated 3-room apartment. The property is located on the 3rd floor of a revitalized panel building with an elevator. The apartment is being sold directly by the owner, so there is no commission for interested parties.\n\nThe apartment has an area of 52 m2 and includes a cellar.\n\nThe layout of the apartment consists of two separate bedrooms, a spacious living room connected to the kitchen, a spacious bathroom with a shower, a separate toilet, and a utility room.\n\nThe apartment has district heating.\n\nAll civic amenities can be found in the vicinity of the apartment.",
+        "I am offering for sale a beautiful, privately owned, renovated 2-room apartment. The property is located on the 2nd floor of a revitalized panel building with an elevator. The apartment is being sold directly by the owner, so there is no commission for interested parties.\n\nThe apartment has an area of 44 m2 and includes a cellar.\n\nThe layout of the apartment consists of a separate bedroom, a spacious living room connected to the kitchen, a spacious bathroom with a shower, and a separate toilet.\n\nThe apartment has district heating.\n\nAll civic amenities can be found in the vicinity of the apartment.",
+        "I am offering for sale a beautiful, privately owned, renovated 3-room apartment. The property is located on the 6th floor of a revitalized panel building with an elevator. The apartment is being sold directly by the owner, so there is no commission for interested parties.\n\nThe apartment has an area of 68 m2 and includes a cellar.\n\nThe layout of the apartment consists of two separate bedrooms, a spacious living room connected to the kitchen, a spacious bathroom with a shower, a separate toilet, and a lockable closet/utility room.\n\nThe apartment has district heating.\n\nAll civic amenities can be found in the vicinity of the apartment.",
+        "Imagine living in the center of the action, yet every morning being greeted by the sight of treetops and the tranquil surface of the Boti\u010d.\n\nWelcome to Residency K Boti\u010d. As a developer, we offer you a 1+kk apartment (28.6 m\u00b2) that exudes the atmosphere of a boutique hotel. It\u2019s not just a place to live\u2014it\u2019s your private oasis of calm. From the balcony (5.4 m\u00b2), you can gaze upon the lush greenery of the park\u2014an ideal spot for a morning espresso or an evening glass of wine with the sound of a babbling creek in the background.\n\nWhy will you fall in love with this apartment?\nPerfect climate: The north-facing orientation is a real advantage during hot summers. The apartment stays pleasantly cool in the shade. And if it ever gets warm? Simply switch on the ceiling cooling to refresh you without causing a draft.\nMaterials without compromise: No laminate here. You\u2019ll walk on genuine wooden flooring, peer through wooden-framed windows, and enjoy a bathroom adorned with luxurious real marble cladding.\nSmart space design: Thanks to the absence of radiators (with both heating and cooling integrated into the ceiling), every inch of wall space can be utilized for furniture, and the bathroom pampers you with underfloor heating.\nLocation \u2013 Vr\u0161ovice, Bohemians: The Bohemians tram stop is literally around the corner. In just a few minutes, you\u2019re in the city center, yet at home, you enjoy absolute peace. An energy rating of B guarantees low running costs.\n\nThe advantage of buying directly from us: You are purchasing directly from the developer, so no commission is involved. We guarantee quality and legal certainty.\n\nThere is also an option to purchase under cooperative ownership.\nThe apartment purchase can be financed by a mortgage or a building society loan, and we are happy to assist you with the process.",
+        "We offer an apartment in one of the most attractive parts of Brno \u2013 Veve\u0159\u00ed, located in a 1930s residential building currently undergoing extensive modernization. This is a direct sale with no commission.\r\n\r\nThe building has already undergone window replacement, and a full renovation is being gradually completed, including:\r\n\u2013 new plumbing risers\r\n\u2013 new electrical wiring\r\nand more.\r\n\r\nThanks to these upgrades, the property value is expected to increase by approximately 10\u201320% once the works are finished, making this a great investment opportunity.\r\n\r\nApartment No. 104\r\n1st floor\r\n70.78 m\u00b2\r\nPrice: 6,930,000 CZK\r\n\r\nThe unit is intended for complete renovation \u2013 offering the freedom to tailor the layout and design entirely to your preferences.\r\n\r\nA shared balcony is available on the floor.\r\n\r\nIf you are interested in more information or scheduling a viewing?\r\nPlease feel free to contact me via e-mail \u2013 I will be happy to provide all necessary details and arrange a visit.",
+        "We offer for sale a modernly renovated 2+kk apartment with a loggia, located in a quiet part of the \u0160pi\u010d\u00e1k housing estate in \u010cesk\u00e1 L\u00edpa. The apartment offers 39.70 m\u00b2 of floor space plus a 3.70 m\u00b2 loggia. A cellar storage unit of approximately 3 m\u00b2 also belongs to the apartment. Thanks to its location on the 11th floor out of 12, the apartment provides a beautiful view and plenty of natural light.\n\nThe interior has undergone a complete renovation and is ready for immediate move-in with no further investment required. New electrical and water installations, a modern kitchen, a fully renovated bathroom, new interior doors and vinyl flooring throughout the apartment (except the bathroom) ensure comfortable living and low operating costs. The ceilings throughout the apartment are additionally insulated. The unit is suitable both for personal living or as an investment opportunity, especially due to the possibility of a future transfer into personal ownership.\n\nThe building is managed by an active housing cooperative and has undergone partial revitalization. Three sides of the building have been insulated, and the cooperative plans to complete the remaining insulation and also extend the loggias. Residents have access to two elevators and common areas including a bike room, stroller room and drying room.\n\nThe apartment is in cooperative ownership with a remaining annuity of approximately CZK 1,000, with a monthly payment of CZK 103. According to the current payment schedule, monthly housing costs amount to CZK 3,661. The amount of CZK 1,627 represents non-refundable payments, including the repair fund, building management and insurance. Transfer to personal ownership is possible once the annuity is paid off, and applications submitted now are being processed with an expected timeline around 2028. A condition for the transfer is that the owner must physically occupy the apartment.\n\nThe location is one of the most sought-after areas of \u0160pi\u010d\u00e1k. Within walking distance you will find full civic amenities such as kindergartens, schools, shops, a post office, healthcare services and public transport stops. The area is quiet, well maintained and offers plenty of parking spaces. The forest and the popular Singltrek \u010cesk\u00e1 L\u00edpa trails are just a few minutes from the building.\n\nThe building\u2019s energy efficiency rating is class C (expected to improve to class B after the revitalization is completed)."
+      ]
+    },
+    "descriptionSk": {
+      "types": {
+        "string": 1
+      },
+      "non_null_count": 1,
+      "null_count": 1598,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        ""
+      ],
+      "value_counts": {
+        "": 1
+      }
+    },
+    "disposition": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 17,
+      "all_distinct_values": [
+        "UNDEFINED",
+        "DISP_2_KK",
+        "DISP_3_KK",
+        "DISP_1_KK",
+        "DISP_2_1",
+        "DISP_5_KK",
+        "DISP_3_1",
+        "DISP_4_KK",
+        "OSTATNI",
+        "DISP_1_1",
+        "DISP_4_1",
+        "DISP_5_1",
+        "DISP_6_KK",
+        "DISP_6_1",
+        "DISP_7_KK",
+        "DISP_7_1",
+        "GARSONIERA"
+      ],
+      "value_counts": {
+        "UNDEFINED": 433,
+        "DISP_2_KK": 243,
+        "DISP_3_KK": 175,
+        "DISP_1_KK": 114,
+        "DISP_2_1": 108,
+        "DISP_5_KK": 102,
+        "DISP_3_1": 95,
+        "DISP_4_KK": 94,
+        "OSTATNI": 80,
+        "DISP_1_1": 47,
+        "DISP_4_1": 41,
+        "DISP_5_1": 22,
+        "DISP_6_KK": 17,
+        "DISP_6_1": 10,
+        "DISP_7_KK": 7,
+        "DISP_7_1": 6,
+        "GARSONIERA": 5
+      }
+    },
+    "equipped": {
+      "types": {
+        "string": 1094
+      },
+      "non_null_count": 1094,
+      "null_count": 505,
+      "distinct_count": 3,
+      "all_distinct_values": [
+        "CASTECNE",
+        "VYBAVENY",
+        "NEVYBAVENY"
+      ],
+      "value_counts": {
+        "CASTECNE": 500,
+        "VYBAVENY": 314,
+        "NEVYBAVENY": 280
+      }
+    },
+    "estateType": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 3,
+      "all_distinct_values": [
+        "BYT",
+        "DUM",
+        "POZEMEK"
+      ],
+      "value_counts": {
+        "BYT": 780,
+        "DUM": 414,
+        "POZEMEK": 405
+      }
+    },
+    "execution": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "externalId": {
+      "types": {
+        "string": 531
+      },
+      "non_null_count": 531,
+      "null_count": 1068,
+      "distinct_count": 531,
+      "sample_values": [
+        "226",
+        "50086241",
+        "50086003",
+        "50086503",
+        "50086746",
+        "50086293",
+        "50088267",
+        "50088146",
+        "50087662",
+        "B50085148"
+      ]
+    },
+    "fee": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "min": 0,
+      "max": 0,
+      "all_distinct_values": [
+        "0"
+      ],
+      "value_counts": {
+        "0": 1599
+      }
+    },
+    "fivesome": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 924,
+        "true": 675
+      }
+    },
+    "floor": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "frontGarden": {
+      "types": {
+        "number": 56
+      },
+      "non_null_count": 56,
+      "null_count": 1543,
+      "distinct_count": 39,
+      "min": 1,
+      "max": 1200,
+      "all_distinct_values": [
+        "15",
+        "50",
+        "100",
+        "200",
+        "1",
+        "60",
+        "8",
+        "42",
+        "78",
+        "300",
+        "350",
+        "17",
+        "36",
+        "213",
+        "620",
+        "22.16",
+        "2",
+        "29",
+        "12",
+        "10",
+        "75",
+        "18",
+        "69",
+        "150",
+        "21",
+        "155",
+        "52",
+        "48",
+        "95",
+        "122",
+        "355",
+        "70",
+        "5",
+        "44",
+        "110",
+        "339",
+        "1200",
+        "600",
+        "400"
+      ],
+      "value_counts": {
+        "1": 2,
+        "2": 1,
+        "5": 1,
+        "8": 2,
+        "10": 1,
+        "12": 1,
+        "15": 4,
+        "17": 1,
+        "18": 1,
+        "21": 1,
+        "29": 1,
+        "36": 1,
+        "42": 2,
+        "44": 1,
+        "48": 1,
+        "50": 4,
+        "52": 1,
+        "60": 2,
+        "69": 1,
+        "70": 1,
+        "75": 1,
+        "78": 2,
+        "95": 1,
+        "100": 3,
+        "110": 1,
+        "122": 1,
+        "150": 1,
+        "155": 1,
+        "200": 3,
+        "213": 1,
+        "300": 2,
+        "339": 1,
+        "350": 2,
+        "355": 1,
+        "400": 1,
+        "600": 1,
+        "620": 1,
+        "1200": 1,
+        "22.16": 1
+      }
+    },
+    "garage": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1283,
+        "true": 316
+      }
+    },
+    "gps.lat": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1535,
+      "min": 0,
+      "max": 51.003236,
+      "sample_values": [
+        50.1290096,
+        50.06051,
+        50.0247031,
+        50.0917572,
+        50.6636565,
+        50.083938,
+        50.0678918,
+        49.8333274,
+        50.1022979,
+        50.0894748
+      ]
+    },
+    "gps.lng": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1536,
+      "min": 0,
+      "max": 18.758271,
+      "sample_values": [
+        14.4787682,
+        14.40011,
+        14.4542511,
+        14.4349461,
+        15.5936404,
+        14.4309327,
+        14.5551471,
+        18.174075450422,
+        14.4761616,
+        14.4455204
+      ]
+    },
+    "hasContractRent": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "hash": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1599,
+      "sample_values": [
+        "FOTQDPXUGJSGGEKURHXXIQXCH",
+        "BCFAVJJXXWTNLTOUMZJMHFRBX",
+        "GICGWSTPSDCLNPVBLTCAHFFKT",
+        "LLBEMHUGROKQUTOCVSGCHBYTU",
+        "SYJBBPDHECKNANQQQHQPUCIDU",
+        "NPXHMUJHGOPNVGOAEHPCIJCGV",
+        "NXWPNJGWUCGNZSBCDFRBWKGXJ",
+        "FKBOABQEVVWREWVFNYJPONIXG",
+        "MSKEHWLNQMGYPVZUGBZDFQVAD",
+        "JFZSEVAFPBJYMISIBLZCRMZTJ"
+      ]
+    },
+    "heating": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "highlighted": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1249,
+        "true": 350
+      }
+    },
+    "houseNumber": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 971,
+      "sample_values": [
+        "1290/16",
+        "3232/36",
+        "1305/11",
+        "1170/25",
+        "547",
+        "953/4",
+        "711/19",
+        "1128/60",
+        "1406/184a",
+        "317/5"
+      ]
+    },
+    "houseType": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "id": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1599,
+      "sample_values": [
+        "987083",
+        "729050",
+        "979610",
+        "995459",
+        "879148",
+        "993500",
+        "995207",
+        "995206",
+        "995204",
+        "995119"
+      ]
+    },
+    "imageAltText": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1587,
+      "sample_values": [
+        "Prodej bytu 3+kk 67 m\u00b2, T\u0159ebenick\u00e1, Praha",
+        "Prodej bytu 2+kk 61 m\u00b2, Na Neklance, ",
+        "Prodej bytu 4+1 78 m\u00b2, Hurbanova, Praha",
+        "Prodej bytu 3+kk 77 m\u00b2, Petrsk\u00e1, Praha",
+        "Prodej bytu 1+kk 31 m\u00b2, Horsk\u00e1, Vrchlab\u00ed",
+        "Prodej bytu 4+kk 102 m\u00b2, U P\u016fj\u010dovny, Praha, Praha",
+        "Prodej bytu 2+kk 47 m\u00b2, Honz\u00edkova, Praha",
+        "Prodej bytu 2+1 52 m\u00b2, Opavsk\u00e1, Ostrava",
+        "Prodej bytu 2+kk 48 m\u00b2, Sokolovsk\u00e1, Praha",
+        "Prodej bytu 2+1 69 m\u00b2, Pernerova, Praha"
+      ]
+    },
+    "isBrno": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1538,
+        "true": 61
+      }
+    },
+    "isCityWithDistricts": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1493,
+        "true": 106
+      }
+    },
+    "isDiscounted": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1403,
+        "true": 196
+      }
+    },
+    "isEditable": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1590,
+        "true": 9
+      }
+    },
+    "isNew": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1360,
+        "true": 239
+      }
+    },
+    "isPausedBySystem": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 1599
+      }
+    },
+    "isPausedByUser": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 1599
+      }
+    },
+    "isPrague": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1076,
+        "true": 523
+      }
+    },
+    "isPragueEast": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1535,
+        "true": 64
+      }
+    },
+    "isPragueWest": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1547,
+        "true": 52
+      }
+    },
+    "isTSRegion": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 881,
+        "true": 718
+      }
+    },
+    "landType": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "UNDEFINED"
+      ],
+      "value_counts": {
+        "UNDEFINED": 1599
+      }
+    },
+    "lift": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1204,
+        "true": 395
+      }
+    },
+    "locale": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "CS"
+      ],
+      "value_counts": {
+        "CS": 1599
+      }
+    },
+    "loggia": {
+      "types": {
+        "boolean": 1578
+      },
+      "non_null_count": 1578,
+      "null_count": 21,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1556,
+        "true": 22
+      }
+    },
+    "loggiaSurface": {
+      "types": {
+        "number": 112
+      },
+      "non_null_count": 112,
+      "null_count": 1487,
+      "distinct_count": 44,
+      "min": 2,
+      "max": 46,
+      "all_distinct_values": [
+        "3",
+        "4",
+        "7",
+        "5",
+        "6",
+        "8",
+        "2",
+        "10",
+        "3.5",
+        "5.5",
+        "3.85",
+        "3.7",
+        "6.5",
+        "5.25",
+        "2.4",
+        "3.3",
+        "6.95",
+        "5.8",
+        "2.7",
+        "5.2",
+        "17",
+        "4.7",
+        "7.4",
+        "21",
+        "4.5",
+        "13",
+        "24",
+        "2.91",
+        "6.7",
+        "9.8",
+        "7.6",
+        "20",
+        "30",
+        "3.6",
+        "46",
+        "19.5",
+        "15",
+        "12",
+        "12.45",
+        "2.3",
+        "6.1",
+        "7.2",
+        "3.2",
+        "8.4"
+      ],
+      "value_counts": {
+        "2": 5,
+        "3": 17,
+        "4": 14,
+        "5": 10,
+        "6": 7,
+        "7": 10,
+        "8": 6,
+        "10": 4,
+        "12": 1,
+        "13": 1,
+        "15": 1,
+        "17": 1,
+        "20": 1,
+        "21": 1,
+        "24": 1,
+        "30": 1,
+        "46": 1,
+        "3.5": 3,
+        "5.5": 2,
+        "3.85": 1,
+        "3.7": 1,
+        "6.5": 1,
+        "5.25": 1,
+        "2.4": 1,
+        "3.3": 1,
+        "6.95": 1,
+        "5.8": 1,
+        "2.7": 1,
+        "5.2": 1,
+        "4.7": 1,
+        "7.4": 1,
+        "4.5": 1,
+        "2.91": 1,
+        "6.7": 1,
+        "9.8": 1,
+        "7.6": 1,
+        "3.6": 1,
+        "19.5": 1,
+        "12.45": 1,
+        "2.3": 1,
+        "6.1": 1,
+        "7.2": 1,
+        "3.2": 1,
+        "8.4": 1
+      }
+    },
+    "lowEnergy": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "false"
+      ],
+      "value_counts": {
+        "false": 1599
+      }
+    },
+    "maxRentDays": {
+      "types": {
+        "number": 28
+      },
+      "non_null_count": 28,
+      "null_count": 1571,
+      "distinct_count": 4,
+      "min": 210,
+      "max": 730,
+      "all_distinct_values": [
+        "730",
+        "360",
+        "270",
+        "210"
+      ],
+      "value_counts": {
+        "210": 1,
+        "270": 1,
+        "360": 5,
+        "730": 21
+      }
+    },
+    "minRentDays": {
+      "types": {
+        "number": 28
+      },
+      "non_null_count": 28,
+      "null_count": 1571,
+      "distinct_count": 4,
+      "min": 5,
+      "max": 60,
+      "all_distinct_values": [
+        "5",
+        "30",
+        "14",
+        "60"
+      ],
+      "value_counts": {
+        "5": 11,
+        "14": 5,
+        "30": 10,
+        "60": 2
+      }
+    },
+    "newBuilding": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "offerType": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "PRODEJ",
+        "PRONAJEM"
+      ],
+      "value_counts": {
+        "PRODEJ": 1142,
+        "PRONAJEM": 457
+      }
+    },
+    "originalPrice": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 853,
+      "min": 0,
+      "max": 379320000,
+      "sample_values": [
+        9000000,
+        9795060,
+        9100000,
+        16900000,
+        5000000,
+        18500000,
+        3200000,
+        6300000,
+        13390000,
+        9190000
+      ]
+    },
+    "ownership": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 5,
+      "all_distinct_values": [
+        "OSOBNI",
+        "UNDEFINED",
+        "DRUZSTEVNI",
+        "OSTATNI",
+        "OBECNI"
+      ],
+      "value_counts": {
+        "OSOBNI": 969,
+        "UNDEFINED": 569,
+        "DRUZSTEVNI": 56,
+        "OSTATNI": 4,
+        "OBECNI": 1
+      }
+    },
+    "parking": {
+      "types": {
+        "boolean": 1581
+      },
+      "non_null_count": 1581,
+      "null_count": 18,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 949,
+        "true": 632
+      }
+    },
+    "penb": {
+      "types": {
+        "string": 951
+      },
+      "non_null_count": 951,
+      "null_count": 648,
+      "distinct_count": 7,
+      "all_distinct_values": [
+        "G",
+        "B",
+        "C",
+        "D",
+        "E",
+        "A",
+        "F"
+      ],
+      "value_counts": {
+        "G": 333,
+        "B": 208,
+        "C": 165,
+        "D": 122,
+        "E": 62,
+        "A": 42,
+        "F": 19
+      }
+    },
+    "petFriendly": {
+      "types": {
+        "boolean": 47
+      },
+      "non_null_count": 47,
+      "null_count": 1552,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 24,
+        "true": 23
+      }
+    },
+    "position": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "UNDEFINED"
+      ],
+      "value_counts": {
+        "UNDEFINED": 1599
+      }
+    },
+    "price": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 863,
+      "min": 0,
+      "max": 379320000,
+      "sample_values": [
+        8800000,
+        9795060,
+        9100000,
+        16990000,
+        5000000,
+        18500000,
+        3200000,
+        6300000,
+        13390000,
+        8990000
+      ]
+    },
+    "priceFormatted": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 863,
+      "sample_values": [
+        "8.800.000 K\u010d",
+        "9.795.060 K\u010d",
+        "9.100.000 K\u010d",
+        "16.990.000 K\u010d",
+        "5.000.000 K\u010d",
+        "18.500.000 K\u010d",
+        "3.200.000 K\u010d",
+        "6.300.000 K\u010d",
+        "13.390.000 K\u010d",
+        "8.990.000 K\u010d"
+      ]
+    },
+    "publicImages": {
+      "types": {
+        "string": 2
+      },
+      "non_null_count": 2,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "[]"
+      ],
+      "value_counts": {
+        "[]": 2
+      }
+    },
+    "publicImages[].filename": {
+      "types": {
+        "string": 20461
+      },
+      "non_null_count": 20461,
+      "null_count": 0,
+      "distinct_count": 10000,
+      "sample_values": [
+        "1770727179-dxitdshsds-20260210-132347.jpg",
+        "1770056351-ckhrxojflj-09pokojik-2b.jpg",
+        "1770727401-snkyoizqdr-20260210-132655.jpg",
+        "1770729569-miwrbuvhms-20260210-141727.jpg",
+        "1770056351-vppgdwasnn-06pokojik-1a.jpg",
+        "1770056352-gbtjogxuio-07pokojik-1b.jpg",
+        "1770056352-hdjttxanad-08pokojik-2a.jpg",
+        "1770727470-fzkgralzvx-20260210-132743.jpg",
+        "1770727503-ihfnougtdj-20260210-132428.jpg",
+        "1770727604-gztbnbfmtd-20260210-132455.jpg"
+      ]
+    },
+    "publicImages[].id": {
+      "types": {
+        "string": 20461
+      },
+      "non_null_count": 20461,
+      "null_count": 0,
+      "distinct_count": 10000,
+      "sample_values": [
+        "26823309",
+        "26779134",
+        "26823337",
+        "26823462",
+        "26779131",
+        "26779132",
+        "26779133",
+        "26823340",
+        "26823342",
+        "26823343"
+      ]
+    },
+    "publicImages[].main": {
+      "types": {
+        "boolean": 20461
+      },
+      "non_null_count": 20461,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 18864,
+        "true": 1597
+      }
+    },
+    "publicImages[].order": {
+      "types": {
+        "number": 20461
+      },
+      "non_null_count": 20461,
+      "null_count": 0,
+      "distinct_count": 36,
+      "min": 1,
+      "max": 36,
+      "all_distinct_values": [
+        "1",
+        "3",
+        "2",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36"
+      ],
+      "value_counts": {
+        "1": 1597,
+        "2": 1594,
+        "3": 1596,
+        "4": 1328,
+        "5": 1269,
+        "6": 1213,
+        "7": 1166,
+        "8": 1103,
+        "9": 1040,
+        "10": 970,
+        "11": 899,
+        "12": 849,
+        "13": 782,
+        "14": 721,
+        "15": 663,
+        "16": 597,
+        "17": 535,
+        "18": 475,
+        "19": 412,
+        "20": 343,
+        "21": 155,
+        "22": 151,
+        "23": 147,
+        "24": 139,
+        "25": 132,
+        "26": 128,
+        "27": 122,
+        "28": 110,
+        "29": 106,
+        "30": 101,
+        "31": 5,
+        "32": 4,
+        "33": 3,
+        "34": 3,
+        "35": 2,
+        "36": 1
+      }
+    },
+    "publicImages[].url": {
+      "types": {
+        "string": 20461
+      },
+      "non_null_count": 20461,
+      "null_count": 0,
+      "distinct_count": 10000,
+      "sample_values": [
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770727179-dxitdshsds-20260210-132347.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770056351-ckhrxojflj-09pokojik-2b.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770727401-snkyoizqdr-20260210-132655.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770729569-miwrbuvhms-20260210-141727.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770056351-vppgdwasnn-06pokojik-1a.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770056352-gbtjogxuio-07pokojik-1b.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770056352-hdjttxanad-08pokojik-2a.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770727470-fzkgralzvx-20260210-132743.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770727503-ihfnougtdj-20260210-132428.jpg",
+        "https://api.bezrealitky.cz/media/cache/record_main/data/images/advert/987k/987083/1770727604-gztbnbfmtd-20260210-132455.jpg"
+      ]
+    },
+    "realmanExportEnabled": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1227,
+        "true": 372
+      }
+    },
+    "reconstruction": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "region.id": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 862,
+      "sample_values": [
+        "15397",
+        "15504",
+        "15495",
+        "15539",
+        "26446",
+        "15484",
+        "26734",
+        "15501",
+        "15612",
+        "15393"
+      ]
+    },
+    "region.name": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 862,
+      "sample_values": [
+        "Kobylisy",
+        "Sm\u00edchov",
+        "Kr\u010d",
+        "Nov\u00e9 M\u011bsto",
+        "Ho\u0159ej\u0161\u00ed Vrchlab\u00ed",
+        "Doln\u00ed M\u011bcholupy",
+        "Poruba-sever",
+        "Libe\u0148",
+        "Karl\u00edn",
+        "Vyso\u010dany"
+      ]
+    },
+    "region.uri": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 862,
+      "sample_values": [
+        "praha-kobylisy",
+        "praha-smichov",
+        "praha-krc",
+        "praha-nove-mesto",
+        "vrchlabi-horejsi-vrchlabi",
+        "praha-dolni-mecholupy",
+        "ostrava-poruba-sever",
+        "praha-liben",
+        "praha-karlin",
+        "praha-vysocany"
+      ]
+    },
+    "rentPlatformOrder": {
+      "types": {
+        "number": 1507
+      },
+      "non_null_count": 1507,
+      "null_count": 92,
+      "distinct_count": 1,
+      "min": 0,
+      "max": 0,
+      "all_distinct_values": [
+        "0"
+      ],
+      "value_counts": {
+        "0": 1507
+      }
+    },
+    "rentPlatformStatus": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "reserved": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1575,
+        "true": 24
+      }
+    },
+    "roommate": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1581,
+        "true": 18
+      }
+    },
+    "ruianId": {
+      "types": {
+        "string": 1057
+      },
+      "non_null_count": 1057,
+      "null_count": 542,
+      "distinct_count": 1013,
+      "sample_values": [
+        "22370188",
+        "27318036",
+        "21870322",
+        "21710040",
+        "85711411",
+        "21707642",
+        "87407680",
+        "3294625",
+        "30489423",
+        "22351825"
+      ]
+    },
+    "serviceCharges": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 101,
+      "min": 0,
+      "max": 25000,
+      "sample_values": [
+        0,
+        4589,
+        3500,
+        3400,
+        2500,
+        1120,
+        5580,
+        5000,
+        5917,
+        3000
+      ]
+    },
+    "serviceChargesNote": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "sewage": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "shortTerm": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1592,
+        "true": 7
+      }
+    },
+    "showOwnest": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1330,
+        "true": 269
+      }
+    },
+    "showPriceSuggestionButton": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1431,
+        "true": 168
+      }
+    },
+    "situation": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "UNDEFINED"
+      ],
+      "value_counts": {
+        "UNDEFINED": 1599
+      }
+    },
+    "street": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 804,
+      "sample_values": [
+        "T\u0159ebenick\u00e1",
+        "Na Neklance",
+        "Hurbanova",
+        "Petrsk\u00e1",
+        "Horsk\u00e1",
+        "U P\u016fj\u010dovny",
+        "Honz\u00edkova",
+        "Opavsk\u00e1",
+        "Sokolovsk\u00e1",
+        "Pernerova"
+      ]
+    },
+    "surface": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 250,
+      "min": 0,
+      "max": 2032,
+      "sample_values": [
+        67,
+        61,
+        78,
+        77,
+        31,
+        102,
+        47,
+        52,
+        48,
+        69
+      ]
+    },
+    "surfaceLand": {
+      "types": {
+        "number": 895
+      },
+      "non_null_count": 895,
+      "null_count": 704,
+      "distinct_count": 704,
+      "min": 0,
+      "max": 123648,
+      "sample_values": [
+        0,
+        1159,
+        476,
+        599,
+        651,
+        745,
+        2081,
+        3065,
+        687,
+        806
+      ]
+    },
+    "tags": {
+      "types": {
+        "string": 72
+      },
+      "non_null_count": 72,
+      "null_count": 0,
+      "distinct_count": 1,
+      "all_distinct_values": [
+        "[]"
+      ],
+      "value_counts": {
+        "[]": 72
+      }
+    },
+    "tags[]": {
+      "types": {
+        "string": 4139
+      },
+      "non_null_count": 4139,
+      "null_count": 0,
+      "distinct_count": 301,
+      "sample_values": [
+        "Vybaveno",
+        "Parkov\u00e1n\u00ed",
+        "Sklep 3 m\u00b2",
+        "MHD 2 minuty p\u011b\u0161ky",
+        "V\u00fdtah",
+        "Gar\u00e1\u017e",
+        "Sklep 2 m\u00b2",
+        "Lod\u017eie 7 m\u00b2",
+        "\u010c\u00e1ste\u010dn\u011b vybaveno",
+        "Lod\u017eie 3 m\u00b2"
+      ]
+    },
+    "terrace": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "false",
+        "true"
+      ],
+      "value_counts": {
+        "false": 1558,
+        "true": 41
+      }
+    },
+    "terraceSurface": {
+      "types": {
+        "number": 235
+      },
+      "non_null_count": 235,
+      "null_count": 1364,
+      "distinct_count": 66,
+      "min": 4,
+      "max": 178,
+      "all_distinct_values": [
+        "20",
+        "15",
+        "25",
+        "30",
+        "18",
+        "9",
+        "10",
+        "12",
+        "6",
+        "50",
+        "8",
+        "13",
+        "24",
+        "34",
+        "100",
+        "11",
+        "45",
+        "5",
+        "22",
+        "40",
+        "7",
+        "11.7",
+        "16",
+        "17",
+        "4",
+        "21",
+        "14",
+        "32",
+        "130",
+        "120",
+        "60",
+        "70",
+        "28",
+        "35",
+        "39",
+        "44",
+        "11.5",
+        "9.3",
+        "49",
+        "11.4",
+        "19.5",
+        "13.5",
+        "36",
+        "43",
+        "152",
+        "99",
+        "26.5",
+        "38",
+        "33",
+        "6.5",
+        "178",
+        "26.2",
+        "19",
+        "67",
+        "14.7",
+        "41.3",
+        "88",
+        "51",
+        "35.2",
+        "15.24",
+        "24.5",
+        "4.6",
+        "64.2",
+        "52",
+        "78",
+        "84.5"
+      ],
+      "value_counts": {
+        "4": 2,
+        "5": 4,
+        "6": 7,
+        "7": 3,
+        "8": 6,
+        "9": 10,
+        "10": 10,
+        "11": 4,
+        "12": 9,
+        "13": 5,
+        "14": 2,
+        "15": 19,
+        "16": 3,
+        "17": 3,
+        "18": 11,
+        "19": 1,
+        "20": 30,
+        "21": 2,
+        "22": 4,
+        "24": 5,
+        "25": 12,
+        "28": 2,
+        "30": 11,
+        "32": 2,
+        "33": 1,
+        "34": 5,
+        "35": 2,
+        "36": 1,
+        "38": 1,
+        "39": 1,
+        "40": 4,
+        "43": 1,
+        "44": 1,
+        "45": 4,
+        "49": 1,
+        "50": 7,
+        "51": 1,
+        "52": 1,
+        "60": 2,
+        "67": 1,
+        "70": 2,
+        "78": 1,
+        "88": 1,
+        "99": 1,
+        "100": 4,
+        "120": 2,
+        "130": 2,
+        "152": 1,
+        "178": 1,
+        "11.7": 3,
+        "11.5": 1,
+        "9.3": 1,
+        "11.4": 1,
+        "19.5": 1,
+        "13.5": 1,
+        "26.5": 1,
+        "6.5": 1,
+        "26.2": 1,
+        "14.7": 1,
+        "41.3": 1,
+        "35.2": 1,
+        "15.24": 1,
+        "24.5": 1,
+        "4.6": 1,
+        "64.2": 1,
+        "84.5": 1
+      }
+    },
+    "threesome": {
+      "types": {
+        "boolean": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 2,
+      "all_distinct_values": [
+        "true",
+        "false"
+      ],
+      "value_counts": {
+        "true": 815,
+        "false": 784
+      }
+    },
+    "timeActivated": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "timeDeactivated": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "timeExpiration": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1381,
+      "min": 1772187111,
+      "max": 4102441200,
+      "sample_values": [
+        1775723336,
+        1776330493,
+        1774086004,
+        1777616039,
+        1776543139,
+        1774307742,
+        1777318335,
+        1774984575,
+        1777575674,
+        1774965806
+      ]
+    },
+    "timeOrder": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "title": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1207,
+      "sample_values": [
+        "Prodej bytu 3+kk 67 m\u00b2",
+        "Prodej bytu 2+kk 61 m\u00b2",
+        "Prodej bytu 4+1 78 m\u00b2",
+        "Prodej bytu 3+kk 77 m\u00b2",
+        "Prodej bytu 1+kk 31 m\u00b2",
+        "Prodej bytu 4+kk 102 m\u00b2",
+        "Prodej bytu 2+kk 47 m\u00b2",
+        "Prodej bytu 2+1 52 m\u00b2",
+        "Prodej bytu 2+kk 48 m\u00b2",
+        "Prodej bytu 2+1 69 m\u00b2"
+      ]
+    },
+    "titleEnglish": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1014,
+      "sample_values": [
+        "2 bedroom with open-plan kitchen flat for sale, 67 m\u00b2",
+        "1 bedroom with open-plan kitchen flat for sale, 61 m\u00b2",
+        "4 bedroom flat for sale, 78 m\u00b2",
+        "2 bedroom with open-plan kitchen flat for sale, 77 m\u00b2",
+        "Studio flat for sale, 31 m\u00b2",
+        "3 bedroom with open-plan kitchen flat for sale, 102 m\u00b2",
+        "1 bedroom with open-plan kitchen flat for sale, 47 m\u00b2",
+        "2 bedroom flat for sale, 52 m\u00b2",
+        "1 bedroom with open-plan kitchen flat for sale, 48 m\u00b2",
+        "2 bedroom flat for sale, 69 m\u00b2"
+      ]
+    },
+    "totalFloors": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "tour360": {
+      "types": {
+        "string": 19
+      },
+      "non_null_count": 19,
+      "null_count": 1580,
+      "distinct_count": 19,
+      "all_distinct_values": [
+        "https://my.matterport.com/show/?m=aQics8Lnou3",
+        "https://my.matterport.com/show/?m=eWQYamTD6ns",
+        "https://my.matterport.com/show/?m=iQ64oUzXbmB",
+        "https://my.matterport.com/show/?m=P311Apk53Ux",
+        "https://my.matterport.com/show/?m=KWF2kGwGtbk",
+        "https://my.matterport.com/show/?m=KtGNJJNHgAj",
+        "https://my.matterport.com/show/?m=CAatJ3viWKh",
+        "https://my.matterport.com/show/?m=qsJ6Y81m59z",
+        "https://my.matterport.com/show/?m=gprL9bDFfb4",
+        "https://my.matterport.com/show/?m=SqknXaX2K3A",
+        "https://my.matterport.com/show/?m=F6pdzLerxVs",
+        "https://my.matterport.com/show/?m=TaADFC8QAYW",
+        "https://my.matterport.com/show/?m=dKB5vehp5yo",
+        "https://my.matterport.com/show/?m=ftEBtPS16mR",
+        "https://my.matterport.com/show/?m=nqmXEm7zcY1",
+        "https://my.matterport.com/show/?m=uwNyULZz4XR",
+        "https://my.matterport.com/show/?m=PRihUVSnLti",
+        "https://my.matterport.com/show/?m=VDS7cStYtwd",
+        "https://my.matterport.com/show/?m=68zzCiSA8Uk"
+      ],
+      "value_counts": {
+        "https://my.matterport.com/show/?m=aQics8Lnou3": 1,
+        "https://my.matterport.com/show/?m=eWQYamTD6ns": 1,
+        "https://my.matterport.com/show/?m=iQ64oUzXbmB": 1,
+        "https://my.matterport.com/show/?m=P311Apk53Ux": 1,
+        "https://my.matterport.com/show/?m=KWF2kGwGtbk": 1,
+        "https://my.matterport.com/show/?m=KtGNJJNHgAj": 1,
+        "https://my.matterport.com/show/?m=CAatJ3viWKh": 1,
+        "https://my.matterport.com/show/?m=qsJ6Y81m59z": 1,
+        "https://my.matterport.com/show/?m=gprL9bDFfb4": 1,
+        "https://my.matterport.com/show/?m=SqknXaX2K3A": 1,
+        "https://my.matterport.com/show/?m=F6pdzLerxVs": 1,
+        "https://my.matterport.com/show/?m=TaADFC8QAYW": 1,
+        "https://my.matterport.com/show/?m=dKB5vehp5yo": 1,
+        "https://my.matterport.com/show/?m=ftEBtPS16mR": 1,
+        "https://my.matterport.com/show/?m=nqmXEm7zcY1": 1,
+        "https://my.matterport.com/show/?m=uwNyULZz4XR": 1,
+        "https://my.matterport.com/show/?m=PRihUVSnLti": 1,
+        "https://my.matterport.com/show/?m=VDS7cStYtwd": 1,
+        "https://my.matterport.com/show/?m=68zzCiSA8Uk": 1
+      }
+    },
+    "uri": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 1599,
+      "sample_values": [
+        "987083-nabidka-prodej-bytu-trebenicka-praha",
+        "729050-nabidka-prodej-bytu-na-neklance",
+        "979610-nabidka-prodej-bytu-hurbanova-praha",
+        "995459-nabidka-prodej-bytu-petrska-praha",
+        "879148-nabidka-prodej-bytu-horska-vrchlabi",
+        "993500-nabidka-prodej-bytu-u-pujcovny-praha",
+        "995207-nabidka-prodej-bytu-honzikova-praha",
+        "995206-nabidka-prodej-bytu-opavska-ostrava",
+        "995204-nabidka-prodej-bytu-sokolovska-praha",
+        "995119-nabidka-prodej-bytu-pernerova-praha"
+      ]
+    },
+    "utilityCharges": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 93,
+      "min": 0,
+      "max": 22000,
+      "all_distinct_values": [
+        "0",
+        "2000",
+        "3000",
+        "1000",
+        "4000",
+        "1500",
+        "3500",
+        "2500",
+        "5000",
+        "900",
+        "4500",
+        "500",
+        "1",
+        "1200",
+        "800",
+        "600",
+        "1300",
+        "7000",
+        "6000",
+        "2800",
+        "5500",
+        "1400",
+        "1800",
+        "100",
+        "1700",
+        "700",
+        "1100",
+        "10000",
+        "4080",
+        "4210",
+        "6166",
+        "5950",
+        "3695",
+        "3100",
+        "11985",
+        "4700",
+        "2400",
+        "5422",
+        "3024",
+        "730",
+        "8000",
+        "4501",
+        "4200",
+        "1350",
+        "1040",
+        "8496",
+        "9154",
+        "3513",
+        "4109",
+        "7457",
+        "4394",
+        "17689",
+        "750",
+        "1550",
+        "4864",
+        "5556",
+        "5717",
+        "5430",
+        "5040",
+        "830",
+        "8581",
+        "3490",
+        "2900",
+        "5120",
+        "6800",
+        "4853",
+        "2780",
+        "1250",
+        "890",
+        "1850",
+        "2100",
+        "2200",
+        "3661",
+        "1950",
+        "2700",
+        "2600",
+        "3200",
+        "1810",
+        "5200",
+        "5266",
+        "11397",
+        "1900",
+        "870",
+        "1481",
+        "4349",
+        "5576",
+        "1340",
+        "22000",
+        "11000",
+        "4300",
+        "18000",
+        "6500",
+        "4800"
+      ],
+      "value_counts": {
+        "0": 1319,
+        "1": 6,
+        "100": 2,
+        "500": 6,
+        "600": 4,
+        "700": 2,
+        "730": 1,
+        "750": 1,
+        "800": 5,
+        "830": 1,
+        "870": 1,
+        "890": 1,
+        "900": 8,
+        "1000": 21,
+        "1040": 1,
+        "1100": 2,
+        "1200": 5,
+        "1250": 1,
+        "1300": 4,
+        "1340": 1,
+        "1350": 1,
+        "1400": 3,
+        "1481": 1,
+        "1500": 13,
+        "1550": 1,
+        "1700": 2,
+        "1800": 2,
+        "1810": 1,
+        "1850": 1,
+        "1900": 1,
+        "1950": 1,
+        "2000": 29,
+        "2100": 1,
+        "2200": 1,
+        "2400": 1,
+        "2500": 10,
+        "2600": 1,
+        "2700": 1,
+        "2780": 1,
+        "2800": 3,
+        "2900": 1,
+        "3000": 25,
+        "3024": 1,
+        "3100": 1,
+        "3200": 1,
+        "3490": 1,
+        "3500": 12,
+        "3513": 1,
+        "3661": 1,
+        "3695": 1,
+        "4000": 21,
+        "4080": 1,
+        "4109": 1,
+        "4200": 1,
+        "4210": 1,
+        "4300": 1,
+        "4349": 1,
+        "4394": 1,
+        "4500": 8,
+        "4501": 1,
+        "4700": 1,
+        "4800": 1,
+        "4853": 1,
+        "4864": 1,
+        "5000": 9,
+        "5040": 1,
+        "5120": 1,
+        "5200": 1,
+        "5266": 1,
+        "5422": 1,
+        "5430": 1,
+        "5500": 3,
+        "5556": 1,
+        "5576": 1,
+        "5717": 1,
+        "5950": 1,
+        "6000": 4,
+        "6166": 1,
+        "6500": 1,
+        "6800": 1,
+        "7000": 4,
+        "7457": 1,
+        "8000": 1,
+        "8496": 1,
+        "8581": 1,
+        "9154": 1,
+        "10000": 2,
+        "11000": 1,
+        "11397": 1,
+        "11985": 1,
+        "17689": 1,
+        "18000": 1,
+        "22000": 1
+      }
+    },
+    "utilityChargesNote": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "visitCount": {
+      "types": {
+        "number": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 859,
+      "min": 0,
+      "max": 35375,
+      "sample_values": [
+        715,
+        257,
+        356,
+        10,
+        95,
+        260,
+        215,
+        50,
+        189,
+        98
+      ]
+    },
+    "water": {
+      "types": {},
+      "non_null_count": 0,
+      "null_count": 1599,
+      "distinct_count": 0,
+      "all_distinct_values": [],
+      "value_counts": {}
+    },
+    "zip": {
+      "types": {
+        "string": 1599
+      },
+      "non_null_count": 1599,
+      "null_count": 0,
+      "distinct_count": 482,
+      "sample_values": [
+        "182 00",
+        "150 00",
+        "142 00",
+        "110 00",
+        "543 02",
+        "111 01",
+        "708 00",
+        "180 00",
+        "186 00",
+        "190 00"
+      ]
+    }
+  }
+}

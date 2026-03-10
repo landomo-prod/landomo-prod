@@ -1,0 +1,198 @@
+{
+  "timestamp": "2026-02-07T20:18:12.344Z",
+  "testDuration": 27.44,
+  "capacityResults": [
+    {
+      "offerType": "PRODEJ",
+      "estateType": "BYT",
+      "totalAvailable": 683,
+      "testTime": 1489,
+      "batchesRequested": 5,
+      "listingsFetched": 300,
+      "averageResponseTime": 297.8
+    },
+    {
+      "offerType": "PRODEJ",
+      "estateType": "DUM",
+      "totalAvailable": 344,
+      "testTime": 1653,
+      "batchesRequested": 5,
+      "listingsFetched": 300,
+      "averageResponseTime": 330.6
+    },
+    {
+      "offerType": "PRODEJ",
+      "estateType": "POZEMEK",
+      "totalAvailable": 1026,
+      "testTime": 1857,
+      "batchesRequested": 5,
+      "listingsFetched": 300,
+      "averageResponseTime": 371.4
+    },
+    {
+      "offerType": "PRONAJEM",
+      "estateType": "BYT",
+      "totalAvailable": 2218,
+      "testTime": 1372,
+      "batchesRequested": 5,
+      "listingsFetched": 300,
+      "averageResponseTime": 274.4
+    },
+    {
+      "offerType": "PRONAJEM",
+      "estateType": "DUM",
+      "totalAvailable": 60,
+      "testTime": 802,
+      "batchesRequested": 1,
+      "listingsFetched": 60,
+      "averageResponseTime": 802
+    },
+    {
+      "offerType": "PRONAJEM",
+      "estateType": "POZEMEK",
+      "totalAvailable": 4,
+      "testTime": 474,
+      "batchesRequested": 1,
+      "listingsFetched": 4,
+      "averageResponseTime": 474
+    }
+  ],
+  "batchSizeOptimization": {
+    "10": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 174,
+      "listingsReturned": 10,
+      "totalCount": 683,
+      "listingsPerSecond": 57.47,
+      "batchSize": 10,
+      "offset": 0,
+      "status": "success"
+    },
+    "20": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 167,
+      "listingsReturned": 20,
+      "totalCount": 683,
+      "listingsPerSecond": 119.76,
+      "batchSize": 20,
+      "offset": 0,
+      "status": "success"
+    },
+    "30": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 187,
+      "listingsReturned": 30,
+      "totalCount": 683,
+      "listingsPerSecond": 160.43,
+      "batchSize": 30,
+      "offset": 0,
+      "status": "success"
+    },
+    "40": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 235,
+      "listingsReturned": 40,
+      "totalCount": 683,
+      "listingsPerSecond": 170.21,
+      "batchSize": 40,
+      "offset": 0,
+      "status": "success"
+    },
+    "50": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 402,
+      "listingsReturned": 50,
+      "totalCount": 683,
+      "listingsPerSecond": 124.38,
+      "batchSize": 50,
+      "offset": 0,
+      "status": "success"
+    },
+    "60": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 87,
+      "listingsReturned": 60,
+      "totalCount": 683,
+      "listingsPerSecond": 689.66,
+      "batchSize": 60,
+      "offset": 0,
+      "status": "success"
+    },
+    "80": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 233,
+      "listingsReturned": 80,
+      "totalCount": 683,
+      "listingsPerSecond": 343.35,
+      "batchSize": 80,
+      "offset": 0,
+      "status": "success"
+    },
+    "100": {
+      "queryName": "PRODEJ_BYT_offset_0",
+      "requestTime": 259,
+      "listingsReturned": 100,
+      "totalCount": 683,
+      "listingsPerSecond": 386.1,
+      "batchSize": 100,
+      "offset": 0,
+      "status": "success"
+    }
+  },
+  "rateLimitingResults": [
+    {
+      "concurrent": 5,
+      "totalRequests": 5,
+      "successful": 5,
+      "failed": 0,
+      "timeout": 0,
+      "averageTime": 137.2,
+      "requestsPerSecond": 31.25,
+      "rateLimitHit": false
+    },
+    {
+      "concurrent": 10,
+      "totalRequests": 10,
+      "successful": 10,
+      "failed": 0,
+      "timeout": 0,
+      "averageTime": 983.6,
+      "requestsPerSecond": 2.93,
+      "rateLimitHit": false
+    },
+    {
+      "concurrent": 20,
+      "totalRequests": 20,
+      "successful": 20,
+      "failed": 0,
+      "timeout": 0,
+      "averageTime": 363.55,
+      "requestsPerSecond": 23.92,
+      "rateLimitHit": false
+    }
+  ],
+  "summary": {
+    "totalEstatesAvailable": 4335,
+    "breakdownByOfferType": {
+      "PRODEJ": 2053,
+      "PRONAJEM": 2282
+    },
+    "breakdownByEstateType": {
+      "BYT": 2901,
+      "DUM": 404,
+      "POZEMEK": 1030
+    },
+    "averageResponseTimeMs": 425.03,
+    "averageListingsPerSecond": 141.17,
+    "optimalBatchSize": 60,
+    "optimalBatchListingsPerSecond": 689.66,
+    "estimatedTotalScrapingSeconds": 53,
+    "estimatedTotalScrapingMinutes": "0.88",
+    "estimatedTotalScrapingHours": "0.01",
+    "rateLimitingObservations": {
+      "maxConcurrentRequests": 20,
+      "rateLimitDetected": false,
+      "recommendedConcurrency": 5
+    }
+  }
+}
